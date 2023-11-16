@@ -8,6 +8,7 @@ import { GiSkeleton } from "react-icons/gi";
 import { FaUserDoctor } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
+import Loader from '../../components/ui/loader'
 
 interface DashboardCardProps {
   to: string;
@@ -73,6 +74,7 @@ function Dashboard() {
           title="Settings"
         />
       </div>
+      <Loader/>
     </div>
   );
 }
