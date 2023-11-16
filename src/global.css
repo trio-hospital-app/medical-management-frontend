@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  background-color: #e7ebff;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.custom-bg-black {
+  background-color: #3f56cd;
+  position: fixed;
+  top: 0px;
+  padding-top: 100px;
+  bottom: 0;
+}
+.navbar {
+  height: 60px;
+  padding: 0 30px;
+}
+.custom-bg-black nav div {
+  background-color: #3f56cd;
+  color: white;
+  border-radius: 0px !important;
+}
+
+.custom-bg-black nav div div ul li a {
+  font-size: 16px;
+  font-weight: 400;
+  padding: 15px;
+}
+
+.custom-bg-black nav div div ul li a svg {
+  color: white;
+}
+.custom-bg-black nav div div ul li a {
+  border-bottom: white;
+}
+.custom-bg-black nav div div ul li a:hover {
+  background-color: #6b80e8 !important;
+  color: white;
+}
+
+input{
+  background-color: #e1dafa !important;
+  border: 0.5px solid #cbc1f1 !important;
+  padding: 10px !important;
+}
+
+footer{
+  padding: 0px !important;
+  border-radius: 0px !important;
+  background-color: black !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  height: 100%;
+}
