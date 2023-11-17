@@ -10,10 +10,15 @@ interface FilterHeaderProps {
 
 function FilterHeader({ children, title, buttonTitle, resetFilter, search }: FilterHeaderProps) {
   return (
-    <div className="bg-white px-5 py-3 rounded-[1rem] shadow-lg">
+    <div className="bg-white px-5 py-3 rounded-[.5rem] shadow">
       <div className="flex items-center justify-between pb-2 border-b">
         <span className="text-xl font-bold">{title}</span>
-        <Button color="blue">{buttonTitle}</Button>
+        <span
+            className="border bg-ha-primary1 rounded-[1rem] w-[200px] h-10 flex items-center justify-center font-bold text-white cursor-pointer hover:bg-blue-600"
+            onClick={search}
+          >
+           {buttonTitle}
+          </span>
       </div>
 
       <div className="p-3">{children}</div>
@@ -27,7 +32,7 @@ function FilterHeader({ children, title, buttonTitle, resetFilter, search }: Fil
             Reset
           </span>
           <span
-            className="border border-blue-500 rounded-[1rem] w-[49%] h-10 flex items-center justify-center font-bold text-blue-500 cursor-pointer hover:bg-blue-100"
+            className="border border-ha-primary1 rounded-[1rem] w-[49%] h-10 flex items-center justify-center font-bold text-ha-primary1 cursor-pointer hover:bg-blue-100"
             onClick={search}
           >
             Search
