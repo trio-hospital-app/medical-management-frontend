@@ -1,5 +1,3 @@
-import { Button } from "flowbite-react";
-
 interface FilterHeaderProps {
   children: React.ReactNode;
   title: string;
