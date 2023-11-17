@@ -13,7 +13,7 @@ function NavBar() {
           />
         </div>
 
-        <h1 className="font-bold text-xl ml-3 text-ha-primary1">Health App</h1>
+        <h1 className="font-bold text-xl ml-3 text-ha-primary1">MedOpt</h1>
       </div>
       <div className="flex items-center justify-end w-[50%] h-full">
         <Avatar
