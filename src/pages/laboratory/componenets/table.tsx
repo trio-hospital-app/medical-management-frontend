@@ -125,7 +125,7 @@ const data: Patient[] = [
     orderDate: "2021-09-01",
     labId: "L0019sje7e44444444",
     labUnit: "mg/dL",
-    patientName: "John Doe abraham christopher",
+    patientName: "abraham christopher",
     specimenType: "Urine Analysis",
     panelName: "Hepatitis B Panel",
     status: "Take Specimen",
