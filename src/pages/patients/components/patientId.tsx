@@ -1,4 +1,4 @@
-import PatientInfoHeader from "../../components/patientInfoHeader";
+import PatientInfoHeader from "../../../components/patientInfoHeader";
 
 function PatientId() {
 

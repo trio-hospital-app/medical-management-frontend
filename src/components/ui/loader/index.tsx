@@ -9,7 +9,7 @@ function Loader() {
         width="128px"
         height="128px"
       >
-        <g fill="none" stroke-linecap="round" stroke-width="4">
+        <g fill="none" strokeLinecap="round" stroke-width="4">
           <g className="pl__ring" transform="rotate(0)">
             <ellipse
               className="pl__orbit"

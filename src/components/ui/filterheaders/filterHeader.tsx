@@ -24,7 +24,7 @@ function FilterHeader({ children, title, buttonTitle, resetFilter, search }: Fil
       <div className="w-full pt-2 border-t">
         <div className="w-[20%] flex items-center justify-between">
           <span
-            className="border border-red-500 rounded-[1rem] w-[49%] h-10 flex items-center justify-center font-bold text-red-500 cursor-pointer hover:bg-red-100"
+            className="border border-red-500 rounded-[1rem] w-full md:w-[49%] h-10 flex items-center justify-center font-bold text-red-500 cursor-pointer hover:bg-red-100"
             onClick={resetFilter}
           >
             Reset

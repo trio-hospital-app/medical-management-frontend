@@ -21,6 +21,7 @@ const tailwindConfig: Config = {
       colors: {
         ha: {
           primary1: '#3f56cd',
+          primary2: '#E8EBFF',
           secondary1: "#E7EBFF"
         }
       },
