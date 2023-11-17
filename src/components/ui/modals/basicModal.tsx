@@ -24,7 +24,7 @@ function BasicModal({
 }: BasicModalProps) {
   return (
     <div className="basicModal">
-      <Modal show={openModal} color-white onClose={() => setOpenModal(false)}>
+      <Modal show={openModal} dismissible color-white onClose={() => setOpenModal(false)}>
         <Modal.Header>{title}</Modal.Header>
 
         <div className="space-y-6 border">{children}</div>
