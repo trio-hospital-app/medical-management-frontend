@@ -48,7 +48,9 @@ const SearchLab = () => {
       >
         <form className="flex flex-wrap gap-2">
           <div className="w-[24%]">
-            <h1>Service Center</h1>
+            <div className=" block">
+              <label htmlFor="patientid">Service Center</label>
+            </div>
             <CustomMultiSelect
               options={convertToOptions(countries)}
               labelledBy="Select Service Center"
@@ -59,7 +61,9 @@ const SearchLab = () => {
             />
           </div>
           <div className="w-[24%]">
-            <h1>Lab Center</h1>
+            <div className=" block">
+              <label htmlFor="patientid">Lab Center</label>
+            </div>
             <CustomMultiSelect
               options={convertToOptions(cities)}
               labelledBy="Select Lab Center"
@@ -70,7 +74,9 @@ const SearchLab = () => {
             />
           </div>
           <div className="w-[24%]">
-            <h1>Status</h1>
+            <div className=" block">
+              <label htmlFor="patientid">Status</label>
+            </div>
             <CustomMultiSelect
               options={convertToOptions(colors)}
               labelledBy="Select Status"

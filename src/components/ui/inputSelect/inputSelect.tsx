@@ -42,10 +42,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
   });
 
   return (
-    <div
-      className="mt-2"
-      style={{ outline: "solid #3f56cd", borderRadius: ".3rem" }}
-    >
+    <div className="mt-2">
       {isMultiSelect ? (
         <MultiSelect
           options={transformedOptions}
@@ -56,26 +53,26 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
         />
       ) : (
         <select
-        value={selected[0]?.value}
-        onChange={(e) =>
-          handleSelectChange([
-            { label: e.target.value, value: e.target.value },
-          ])
-        }
-        style={{
-          padding: "7px",
-          width: "100%",
-        }}
-      >
-        <option disabled={!placeholder} value="">
-          {placeholder || "Select an option"}
-        </option>
-        {transformedOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+          value={selected[0]?.value}
+          onChange={(e) =>
+            handleSelectChange([
+              { label: e.target.value, value: e.target.value },
+            ])
+          }
+          style={{
+            padding: "7px",
+            width: "100%",
+          }}
+        >
+          <option disabled={!placeholder} value="">
+            {placeholder || "Select an option"}
           </option>
-        ))}
-      </select>
+          {transformedOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       )}
     </div>
   );
