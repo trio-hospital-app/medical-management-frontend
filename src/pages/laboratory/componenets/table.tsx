@@ -102,13 +102,13 @@ const columns = [
     sortable: true,
     width: "11rem",
   },
-  // {
-  //   cell: (row: Patient) => (
-  //     <MdOutlineCancel onClick={() => handleRowDelete(row)} className='border border-red-300' />
-  //   ),
-  //   sortable: false,
-  //   width: "1rem",
-  // },
+  {
+    cell: (row: Patient) => (
+      <MdOutlineCancel onClick={() => handleRowDelete(row)} className='font-bold text-red-300' />
+    ),
+    sortable: false,
+    width: "3rem",
+  },
 ];
 
 const getRandomColor = () => {

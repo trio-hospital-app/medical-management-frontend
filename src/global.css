@@ -27,6 +27,7 @@ body {
 .custom-bg-black {
   background-color: #3f56cd;
   position: fixed;
+  width: 200px;
   top: 0px;
   padding-top: 100px;
   bottom: 0;
@@ -37,6 +38,7 @@ body {
 }
 .custom-bg-black nav div {
   background-color: #3f56cd;
+  width: 200px;
   color: white;
   border-radius: 0px !important;
 }

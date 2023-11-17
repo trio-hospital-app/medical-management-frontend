@@ -4,7 +4,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import { useState } from "react";
-import OrderLab from "./OrderLab";
+import OrderLab from "./orderLab";
 
 function PatientTable() {
   const [showLabModal, setShowLabModal] = useState(false);
