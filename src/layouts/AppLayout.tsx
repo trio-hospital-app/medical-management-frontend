@@ -9,7 +9,7 @@ function AppLayout() {
       <NavBar />
       <SideBar />
       <FooterComponent />
-      <div className=" ml-[300px] mt-[100px] mr-[30px]">
+      <div className=" ml-[300px] mt-[100px] mr-[30px] mb-[100px]">
         <Outlet />
       </div>
     </div>

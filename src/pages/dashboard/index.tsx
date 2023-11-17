@@ -8,7 +8,7 @@ import { GiSkeleton } from "react-icons/gi";
 import { FaUserDoctor } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
-import Loader from '../../components/ui/loader'
+// import Loader from '../../components/ui/loader'
 
 interface DashboardCardProps {
   to: string;
@@ -42,9 +42,9 @@ function Dashboard() {
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-          <h1 className="text-4xl font-bold mb-4">Welcome to Your Dashboard</h1>
+          <h1 className="text-4xl font-bold mb-4"> 👋 Welcome Prof. Kenneth Igbenedion</h1>
           <p className="text-lg">
-            Explore the amazing features of your dashboard.
+            Today is a great day to save lives, continue where you left off 💉🩺💊.
           </p>
         </div>
       </div>
@@ -74,7 +74,7 @@ function Dashboard() {
           title="Settings"
         />
       </div>
-      <Loader/>
+      {/* <Loader/> */}
     </div>
   );
 }

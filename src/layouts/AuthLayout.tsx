@@ -18,7 +18,6 @@ function AuthLayout() {
             <input
               id="username"
               className="w-[300px]"
-              placeholder="name@company.com"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               required
@@ -28,7 +27,7 @@ function AuthLayout() {
             <div className="mb-2 block">
               <Label htmlFor="password" value="Your password" />
             </div>
-            <input id="password" type="password" className="w-[300px]" required placeholder="P@$$word"/>
+            <input id="password" type="password" className="w-[300px]" required/>
           </div>
           <div className="flex justify-between">
             <a
