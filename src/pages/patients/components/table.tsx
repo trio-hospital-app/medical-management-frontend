@@ -142,12 +142,12 @@ const data = [
 ];
 
 function PatientTable() {
-  // const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+//   const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
 
   const navigate = useNavigate();
 
   const handleRowClick = (patientId: number) => {
-    navigate(`/patient/${patientId}`);
+    navigate(`/patients/${patientId}`);
   };
 
   return (
