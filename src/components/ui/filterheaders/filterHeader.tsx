@@ -19,7 +19,7 @@ function FilterHeader({ children, title, buttonTitle, resetFilter, search }: Fil
           </span>
       </div>
 
-      <div className="p-3">{children}</div>
+      <div className="py-3">{children}</div>
 
       <div className="w-full pt-2 border-t">
         <div className="w-[20%] flex items-center justify-between">
