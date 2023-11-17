@@ -7,11 +7,13 @@ interface Patient {
   firstName: string;
   lastName: string;
   patientId: string | number;
+  orderDate: any;
   labId: string | number;
   labUnit: string | number;
   patientName: string;
   specimenType: string;
   status: any;
+  color?: any;
 }
 
 const columns = [
@@ -19,36 +21,81 @@ const columns = [
     name: "Patient Name",
     selector: (row: Patient) => row.patientName,
     sortable: true,
+      width: "10rem",
+
   },
   {
     name: "Patient ID",
     selector: (row: Patient) => row.patientId,
     sortable: true,
+      width: "10rem",
+
+  },
+  {
+    name: "Order Date",
+    selector: (row: Patient) => row.orderDate,
+    sortable: true,
+      width: "10rem",
+
   },
   {
     name: "Lab ID",
     selector: (row: Patient) => row.labId,
     sortable: true,
+      width: "10rem",
+
   },
   {
     name: "Lab Unit",
     selector: (row: Patient) => row.labUnit,
     sortable: true,
+      width: "10rem",
+
   },
   {
     name: "Specimen Type",
-    selector: (row: Patient) => row.specimenType,
+    selector: (row: Patient) => (
+      <div className="flex items-center">
+        <div
+          style={{
+            width: "1.5rem",
+            height: "1.5rem",
+            borderRadius: "50%",
+            marginRight: "8px",
+            backgroundColor: row.color,
+          }}
+        ></div>
+        {row.specimenType}
+      </div>
+    ),
     sortable: true,
+    width: "10rem",
   },
+
   {
     name: "Status",
-    selector: (row: Patient) => row.status,
+    selector: (row: Patient) => (
+      <div className={` px-5 py-3 rounded-[1rem] cursor-pointer text-white w-[10rem]  text-center border ${
+        row.status === "Take Specimen"
+          ? "bg-yellow-500 hover:bg-yellow-600"
+          : row.status === "Receive Specimen"
+          ? "bg-blue-500 hover:bg-blue-600"
+          : row.status === "Awaiting Specimen"
+          ? "bg-green-500 hover:bg-green-600"
+          : row.status === "Final Result"
+          ? "bg-red-500 hover:bg-red-600"
+          : ""
+      }`}
+      >
+        {row.status}
+      </div>
+    ),
     sortable: true,
+    width: "15rem",
   },
   {
-    name: "Actions",
     cell: (row: Patient) => (
-      <Dropdown arrowIcon={false} inline label={<BsThreeDotsVertical />}>
+      <Dropdown arrowIcon={false} inline label={<BsThreeDotsVertical />} >
         <Dropdown.Item>Order Laboratory</Dropdown.Item>
         <Dropdown.Item>Order Radiology</Dropdown.Item>
         <Dropdown.Item>Order Pharmacy</Dropdown.Item>
@@ -56,286 +103,83 @@ const columns = [
       </Dropdown>
     ),
     sortable: false,
+      width: "20%",
+
   },
 ];
 
+const getRandomColor = () => {
+  // Generate a random hex color code
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+};
 
 const data: Patient[] = [
   {
     id: 1,
     firstName: "John",
     lastName: "Doe",
-    patientId: "P001",
-    labId: "L001",
+    patientId: "P001sus8sj",
+    orderDate: "2021-09-01",
+    labId: "L0019sje7e",
     labUnit: "mg/dL",
     patientName: "John Doe",
     specimenType: "Blood",
-    status: "Active",
+    status: "Take Specimen",
+    color: getRandomColor(),
   },
   {
     id: 2,
     firstName: "Jane",
     lastName: "Smith",
-    patientId: 1002,
-    labId: 2002,
+    patientId: '2jdhd84ne9',
+    orderDate: "2021-09-03",
+    labId: '3jj388eiw0',
     labUnit: "mmol/L",
     patientName: "Jane Smith",
     specimenType: "Urine",
-    status: "Inactive",
+    status: "Receive Specimen",
+    color: getRandomColor(),
   },
   {
     id: 3,
     firstName: "Alice",
     lastName: "Johnson",
-    patientId: "P003",
-    labId: 3003,
+    patientId: "P003s7sjsu",
+    orderDate: "2021-09-05",
+    labId: '32ekd0dle8',
     labUnit: "g/L",
     patientName: "Alice Johnson",
     specimenType: "Saliva",
-    status: "Active",
+    status: "Awaiting Specimen",
+    color: getRandomColor(),
   },
   {
     id: 4,
     firstName: "Bob",
     lastName: "Williams",
-    patientId: 1004,
-    labId: "L004",
+    patientId: 'ksos9skrhi004',
+    orderDate: "2021-09-07",
+    labId: "L0048sksoe",
     labUnit: 75,
     patientName: "Bob Williams",
     specimenType: "Hair",
-    status: "Inactive",
+    status: "Final Result",
+    color: getRandomColor(),
   },
   {
     id: 5,
     firstName: "Eva",
     lastName: "Anderson",
-    patientId: "P005",
-    labId: "L005",
+    patientId: "P009lkdid9005",
+    orderDate: "2021-09-09",
+    labId: "Lhdhjsdks094030305",
     labUnit: "mg/dL",
     patientName: "Eva Anderson",
     specimenType: "Blood",
-    status: "Active",
+    status: "Take Specimen",
+    color: getRandomColor(),
   },
-  {
-    id: 6,
-    firstName: "David",
-    lastName: "Brown",
-    patientId: 1006,
-    labId: 2006,
-    labUnit: "mmol/L",
-    patientName: "David Brown",
-    specimenType: "Urine",
-    status: "Inactive",
-  },
-  {
-    id: 7,
-    firstName: "Grace",
-    lastName: "Miller",
-    patientId: "P007",
-    labId: 3007,
-    labUnit: "g/L",
-    patientName: "Grace Miller",
-    specimenType: "Saliva",
-    status: "Active",
-  },
-  {
-    id: 8,
-    firstName: "Charlie",
-    lastName: "Jones",
-    patientId: 1008,
-    labId: "L008",
-    labUnit: 80,
-    patientName: "Charlie Jones",
-    specimenType: "Hair",
-    status: "Inactive",
-  },
-  {
-    id: 9,
-    firstName: "Sophia",
-    lastName: "Wilson",
-    patientId: "P009",
-    labId: "L009",
-    labUnit: "mg/dL",
-    patientName: "Sophia Wilson",
-    specimenType: "Blood",
-    status: "Active",
-  },
-  {
-    id: 10,
-    firstName: "Henry",
-    lastName: "Davis",
-    patientId: 1010,
-    labId: 2010,
-    labUnit: "mmol/L",
-    patientName: "Henry Davis",
-    specimenType: "Urine",
-    status: "Inactive",
-  },
-  {
-    id: 11,
-    firstName: "Olivia",
-    lastName: "Moore",
-    patientId: "P011",
-    labId: 3011,
-    labUnit: "g/L",
-    patientName: "Olivia Moore",
-    specimenType: "Saliva",
-    status: "Active",
-  },
-  {
-    id: 12,
-    firstName: "Daniel",
-    lastName: "Taylor",
-    patientId: 1012,
-    labId: "L012",
-    labUnit: 85,
-    patientName: "Daniel Taylor",
-    specimenType: "Hair",
-    status: "Inactive",
-  },
-  {
-    id: 13,
-    firstName: "Emma",
-    lastName: "Hill",
-    patientId: "P013",
-    labId: "L013",
-    labUnit: "mg/dL",
-    patientName: "Emma Hill",
-    specimenType: "Blood",
-    status: "Active",
-  },
-  {
-    id: 14,
-    firstName: "Jackson",
-    lastName: "Adams",
-    patientId: 1014,
-    labId: 2014,
-    labUnit: "mmol/L",
-    patientName: "Jackson Adams",
-    specimenType: "Urine",
-    status: "Inactive",
-  },
-  {
-    id: 15,
-    firstName: "Ava",
-    lastName: "Baker",
-    patientId: "P015",
-    labId: 3015,
-    labUnit: "g/L",
-    patientName: "Ava Baker",
-    specimenType: "Saliva",
-    status: "Active",
-  },
-  {
-    id: 16,
-    firstName: "Noah",
-    lastName: "Carter",
-    patientId: 1016,
-    labId: "L016",
-    labUnit: 90,
-    patientName: "Noah Carter",
-    specimenType: "Hair",
-    status: "Inactive",
-  },
-  {
-    id: 17,
-    firstName: "Sophie",
-    lastName: "Evans",
-    patientId: "P017",
-    labId: "L017",
-    labUnit: "mg/dL",
-    patientName: "Sophie Evans",
-    specimenType: "Blood",
-    status: "Active",
-  },
-  {
-    id: 18,
-    firstName: "Liam",
-    lastName: "Fisher",
-    patientId: 1018,
-    labId: 2018,
-    labUnit: "mmol/L",
-    patientName: "Liam Fisher",
-    specimenType: "Urine",
-    status: "Inactive",
-  },
-  {
-    id: 19,
-    firstName: "Chloe",
-    lastName: "Grant",
-    patientId: "P019",
-    labId: 3019,
-    labUnit: "g/L",
-    patientName: "Chloe Grant",
-    specimenType: "Saliva",
-    status: "Active",
-  },
-  {
-    id: 20,
-    firstName: "Mason",
-    lastName: "Harris",
-    patientId: 1020,
-    labId: "L020",
-    labUnit: 95,
-    patientName: "Mason Harris",
-    specimenType: "Hair",
-    status: "Inactive",
-  },
-  {
-    id: 21,
-    firstName: "Zoe",
-    lastName: "Ingram",
-    patientId: "P021",
-    labId: "L021",
-    labUnit: "mg/dL",
-    patientName: "Zoe Ingram",
-    specimenType: "Blood",
-    status: "Active",
-  },
-  {
-    id: 22,
-    firstName: "Ethan",
-    lastName: "James",
-    patientId: 1022,
-    labId: 2022,
-    labUnit: "mmol/L",
-    patientName: "Ethan James",
-    specimenType: "Urine",
-    status: "Inactive",
-  },
-  {
-    id: 23,
-    firstName: "Mia",
-    lastName: "Kelly",
-    patientId: "P023",
-    labId: 3023,
-    labUnit: "g/L",
-    patientName: "Mia Kelly",
-    specimenType: "Saliva",
-    status: "Active",
-  },
-  {
-    id: 24,
-    firstName: "Logan",
-    lastName: "Lee",
-    patientId: 1024,
-    labId: "L024",
-    labUnit: 100,
-    patientName: "Logan Lee",
-    specimenType: "Hair",
-    status: "Inactive",
-  },
-  {
-    id: 25,
-    firstName: "Aria",
-    lastName: "Martin",
-    patientId: "P025",
-    labId: "L025",
-    labUnit: "mg/dL",
-    patientName: "Aria Martin",
-    specimenType: "Blood",
-    status: "Active",
-  },
+
 ];
 
 function PatientTable() {
