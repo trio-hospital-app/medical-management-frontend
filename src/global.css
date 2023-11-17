@@ -113,11 +113,18 @@ footer{
 
 .dark\:bg-gray-700{
   background: white !important;
+  color: black;
 }
 .dark\:text-white{
-  color: gray !important;
+  color: black !important;
+}
+
+.custom-bg-black nav div div ul li a span {
+  color: white;
+  font-size: 16px;
 }
 
 .dark\:border-gray-600 {
   border: 0px;
+  color: black;
 }
