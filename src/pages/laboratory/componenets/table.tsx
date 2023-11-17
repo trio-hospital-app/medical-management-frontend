@@ -40,7 +40,7 @@ const columns = [
   {
     name: "Patient Name",
     cell: (row: Patient) => (
-      <div className="text-left w-[15rem]">{row.patientName}</div>
+      <div className="text-left">{row.patientName}</div>
     ),
     sortable: true,
   },
@@ -48,25 +48,24 @@ const columns = [
     name: "Patient ID",
     selector: (row: Patient) => row.patientId,
     sortable: true,
-    width: "9rem",
   },
   {
     name: "Order Date",
     selector: (row: Patient) => row.orderDate,
     sortable: true,
-    width: "full",
+    // width: "full",
   },
   {
     name: "Lab ID",
     selector: (row: Patient) => row.labId,
     sortable: true,
-    width: "9rem",
+    // width: "9rem",
   },
   {
     name: "Lab Unit",
     selector: (row: Patient) => row.labUnit,
     sortable: true,
-    width: "6rem",
+    // width: "6rem",
   },
   {
     name: "Panel Name",
@@ -78,14 +77,14 @@ const columns = [
     name: "Specimen Type",
     cell: (row: Patient) => getSpecimenTypeContent(row),
     sortable: true,
-    grow: 2,
+    grow: 3,
   },
 
   {
     name: "Status",
     selector: (row: Patient) => (
       <div
-        className={` px-5 py-3 rounded-[1rem] text-white w-[10rem]  text-center border ${
+        className={` px-1 py-3 rounded-[1rem] text-white w-[8rem]  text-center border ${
           row.status === "Take Specimen"
             ? "bg-yellow-500 hover:bg-yellow-600"
             : row.status === "Receive Specimen"
@@ -101,14 +100,15 @@ const columns = [
       </div>
     ),
     sortable: true,
-    width: "12rem",
+    width: "11rem",
   },
-  {
-    cell: (row: Patient) => (
-      <MdOutlineCancel onClick={() => handleRowDelete(row)} />
-    ),
-    sortable: false,
-  },
+  // {
+  //   cell: (row: Patient) => (
+  //     <MdOutlineCancel onClick={() => handleRowDelete(row)} className='border border-red-300' />
+  //   ),
+  //   sortable: false,
+  //   width: "1rem",
+  // },
 ];
 
 const getRandomColor = () => {
