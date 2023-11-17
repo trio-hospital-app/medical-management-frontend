@@ -72,9 +72,10 @@ input{
 
 .rdt_TableRow{
   border: 0px !important;
-  background-color: #e7eaf8 !important;
+  background-color: #ebeefc !important;
   margin: 1px 0px;
-  border: .5px solid #cad2f7 !important;
+  border: .5px solid #6676c0 !important;
+  cursor: pointer;
 }
 
 .rdt_TableRow:hover{
