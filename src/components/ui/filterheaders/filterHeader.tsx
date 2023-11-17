@@ -10,11 +10,11 @@ interface FilterHeaderProps {
 
 function FilterHeader({ children, title, buttonTitle, resetFilter, search }: FilterHeaderProps) {
   return (
-    <div className="bg-white px-5 py-3 rounded-[.5rem] shadow">
+    <div className="bg-white px-10 py-4 rounded-[.5rem] shadow">
       <div className="flex items-center justify-between pb-2 border-b">
         <span className="text-xl font-bold">{title}</span>
         <span
-            className="border bg-ha-primary1 rounded-[1rem] w-[200px] h-10 flex items-center justify-center font-bold text-white cursor-pointer hover:bg-blue-600"
+            className="border bg-ha-primary1 rounded-[1rem] w-[auto] py-2 px-5 flex items-center justify-center font-bold text-white cursor-pointer hover:bg-blue-600"
             onClick={search}
           >
            {buttonTitle}
