@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Button, Modal } from "flowbite-react";
+import { Modal } from "flowbite-react";
 
 interface BasicModalProps {
   children: ReactNode;
