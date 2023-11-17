@@ -15,10 +15,12 @@
     "flowbite-react": "^0.6.4",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
+    "react-data-table-component": "^7.5.4",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
     "react-multi-select-component": "^4.3.4",
     "react-router-dom": "^6.18.0",
+    "styled-components": "^6.1.1",
     "tailwindcss": "^3.3.5"
   },
   "devDependencies": {

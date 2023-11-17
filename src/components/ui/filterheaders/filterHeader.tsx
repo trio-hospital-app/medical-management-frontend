@@ -8,7 +8,7 @@ interface FilterHeaderProps {
 
 function FilterHeader({ children, title, buttonTitle, resetFilter, search }: FilterHeaderProps) {
   return (
-    <div className="bg-white px-10 py-4 rounded-[.5rem] shadow">
+    <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
       <div className="flex items-center justify-between pb-2 border-b">
         <span className="text-xl font-bold">{title}</span>
         <span
