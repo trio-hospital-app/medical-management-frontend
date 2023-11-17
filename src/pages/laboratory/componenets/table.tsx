@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
-import { Dropdown } from "flowbite-react";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdOutlineCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 interface Patient {
   id: number;
@@ -16,6 +16,10 @@ interface Patient {
   color?: any;
   panelName?: string;
 }
+
+const handleRowDelete = (row: Patient) => {
+  console.log(row);
+};
 
 const getSpecimenTypeContent = (row: Patient) => (
   <div className="flex items-center">
@@ -36,9 +40,7 @@ const columns = [
   {
     name: "Patient Name",
     cell: (row: Patient) => (
-      <div className="text-left w-[20rem]">
-        {row.patientName}
-      </div>
+      <div className="text-left w-[15rem]">{row.patientName}</div>
     ),
     sortable: true,
   },
@@ -65,7 +67,6 @@ const columns = [
     selector: (row: Patient) => row.labUnit,
     sortable: true,
     width: "6rem",
-
   },
   {
     name: "Panel Name",
@@ -78,14 +79,13 @@ const columns = [
     cell: (row: Patient) => getSpecimenTypeContent(row),
     sortable: true,
     grow: 2,
-    
   },
 
   {
     name: "Status",
     selector: (row: Patient) => (
       <div
-        className={` px-5 py-3 rounded-[1rem] cursor-pointer text-white w-[10rem]  text-center border ${
+        className={` px-5 py-3 rounded-[1rem] text-white w-[10rem]  text-center border ${
           row.status === "Take Specimen"
             ? "bg-yellow-500 hover:bg-yellow-600"
             : row.status === "Receive Specimen"
@@ -105,15 +105,9 @@ const columns = [
   },
   {
     cell: (row: Patient) => (
-      <Dropdown arrowIcon={false} inline label={<BsThreeDotsVertical />}>
-        <Dropdown.Item>Order Laboratory</Dropdown.Item>
-        <Dropdown.Item>Order Radiology</Dropdown.Item>
-        <Dropdown.Item>Order Pharmacy</Dropdown.Item>
-        <Dropdown.Item>Order OPD</Dropdown.Item>
-      </Dropdown>
+      <MdOutlineCancel onClick={() => handleRowDelete(row)} />
     ),
     sortable: false,
-  
   },
 ];
 
@@ -197,9 +191,17 @@ const data: Patient[] = [
 ];
 
 function PatientTable() {
+  const navigate = useNavigate();
+  const handleRowClick = (patientId: number) => {
+    navigate(`/laboratory/${patientId}`);
+  };
   return (
     <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
-      <DataTable columns={columns} data={data} />
+      <DataTable
+        columns={columns}
+        data={data}
+        onRowClicked={(row) => handleRowClick(row.id)}
+      />
     </div>
   );
 }

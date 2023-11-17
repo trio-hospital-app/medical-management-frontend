@@ -1,8 +1,8 @@
 import { useState } from "react";
-import PatientInfoHeader from "../../components/patientInfoHeader";
-import BasicModal from "../../components/ui/modals/basicModal";
+import PatientInfoHeader from "../../../components/patientInfoHeader";
+import BasicModal from "../../../components/ui/modals/basicModal";
 
-function PatientId() {
+function TakeSpecimen() {
   const [openModal, setOpenModal] = useState(false);
 
   const handleclick = () => {
@@ -28,4 +28,4 @@ function PatientId() {
   );
 }
 
-export default PatientId;
+export default TakeSpecimen;
