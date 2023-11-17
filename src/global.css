@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 html {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
@@ -58,13 +59,13 @@ body {
   color: white;
 }
 
-input{
+input {
   background-color: #e1dafa !important;
   border: 0.5px solid #cbc1f1 !important;
   padding: 10px !important;
 }
 
-footer{
+footer {
   padding: 0px !important;
   border-radius: 0px !important;
   background-color: black !important;
