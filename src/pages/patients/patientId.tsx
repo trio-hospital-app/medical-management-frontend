@@ -11,7 +11,7 @@ function PatientId() {
         setOpenModal={() => {
           true;
         }}
-        cancelTitle='Reject'
+        cancelTitle='cancel'
         openModal={true}
         showCancelButton={true}
         submitTitle="shdcdhcbdh"

@@ -1,39 +1,55 @@
-import React, { ReactNode } from 'react';
-import { Button, Modal } from 'flowbite-react';
+import React, { ReactNode } from "react";
+import { Button, Modal } from "flowbite-react";
 
 interface BasicModalProps {
   children: ReactNode;
-  title: string,
+  title: string;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   openModal: boolean;
   submitTitle: string;
-  showCancelButton?:boolean;
-  showSubmitButton?:boolean;
+  showCancelButton?: boolean;
+  showSubmitButton?: boolean;
   cancelTitle: string;
 }
 
-function BasicModal({ children, title, setOpenModal, openModal, cancelTitle, submitTitle, showCancelButton, showSubmitButton }: BasicModalProps) {
+function BasicModal({
+  children,
+  title,
+  setOpenModal,
+  openModal,
+  cancelTitle,
+  submitTitle,
+  showCancelButton,
+  showSubmitButton,
+}: BasicModalProps) {
   return (
-    <>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
+    <div className="basicModal">
+      <Modal show={openModal} color-white onClose={() => setOpenModal(false)}>
         <Modal.Header>{title}</Modal.Header>
 
-        <Modal.Body>
-          <div className="space-y-6">{children}</div>
-        </Modal.Body>
+        <div className="space-y-6 border">{children}</div>
 
         <Modal.Footer>
+          {showCancelButton && (
+            <span
+              className="border border-red-500 text-red-500 px-5 py-2 rounded-md bg-red-100 cursor-pointer hover:bg-red-200 "
+              onClick={() => setOpenModal(false)}
+            >
+              {cancelTitle}
+            </span>
+          )}
 
-          {showSubmitButton && <Button onClick={() => setOpenModal(false)}>{submitTitle}</Button>}
-
-          { showCancelButton && <Button color="gray" onClick={() => setOpenModal(false)}>
-            {cancelTitle}
-          </Button>}
-          
+          {showSubmitButton && (
+            <span
+              className="border bg-blue-500 px-5 py-2 rounded-md cursor-pointer hover:bg-blue-400 text-white"
+              onClick={() => setOpenModal(false)}
+            >
+              {submitTitle}
+            </span>
+          )}
         </Modal.Footer>
-
       </Modal>
-    </>
+    </div>
   );
 }
 

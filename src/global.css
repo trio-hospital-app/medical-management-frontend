@@ -109,3 +109,15 @@ footer{
   padding-right: 20px !important;
   height: 100%;
 }
+
+
+.dark\:bg-gray-700{
+  background: white !important;
+}
+.dark\:text-white{
+  color: gray !important;
+}
+
+.dark\:border-gray-600 {
+  border: 0px;
+}
