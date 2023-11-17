@@ -3,14 +3,14 @@ import { Avatar, Dropdown } from "flowbite-react";
 function PatientInfoHeader() {
   return (
     <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
-      <div className="flex items-center justify-between border-b">
+      <div className="flex md:flex-row flex-col md:items-center justify-between border-b">
         <div className="flex items-start justify-center flex-col">
-          <span className="text-xl font-bold">Mr. Fredrick Luguard</span>
+          <span className="md:text-xl font-bold text-bold">Mr. Fredrick Luguard</span>
           <span className="text-ha-primary1">12345667778</span>
         </div>
         <div>
           <Dropdown inline label={"Actions"}>
-          <Dropdown.Item>View Patient Details</Dropdown.Item>
+            <Dropdown.Item>View Patient Details</Dropdown.Item>
             <Dropdown.Item>Book Appointment</Dropdown.Item>
             <Dropdown.Item>Make Deposit</Dropdown.Item>
             <Dropdown.Item onClick={() => "new function"}>Edit</Dropdown.Item>
@@ -19,7 +19,7 @@ function PatientInfoHeader() {
           </Dropdown>
         </div>
       </div>
-      <div className="flex items-start justify-between mt-5">
+      <div className="flex flex-col md:flex-row  md:items-start justify-between mt-5">
         <div>
           <Avatar
             alt="User settings"

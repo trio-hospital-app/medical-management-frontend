@@ -41,14 +41,14 @@ function Dashboard() {
           />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-          <h1 className="text-4xl font-bold mb-4"> 👋 Welcome Prof. Kenneth Igbenedion</h1>
-          <p className="text-lg">
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white ml-3">
+          <h1 className="md:text-4xl text-xl font-bold mb-4"> 👋 Welcome Prof. Kenneth Igbenedion</h1>
+          <p className="md:text-lg">
             Today is a great day to save lives, continue where you left off 💉🩺💊.
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10 bg-white p-10 rounded-[1rem]">
+      <div className="grid md:grid-cols-4 gap-6 mt-10 bg-white p-10 rounded-[1rem]">
         <DashboardCard
           to="/dashboard"
           icon={<MdDashboard />}

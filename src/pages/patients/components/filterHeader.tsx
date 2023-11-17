@@ -9,38 +9,38 @@ function Patients() {
         resetFilter={() => "hello"}
         search={() => "i am a function"}
       >
-        <form className="flex flex-wrap gap-2">
-          <div className="w-[24%]">
+        <form className="grid md:grid-cols-4 flex-wrap gap-2">
+          <div className="">
             <div className=" block">
               <label htmlFor="patientid">Patient ID</label>
             </div>
             <input id="patientid" className="w-full" required />
           </div>
-          <div className="w-[24%]">
+          <div className="">
             <div className=" block">
               <label htmlFor="firstName">First Name</label>
             </div>
             <input id="firstName" className="w-full" required />
           </div>
-          <div className="w-[24%]">
+          <div className="">
             <div className="block">
               <label htmlFor="lastName">Last Name</label>
             </div>
             <input id="lastName" required className="w-full" />
           </div>
-          <div className="w-[24%]">
+          <div className="">
             <div className="block">
               <label htmlFor="dob">Date Of Birth</label>
             </div>
             <input type="date" id="dob" name="dob" className="w-full" />
           </div>
-          <div className="w-[24%]">
+          <div className="]">
             <div className="block">
               <label htmlFor="phoneNumber">Phone Number</label>
             </div>
             <input id="phoneNumber" className="w-full" type="number" required />
           </div>
-          <div className="w-[24%]">
+          <div className="">
             <div className=" block">
               <label htmlFor="gender">Gender</label>
             </div>

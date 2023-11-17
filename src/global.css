@@ -5,6 +5,7 @@
 html {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 * {
@@ -126,7 +127,11 @@ footer{
 
 .dark\:bg-gray-700{
   background: white !important;
+  color: black !important;
 }
+/* .dark\:bg-gray-700{
+  background: white !important;
+} */
 .dark\:text-white{
   color: black !important;
 }
@@ -137,4 +142,16 @@ footer{
 .dark\:border-gray-600 {
   border: 0px;
   color: black;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .custom-bg-black {
+    width:50px !important;
+  }
+  .custom-bg-black nav div {
+    width: 50px !important;
+  }
 }

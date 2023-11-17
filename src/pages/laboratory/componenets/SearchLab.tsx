@@ -46,8 +46,8 @@ const SearchLab = () => {
         resetFilter={resetHandler}
         search={searchHandler}
       >
-        <form className="flex flex-wrap gap-2">
-          <div className="w-[24%]">
+        <form className="grid md:grid-cols-4 gap-2">
+          <div className="">
             <div className=" block">
               <label htmlFor="patientid">Service Center</label>
             </div>
@@ -60,7 +60,7 @@ const SearchLab = () => {
               placeholder="Select Service Center"
             />
           </div>
-          <div className="w-[24%]">
+          <div className="">
             <div className=" block">
               <label htmlFor="patientid">Lab Center</label>
             </div>
@@ -73,7 +73,7 @@ const SearchLab = () => {
               placeholder="Select Lab Center"
             />
           </div>
-          <div className="w-[24%]">
+          <div className="">
             <div className=" block">
               <label htmlFor="patientid">Status</label>
             </div>
@@ -86,7 +86,7 @@ const SearchLab = () => {
               placeholder="Select Status"
             />
           </div>
-          <div className="w-[24%]">
+          <div className="">
             <div className="mb-2 block">
               <label htmlFor="username">Patient ID / Name</label>
             </div>

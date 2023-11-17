@@ -16,28 +16,28 @@ function SideBar() {
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Sidebar.Item as={Link} to="/dashboard" icon={MdDashboard}>
-              Dashboard
+              <span className="hidden lg:flex">Dashboard</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/patients" icon={IoIosPeople}>
-              Patients
+              <span className="hidden lg:flex">Patients</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/opd" icon={FaUserDoctor}>
-              OPD
+              <span className="hidden lg:flex">OPD</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/laboratory" icon={MdBloodtype}>
-              Laboratory
+              <span className="hidden lg:flex">Laboratory</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/radiology" icon={GiSkeleton}>
-              Radiology
+              <span className="hidden lg:flex">Radiology</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/pharmacy" icon={GiMedicines}>
-              Pharmacy
+              <span className="hidden lg:flex">Pharmacy</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
-              Nursing
+              <span className="hidden lg:flex">Nursing</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/settings" icon={IoMdSettings}>
-              Settings
+              <span className="hidden lg:flex">Settings</span>
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>

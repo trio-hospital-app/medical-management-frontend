@@ -22,7 +22,7 @@ function NavBar() {
           rounded
           bordered
         />
-        <div className="flex flex-col items-start justify-center mx-5 !important">
+        <div className="md:flex hidden flex-col items-start justify-center mx-5">
           <span className="font-semibold text-ha-primary1">
             Prof. Kenneth Igbenedion
           </span>
