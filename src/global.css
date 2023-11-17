@@ -50,6 +50,9 @@ body {
 .custom-bg-black nav div div ul li a svg {
   color: white;
 }
+.custom-bg-black nav div div ul li a span {
+  color: white !important;
+}
 .custom-bg-black nav div div ul li a {
   border-bottom: white;
 }
@@ -123,9 +126,13 @@ footer{
   background: white !important;
 }
 .dark\:text-white{
-  color: gray !important;
+  color: black !important;
 }
 
+.dark\:text-gray-200 {
+  color: black !important; 
+}
 .dark\:border-gray-600 {
   border: 0px;
+  color: black;
 }
