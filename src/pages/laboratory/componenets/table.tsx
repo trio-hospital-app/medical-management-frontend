@@ -3,11 +3,17 @@ import { useState } from "react";
 import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
+import TakeSpecimen from "./modal/takeSpecimen";
 
 function PatientTable() {
   const [takeSpecimen, setTakeSpecimen] = useState(false);
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
   const [awaitingApproval, setAwaitingApproval] = useState(false);
+
+  const handleTakeSpecime = () => {
+    console.log("take specimen");
+    setTakeSpecimen(false);
+  }
 
   interface Patient {
     id: number;
@@ -214,17 +220,20 @@ function PatientTable() {
       <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
         <DataTable columns={columns} data={data} />
       </div>
-      // take specimen modal
+
+      {/* // take specimen modal */}
       <BasicModal
         title="Take Specimen"
         setOpenModal={setTakeSpecimen}
         cancelTitle="cancel"
         openModal={takeSpecimen}
         showCancelButton={true}
-        submitTitle="shdcdhcbdh"
+        submitTitle="Save"
         showSubmitButton={true}
+        style={{ width: "100%", height: "1/2"}} 
+        submitHandler={handleTakeSpecime}
       >
-        Take specimen
+       <TakeSpecimen/>
       </BasicModal>
 
       {/* // receive specimen modal */}
@@ -234,7 +243,7 @@ function PatientTable() {
         cancelTitle="cancel"
         openModal={receiveSpecimen}
         showCancelButton={true}
-        submitTitle="shdcdhcbdh"
+        submitTitle="Save"
         showSubmitButton={true}
       >
         Receive specimen
@@ -243,11 +252,12 @@ function PatientTable() {
       <BasicModal
         title="Awaiting Approval"
         setOpenModal={setAwaitingApproval}
-        cancelTitle="cancel"
+        cancelTitle="Reject"
         openModal={awaitingApproval}
         showCancelButton={true}
-        submitTitle="shdcdhcbdh"
+        submitTitle="Approve"
         showSubmitButton={true}
+
       >
         Awaiting Approval
       </BasicModal>
