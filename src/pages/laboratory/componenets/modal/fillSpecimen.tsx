@@ -14,7 +14,7 @@ function TakeSpecimen() {
     <>
       <div>
         <CustomLabHeader
-          patientName="Mr. Fredrick Luguard"
+          patientName="Mr. christopher Abraham"
           patientID="12345667778"
           testName="Full Blood Count"
           labID="12345667778"
@@ -120,7 +120,17 @@ function TakeSpecimen() {
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className="px-4">
+
+          {/* fill form are  */}
+
+          <div className="px-4">
+            <div className="bg-ha-primary2 px-4 py-3 font-bold rounded-[.3rem]">
+                <h1>Full Blood Couunt</h1>
+            </div>
+            
+          </div>
+
+      {/* <div className="px-4">
         <span className="font-bold">Add Comment</span>
         <TextareaAutosize
           minRows={3}
@@ -130,7 +140,7 @@ function TakeSpecimen() {
           value={formData}
           maxRows={5}
         />
-      </div>
+      </div> */}
     </>
   );
 }

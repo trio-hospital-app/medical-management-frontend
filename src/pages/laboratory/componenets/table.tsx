@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import TakeSpecimen from "./modal/takeSpecimen";
+import FillSpecimen from "./modal/fillSpecimen";
 
 interface Patient {
   id: number;
@@ -203,7 +204,7 @@ function PatientTable() {
   const handleTakeSpecime = () => {
     console.log("take specimen");
     setTakeSpecimen(false);
-  }
+  };
 
   interface Patient {
     id: number;
@@ -420,15 +421,15 @@ function PatientTable() {
         showCancelButton={true}
         submitTitle="Save"
         showSubmitButton={true}
-        style={{ width: "100%", height: "1/2"}} 
+        style={{ width: "100%", height: "1/2" }}
         submitHandler={handleTakeSpecime}
       >
-       <TakeSpecimen/>
+        <TakeSpecimen />
       </BasicModal>
 
       {/* // receive specimen modal */}
       <BasicModal
-        title="Receive Specimen"
+        title="Fill Result"
         setOpenModal={setReceiveSpecimen}
         cancelTitle="cancel"
         openModal={receiveSpecimen}
@@ -436,8 +437,9 @@ function PatientTable() {
         submitTitle="Save"
         showSubmitButton={true}
       >
-        Receive specimen
+        <FillSpecimen />
       </BasicModal>
+
       {/* // awaiting specimen modal */}
       <BasicModal
         title="Awaiting Approval"
@@ -447,7 +449,6 @@ function PatientTable() {
         showCancelButton={true}
         submitTitle="Approve"
         showSubmitButton={true}
-
       >
         Awaiting Approval
       </BasicModal>

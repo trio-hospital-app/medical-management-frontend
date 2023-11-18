@@ -32,11 +32,21 @@ function BasicModal({
   };
 
   return (
-    <div className="basicModal">
-      <Modal show={openModal} dismissible color-white onClose={() => setOpenModal(false)} style={style}>
-        <Modal.Header>{title}</Modal.Header>
+    <div className="basicModal" style={{ overflowY: "scroll" }}>
+      <Modal
+        show={openModal}
+        dismissible
+        color-white
+        onClose={() => setOpenModal(false)}
+        style={style}
+      >
+        <Modal.Header>
+          <p className="text-ha-primary1">{title}</p>
+        </Modal.Header>
 
-        <div className="space-y-6 border">{children}</div>
+        <div className="space-y-6 max-h-[40rem] overflow-y-scroll">
+          {children}
+        </div>
 
         <Modal.Footer>
           {showCancelButton && (
