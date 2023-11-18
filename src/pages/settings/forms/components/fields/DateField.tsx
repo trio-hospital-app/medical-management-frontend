@@ -6,18 +6,17 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ElementsType, FormElement, FormElementInstance, SubmitFunction } from "../FormElements";
 import useDesigner from "../hooks/useDesigner";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-
-import { cn } from "@/lib/utils";
+import { Input } from "../../../../../components/ui/input";
+import { Label } from "../../../../../components/ui/label";
+import { cn } from "../../../../../lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { BsFillCalendarDateFill } from "react-icons/bs";
-import { Button } from "../ui/button";
-import { Calendar } from "../ui/calendar";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Switch } from "../ui/switch";
+import { Button } from "../../../../../components/ui/button";
+import { Calendar } from "../../../../../components/ui/calendar";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../../../../components/ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "../../../../../components/ui/popover";
+import { Switch } from "../../../../../components/ui/switch";
 
 const type: ElementsType = "DateField";
 

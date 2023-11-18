@@ -1,4 +1,3 @@
-"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -6,11 +5,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ElementsType, FormElement, FormElementInstance } from "../FormElements";
 import useDesigner from "../hooks/useDesigner";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Input } from "../../../../../components/ui/input";
+import { Label } from "../../../../../components/ui/label";
 
 import { LuHeading2 } from "react-icons/lu";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../../components/ui/form";
 
 const type: ElementsType = "SubTitleField";
 

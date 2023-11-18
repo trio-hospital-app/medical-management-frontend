@@ -1,16 +1,15 @@
-"use client";
 
 import { ElementsType, FormElement, FormElementInstance } from "../FormElements";
-import { Label } from "../ui/label";
+import { Label } from "../../../../../components/ui/label";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import useDesigner from "../hooks/useDesigner";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../../components/ui/form";
 import { LuSeparatorHorizontal } from "react-icons/lu";
-import { Slider } from "../ui/slider";
+import { Slider } from "../../../../../components/ui/slider";
 
 const type: ElementsType = "SpacerField";
 

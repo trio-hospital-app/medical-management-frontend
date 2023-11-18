@@ -1,23 +1,22 @@
 "use client";
 
 import { ElementsType, FormElement, FormElementInstance, SubmitFunction } from "../FormElements";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "../../../../../components/ui/label";
+import { Input } from "../../../../../components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import useDesigner from "../hooks/useDesigner";
 import { RxDropdownMenu } from "react-icons/rx";
-
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Switch } from "../ui/switch";
-import { cn } from "@/lib/utils";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../../../../components/ui/form";
+import { Switch } from "../../../../../components/ui/switch";
+import { cn } from "../../../../../lib/utils";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../../components/ui/select";
+import { Separator } from "../../../../../components/ui/separator";
+import { Button } from "../../../../../components/ui/button";
 import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
-import { toast } from "../ui/use-toast";
+import { toast } from "../../../../../components/ui/use-toast";
 
 const type: ElementsType = "SelectField";
 
