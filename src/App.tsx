@@ -5,13 +5,13 @@ import PatientId from './pages/laboratory/componenets/takeSpecimen'
 import Laboratory from "./pages/laboratory";
 import Imaging from "./pages/imaging";
 import Pharmacy from "./pages/pharmacy";
-// import Settings from "./pages/settings";
 import OPD from "./pages/opd";
 import Nursing from "./pages/nursing";
 import NotFound from "./pages/NotFound";
 import AppLayout from "./layouts/AppLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import TakeSpecimen from "./pages/laboratory/componenets/takeSpecimen";
+import Forms from "./pages/settings/forms";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         <Route path="/radiology" element={<Imaging />} />
         <Route path="/pharmacy" element={<Pharmacy />} />
         <Route path="/nursing" element={<Nursing />} />
-        {/* <Route path="/settings" element={<Settings />} /> */}
+        <Route path="/settings/forms" element={<Forms />} />
       </Route>
 
       {/* 404 route */}
