@@ -11,12 +11,13 @@ interface TakeSpecimenProps {
   nationality: string;
   maritalStatus: string;
   age: string;
+  imgSrc?: string;
   orderedBy: string;
   orderedDate: string;
   testNameBackgroundColor?: string;
 }
 
-function LabHeader({
+function CustomLabHeader({
   patientName,
   patientID,
   testName,
@@ -27,6 +28,7 @@ function LabHeader({
   nationality,
   maritalStatus,
   age,
+  imgSrc,
   orderedBy,
   orderedDate,
   testNameBackgroundColor,
@@ -78,7 +80,10 @@ function LabHeader({
             <div>
               <Avatar
                 alt="User settings"
-                img="https://cdn-icons-png.flaticon.com/512/666/666201.png"
+                img={
+                  imgSrc ||
+                  "https://cdn-icons-png.flaticon.com/512/666/666201.png"
+                }
                 rounded
                 bordered
                 size="xl"
@@ -147,4 +152,4 @@ function LabHeader({
   );
 }
 
-export default LabHeader;
+export default CustomLabHeader;
