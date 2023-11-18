@@ -1,6 +1,8 @@
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
+import { useNavigate } from "react-router-dom";
 
 function Patients() {
+  const navigate = useNavigate()
   return (
     <div className="Patients">
       <FilterHeader
@@ -8,6 +10,7 @@ function Patients() {
         buttonTitle="Create New Patient"
         resetFilter={() => "hello"}
         search={() => "i am a function"}
+        handleCreate={()=> {navigate('/patients/new')}}
       >
         <form className="grid md:grid-cols-4 flex-wrap gap-2">
           <div className="">

@@ -1,4 +1,4 @@
-import { Sidebar } from "flowbite-react";
+import { Dropdown, Sidebar } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { MdBloodtype } from "react-icons/md";
 import { FaUserNurse } from "react-icons/fa";
@@ -36,8 +36,15 @@ function SideBar() {
             <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
               <span className="hidden lg:flex">Nursing</span>
             </Sidebar.Item>
-            <Sidebar.Item as={Link} to="/settings" icon={IoMdSettings}>
-              <span className="hidden lg:flex">Settings</span>
+            <Sidebar.Item icon={IoMdSettings}>
+              <span className="hidden lg:flex">
+                {" "}
+                <Dropdown arrowIcon={true} inline label="Settings">
+                  <Dropdown.Item as={Link} to="/settings/laborataory">Laboratory</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/settings/radiology">Radiology</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/settings/forms">Forms</Dropdown.Item>
+                </Dropdown>
+              </span>
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
