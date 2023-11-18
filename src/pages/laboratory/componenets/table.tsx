@@ -1,7 +1,6 @@
 import { Tooltip } from "flowbite-react";
 import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 interface Patient {
   id: number;
@@ -12,10 +11,10 @@ interface Patient {
   labId: string | number;
   labUnit: string | number;
   patientName: string;
-  specimenType: any;
+  specimenType?: any;
   status: any;
   color?: any;
-  panelName?: string;
+  panelName?: any;
 }
 
 const handleRowDelete = (row: Patient) => {
@@ -37,7 +36,7 @@ const getSpecimenTypeContent = (row: Patient) => (
   </div>
 );
 
-const columns = [
+const columns:any = [
   {
     name: "Patient Name",
     cell: (row: Patient) => <div className="text-left">{row.patientName}</div>,
@@ -70,13 +69,13 @@ const columns = [
     name: "Panel Name",
     selector: (row: Patient) => `${row.panelName}`,
     sortable: true,
-    width: "7rem",
+    width: "full",
   },
   {
     name: "Specimen Type",
     cell: (row: Patient) => getSpecimenTypeContent(row),
     sortable: true,
-    grow: 3,
+    grow: 2,
   },
   {
     name: "Status",
@@ -188,23 +187,14 @@ const data: Patient[] = [
     specimenType: "Blood",
     status: "Take Specimen",
     panelName: "Hepatitis B Panel",
-
     color: getRandomColor(),
   },
 ];
 
 function PatientTable() {
-  const navigate = useNavigate();
-  const handleRowClick = (patientId: number) => {
-    navigate(`/laboratory/${patientId}`);
-  };
   return (
     <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
-      <DataTable
-        columns={columns}
-        data={data}
-        onRowClicked={(row) => handleRowClick(row.id)}
-      />
+      <DataTable columns={columns} data={data} />
     </div>
   );
 }
