@@ -36,9 +36,23 @@ function SideBar() {
             <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
               <span className="hidden lg:flex">Nursing</span>
             </Sidebar.Item>
-            <Sidebar.Item as={Link} to="/settings" icon={IoMdSettings}>
+            {/* <Sidebar.Item as={Link} to="/settings" icon={IoMdSettings}>
               <span className="hidden lg:flex">Settings</span>
-            </Sidebar.Item>
+            </Sidebar.Item> */}
+            <Sidebar.Collapse icon={IoMdSettings} label="Settings">
+              <Sidebar.Item as={Link} to="/settings">
+                Laboratory
+              </Sidebar.Item>
+              <Sidebar.Item as={Link} to="/settings">
+                Radiology
+              </Sidebar.Item>
+              <Sidebar.Item as={Link} to="/settings">
+                Pharmarcy
+              </Sidebar.Item>
+              <Sidebar.Item as={Link} to="/settings/forms">
+                Form Creation
+              </Sidebar.Item>
+            </Sidebar.Collapse>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
       </Sidebar>

@@ -5,7 +5,7 @@ import PatientId from './pages/laboratory/componenets/takeSpecimen'
 import Laboratory from "./pages/laboratory";
 import Imaging from "./pages/imaging";
 import Pharmacy from "./pages/pharmacy";
-import Settings from "./pages/settings";
+// import Settings from "./pages/settings";
 import OPD from "./pages/opd";
 import Nursing from "./pages/nursing";
 import NotFound from "./pages/NotFound";
@@ -31,7 +31,7 @@ function App() {
         <Route path="/radiology" element={<Imaging />} />
         <Route path="/pharmacy" element={<Pharmacy />} />
         <Route path="/nursing" element={<Nursing />} />
-        <Route path="/settings" element={<Settings />} />
+        {/* <Route path="/settings" element={<Settings />} /> */}
       </Route>
 
       {/* 404 route */}

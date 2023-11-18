@@ -87,7 +87,7 @@ const columns = [
             ? "bg-yellow-500 hover:bg-yellow-600"
             : row.status === "Receive Specimen"
             ? "bg-blue-500 hover:bg-blue-600"
-            : row.status === "Awaiting Specimen"
+            : row.status === "Awaiting Approval"
             ? "bg-green-500 hover:bg-green-600"
             : row.status === "Final Result"
             ? "bg-red-500 hover:bg-red-600"
@@ -102,7 +102,7 @@ const columns = [
   },
   {
     cell: (row: Patient) => (
-      <Tooltip content="Cancle order">
+      <Tooltip content="Cancle">
         <MdOutlineCancel
           onClick={() => handleRowDelete(row)}
           className="font-extrabold text-xl text-red-400"
@@ -158,7 +158,7 @@ const data: Patient[] = [
     labUnit: "g/L",
     patientName: "Alice Johnson",
     specimenType: "Saliva Analysis",
-    status: "Awaiting Specimen",
+    status: "Awaiting Approval",
     panelName: "Hepatitis B Panel",
     color: getRandomColor(),
   },
