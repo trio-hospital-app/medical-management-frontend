@@ -12,6 +12,7 @@ import AppLayout from "./layouts/AppLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import TakeSpecimen from "./pages/laboratory/componenets/takeSpecimen";
 import Forms from "./pages/settings/forms";
+import FormBuilder from "./pages/settings/forms/builder";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/pharmacy" element={<Pharmacy />} />
         <Route path="/nursing" element={<Nursing />} />
         <Route path="/settings/forms" element={<Forms />} />
+        <Route path="/settings/forms/:id" element={<FormBuilder />} />
       </Route>
 
       {/* 404 route */}
