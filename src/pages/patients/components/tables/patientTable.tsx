@@ -2,9 +2,9 @@ import DataTable from "react-data-table-component";
 import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import BasicModal from "../../../components/ui/modals/basicModal";
+import BasicModal from "../../../../components/ui/modals/basicModal";
 import { useState } from "react";
-import OrderLab from "./orderLab";
+import OrderLab from "../orderLab";
 
 function PatientTable() {
   const [showLabModal, setShowLabModal] = useState(false);

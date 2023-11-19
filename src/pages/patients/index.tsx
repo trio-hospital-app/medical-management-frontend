@@ -1,5 +1,5 @@
 import FilterHeader from "./components/filterHeader";
-import PatientTable from "./components/table";
+import PatientTable from "./components/tables/patientTable";
 
 function Patients() {
   return (

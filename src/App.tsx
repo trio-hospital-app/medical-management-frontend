@@ -1,7 +1,8 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/dashboard";
 import Patients from "./pages/patients";
-import PatientId from './pages/laboratory/componenets/takeSpecimen'
+import PatientId from "./pages/patients/patientId";
 import Laboratory from "./pages/laboratory";
 import Imaging from "./pages/imaging";
 import Pharmacy from "./pages/pharmacy";
@@ -10,35 +11,187 @@ import Nursing from "./pages/nursing";
 import NotFound from "./pages/NotFound";
 import AppLayout from "./layouts/AppLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import TakeSpecimen from "./pages/laboratory/componenets/takeSpecimen";
 import Forms from "./pages/settings/forms";
 import FormBuilder from "./pages/settings/forms/builder";
+import NewPatient from "./pages/patients/newPatient";
+
+const pageVariants = {
+  initial: { opacity: 0.5, translateY: -10 },
+  animate: { opacity: 1, translateY: 0, transition: { duration: 0.5 } },
+  exit: { opacity: 0, translateY: 10, transition: { duration: 0.5 } },
+};
 
 function App() {
+  const location = useLocation();
+
   return (
-    <Routes>
-      {/* login route */}
-      <Route path="/login" element={<AuthLayout />} />
+    <AnimatePresence>
+      <Routes>
+        {/* login route */}
+        <Route path="/login" element={<AuthLayout />} />
 
-      {/* routes in the applayout */}
-      <Route path="/" element={<AppLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/patients" element={<Patients />} />
-        <Route path="/patients/:id" element={<PatientId />} />
-        <Route path="/laboratory/:id" element={<TakeSpecimen />} />
-        <Route path="/patients/new" element={<PatientId />} />
-        <Route path="/opd" element={<OPD />} />
-        <Route path="/laboratory" element={<Laboratory />} />
-        <Route path="/radiology" element={<Imaging />} />
-        <Route path="/pharmacy" element={<Pharmacy />} />
-        <Route path="/nursing" element={<Nursing />} />
-        <Route path="/settings/forms" element={<Forms />} />
-        <Route path="/settings/forms/:id" element={<FormBuilder />} />
-      </Route>
+        {/* routes in the applayout */}
+        <Route path="/" element={<AppLayout />}>
+          <Route
+            path="/dashboard"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Dashboard />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/patients"
+            element={
+              <motion.div
+                variants={pageVariants}
+                initial="initial"
+                key={location.pathname}
+                animate="animate"
+                exit="exit"
+              >
+                <Patients />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/patients/:id"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <PatientId />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/patients/new"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <NewPatient />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/opd"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <OPD />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/laboratory"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Laboratory />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/radiology"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Imaging />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/pharmacy"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Pharmacy />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/nursing"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Nursing />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/settings/forms"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Forms />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/settings/forms/:id"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <FormBuilder />
+              </motion.div>
+            }
+          />
+        </Route>
 
-      {/* 404 route */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        {/* 404 route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AnimatePresence>
   );
 }
 
