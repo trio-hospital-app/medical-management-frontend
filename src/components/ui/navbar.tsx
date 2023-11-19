@@ -3,7 +3,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 
 function NavBar() {
   return (
-    <div className="w-full navbar shadow-md z-[50] bg-white fixed top-0 left-0 right-0 flex items-center justify-between">
+    <div className="w-full navbar shadow-md z-[60] bg-white fixed top-0 left-0 right-0 flex items-center justify-between">
       <div className="flex items-center w-[50%]">
         <div>
           <Avatar
@@ -22,7 +22,7 @@ function NavBar() {
           rounded
           bordered
         />
-        <div className="flex flex-col items-start justify-center mx-5 !important">
+        <div className="md:flex hidden flex-col items-start justify-center mx-5">
           <span className="font-semibold text-ha-primary1">
             Prof. Kenneth Igbenedion
           </span>

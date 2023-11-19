@@ -1,3 +1,4 @@
+import { Tooltip } from "flowbite-react";
 import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -39,37 +40,35 @@ const getSpecimenTypeContent = (row: Patient) => (
 const columns = [
   {
     name: "Patient Name",
-    cell: (row: Patient) => (
-      <div className="text-left">{row.patientName}</div>
-    ),
+    cell: (row: Patient) => <div className="text-left">{row.patientName}</div>,
     sortable: true,
   },
   {
     name: "Patient ID",
-    selector: (row: Patient) => row.patientId,
+    selector: (row: Patient) => `${row.patientId}`,
     sortable: true,
   },
   {
     name: "Order Date",
-    selector: (row: Patient) => row.orderDate,
+    selector: (row: Patient) => `${row.orderDate}`,
     sortable: true,
     // width: "full",
   },
   {
     name: "Lab ID",
-    selector: (row: Patient) => row.labId,
+    selector: (row: Patient) => `${row.labId}`,
     sortable: true,
     // width: "9rem",
   },
   {
     name: "Lab Unit",
-    selector: (row: Patient) => row.labUnit,
+    selector: (row: Patient) => `${row.labUnit}`,
     sortable: true,
     // width: "6rem",
   },
   {
     name: "Panel Name",
-    selector: (row: Patient) => row.panelName,
+    selector: (row: Patient) => `${row.panelName}`,
     sortable: true,
     width: "7rem",
   },
@@ -79,7 +78,6 @@ const columns = [
     sortable: true,
     grow: 3,
   },
-
   {
     name: "Status",
     selector: (row: Patient) => (
@@ -89,7 +87,7 @@ const columns = [
             ? "bg-yellow-500 hover:bg-yellow-600"
             : row.status === "Receive Specimen"
             ? "bg-blue-500 hover:bg-blue-600"
-            : row.status === "Awaiting Specimen"
+            : row.status === "Awaiting Approval"
             ? "bg-green-500 hover:bg-green-600"
             : row.status === "Final Result"
             ? "bg-red-500 hover:bg-red-600"
@@ -102,13 +100,18 @@ const columns = [
     sortable: true,
     width: "11rem",
   },
-  // {
-  //   cell: (row: Patient) => (
-  //     <MdOutlineCancel onClick={() => handleRowDelete(row)} className='border border-red-300' />
-  //   ),
-  //   sortable: false,
-  //   width: "1rem",
-  // },
+  {
+    cell: (row: Patient) => (
+      <Tooltip content="Cancle">
+        <MdOutlineCancel
+          onClick={() => handleRowDelete(row)}
+          className="font-extrabold text-xl text-red-400"
+        />
+      </Tooltip>
+    ),
+    sortable: false,
+    width: "3rem",
+  },
 ];
 
 const getRandomColor = () => {
@@ -155,7 +158,7 @@ const data: Patient[] = [
     labUnit: "g/L",
     patientName: "Alice Johnson",
     specimenType: "Saliva Analysis",
-    status: "Awaiting Specimen",
+    status: "Awaiting Approval",
     panelName: "Hepatitis B Panel",
     color: getRandomColor(),
   },
