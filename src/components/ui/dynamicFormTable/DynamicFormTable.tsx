@@ -108,7 +108,7 @@ const DynamicFormTable: React.FC<DynamicFormTableProps> = ({
         </tbody>
       </table>
       <span
-        className="border bg-blue-500 px-2 py-2 rounded-[.5rem] cursor-pointer hover:bg-blue-400 text-white"
+        className="border bg-blue-500 px-2 py-2 rounded-[.5rem] mx-1 cursor-pointer hover:bg-blue-400 text-white"
         onClick={handleAddRow}
       >
         Add New Row

@@ -5,6 +5,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import TakeSpecimen from "./modal/takeSpecimen";
 import FillSpecimen from "./modal/fillSpecimen";
+import AwaitingApproval from "./modal/awaitingApproval";
 
 interface Patient {
   id: number;
@@ -450,7 +451,7 @@ function PatientTable() {
         submitTitle="Approve"
         showSubmitButton={true}
       >
-        Awaiting Approval
+        <AwaitingApproval />
       </BasicModal>
     </>
   );
