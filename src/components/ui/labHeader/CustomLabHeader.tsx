@@ -60,7 +60,6 @@ function CustomLabHeader({
                   testNameBackgroundColor || "bg-pink-400"
                 }`}
               >
-                {" "}
                 {testName}
               </span>
               <div className="px-2">

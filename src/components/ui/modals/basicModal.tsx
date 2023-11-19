@@ -32,7 +32,7 @@ function BasicModal({
   };
 
   return (
-    <div className="basicModal" style={{ overflowY: "scroll" }}>
+    <div className="basicModal">
       <Modal
         show={openModal}
         dismissible
