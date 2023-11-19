@@ -6,9 +6,15 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
-
+import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
 function TakeSpecimen() {
   const [formData, setFormData] = useState("");
+  const [dynamicFormRows, setDynamicFormRows] = useState([]);
+
+  const handleRowDataChange = (rowData:any) => {
+    setDynamicFormRows(rowData);
+  };
+  console.log(dynamicFormRows);
 
   return (
     <>
@@ -55,14 +61,16 @@ function TakeSpecimen() {
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
                     <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">christopher Abraham</span>
+                    <span className="font-bold capitalize">
+                      christopher Abraham
+                    </span>
                   </div>
                   <div className="flex items-start justify-center flex-col">
                     <span className="text-sm font-sm text-gray-500">Date:</span>
                     <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
                   </div>
                 </div>
-                <hr  className="mx-5 "/>
+                <hr className="mx-5 " />
                 <div className="px-10 py-2">
                   <span className="font-bold text-justify capitalize">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -78,14 +86,16 @@ function TakeSpecimen() {
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
                     <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">christopher Abraham</span>
+                    <span className="font-bold capitalize">
+                      christopher Abraham
+                    </span>
                   </div>
                   <div className="flex items-start justify-center flex-col">
                     <span className="text-sm font-sm text-gray-500">Date:</span>
                     <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
                   </div>
                 </div>
-                <hr  className="mx-5 "/>
+                <hr className="mx-5 " />
                 <div className="px-10 py-2">
                   <span className="font-bold text-justify capitalize">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -101,14 +111,16 @@ function TakeSpecimen() {
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
                     <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">christopher Abraham</span>
+                    <span className="font-bold capitalize">
+                      christopher Abraham
+                    </span>
                   </div>
                   <div className="flex items-start justify-center flex-col">
                     <span className="text-sm font-sm text-gray-500">Date:</span>
                     <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
                   </div>
                 </div>
-                <hr  className="mx-5 "/>
+                <hr className="mx-5 " />
                 <div className="px-10 py-2">
                   <span className="font-bold text-justify capitalize">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -121,16 +133,18 @@ function TakeSpecimen() {
         </Accordion>
       </div>
 
-          {/* fill form are  */}
+      {/* fill form are  */}
 
-          <div className="px-4">
-            <div className="bg-ha-primary2 px-4 py-3 font-bold rounded-[.3rem]">
-                <h1>Full Blood Couunt</h1>
-            </div>
-            
-          </div>
+      <div className="px-4">
+        <div className="bg-ha-primary2 px-4 py-3 font-bold rounded-[.3rem]">
+          <h1>Full Blood Count</h1>
+        </div>
+        <div>
+          <DynamicFormTable onRowDataChange={handleRowDataChange} />
+        </div>
+      </div>
 
-      {/* <div className="px-4">
+      <div className="px-4">
         <span className="font-bold">Add Comment</span>
         <TextareaAutosize
           minRows={3}
@@ -140,7 +154,7 @@ function TakeSpecimen() {
           value={formData}
           maxRows={5}
         />
-      </div> */}
+      </div>
     </>
   );
 }
