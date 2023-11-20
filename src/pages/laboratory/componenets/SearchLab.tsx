@@ -45,7 +45,7 @@ const SearchLab = () => {
         buttonTitle="New Lab Order"
         resetFilter={resetHandler}
         search={searchHandler}
-        handleCreate={()=>{'show create lab modal'}}
+        handleCreate={() => {console.log("create")}}
       >
         <form className="grid md:grid-cols-4 gap-2">
           <div className="">

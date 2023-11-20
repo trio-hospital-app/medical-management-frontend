@@ -7,6 +7,7 @@ import TakeSpecimen from "./modal/takeSpecimen";
 import FillSpecimen from "./modal/fillSpecimen";
 import AwaitingApproval from "./modal/awaitingApproval";
 import FinalResult from "./modal/finalResult";
+import { Button } from "../../../components/ui/button";
 
 interface Patient {
   id: number;
@@ -94,13 +95,13 @@ function PatientTable() {
       name: "Specimen Type",
       cell: (row: Patient) => getSpecimenTypeContent(row),
       sortable: true,
-      grow: 3,
+      grow: 2,
     },
     {
       name: "Status",
       selector: (row: Patient) => (
-        <div
-          className={` px-1 py-3 rounded-[1rem] text-white w-[8rem]  text-center border ${
+        <Button
+          className={` text-white w-[8rem] ${
             row.status === "Take Specimen"
               ? "bg-yellow-500 hover:bg-yellow-600"
               : row.status === "Receive Specimen"
@@ -124,7 +125,7 @@ function PatientTable() {
           }
         >
           {row.status}
-        </div>
+        </Button>
       ),
       sortable: true,
       width: "11rem",
@@ -279,7 +280,7 @@ function PatientTable() {
         submitTitle="Print"
         showSubmitButton={true}
       >
-       <FinalResult />
+        <FinalResult />
       </BasicModal>
     </>
   );

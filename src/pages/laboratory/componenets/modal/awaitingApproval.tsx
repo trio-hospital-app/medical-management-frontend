@@ -8,7 +8,7 @@ import {
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
-import { Button, buttonVariants } from "../../../../components/ui/button";
+import { Button } from "../../../../components/ui/button";
 
 function AwaitingApproval() {
   const [formData, setFormData] = useState("");
