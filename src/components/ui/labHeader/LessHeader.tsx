@@ -3,35 +3,28 @@ import { Avatar } from "flowbite-react";
 interface TakeSpecimenProps {
   patientName: string;
   patientID: string;
-  testName?: string;
-  labID?: string;
+
   gender: string;
   phoneNumber: string;
+  patientEmail?: string | number;
   religion: string;
   nationality: string;
   maritalStatus?: string;
   age: string;
   imgSrc?: string;
-  orderedBy?: string;
-  orderedDate?: string;
-  testNameBackgroundColor?: string;
 }
 
-function CustomLabHeader({
+function LessHeader({
   patientName,
   patientID,
-  testName,
-  labID,
   gender,
   phoneNumber,
+  patientEmail,
   religion,
   nationality,
   maritalStatus,
   age,
   imgSrc,
-  orderedBy,
-  orderedDate,
-  testNameBackgroundColor,
 }: TakeSpecimenProps) {
   return (
     <>
@@ -53,24 +46,15 @@ function CustomLabHeader({
                   {patientID}
                 </span>
               </div>
-            </div>
-            <div className="flex items-start justify-center flex-col">
-              <span
-                className={`md:text-xl font-bold text-bold px-3 py-1 text-white rounded-[1rem] text-justify ${
-                  testNameBackgroundColor || "bg-pink-400"
-                }`}
-              >
-                {testName}
-              </span>
-              <div className="px-2">
+              <div>
                 <label
-                  htmlFor="labID"
+                  htmlFor="Email"
                   className="text-sm font-semibold text-gray-500"
                 >
-                  Lab ID:
+                  Email:
                 </label>
                 <span id="labID" className="text-ha-primary1 pl-1">
-                  {labID}
+                  {patientEmail}
                 </span>
               </div>
             </div>
@@ -132,23 +116,9 @@ function CustomLabHeader({
             </div>
           </div>
         </div>
-        <div className="px-10 py-1 shadow flex items-start justify-start gap-5 flex-col md:flex-row">
-          <div className="flex items-start justify-center flex-col">
-            <span className="text-sm font-semibold text-gray-500">
-              Orderd By:
-            </span>
-            <span className="font-semibold">{orderedBy}</span>
-          </div>
-          <div className="flex items-start justify-center flex-col">
-            <span className="text-sm font-semibold text-gray-500">
-              Orderd Date:
-            </span>
-            <span className="font-semibold">{orderedDate}</span>
-          </div>
-        </div>
       </div>
     </>
   );
 }
 
-export default CustomLabHeader;
+export default LessHeader;

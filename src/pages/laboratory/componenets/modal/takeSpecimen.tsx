@@ -1,9 +1,4 @@
 import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 
@@ -31,95 +26,6 @@ function TakeSpecimen() {
         />
       </div>
 
-      {/* accordion */}
-      <div className="px-4 max-h-[300px] overflow-y-scroll">
-        <Accordion
-          style={{
-            backgroundColor: "#E8EBFF",
-            overflowY: "scroll",
-            maxHeight: "300px",
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>
-              <p className="font-bold"> Previous Comments</p>
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <div className="bg-gray-300 py-3 rounded-[1rem]">
-                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">christopher Abraham</span>
-                  </div>
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">Date:</span>
-                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-                  </div>
-                </div>
-                <hr  className="mx-5 "/>
-                <div className="px-10 py-2">
-                  <span className="font-bold text-justify capitalize">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-                  </span>
-                </div>
-              </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
-              <div className="bg-gray-300 py-3 rounded-[1rem]">
-                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">christopher Abraham</span>
-                  </div>
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">Date:</span>
-                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-                  </div>
-                </div>
-                <hr  className="mx-5 "/>
-                <div className="px-10 py-2">
-                  <span className="font-bold text-justify capitalize">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-                  </span>
-                </div>
-              </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
-              <div className="bg-gray-300 py-3 rounded-[1rem]">
-                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">christopher Abraham</span>
-                  </div>
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">Date:</span>
-                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-                  </div>
-                </div>
-                <hr  className="mx-5 "/>
-                <div className="px-10 py-2">
-                  <span className="font-bold text-justify capitalize">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-                  </span>
-                </div>
-              </div>
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      </div>
       <div className="px-4">
         <span className="font-bold">Add Comment</span>
         <TextareaAutosize

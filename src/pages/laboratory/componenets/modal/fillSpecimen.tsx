@@ -1,17 +1,18 @@
 import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "../../../../components/ui/accordion";
 import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
 function TakeSpecimen() {
   const [formData, setFormData] = useState("");
   const [dynamicFormRows, setDynamicFormRows] = useState([]);
 
-  const handleRowDataChange = (rowData:any) => {
+  const handleRowDataChange = (rowData: any) => {
     setDynamicFormRows(rowData);
   };
   console.log(dynamicFormRows);
@@ -40,23 +41,15 @@ function TakeSpecimen() {
       {/* accordion */}
       <div className="px-4 max-h-[300px] overflow-y-scroll">
         <Accordion
-          style={{
-            backgroundColor: "#E8EBFF",
-            overflowY: "scroll",
-            maxHeight: "300px",
-          }}
+          collapsible
+          type="single"
+          className="bg-ha-primary2 px-4 rounded-[.3rem]"
         >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>
-              <p className="font-bold"> Previous Comments</p>
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
+          <AccordionItem className="AccordionItem" value="item-1">
+            <AccordionTrigger>
+              <h1 className="text-ha-primary1"> Previous Comments</h1>
+            </AccordionTrigger>
+            <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
@@ -78,10 +71,8 @@ function TakeSpecimen() {
                   </span>
                 </div>
               </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
+            </AccordionContent>
+            <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
@@ -103,10 +94,8 @@ function TakeSpecimen() {
                   </span>
                 </div>
               </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
+            </AccordionContent>
+            <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
@@ -128,15 +117,15 @@ function TakeSpecimen() {
                   </span>
                 </div>
               </div>
-            </Typography>
-          </AccordionDetails>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
       </div>
 
       {/* fill form are  */}
 
       <div className="px-4">
-        <div className="bg-ha-primary2 px-4 py-3 font-bold rounded-[.3rem]">
+        <div className="bg-ha-primary2 px-4 py-4 font-bold rounded-[.3rem]">
           <h1>Full Blood Count</h1>
         </div>
         <div>
