@@ -1,14 +1,14 @@
 import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+  } from "../../../../components/ui/accordion";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
-import Button from "@mui/material/Button";
-
+import { Button, buttonVariants } from "../../../../components/ui/button";
 
 function AwaitingApproval() {
   const [formData, setFormData] = useState("");
@@ -38,23 +38,15 @@ function AwaitingApproval() {
       {/* accordion */}
       <div className="px-4 max-h-[300px] overflow-y-scroll">
         <Accordion
-          style={{
-            backgroundColor: "#E8EBFF",
-            overflowY: "scroll",
-            maxHeight: "300px",
-          }}
+          collapsible
+          type="single"
+          className="bg-ha-primary2 px-4 rounded-[.3rem]"
         >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>
-              <p className="font-bold"> Previous Comments</p>
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
+          <AccordionItem className="AccordionItem" value="item-1">
+            <AccordionTrigger>
+              <h1 className="text-ha-primary1"> Previous Comments</h1>
+            </AccordionTrigger>
+            <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
@@ -76,10 +68,8 @@ function AwaitingApproval() {
                   </span>
                 </div>
               </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
+            </AccordionContent>
+            <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
@@ -101,10 +91,8 @@ function AwaitingApproval() {
                   </span>
                 </div>
               </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
+            </AccordionContent>
+            <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">
                 <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
                   <div className="flex items-start justify-center flex-col">
@@ -126,15 +114,15 @@ function AwaitingApproval() {
                   </span>
                 </div>
               </div>
-            </Typography>
-          </AccordionDetails>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
       </div>
 
       {/* fill form are  */}
 
       <div className="px-4">
-        <div className="bg-ha-primary2 px-4 py-3 font-bold rounded-[.3rem]">
+        <div className="bg-ha-primary2 px-4 py-4 mb-3 font-bold rounded-[.3rem]">
           <h1>Full Blood Count</h1>
         </div>
         <div>
@@ -328,7 +316,7 @@ function AwaitingApproval() {
       <div className="px-4 py-7">
         <div className=" flex items-center justify-start gap-3">
           <span className="font-bold text-ha-primary1">Add Comment</span>
-          <Button onClick={() => setOpenCommenTextArea(!openCommenTextArea)}>
+          <Button onClick={() => setOpenCommenTextArea(!openCommenTextArea)} className="bg-blue-100 hover:bg-blue-200">
             <BsFillPencilFill />
           </Button>
         </div>
