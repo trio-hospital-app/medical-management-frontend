@@ -4,16 +4,8 @@ import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader
 // import AccordionDetails from "@mui/material/AccordionDetails";
 // import Typography from "@mui/material/Typography";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TextareaAutosize from "react-textarea-autosize";
-import { useState } from "react";
-import { BsFillPencilFill } from "react-icons/bs";
-import Button from "@mui/material/Button";
-
 
 function FinalResult() {
-  const [formData, setFormData] = useState("");
-  const [openCommenTextArea, setOpenCommenTextArea] = useState(false);
-
   return (
     <>
       <div>
