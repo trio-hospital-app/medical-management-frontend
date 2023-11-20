@@ -1,16 +1,16 @@
 import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import Accordion from "@mui/material/Accordion";
+// import AccordionSummary from "@mui/material/AccordionSummary";
+// import AccordionDetails from "@mui/material/AccordionDetails";
+// import Typography from "@mui/material/Typography";
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
 import Button from "@mui/material/Button";
 
 
-function AwaitingApproval() {
+function FinalResult() {
   const [formData, setFormData] = useState("");
   const [openCommenTextArea, setOpenCommenTextArea] = useState(false);
 
@@ -36,7 +36,7 @@ function AwaitingApproval() {
       </div>
 
       {/* accordion */}
-      <div className="px-4 max-h-[300px] overflow-y-scroll">
+      {/* <div className="px-4 max-h-[300px] overflow-y-scroll">
         <Accordion
           style={{
             backgroundColor: "#E8EBFF",
@@ -129,7 +129,7 @@ function AwaitingApproval() {
             </Typography>
           </AccordionDetails>
         </Accordion>
-      </div>
+      </div> */}
 
       {/* fill form are  */}
 
@@ -302,7 +302,7 @@ function AwaitingApproval() {
               </span>
             </div>
           </div>
-          <div className="bg-gray-300 py-3 rounded-[1rem]">
+          {/* <div className="bg-gray-300 py-3 rounded-[1rem]">
             <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
               <div className="flex items-start justify-center flex-col">
                 <span className="text-sm font-sm text-gray-500">By:</span>
@@ -322,10 +322,10 @@ function AwaitingApproval() {
                 Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="px-4 py-7">
+      {/* <div className="px-4 py-7">
         <div className=" flex items-center justify-start gap-3">
           <span className="font-bold text-ha-primary1">Add Comment</span>
           <Button onClick={() => setOpenCommenTextArea(!openCommenTextArea)}>
@@ -342,9 +342,9 @@ function AwaitingApproval() {
             maxRows={5}
           />
         )}
-      </div>
+      </div> */}
     </>
   );
 }
 
-export default AwaitingApproval;
+export default FinalResult;

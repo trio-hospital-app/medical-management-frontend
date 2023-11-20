@@ -50,6 +50,7 @@ function BasicModal({
 
         <Modal.Footer>
           {showCancelButton && (
+            
             <span
               className="border border-red-500 text-red-500 px-5 py-2 rounded-md bg-red-100 cursor-pointer hover:bg-red-200 "
               onClick={() => setOpenModal(false)}

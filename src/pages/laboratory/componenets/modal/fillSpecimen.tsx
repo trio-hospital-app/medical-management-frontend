@@ -152,7 +152,7 @@ function TakeSpecimen() {
           onChange={(e) => setFormData(e.target.value)}
           className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
           value={formData}
-          maxRows={5}
+          maxRows={4}
         />
       </div>
     </>
