@@ -8,6 +8,7 @@ interface CustomMultiSelectProps extends SelectProps {
   onSelectChange?: (selectedValues: string | string[]) => void; // Change the type
   isMultiSelect?: boolean;
   placeholder?: string;
+  style?: any;
 }
 
 const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
@@ -17,6 +18,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
   onSelectChange,
   isMultiSelect = true,
   placeholder,
+
 }) => {
   const [selected, setSelected] = useState(initialValue);
 

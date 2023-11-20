@@ -222,6 +222,10 @@ function PatientTable() {
     },
   ];
 
+  // expnad rows
+
+  // const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+
   return (
     <>
       <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
@@ -232,7 +236,7 @@ function PatientTable() {
       <BasicModal
         title="Take Specimen"
         setOpenModal={setTakeSpecimen}
-        cancelTitle="cancel"
+        cancelTitle="Cancel"
         openModal={takeSpecimen}
         showCancelButton={true}
         submitTitle="Save"
@@ -247,7 +251,7 @@ function PatientTable() {
       <BasicModal
         title="Fill Result"
         setOpenModal={setReceiveSpecimen}
-        cancelTitle="cancel"
+        cancelTitle="Cancel"
         openModal={receiveSpecimen}
         showCancelButton={true}
         submitTitle="Save"
@@ -274,7 +278,7 @@ function PatientTable() {
       <BasicModal
         title="Approved Result"
         setOpenModal={setFinalResult}
-        cancelTitle="cancel"
+        cancelTitle="Cancel"
         openModal={finalResult}
         showCancelButton={true}
         submitTitle="Print"
