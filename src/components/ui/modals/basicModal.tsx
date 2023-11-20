@@ -32,9 +32,11 @@ function BasicModal({
   };
 
   return (
-    <div className="basicModal">
+    <div>
       <Modal
+       className="z-[100]"
         show={openModal}
+        size={"5xl"}
         dismissible
         color-white
         onClose={() => setOpenModal(false)}
@@ -44,7 +46,7 @@ function BasicModal({
           <p className="text-ha-primary1">{title}</p>
         </Modal.Header>
 
-        <div className="space-y-6 max-h-[40rem] overflow-y-scroll">
+        <div className="space-y-6 max-h-[60rem] overflow-y-scroll">
           {children}
         </div>
 

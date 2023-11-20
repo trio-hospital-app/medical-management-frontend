@@ -1,8 +1,13 @@
 import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "../../../../components/ui/accordion";
 
 function LabTable() {
-
   interface Patient {
     id: number;
     firstName: string;
@@ -122,16 +127,36 @@ function LabTable() {
       selector: (row: Patient) => row.lastAppointmentDate,
       sortable: true,
       with: "500px",
-    }
+    },
   ];
-  
+
   const navigate = useNavigate();
   const handleRowClick = (patientId: number) => {
     navigate(`/patients/${patientId}`);
   };
-
-  const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
-  
+  // AccordionItem, AccordionTrigger, AccordionContent
+  const ExpandedComponent = ({ data }) => (
+    <div className="m-5 p-5 shadow rounded-md" >
+      <Accordion type="single" collapsible>
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Hi</AccordionTrigger>
+          <AccordionContent> I am a content</AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger>Hi</AccordionTrigger>
+          <AccordionContent> I am a content</AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-4x">
+          <AccordionTrigger>Hi</AccordionTrigger>
+          <AccordionContent> I am a content</AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-3">
+          <AccordionTrigger>Hi</AccordionTrigger>
+          <AccordionContent> I am a content</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  );
 
   return (
     <div>
