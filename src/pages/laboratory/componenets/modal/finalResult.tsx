@@ -1,4 +1,4 @@
-import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader";
+import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
 // import Accordion from "@mui/material/Accordion";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
@@ -16,6 +16,7 @@ function FinalResult() {
           labID="12345667778"
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
           gender="Male"
+          patientEmail="Christopherabraham8@gmail.com"
           phoneNumber="12345667778"
           religion="Christian"
           nationality="Nigeria"

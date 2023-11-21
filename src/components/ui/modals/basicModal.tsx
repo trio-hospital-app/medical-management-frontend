@@ -49,7 +49,7 @@ function BasicModal({
           <p className="text-ha-primary1">{title}</p>
         </Modal.Header>
 
-        <div className="space-y-6 max-h-[40rem] overflow-y-scroll border-b-2">
+        <div className="space-y-6 max-h-[40rem] overflow-y-scroll shadow p-5 border-t-2 border-b-2">
           {children}
         </div>
 

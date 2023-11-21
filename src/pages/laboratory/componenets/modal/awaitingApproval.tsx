@@ -1,4 +1,4 @@
-import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader";
+import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
 import {
     Accordion,
     AccordionItem,
@@ -22,6 +22,7 @@ function AwaitingApproval() {
           patientID="12345667778"
           testName="Full Blood Count"
           labID="12345667778"
+          patientEmail="Christopherabraham8@gmail.com"
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
           gender="Male"
           phoneNumber="12345667778"

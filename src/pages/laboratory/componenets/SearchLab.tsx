@@ -115,6 +115,7 @@ const SearchLab = () => {
         submitTitle="Save"
         showCancelButton={true}
         showSubmitButton={true}
+        size="5xl"
         submitHandler={() => {
           console.log("save");
         }}

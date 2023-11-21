@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
-import LessHeader from "../../../../components/ui/labHeader/LessHeader";
+import CustomPatientCard from "../../../../components/ui/customPatientCard/customPatientCard";
 import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect";
 import TextareaAutosize from "react-textarea-autosize";
 
@@ -71,7 +71,7 @@ const NewLabOrder = () => {
       ) : null}
       {foundRecode ? (
         <div>
-          <LessHeader
+          <CustomPatientCard
             patientName="Mr. Christopher Abraham"
             patientID="12345667778"
             patientEmail="Christopherabraham8@gmail.com"
@@ -82,6 +82,7 @@ const NewLabOrder = () => {
             nationality="Nigeria"
             maritalStatus="Single"
             age="32 years"
+            layout={2}
           />
         </div>
       ) : null}
