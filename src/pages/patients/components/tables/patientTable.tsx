@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { useState } from "react";
 import OrderLab from "../orderLab";
+import OrderRadiology from "../orderRadiology";
+import OrderDoctor from "../orderDoctor";
 
 function PatientTable() {
   const [showLabModal, setShowLabModal] = useState(false);
   const [showImagingModal, setShowImagingModal] = useState(false);
-  // const [showpharmacyModal, setShowpharmacyModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
 
   interface Patient {
@@ -61,37 +62,32 @@ function PatientTable() {
     },
     {
       cell: () => (
-        <div className=" w-full flex justify-end items-center ">
-          <Dropdown arrowIcon={false} inline label={<BsThreeDotsVertical />}>
-            <Dropdown.Item
-              onClick={() => {
-                setShowLabModal(true);
-              }}
-            >
-              Order Laboratory
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setShowImagingModal(true);
-              }}
-            >
-              Order Radiology
-            </Dropdown.Item>
-            {/* <Dropdown.Item
-              onClick={() => {
-                setShowpharmacyModal(true);
-              }}
-            >
-              Order Pharmacy
-            </Dropdown.Item> */}
-            <Dropdown.Item
-              onClick={() => {
-                setShowDoctorModal(true)
-              }}
-            >
-              See a Doctor
-            </Dropdown.Item>
-          </Dropdown>
+        <div className=" w-full flex justify-end items-center">
+          <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
+            <Dropdown arrowIcon={false} inline label={<BsThreeDotsVertical  style={{color: "black"}}/>}>
+              <Dropdown.Item
+                onClick={() => {
+                  setShowLabModal(true);
+                }}
+              >
+                Order Laboratory
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setShowImagingModal(true);
+                }}
+              >
+                Order Radiology
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setShowDoctorModal(true);
+                }}
+              >
+                See a Doctor
+              </Dropdown.Item>
+            </Dropdown>
+          </div>
         </div>
       ),
       sortable: false,
@@ -195,7 +191,7 @@ function PatientTable() {
         submitTitle="Submit Order"
         showSubmitButton={true}
       >
-        <OrderLab/>
+        <OrderLab />
       </BasicModal>
 
       {/* Imaging modal */}
@@ -208,7 +204,7 @@ function PatientTable() {
         submitTitle="Submit Order"
         showSubmitButton={true}
       >
-        chisom
+        <OrderRadiology />
       </BasicModal>
 
       {/* Doctor encounter modal */}
@@ -221,9 +217,8 @@ function PatientTable() {
         submitTitle="Submit Order"
         showSubmitButton={true}
       >
-        chisom
+        <OrderDoctor />
       </BasicModal>
-
     </div>
   );
 }
