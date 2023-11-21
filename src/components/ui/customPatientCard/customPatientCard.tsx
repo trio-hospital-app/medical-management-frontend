@@ -90,7 +90,7 @@ function customPatientCard({
                 </div>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row  md:items-start justify-between mt-5">
+            <div className="flex flex-col md:flex-row md:items-start justify-between mt-5">
               <div>
                 <Avatar
                   alt="User settings"

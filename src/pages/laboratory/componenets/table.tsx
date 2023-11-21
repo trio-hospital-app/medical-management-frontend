@@ -58,37 +58,53 @@ function PatientTable() {
     {
       name: "Patient Name",
       cell: (row: Patient) => (
-        <div className="text-left border">{row.patientName}</div>
+        <div className="text-left">{row.patientName}</div>
       ),
+      selector: "patientName",
       sortable: true,
-      // width: '10rem'
+      width: "10rem",
     },
     {
       name: "Patient ID",
-      selector: (row: Patient) => `${row.patientId}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.patientId}</div>
+      ),
+      selector: "patientId",
       sortable: true,
     },
     {
       name: "Order Date",
-      selector: (row: Patient) => `${row.orderDate}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.orderDate}</div>
+      ),
+      selector: "orderDate",
       sortable: true,
       width: "full",
     },
     {
       name: "Lab ID",
-      selector: (row: Patient) => `${row.labId}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.labId}</div>
+      ),
+      selector: "labId",
       sortable: true,
       // width: "9rem",
     },
     {
       name: "Lab Unit",
-      selector: (row: Patient) => `${row.labUnit}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.labUnit}</div>
+      ),
+      selector: "labUnit",
       sortable: true,
       // width: "6rem",
     },
     {
       name: "Panel Name",
-      selector: (row: Patient) => `${row.panelName}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.panelName}</div>
+      ),
+      selector: "panelName",
       sortable: true,
       width: "full",
     },
@@ -96,13 +112,13 @@ function PatientTable() {
       name: "Specimen Type",
       cell: (row: Patient) => getSpecimenTypeContent(row),
       sortable: true,
-      grow: 2,
+      grow: 3,
     },
     {
       name: "Status",
-      selector: (row: Patient) => (
+      cell: (row: Patient) => (
         <Button
-          className={` text-white w-[8rem] ${
+          className={` text-white w-[9.5rem] ${
             row.status === "Take Specimen"
               ? "bg-yellow-500 hover:bg-yellow-600"
               : row.status === "Receive Specimen"
@@ -128,8 +144,9 @@ function PatientTable() {
           {row.status}
         </Button>
       ),
+      selector: "status",
       sortable: true,
-      width: "11rem",
+      width: "15rem",
     },
     {
       cell: (row: Patient) => (

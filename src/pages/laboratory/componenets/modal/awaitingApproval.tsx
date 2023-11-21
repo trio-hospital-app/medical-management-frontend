@@ -326,7 +326,7 @@ function AwaitingApproval() {
             minRows={3}
             placeholder="Write a comment"
             onChange={(e) => setFormData(e.target.value)}
-            className={`w-[98%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
+            className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
             value={formData}
             maxRows={5}
           />

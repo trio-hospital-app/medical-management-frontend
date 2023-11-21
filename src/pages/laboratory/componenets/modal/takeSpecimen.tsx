@@ -1,6 +1,12 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "../../../../components/ui/accordion";
 
 function TakeSpecimen() {
   const [formData, setFormData] = useState("");
@@ -26,6 +32,89 @@ function TakeSpecimen() {
           testNameBackgroundColor="bg-green-700"
         />
       </div>
+      {/* accordion */}
+      <div className="px-4 max-h-[300px] overflow-y-scroll">
+        <Accordion
+          collapsible
+          type="single"
+          className="bg-ha-primary2 px-4 rounded-[.3rem]"
+        >
+          <AccordionItem className="AccordionItem" value="item-1">
+            <AccordionTrigger>
+              <h1 className="text-ha-primary1"> Previous Comments</h1>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="bg-gray-300 py-3 rounded-[1rem]">
+                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
+                  <div className="flex items-start justify-center flex-col">
+                    <span className="text-sm font-sm text-gray-500">By:</span>
+                    <span className="font-bold capitalize">
+                      christopher Abraham
+                    </span>
+                  </div>
+                  <div className="flex items-start justify-center flex-col">
+                    <span className="text-sm font-sm text-gray-500">Date:</span>
+                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
+                  </div>
+                </div>
+                <hr className="mx-5 " />
+                <div className="px-10 py-2">
+                  <span className="font-bold text-justify capitalize">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
+                  </span>
+                </div>
+              </div>
+            </AccordionContent>
+            <AccordionContent>
+              <div className="bg-gray-300 py-3 rounded-[1rem]">
+                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
+                  <div className="flex items-start justify-center flex-col">
+                    <span className="text-sm font-sm text-gray-500">By:</span>
+                    <span className="font-bold capitalize">
+                      christopher Abraham
+                    </span>
+                  </div>
+                  <div className="flex items-start justify-center flex-col">
+                    <span className="text-sm font-sm text-gray-500">Date:</span>
+                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
+                  </div>
+                </div>
+                <hr className="mx-5 " />
+                <div className="px-10 py-2">
+                  <span className="font-bold text-justify capitalize">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
+                  </span>
+                </div>
+              </div>
+            </AccordionContent>
+            <AccordionContent>
+              <div className="bg-gray-300 py-3 rounded-[1rem]">
+                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
+                  <div className="flex items-start justify-center flex-col">
+                    <span className="text-sm font-sm text-gray-500">By:</span>
+                    <span className="font-bold capitalize">
+                      christopher Abraham
+                    </span>
+                  </div>
+                  <div className="flex items-start justify-center flex-col">
+                    <span className="text-sm font-sm text-gray-500">Date:</span>
+                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
+                  </div>
+                </div>
+                <hr className="mx-5 " />
+                <div className="px-10 py-2">
+                  <span className="font-bold text-justify capitalize">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
+                  </span>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
 
       <div className="px-4">
         <span className="font-bold">Add Comment</span>
@@ -33,7 +122,7 @@ function TakeSpecimen() {
           minRows={3}
           placeholder="Write a comment"
           onChange={(e) => setFormData(e.target.value)}
-          className={`w-[95%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
+          className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
           value={formData}
           maxRows={5}
         />
