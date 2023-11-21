@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
+import { Button } from "../button";
 
 interface Row {
   observation: string | number;
@@ -48,12 +49,18 @@ const DynamicFormTable: React.FC<DynamicFormTableProps> = ({
     <div>
       <table
         className=" flex flex-col md:flex-row justify-between text-left"
-        style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
+        style={{
+          borderCollapse: "separate",
+          borderSpacing: "0 1rem",
+          width: "100%",
+          paddingLeft: ".5rem",
+          paddingRight: "1rem",
+        }}
       >
-        <tbody>
+        <tbody className="w-[100%]">
           {rows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              <td className="pl-1">
+            <tr key={rowIndex} className="w-[100%]">
+              <td className="pl-1 w-[20%]">
                 <input
                   placeholder="Observation"
                   type="text"
@@ -63,7 +70,7 @@ const DynamicFormTable: React.FC<DynamicFormTableProps> = ({
                   style={{ border: "none", width: "100%" }}
                 />
               </td>
-              <td className="pl-1">
+              <td className="pl-1 w-[20%]">
                 <input
                   placeholder="Unit"
                   type="text"
@@ -73,7 +80,7 @@ const DynamicFormTable: React.FC<DynamicFormTableProps> = ({
                   style={{ border: "none", width: "100%" }}
                 />
               </td>
-              <td className="pl-1">
+              <td className="pl-1 w-[20%]">
                 <input
                   placeholder="Value"
                   type="text"
@@ -83,7 +90,7 @@ const DynamicFormTable: React.FC<DynamicFormTableProps> = ({
                   style={{ border: "none", width: "100%" }}
                 />
               </td>
-              <td className="pl-1">
+              <td className="pl-1 w-[20%]">
                 <input
                   placeholder="Reference Range"
                   type="text"
@@ -95,24 +102,24 @@ const DynamicFormTable: React.FC<DynamicFormTableProps> = ({
               </td>
               {rows.length > 1 && (
                 <td>
-                  <span
-                    className="border border-red-500 text-red-500 px-2 py-2 rounded-md mx-3 bg-red-100 cursor-pointer hover:bg-red-200 "
+                  <Button
+                    className=" text-white  bg-red-500 hover:bg-red-400 w-[auto] mx-3  "
                     onClick={() => handleDeleteRow(rowIndex)}
                   >
                     Delete
-                  </span>
+                  </Button>
                 </td>
               )}
             </tr>
           ))}
         </tbody>
       </table>
-      <span
-        className="border bg-blue-500 px-2 py-2 rounded-[.5rem] mx-1 cursor-pointer hover:bg-blue-400 text-white"
+      <Button
         onClick={handleAddRow}
+        className="bg-ha-primary1 text-white  hover:bg-blue-900 mx-3"
       >
         Add New Row
-      </span>
+      </Button>
       {/* <div className="body"> {JSON.stringify(rows)} </div> */}
     </div>
   );

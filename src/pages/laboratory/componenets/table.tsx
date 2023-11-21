@@ -60,34 +60,51 @@ function PatientTable() {
       cell: (row: Patient) => (
         <div className="text-left">{row.patientName}</div>
       ),
+      selector: "patientName",
       sortable: true,
+      width: "10rem",
     },
     {
       name: "Patient ID",
-      selector: (row: Patient) => `${row.patientId}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.patientId}</div>
+      ),
+      selector: "patientId",
       sortable: true,
     },
     {
       name: "Order Date",
-      selector: (row: Patient) => `${row.orderDate}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.orderDate}</div>
+      ),
+      selector: "orderDate",
       sortable: true,
-      // width: "full",
+      width: "full",
     },
     {
       name: "Lab ID",
-      selector: (row: Patient) => `${row.labId}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.labId}</div>
+      ),
+      selector: "labId",
       sortable: true,
       // width: "9rem",
     },
     {
       name: "Lab Unit",
-      selector: (row: Patient) => `${row.labUnit}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.labUnit}</div>
+      ),
+      selector: "labUnit",
       sortable: true,
       // width: "6rem",
     },
     {
       name: "Panel Name",
-      selector: (row: Patient) => `${row.panelName}`,
+      cell: (row: Patient) => (
+        <div className="text-left">{row.panelName}</div>
+      ),
+      selector: "panelName",
       sortable: true,
       width: "full",
     },
@@ -95,13 +112,13 @@ function PatientTable() {
       name: "Specimen Type",
       cell: (row: Patient) => getSpecimenTypeContent(row),
       sortable: true,
-      grow: 2,
+      grow: 3,
     },
     {
       name: "Status",
-      selector: (row: Patient) => (
+      cell: (row: Patient) => (
         <Button
-          className={` text-white w-[8rem] ${
+          className={` text-white w-[9.5rem] ${
             row.status === "Take Specimen"
               ? "bg-yellow-500 hover:bg-yellow-600"
               : row.status === "Receive Specimen"
@@ -127,8 +144,9 @@ function PatientTable() {
           {row.status}
         </Button>
       ),
+      selector: "status",
       sortable: true,
-      width: "11rem",
+      width: "15rem",
     },
     {
       cell: (row: Patient) => (
@@ -154,9 +172,9 @@ function PatientTable() {
       id: 1,
       firstName: "John",
       lastName: "Doe",
-      patientId: "P001sus8seeeee3e3e3e3j",
-      orderDate: "2021-09-01",
-      labId: "L0019sje7e44444444",
+      patientId: "P001sus8sR",
+      orderDate: "2021-09-01 (09:20am UTC)",
+      labId: "L0019sje7e",
       labUnit: "mg/dL",
       patientName: "abraham christopher",
       specimenType: "Urine Analysis",

@@ -76,7 +76,7 @@ const NewLabOrder = () => {
         <div className="flex flex-col md:flex-row items-center justify-between pt-5">
           <div className="mb-2 w-[48%]">
             <label className="text-sm font-semibold text-ha-primary1">
-              Scheme
+              Scheme 
             </label>
             <CustomMultiSelect
               options={convertToOptions(cities)}
@@ -112,6 +112,58 @@ const NewLabOrder = () => {
             value={selectedLabCenter}
             isMultiSelect={false}
             placeholder="Select Lab Center"
+          />
+        </div>
+        <div className="mb-2 pt-5">
+          <label className="text-sm font-semibold text-ha-primary1">
+            Diagnosis
+          </label>
+          <CustomMultiSelect
+            options={convertToOptions(cities)}
+            labelledBy="Select Diagnosis"
+            onSelectChange={handleLabCenterChange}
+            value={selectedLabCenter}
+            isMultiSelect={false}
+            placeholder="Select Diagnosis"
+          />
+        </div>
+        <div className="mb-2 pt-5">
+          <label className="text-sm font-semibold text-ha-primary1">
+            Referral Facility
+          </label>
+          <CustomMultiSelect
+            options={convertToOptions(countries)}
+            labelledBy="Select Referral Facility"
+            onSelectChange={handleLabCenterChange}
+            value={selectedLabCenter}
+            isMultiSelect={false}
+            placeholder="Select Referral Facility"
+          />
+        </div>
+        <div className="mb-2 pt-5">
+          <label className="text-sm font-semibold text-ha-primary1">
+            Order Physician
+          </label>
+          <CustomMultiSelect
+            options={convertToOptions(colors)}
+            labelledBy="Select Physician"
+            onSelectChange={handleLabCenterChange}
+            value={selectedLabCenter}
+            isMultiSelect={false}
+            placeholder="Select Physician"
+          />
+        </div>
+        <div className="mb-2 pt-5">
+          <label className="text-sm font-semibold text-ha-primary1">
+            Observation
+          </label>
+          <CustomMultiSelect
+            options={convertToOptions(cities)}
+            labelledBy="Select Observation"
+            onSelectChange={handleLabCenterChange}
+            value={selectedLabCenter}
+            isMultiSelect={false}
+            placeholder="Select Observation"
           />
         </div>
         <div className="mb-2 pt-5">
