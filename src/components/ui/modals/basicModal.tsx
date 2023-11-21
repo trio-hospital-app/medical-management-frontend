@@ -1,5 +1,6 @@
 import React, { ReactNode, CSSProperties } from "react";
 import { Modal } from "flowbite-react";
+import { Button } from "../button";
 
 interface BasicModalProps {
   children: ReactNode;
@@ -52,24 +53,23 @@ function BasicModal({
 
         <Modal.Footer>
           {showCancelButton && (
-            
-            <span
-              className="border border-red-500 text-red-500 px-5 py-2 rounded-md bg-red-100 cursor-pointer hover:bg-red-200 "
+            <Button
+              className=" text-white  bg-red-500 hover:bg-red-400 w-[6rem] "
               onClick={() => setOpenModal(false)}
             >
               {cancelTitle}
-            </span>
+            </Button>
           )}
 
           {showSubmitButton && (
-            <span
-              className="border bg-blue-500 px-5 py-2 rounded-md cursor-pointer hover:bg-blue-400 text-white"
+            <Button
               onClick={() => {
                 submitHandler ? submitHandler() : handleDefaultSubmit();
               }}
+              className="hover:bg-blue-400 text-white bg-blue-500 w-[6rem]"
             >
               {submitTitle}
-            </span>
+            </Button>
           )}
         </Modal.Footer>
       </Modal>
