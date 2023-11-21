@@ -55,7 +55,7 @@ function Dashboard() {
           title="Dashboard"
         />
         <DashboardCard to="/patients" icon={<IoIosPeople />} title="Patients" />
-        <DashboardCard to="/opd" icon={<FaUserDoctor />} title="OPD" />
+        <DashboardCard to="/opd" icon={<FaUserDoctor />} title="See Doctor" />
         <DashboardCard
           to="/laboratory"
           icon={<MdBloodtype />}

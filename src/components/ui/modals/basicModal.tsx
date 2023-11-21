@@ -9,6 +9,7 @@ interface BasicModalProps {
   openModal: boolean;
   submitTitle: string;
   showCancelButton?: boolean;
+  size?:string;
   showSubmitButton?: boolean;
   cancelTitle: string;
   style?: CSSProperties; // Use style as the prop name
@@ -21,6 +22,7 @@ function BasicModal({
   setOpenModal,
   openModal,
   cancelTitle,
+  size,
   submitTitle,
   showCancelButton,
   showSubmitButton,
@@ -33,9 +35,11 @@ function BasicModal({
   };
 
   return (
-    <div className="basicModal">
+    <div>
       <Modal
+       className="z-[100]"
         show={openModal}
+        size={size}
         dismissible
         color-white
         onClose={() => setOpenModal(false)}
@@ -45,14 +49,14 @@ function BasicModal({
           <p className="text-ha-primary1">{title}</p>
         </Modal.Header>
 
-        <div className="space-y-6 max-h-[40rem] overflow-y-scroll">
+        <div className="space-y-6 max-h-[60rem] overflow-y-scroll">
           {children}
         </div>
 
         <Modal.Footer>
           {showCancelButton && (
             <Button
-              className=" text-white  bg-red-500 hover:bg-red-400 w-[6rem] "
+              className=" text-white  bg-red-500 hover:bg-red-400 w-[auto] "
               onClick={() => setOpenModal(false)}
             >
               {cancelTitle}
@@ -64,7 +68,7 @@ function BasicModal({
               onClick={() => {
                 submitHandler ? submitHandler() : handleDefaultSubmit();
               }}
-              className="hover:bg-blue-400 text-white bg-blue-500 w-[6rem]"
+              className="hover:bg-blue-400 text-white bg-blue-500 w-[auto]"
             >
               {submitTitle}
             </Button>

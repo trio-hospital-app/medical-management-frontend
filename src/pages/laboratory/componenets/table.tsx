@@ -243,6 +243,7 @@ function PatientTable() {
         showSubmitButton={true}
         style={{ width: "100%", height: "1/2" }}
         submitHandler={handleTakeSpecime}
+        size="5xl"
       >
         <TakeSpecimen />
       </BasicModal>
@@ -256,6 +257,7 @@ function PatientTable() {
         showCancelButton={true}
         submitTitle="Save"
         showSubmitButton={true}
+        size="5xl"
       >
         <FillSpecimen />
       </BasicModal>
@@ -269,6 +271,7 @@ function PatientTable() {
         showCancelButton={true}
         submitTitle="Approve"
         showSubmitButton={true}
+        size="5xl"
       >
         <AwaitingApproval />
       </BasicModal>
@@ -283,6 +286,7 @@ function PatientTable() {
         showCancelButton={true}
         submitTitle="Print"
         showSubmitButton={true}
+        size="5xl"
       >
         <FinalResult />
       </BasicModal>
