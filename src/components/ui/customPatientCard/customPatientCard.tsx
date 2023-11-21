@@ -4,6 +4,7 @@ interface TakeSpecimenProps {
   patientID: string;
   testName?: string;
   labID?: string;
+  IdName?: string;
   gender: string;
   phoneNumber: string;
   religion: string;
@@ -16,12 +17,13 @@ interface TakeSpecimenProps {
   orderedDate?: string;
   testNameBackgroundColor?: string;
   layout?: number;
+  tests?: { testName: string; testNameBackgroundColor: string }[];
 }
 
 function customPatientCard({
   patientName,
   patientID,
-  testName,
+  IdName,
   labID,
   gender,
   phoneNumber,
@@ -33,7 +35,8 @@ function customPatientCard({
   imgSrc,
   orderedBy,
   orderedDate,
-  testNameBackgroundColor,
+  tests = [],
+  // testNameBackgroundColor,
   layout = 1,
 }: TakeSpecimenProps) {
   return (
@@ -69,20 +72,25 @@ function customPatientCard({
                   </span>
                 </div>
               </div>
-              <div className="flex items-start justify-center flex-col">
-                <span
-                  className={`md:text-xl font-bold text-bold px-3 py-1 text-white rounded-[1rem] text-justify ${
-                    testNameBackgroundColor || "bg-pink-400"
-                  }`}
-                >
-                  {testName}
-                </span>
+              <div className="flex items-start justify-center flex-col pl-2">
+                <div className="flex md:flex-row flex-col items-center justify-start gap-2 flex-wrap">
+                  {tests.map((test, index) => (
+                    <span
+                      key={index}
+                      className={`md:text-xl font-bold text-bold px-3 text-white rounded-[1rem] py-1 text-center my-1 ${
+                        test.testNameBackgroundColor || "bg-pink-400"
+                      }`}
+                    >
+                      {test.testName}
+                    </span>
+                  ))}
+                </div>
                 <div className="px-2">
                   <label
                     htmlFor="labID"
                     className="text-sm font-semibold text-gray-500"
                   >
-                    Lab ID:
+                    {IdName}
                   </label>
                   <span id="labID" className="text-ha-primary1 pl-1">
                     {labID}

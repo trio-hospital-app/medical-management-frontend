@@ -10,6 +10,8 @@ import BasicModal from "../../../components/ui/modals/basicModal";
 // import AwaitingApproval from "./modal/awaitingApproval";
 // import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
+import CaptureImaging from "./modal/CaptureImaging";
+import ReportImaging from "./modal/ReportImaging";
 interface Patient {
   id: number;
   firstName: string;
@@ -28,10 +30,10 @@ function PatientTable() {
   const [captureModal, setCaptureModal] = useState(false);
   const [reportModal, setReportModal] = useState(false);
 
-  // const handleTakeSpecime = () => {
-  //   console.log("take specimen");
-  //   setTakeSpecimen(false);
-  // };
+  const handleCaptureImaging = () => {
+    console.log("capturing imaging");
+    setCaptureModal(false);
+  };
 
   const handleRowDelete = (row: Patient) => {
     console.log(row);
@@ -236,64 +238,35 @@ function PatientTable() {
         <DataTable columns={columns} data={data} />
       </div>
 
-      {/* // take specimen modal */}
-      {/* <BasicModal
-        title="Take Specimen"
-        setOpenModal={setTakeSpecimen}
+      {/* // Capture Imaging modal */}
+      <BasicModal
+        title="Capture Imaging"
+        setOpenModal={setCaptureModal}
         cancelTitle="Cancel"
-        openModal={takeSpecimen}
+        openModal={captureModal}
         showCancelButton={true}
-        submitTitle="Save"
+        submitTitle="Capture"
         showSubmitButton={true}
         style={{ width: "100%", height: "1/2" }}
-        submitHandler={handleTakeSpecime}
+        submitHandler={handleCaptureImaging}
         size="5xl"
       >
-        <TakeSpecimen />
-      </BasicModal> */}
+        <CaptureImaging />
+      </BasicModal>
 
-      {/* // receive specimen modal */}
-      {/* <BasicModal
-        title="Fill Result"
-        setOpenModal={setReceiveSpecimen}
+      {/* // report imaging modal */}
+      <BasicModal
+        title="Report Imaging"
+        setOpenModal={setReportModal}
         cancelTitle="Cancel"
-        openModal={receiveSpecimen}
+        openModal={reportModal}
         showCancelButton={true}
         submitTitle="Save"
         showSubmitButton={true}
         size="5xl"
       >
-        <FillSpecimen />
-      </BasicModal> */}
-
-      {/* // awaiting specimen modal */}
-      {/* <BasicModal
-        title="Awaiting Approval"
-        setOpenModal={setAwaitingApproval}
-        cancelTitle="Reject"
-        openModal={awaitingApproval}
-        showCancelButton={true}
-        submitTitle="Approve"
-        showSubmitButton={true}
-        size="5xl"
-      >
-        <AwaitingApproval />
-      </BasicModal> */}
-
-      {/* final result modal */}
-
-      {/* <BasicModal
-        title="Approved Result"
-        setOpenModal={setFinalResult}
-        cancelTitle="Cancel"
-        openModal={finalResult}
-        showCancelButton={true}
-        submitTitle="Print"
-        showSubmitButton={true}
-        size="5xl"
-      >
-        <FinalResult />
-      </BasicModal> */}
+        <ReportImaging />
+      </BasicModal>
     </>
   );
 }

@@ -1,10 +1,10 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
 import {
-    Accordion,
-    AccordionItem,
-    AccordionTrigger,
-    AccordionContent,
-  } from "../../../../components/ui/accordion";
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "../../../../components/ui/accordion";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
@@ -14,13 +14,21 @@ function AwaitingApproval() {
   const [formData, setFormData] = useState("");
   const [openCommenTextArea, setOpenCommenTextArea] = useState(false);
 
+  const tests = [
+    {
+      testName: "Full Blood Count",
+      testNameBackgroundColor: "bg-green-700",
+    },
+  ];
+
   return (
     <>
       <div>
         <CustomLabHeader
           patientName="Mr. christopher Abraham"
           patientID="12345667778"
-          testName="Full Blood Count"
+          tests={tests}
+          IdName="Lab ID"
           labID="12345667778"
           patientEmail="Christopherabraham8@gmail.com"
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
@@ -317,7 +325,10 @@ function AwaitingApproval() {
       <div className="px-4 py-7">
         <div className=" flex items-center justify-start gap-3">
           <span className="font-bold text-ha-primary1">Add Comment</span>
-          <Button onClick={() => setOpenCommenTextArea(!openCommenTextArea)} className="bg-blue-100 hover:bg-blue-200">
+          <Button
+            onClick={() => setOpenCommenTextArea(!openCommenTextArea)}
+            className="bg-blue-100 hover:bg-blue-200"
+          >
             <BsFillPencilFill />
           </Button>
         </div>

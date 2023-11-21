@@ -2,7 +2,7 @@ import { useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import CustomMultiSelect from "../../../components/ui/inputSelect/inputSelect";
 import BasicModal from "../../../components/ui/modals/basicModal";
-// import NewLabOrder from "./modal/newLabOrder";
+import NewImagingOrder from "../components//modal/NewImagingOrder"
 
 const countries = ["United States", "Canada", "France", "Germany"];
 const cities = ["New York", "Toronto", "Paris", "Berlin"];
@@ -120,7 +120,7 @@ const SearchImaging = () => {
           console.log("save");
         }}
       >
-        {/* <NewLabOrder /> */}
+        <NewImagingOrder />
       </BasicModal>
     </>
   );
