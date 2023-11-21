@@ -22,7 +22,7 @@ function SideBar() {
               <span className="hidden lg:flex">Patients</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/opd" icon={FaUserDoctor}>
-              <span className="hidden lg:flex">OPD</span>
+              <span className="hidden lg:flex">See Doctor</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/laboratory" icon={MdBloodtype}>
               <span className="hidden lg:flex">Laboratory</span>
