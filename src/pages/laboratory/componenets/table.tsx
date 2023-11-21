@@ -58,9 +58,10 @@ function PatientTable() {
     {
       name: "Patient Name",
       cell: (row: Patient) => (
-        <div className="text-left">{row.patientName}</div>
+        <div className="text-left border">{row.patientName}</div>
       ),
       sortable: true,
+      // width: '10rem'
     },
     {
       name: "Patient ID",
@@ -71,7 +72,7 @@ function PatientTable() {
       name: "Order Date",
       selector: (row: Patient) => `${row.orderDate}`,
       sortable: true,
-      // width: "full",
+      width: "full",
     },
     {
       name: "Lab ID",
@@ -154,9 +155,9 @@ function PatientTable() {
       id: 1,
       firstName: "John",
       lastName: "Doe",
-      patientId: "P001sus8seeeee3e3e3e3j",
-      orderDate: "2021-09-01",
-      labId: "L0019sje7e44444444",
+      patientId: "P001sus8sR",
+      orderDate: "2021-09-01 (09:20am UTC)",
+      labId: "L0019sje7e",
       labUnit: "mg/dL",
       patientName: "abraham christopher",
       specimenType: "Urine Analysis",
