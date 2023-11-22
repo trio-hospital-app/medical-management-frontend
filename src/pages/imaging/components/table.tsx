@@ -133,7 +133,7 @@ function PatientTable() {
       cell: () => (
         <div className=" w-full flex justify-end items-center">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
-            <Dropdown arrowIcon={false} inline label={<BsThreeDotsVertical  style={{color: "black"}}/>}>
+            <Dropdown size="lg" arrowIcon={false} inline label={<BsThreeDotsVertical  style={{color: "black"}}/>}>
               <Dropdown.Item
                 onClick={() => {
                   
@@ -147,13 +147,6 @@ function PatientTable() {
                 }}
               >
                 Cancel Report
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  
-                }}
-              >
-                
               </Dropdown.Item>
             </Dropdown>
           </div>
