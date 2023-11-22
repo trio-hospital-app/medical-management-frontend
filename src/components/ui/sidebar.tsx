@@ -40,9 +40,18 @@ function SideBar() {
               <span className="hidden lg:flex">
                 {" "}
                 <Dropdown arrowIcon={true} inline label="Settings">
-                  <Dropdown.Item as={Link} to="/settings/laborataory">Laboratory</Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/radiology">Radiology</Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/forms">Forms</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/settings/users">
+                    User Management
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/settings/laborataory">
+                    Laboratory
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/settings/radiology">
+                    Radiology
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/settings/forms">
+                    Forms
+                  </Dropdown.Item>
                 </Dropdown>
               </span>
             </Sidebar.Item>
