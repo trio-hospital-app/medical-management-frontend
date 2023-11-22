@@ -1,15 +1,21 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
-import TextareaAutosize from "react-textarea-autosize";
-import { useState } from "react";
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "../../../../components/ui/accordion";
+import QuilEditor from "../QuilEditor";
+import { useState } from "react";
 
 function ReportImaging() {
-  const [formData, setFormData] = useState("");
+  const [quillData, setQuillData] = useState("");
+
+  const updateQuillData = (data: any) => {
+    setQuillData(data);
+  };
+
+  console.log(quillData);
 
   const tests = [
     {
@@ -48,7 +54,7 @@ function ReportImaging() {
         >
           <AccordionItem className="AccordionItem" value="item-1">
             <AccordionTrigger>
-              <h1 className="text-ha-primary1"> Previous Comments</h1>
+              <h1 className="text-ha-primary1">Choose Reporting Templete</h1>
             </AccordionTrigger>
             <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">
@@ -124,15 +130,8 @@ function ReportImaging() {
       </div>
 
       <div className="px-4">
-        <span className="font-bold">Add Comment</span>
-        <TextareaAutosize
-          minRows={3}
-          placeholder="Write a comment"
-          onChange={(e) => setFormData(e.target.value)}
-          className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-          value={formData}
-          maxRows={5}
-        />
+        <label htmlFor="quill" className="text-ha-primary1 font-semibold">Add Report</label>
+        <QuilEditor updateQuillData={updateQuillData} />
       </div>
     </>
   );
