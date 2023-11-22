@@ -1,4 +1,4 @@
-import { Tooltip } from "flowbite-react";
+import { Dropdown, Tooltip } from "flowbite-react";
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
@@ -12,6 +12,7 @@ import BasicModal from "../../../components/ui/modals/basicModal";
 import { Button } from "../../../components/ui/button";
 import CaptureImaging from "./modal/CaptureImaging";
 import ReportImaging from "./modal/ReportImaging";
+import { BsThreeDotsVertical } from "react-icons/bs";
 interface Patient {
   id: number;
   firstName: string;
@@ -105,8 +106,9 @@ function PatientTable() {
     {
       name: "Status",
       cell: (row: Patient) => (
-        <Button
-          className={` text-white w-[5.2rem] ${
+        <div className="w-full">
+           <Button
+          className={` text-white w-full ${
             row.status === "Report"
               ? "bg-purple-400 hover:bg-purple-500"
               : "bg-green-700 hover:bg-green-900"
@@ -121,43 +123,70 @@ function PatientTable() {
         >
           {row.status}
         </Button>
+        </div>
       ),
       selector: "status",
       sortable: true,
+      width: '120px'
     },
     {
-      cell: (row: Patient) =>
-        row.status === "Report" ? (
-          <div className="flex items-center justify-between gap-5 ">
-            <Tooltip content="Print">
-              <MdPrint
-                onClick={() => handleRowPrint(row)}
-                className="font-extrabold text-xl text-ha-primary1"
-              />
-            </Tooltip>
-            <Tooltip content="Share">
-              <MdEmail
-                onClick={() => handleRowSend(row)}
-                className="font-extrabold text-xl text-ha-primary1"
-              />
-            </Tooltip>
+      cell: () => (
+        <div className=" w-full flex justify-end items-center">
+          <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
+            <Dropdown size="lg" arrowIcon={false} inline label={<BsThreeDotsVertical  style={{color: "black"}}/>}>
+              <Dropdown.Item
+                onClick={() => {
+                  
+                }}
+              >
+                Print Report
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                 
+                }}
+              >
+                Cancel Report
+              </Dropdown.Item>
+            </Dropdown>
           </div>
-        ) : null,
-      sortable: false,
-      width: "7rem", // Adjust the width as needed
-    },
-    {
-      cell: (row: Patient) => (
-        <Tooltip content="Cancle order">
-          <MdOutlineCancel
-            onClick={() => handleRowDelete(row)}
-            className="font-extrabold text-xl text-red-400"
-          />
-        </Tooltip>
+        </div>
       ),
       sortable: false,
-      width: "3rem",
     },
+    // {
+    //   cell: (row: Patient) =>
+    //     row.status === "Report" ? (
+    //       <div className="flex items-center justify-between gap-5 ">
+    //         <Tooltip content="Print">
+    //           <MdPrint
+    //             onClick={() => handleRowPrint(row)}
+    //             className="font-extrabold text-xl text-ha-primary1"
+    //           />
+    //         </Tooltip>
+    //         <Tooltip content="Share">
+    //           <MdEmail
+    //             onClick={() => handleRowSend(row)}
+    //             className="font-extrabold text-xl text-ha-primary1"
+    //           />
+    //         </Tooltip>
+    //       </div>
+    //     ) : null,
+    //   sortable: false,
+    //   width: "7rem", // Adjust the width as needed
+    // },
+    // {
+    //   cell: (row: Patient) => (
+    //     <Tooltip content="Cancle order">
+    //       <MdOutlineCancel
+    //         onClick={() => handleRowDelete(row)}
+    //         className="font-extrabold text-xl text-red-400"
+    //       />
+    //     </Tooltip>
+    //   ),
+    //   sortable: false,
+    //   width: "3rem",
+    // },
   ];
 
   const data: Patient[] = [
