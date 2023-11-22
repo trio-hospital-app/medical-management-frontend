@@ -14,6 +14,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import Forms from "./pages/settings/forms";
 import FormBuilder from "./pages/settings/forms/builder";
 import NewPatient from "./pages/patients/newPatient";
+import Users from "./pages/settings/users";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -155,6 +156,20 @@ function App() {
                 exit="exit"
               >
                 <Nursing />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/settings/users"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Users />
               </motion.div>
             }
           />
