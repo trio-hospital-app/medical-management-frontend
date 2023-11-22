@@ -1,10 +1,12 @@
-
+import Table from "./components//table"
+import SearchImaging from "./components/SearchImaging";
 
 function Laboratory() {
     return (
       <div className="Patients">
-          OPD
-      </div>
+      <SearchImaging />
+      <Table />
+  </div>
     );
   }
   

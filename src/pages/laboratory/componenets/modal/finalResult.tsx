@@ -1,4 +1,4 @@
-import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader";
+import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
 // import Accordion from "@mui/material/Accordion";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
@@ -6,16 +6,25 @@ import CustomLabHeader from "../../../../components/ui/labHeader/CustomLabHeader
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 function FinalResult() {
+
+  const tests = [
+    {
+      testName: "Full Blood Count",
+      testNameBackgroundColor: "bg-green-700",
+    },
+  ];
   return (
     <>
       <div>
         <CustomLabHeader
           patientName="Mr. christopher Abraham"
           patientID="12345667778"
-          testName="Full Blood Count"
+          tests={tests}
           labID="12345667778"
+          IdName="Lab ID"
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
           gender="Male"
+          patientEmail="Christopherabraham8@gmail.com"
           phoneNumber="12345667778"
           religion="Christian"
           nationality="Nigeria"
@@ -23,7 +32,6 @@ function FinalResult() {
           age="32 years"
           orderedBy="Dr. Alexander Ifeanyichukwu"
           orderedDate="23-04-2023 (9:10 am UTC)"
-          testNameBackgroundColor="bg-green-700"
         />
       </div>
 

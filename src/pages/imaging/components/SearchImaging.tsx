@@ -2,13 +2,13 @@ import { useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import CustomMultiSelect from "../../../components/ui/inputSelect/inputSelect";
 import BasicModal from "../../../components/ui/modals/basicModal";
-import NewLabOrder from "./modal/newLabOrder";
+import NewImagingOrder from "../components//modal/NewImagingOrder"
 
 const countries = ["United States", "Canada", "France", "Germany"];
 const cities = ["New York", "Toronto", "Paris", "Berlin"];
 const colors = ["Red", "Blue", "Green", "Yellow"];
 
-const SearchLab = () => {
+const SearchImaging = () => {
   const [selectedServiceCenter, setSelectedServiceCenter] = useState([]);
   const [selectedLabCenter, setSelectedLabCenter] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState([]);
@@ -45,8 +45,8 @@ const SearchLab = () => {
     <>
       <div className="Patients">
         <FilterHeader
-          title="Laboratory Records"
-          buttonTitle="New Lab Order"
+          title="Imaging Records"
+          buttonTitle="New Imaging Order"
           resetFilter={resetHandler}
           search={searchHandler}
           handleCreate={() => {
@@ -108,7 +108,7 @@ const SearchLab = () => {
         </FilterHeader>
       </div>
       <BasicModal
-        title="New Lab Order"
+        title="New Imaging Order"
         setOpenModal={setNewLabOrderModal}
         openModal={newLabOrderModal}
         cancelTitle="Cancel"
@@ -119,11 +119,11 @@ const SearchLab = () => {
         submitHandler={() => {
           console.log("save");
         }}
-        >
-          <NewLabOrder />
-        </BasicModal>
+      >
+        <NewImagingOrder />
+      </BasicModal>
     </>
   );
 };
 
-export default SearchLab;
+export default SearchImaging;

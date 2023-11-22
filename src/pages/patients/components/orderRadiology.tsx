@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CustomLabHeader from "../../../components/ui/labHeader/CustomLabHeader";
+import CustomLabHeader from "../../../components/ui/customPatientCard/customPatientCard";
 import { MultiSelect } from "react-multi-select-component";
 
 const options = [
