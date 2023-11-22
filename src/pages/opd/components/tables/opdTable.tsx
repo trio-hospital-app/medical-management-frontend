@@ -151,6 +151,7 @@ function OpdTable() {
         showCancelButton={true}
         submitTitle="Submit Vitals"
         showSubmitButton={true}
+        size='4xl'
       >
         <TakeNursingVitals />
       </BasicModal>
