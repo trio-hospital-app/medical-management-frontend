@@ -43,7 +43,7 @@ function SideBar() {
                   <Dropdown.Item as={Link} to="/settings/users">
                     User Management
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/laborataory">
+                  <Dropdown.Item as={Link} to="/settings/laboratory">
                     Laboratory
                   </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/settings/radiology">
