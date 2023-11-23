@@ -92,7 +92,7 @@ const NewLabOrder = () => {
               Service Center
             </label>
             <CustomMultiSelect
-              options={convertToOptions(cities)}
+              options={convertToOptions(colors)}
               labelledBy="Select Service Center"
               onSelectChange={handleLabCenterChange}
               value={selectedLabCenter}
@@ -106,7 +106,7 @@ const NewLabOrder = () => {
             Lab Panel
           </label>
           <CustomMultiSelect
-            options={convertToOptions(cities)}
+            options={convertToOptions(countries)}
             labelledBy="Select Lab Center"
             onSelectChange={handleLabCenterChange}
             value={selectedLabCenter}
