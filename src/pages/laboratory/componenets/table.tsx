@@ -40,17 +40,18 @@ function PatientTable() {
   };
 
   const getSpecimenTypeContent = (row: Patient) => (
-    <div className="flex items-center">
-      <div
-        style={{
-          width: "1.5rem",
-          height: "1.5rem",
-          borderRadius: "50%",
-          marginRight: "8px",
-          backgroundColor: row.color,
-        }}
-      ></div>
-      {row.specimenType}
+    <div className="flex md:flex-row flex-col items-center gap-2">
+      <div>
+        <p
+          style={{
+            width: "1.5rem",
+            height: "1.5rem",
+            borderRadius: "50%",
+            backgroundColor: row.color,
+          }}
+        ></p>
+      </div>
+      <span> {row.specimenType}</span>
     </div>
   );
 
@@ -66,51 +67,45 @@ function PatientTable() {
     },
     {
       name: "Patient ID",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.patientId}</div>
-      ),
+      cell: (row: Patient) => <div className="text-left">{row.patientId}</div>,
       selector: "patientId",
       sortable: true,
     },
     {
       name: "Order Date",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.orderDate}</div>
-      ),
+      cell: (row: Patient) => <div className="text-left">{row.orderDate}</div>,
       selector: "orderDate",
       sortable: true,
       width: "full",
     },
     {
       name: "Lab ID",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.labId}</div>
-      ),
+      cell: (row: Patient) => <div className="text-left">{row.labId}</div>,
       selector: "labId",
       sortable: true,
       // width: "9rem",
     },
     {
       name: "Lab Unit",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.labUnit}</div>
-      ),
+      cell: (row: Patient) => <div className="text-left">{row.labUnit}</div>,
       selector: "labUnit",
       sortable: true,
       // width: "6rem",
     },
     {
       name: "Panel Name",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.panelName}</div>
-      ),
+      cell: (row: Patient) => <div className="text-left">{row.panelName}</div>,
       selector: "panelName",
       sortable: true,
       width: "full",
     },
     {
       name: "Specimen Type",
-      cell: (row: Patient) => getSpecimenTypeContent(row),
+      cell: (row: Patient) => (
+        <div className=" w-[10rem]">
+          {getSpecimenTypeContent(row)}
+        </div>
+      ),
       sortable: true,
       grow: 3,
     },
