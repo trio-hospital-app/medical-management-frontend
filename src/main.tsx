@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import App from "./App.tsx";
 import "./global.css";
 import { BrowserRouter } from "react-router-dom";
 import DesignerContextProvider from "./pages/settings/forms/components/context/DesignerContext.tsx";
 import { ReactQueryDevtools } from "react-query/devtools";
 import {
-  // useQuery,
-  // useMutation,
-  // useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from "react-query";
@@ -21,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <DesignerContextProvider>
           <App />
+          <ToastContainer />
         </DesignerContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
