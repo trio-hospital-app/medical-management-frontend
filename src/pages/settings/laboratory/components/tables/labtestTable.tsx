@@ -3,6 +3,9 @@ import DataTable from "react-data-table-component";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../../components/ui/button";
+import { useState } from "react";
+import BasicModal from "../../../../../components/ui/modals/basicModal";
+import NewLabTests from "../newLabTests";
 
 function LabTestsTable() {
   interface LabTest {
@@ -151,8 +154,27 @@ function LabTestsTable() {
     return luminance > 0.5;
   };
 
+  const [showCreate, setShowCreate] = useState(false);
+  const handleClick = () => {
+    setShowCreate(true);
+  };
+
   return (
     <div className="w-full">
+      {showCreate && (
+        <BasicModal
+          title="New Lab Test"
+          setOpenModal={setShowCreate}
+          cancelTitle="Cancel"
+          openModal={showCreate}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {}}
+        >
+         <NewLabTests/>
+        </BasicModal>
+      )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
         <div className="relative w-[300px]">
           <input
@@ -164,7 +186,9 @@ function LabTestsTable() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white">New Lab Test</Button>
+        <Button className="bg-ha-primary1 text-white" onClick={handleClick}>
+          New Lab Test
+        </Button>
       </div>
       <DataTable columns={columns} data={labTestData} />
     </div>

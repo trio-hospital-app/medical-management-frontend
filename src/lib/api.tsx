@@ -1,26 +1,15 @@
-import axios from "axios"
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from "axios";
 
+const client = axios.create({ baseURL: 'https://medopt-pilj.onrender.com/api/v1/' });
 
-const client = axios.create({baseURL: 'http://localhost:5000/'})
+export const request = ({ ...options }: AxiosRequestConfig) => {
+    client.defaults.headers.common.Authorization = `medopt token`;
 
+    const onSuccess = (response: AxiosResponse) => response;
+    const onError = (error: AxiosError) => {
+        console.log(error);
+        return Promise.reject(error);
+    };
 
-export const request = ({...options}) => {
-    client.defaults.headers.common.Authorization = `Bearer token`
-
-    const onSuccess = (response) => response
-    const onError = (error) => {
-        console.log(error)
-        return error
-    }
-
-    return client(options).then(onSuccess).catch(onError)
-}
-
-
-/*
-        HOW TO USE THE REQUEST FUNCTION
-
-    import request from @/lib/utils
-
-    request({url: '/chisom', method: 'post', data: {}})
-*/
+    return client(options).then(onSuccess).catch(onError);
+};

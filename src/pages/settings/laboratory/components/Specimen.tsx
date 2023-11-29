@@ -1,14 +1,36 @@
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
+import { useState } from "react";
+import BasicModal from "../../../../components/ui/modals/basicModal";
 
 function Specimen() {
+  const [showCreate, setShowCreate] = useState(false);
   const handleClick = () => {
-    // Define the behavior for the click event here
-    console.log("Button clicked!");
+    setShowCreate(true);
   };
-
   return (
     <div className="w-full">
+      {showCreate && (
+        <BasicModal
+          title="New Lab Specimen"
+          setOpenModal={setShowCreate}
+          cancelTitle="Cancel"
+          openModal={showCreate}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {}}
+        >
+          <div className="grid">
+            <label>Name Of Specimen e.g (Blood, Stool)</label>
+            <input type="text" />
+          </div>
+          <div className="grid">
+            <label>Description</label>
+            <textarea rows={5} className="border rounded-lg" />
+          </div>
+        </BasicModal>
+      )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
         <div className="relative w-[300px]">
           <input
@@ -20,7 +42,7 @@ function Specimen() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white">New Specimen</Button>
+        <Button className="bg-ha-primary1 text-white" onClick={handleClick}>New Specimen</Button>
       </div>
 
       <div className="bg-white rounded-[.5rem] py-5 px-5 grid md:grid-cols-3 gap-2">
