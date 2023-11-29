@@ -1,13 +1,13 @@
 import { useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import BasicModal from "../../../components/ui/modals/basicModal";
-import NewLabOrder from "./modal/newLabOrder";
+import NewNursingbOrder from "./modal/newNursingOrder";
 import MainSearchInput from "../../../components/ui/mainSearchInput";
 
 const SearchLab = () => {
   const [search, setSearch] = useState("");
-  const [newLabOrderModal, setNewLabOrderModal] = useState(false);
 
+  const [newLabOrderModal, setNewLabOrderModal] = useState(false);
 
   const handleChange = (event: any) => {
     setSearch(event.target.value);
@@ -19,7 +19,7 @@ const SearchLab = () => {
       console.log(search);
     }
   };
-
+  
   const resetHandler = () => {
     console.log("reset");
   };
@@ -32,15 +32,15 @@ const SearchLab = () => {
     <>
       <div className="Patients">
         <FilterHeader
-          title="Laboratory Records"
-          buttonTitle="New Lab Order"
+          title="Nursing Worklist"
+          buttonTitle="New Nursing Order"
           resetFilter={resetHandler}
           search={searchHandler}
           handleCreate={() => {
             setNewLabOrderModal(true);
           }}
         >
-          <form className="">
+          <form>
             <MainSearchInput
               Label=" Search Patient"
               value={search}
@@ -52,7 +52,7 @@ const SearchLab = () => {
         </FilterHeader>
       </div>
       <BasicModal
-        title="New Lab Order"
+        title="New Nursing Order"
         setOpenModal={setNewLabOrderModal}
         openModal={newLabOrderModal}
         cancelTitle="Cancel"
@@ -64,7 +64,7 @@ const SearchLab = () => {
           console.log("save");
         }}
       >
-        <NewLabOrder />
+        <NewNursingbOrder />
       </BasicModal>
     </>
   );
