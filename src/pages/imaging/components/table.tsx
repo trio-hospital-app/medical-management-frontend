@@ -43,24 +43,11 @@ function PatientTable() {
     {
       name: "Patient Name",
       cell: (row: Patient) => (
-        <div className="text-left">{row.patientName}</div>
+        <div className="text-left capitalize">{row.patientName}</div>
       ),
       selector: "patientName",
       sortable: true,
-      width: "10rem",
-    },
-    {
-      name: "Patient ID",
-      cell: (row: Patient) => <div className="text-left">{row.patientId}</div>,
-      selector: "patientId",
-      sortable: true,
-    },
-    {
-      name: "Imaging ID",
-      cell: (row: Patient) => <div className="text-left">{row.imagingId}</div>,
-      selector: "labId",
-      sortable: true,
-      // width: "9rem",
+      width: "full",
     },
     {
       name: "Order Date",
@@ -73,27 +60,27 @@ function PatientTable() {
     {
       name: "Ordered By",
       cell: (row: Patient) => <div className="text-left">{row.orderBy}</div>,
-      selector: "labUnit",
+      selector: "orderBy",
       sortable: true,
-      // width: "6rem",
+      width: "11rem",
     },
     {
       name: "Service Center",
       cell: (row: Patient) => (
         <div className="text-left">{row.serviceCenter}</div>
       ),
-      selector: "panelName",
+      selector: "serviceCenter",
       sortable: true,
-      // width: "full",
+      width: "11rem",
     },
     {
       name: "Observation",
       cell: (row: Patient) => (
         <div className="text-left">{row.observation}</div>
       ),
-      selector: "panelName",
+      selector: "observation",
       sortable: true,
-      width: "10rem",
+      width: "15rem",
     },
 
     {
@@ -120,7 +107,7 @@ function PatientTable() {
       ),
       selector: "status",
       sortable: true,
-      width: "8.5rem",
+      width: "full",
     },
     {
       cell: (row: Patient) => (
@@ -168,7 +155,7 @@ function PatientTable() {
       firstName: "Mason",
       lastName: "Martin",
       patientId: "P012qwerty456",
-      orderDate: "2021-09-24",
+      orderDate: "2023-11-17 13:02",
       imagingId: "Lpqr123456",
       serviceCenter: "CT Scan Center",
       patientName: "Mason Martin",

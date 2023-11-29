@@ -21,18 +21,18 @@ const SearchLab = () => {
   };
 
   const resetHandler = () => {
-    console.log("reset");
+    setSearch("");
   };
 
   const searchHandler = () => {
-    console.log("search");
+    console.log(search);
   };
 
   return (
     <>
       <div className="Patients">
         <FilterHeader
-          title="Laboratory Records"
+          title="Laboratory Workbench"
           buttonTitle="New Lab Order"
           resetFilter={resetHandler}
           search={searchHandler}

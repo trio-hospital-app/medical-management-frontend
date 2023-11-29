@@ -89,7 +89,7 @@ const NewNursingOrder = () => {
           </div>
           <div className="mb-2 w-[48%]">
             <label className="text-sm font-semibold text-ha-primary1">
-              Service Center
+              Nursing Station
             </label>
             <CustomMultiSelect
               options={convertToOptions(colors)}
@@ -97,13 +97,13 @@ const NewNursingOrder = () => {
               onSelectChange={handleLabCenterChange}
               value={selectedLabCenter}
               isMultiSelect={false}
-              placeholder="Select Service Center"
+              placeholder="Select Nursing Station"
             />
           </div>
         </div>
         <div className="mb-2 pt-5">
           <label className="text-sm font-semibold text-ha-primary1">
-            Lab Panel
+            Observation
           </label>
           <CustomMultiSelect
             options={convertToOptions(countries)}
@@ -111,7 +111,7 @@ const NewNursingOrder = () => {
             onSelectChange={handleLabCenterChange}
             value={selectedLabCenter}
             isMultiSelect={false}
-            placeholder="Select Nursing Center"
+            placeholder="Select observation"
           />
         </div>
         <div className="mb-2 pt-5">

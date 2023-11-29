@@ -86,7 +86,7 @@ function PatientTable() {
     //   // width: "9rem",
     // },
     {
-      name: "Center",
+      name: "Lab Center",
       cell: (row: Patient) => <div className="text-left">{row.labUnit}</div>,
       selector: "labUnit",
       sortable: true,

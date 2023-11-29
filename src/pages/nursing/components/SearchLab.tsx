@@ -19,20 +19,20 @@ const SearchLab = () => {
       console.log(search);
     }
   };
-  
+
   const resetHandler = () => {
-    console.log("reset");
+    setSearch("");
   };
 
   const searchHandler = () => {
-    console.log("search");
+    console.log(search);
   };
 
   return (
     <>
       <div className="Patients">
         <FilterHeader
-          title="Nursing Worklist"
+          title="Nursing Workbench"
           buttonTitle="New Nursing Order"
           resetFilter={resetHandler}
           search={searchHandler}

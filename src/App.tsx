@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/dashboard";
 import Patients from "./pages/patients";
 import PatientId from "./pages/patients/patientId";
+import NursingList from "./pages/nursing/NursingList";
 import Laboratory from "./pages/laboratory";
 import Imaging from "./pages/imaging";
 import Pharmacy from "./pages/pharmacy";
@@ -73,6 +74,20 @@ function App() {
                 exit="exit"
               >
                 <PatientId />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/nursing/:id"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <NursingList />
               </motion.div>
             }
           />
@@ -202,7 +217,7 @@ function App() {
               </motion.div>
             }
           />
-                    <Route
+          <Route
             path="/settings/laboratory"
             element={
               <motion.div

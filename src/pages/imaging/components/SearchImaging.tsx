@@ -1,9 +1,8 @@
 import { useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import BasicModal from "../../../components/ui/modals/basicModal";
-import NewImagingOrder from "../components//modal/NewImagingOrder"
+import NewImagingOrder from "../components//modal/NewImagingOrder";
 import MainSearchInput from "../../../components/ui/mainSearchInput";
-
 
 const SearchImaging = () => {
   const [search, setSearch] = useState("");
@@ -21,18 +20,18 @@ const SearchImaging = () => {
   };
 
   const resetHandler = () => {
-    console.log("reset");
+    setSearch("");
   };
 
   const searchHandler = () => {
-    console.log("search");
+    console.log(search);
   };
 
   return (
     <>
       <div className="Patients">
         <FilterHeader
-          title="Imaging Records"
+          title="Imaging Workbench"
           buttonTitle="New Imaging Order"
           resetFilter={resetHandler}
           search={searchHandler}
