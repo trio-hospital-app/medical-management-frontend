@@ -7,6 +7,9 @@ import {
 import Specimen from "./components/Specimen";
 import Departments from "./components/departments";
 import LabCenters from "./components/labCenters";
+import LabTestsTable from "./components/tables/labtestTable";
+import ObservationsTable from "./components/tables/observationsTable";
+import SpecimenContainerTable from "./components/tables/specimenContatainer";
 
 function LaboratoryManagement() {
   return (
@@ -45,15 +48,15 @@ function LaboratoryManagement() {
             <TabsContent value="departments">
               <Departments />
             </TabsContent>
-            <TabsContent value="lab-test"></TabsContent>
-            <TabsContent value="observation">
-              {/* <PharmacyTable /> */}
+            <TabsContent value="lab-test">
+              <LabTestsTable />
             </TabsContent>
+            <TabsContent value="observation"><ObservationsTable/></TabsContent>
             <TabsContent value="specimen-container">
-              {/* <NursingTable /> */}
+              <SpecimenContainerTable />
             </TabsContent>
             <TabsContent value="specimen">
-                <Specimen />
+              <Specimen />
             </TabsContent>
           </div>
         </Tabs>
