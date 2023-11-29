@@ -105,7 +105,7 @@ function PatientTable() {
     },
     {
       cell: (row: Patient) => (
-        <div className=" w-full flex justify-end items-center border border-red-600">
+        <div className=" w-full flex justify-end items-center">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown
               size="lg"
