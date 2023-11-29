@@ -12,8 +12,8 @@ interface BasicModalProps {
   size?:string;
   showSubmitButton?: boolean;
   cancelTitle: string;
-  style?: CSSProperties; // Use style as the prop name
-  submitHandler?: () => void; // Add submitHandler prop
+  style?: CSSProperties;
+  submitHandler?: () => void;
 }
 
 function BasicModal({
@@ -26,11 +26,10 @@ function BasicModal({
   submitTitle,
   showCancelButton,
   showSubmitButton,
-  style, // Rename the prop to style
-  submitHandler, // Add the submitHandler prop
+  style,
+  submitHandler,
 }: BasicModalProps) {
   const handleDefaultSubmit = () => {
-    // Default submit handler (can be customized)
     setOpenModal(false);
   };
 

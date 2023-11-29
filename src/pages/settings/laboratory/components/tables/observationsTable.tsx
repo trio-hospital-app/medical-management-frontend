@@ -2,8 +2,10 @@ import { Dropdown } from "flowbite-react";
 import DataTable from "react-data-table-component";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { Button } from "../../../../../components/ui/button";
+import BasicModal from "../../../../../components/ui/modals/basicModal";
+import { useState } from "react";
+import NewObservation from "../newObservation";
 
 function ObservationsTable() {
   interface Observation {
@@ -151,13 +153,26 @@ function ObservationsTable() {
     },
   ];
 
-  const navigate = useNavigate();
-  const handleRowClick = (observationId: number) => {
-    navigate(`/observations/${observationId}`);
+  const [showCreate, setShowCreate] = useState(false);
+  const handleClick = () => {
+    setShowCreate(true);
   };
-
   return (
     <div className="w-full">
+      {showCreate && (
+        <BasicModal
+          title="Add Observations"
+          setOpenModal={setShowCreate}
+          cancelTitle="Cancel"
+          openModal={showCreate}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {}}
+        >
+          <NewObservation />
+        </BasicModal>
+      )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
         <div className="relative w-[300px]">
           <input
@@ -169,13 +184,11 @@ function ObservationsTable() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white">New Observation</Button>
+        <Button className="bg-ha-primary1 text-white" onClick={handleClick}>
+          New Observation
+        </Button>
       </div>
-      <DataTable
-        columns={columns}
-        data={observationsData}
-        onRowClicked={(row) => handleRowClick(row.id)}
-      />
+      <DataTable columns={columns} data={observationsData} />
     </div>
   );
 }

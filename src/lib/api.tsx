@@ -1,26 +1,51 @@
-import axios from "axios"
-
-
-const client = axios.create({baseURL: 'http://localhost:5000/'})
-
-
-export const request = ({...options}) => {
-    client.defaults.headers.common.Authorization = `Bearer token`
-
-    const onSuccess = (response) => response
-    const onError = (error) => {
-        console.log(error)
-        return error
-    }
-
-    return client(options).then(onSuccess).catch(onError)
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { Cookies } from "react-cookie";
+const cookies = new Cookies();
+let access = "";
+if (typeof window !== "undefined") {
+  access = cookies.get("accessToken");
 }
 
+const client = axios.create({
+  baseURL: "https://medopt-pilj.onrender.com/api/v1/",
+});
+const token = access;
 
-/*
-        HOW TO USE THE REQUEST FUNCTION
+export const request = ({ headers, ...options }: AxiosRequestConfig) => {
+  if (token) {
+    headers = {
+      ...headers,
+      medopt: token,
+    };
+  }
 
-    import request from @/lib/utils
+  const onSuccess = (response: AxiosResponse) => {
+    return response;
+  };
 
-    request({url: '/chisom', method: 'post', data: {}})
-*/
+  const onError = (error: AxiosError) => {
+    if (error.response) {
+      const { status, data } = error.response;
+
+      if (status >= 400 && status < 500) {
+        toast.error(
+          `Client Error: ${status} - ${data.message || "Unknown Error"}`
+        );
+      } else if (status >= 500) {
+        toast.error(
+          `Server Error: ${status} - ${data.message || "Unknown Error"}`
+        );
+      }
+    } else if (error.request) {
+      toast.error("Network Error: Unable to connect to the server");
+    } else {
+      toast.error("An Error Occurred: Please try again later");
+    }
+  };
+
+  // Include headers in the request
+  return client({ ...options, headers })
+    .then(onSuccess)
+    .catch(onError);
+};

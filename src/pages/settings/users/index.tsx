@@ -3,9 +3,38 @@ import { Button } from "../../../components/ui/button";
 import UserTable from "./components/userTable";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import AddUser from "./components/addUser";
+import { useRegister } from "../../../hooks/reactQuery/useUser";
+import Loader from "../../../components/ui/loader";
 
 function Users() {
   const [showAddUser, setShowAddUser] = useState(false);
+  const [formData, setFormData] = useState<UserFormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    role: [],
+  });
+
+  interface UserFormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string[];
+  }
+
+  const {mutate, isLoading} = useRegister();
+
+  const handleSubmit = async () => {
+    await mutate(formData);
+    setShowAddUser(false);
+  };
+
+
+  if (isLoading) {
+    return <Loader/>;
+  }
+
+  
   return (
     <div>
       <BasicModal
@@ -17,12 +46,16 @@ function Users() {
         submitTitle="Submit"
         showSubmitButton={true}
         size="3xl"
+        submitHandler={() => handleSubmit()}
       >
-        <AddUser />
+        <AddUser setFormData={setFormData} />
       </BasicModal>
       <div className="px-5 py-2 flex items-center justify-between bg-white rounded-lg">
         <h1 className="font-bold text-2xl">User Management</h1>
-        <Button className="bg-ha-primary1 text-white hover:bg-blue-600" onClick={()=> setShowAddUser(true)}> 
+        <Button
+          className="bg-ha-primary1 text-white hover:bg-blue-600"
+          onClick={() => setShowAddUser(true)}
+        >
           Add User
         </Button>
       </div>
