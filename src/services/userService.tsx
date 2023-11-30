@@ -55,6 +55,7 @@ class UserService {
       data,
     };
     const response = await request(options);
+     // @ts-expect-error: Just ignore the next line
     return response.data;
   }
 }

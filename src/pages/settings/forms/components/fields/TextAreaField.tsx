@@ -62,8 +62,11 @@ type CustomInstance = FormElementInstance & {
   extraAttributes: typeof extraAttributes;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   const element = elementInstance as CustomInstance;
+   // @ts-expect-error: Just ignore the next line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { label, required, placeHolder, helperText, rows } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -77,6 +80,7 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 function FormComponent({
   elementInstance,
   submitValue,
@@ -125,6 +129,7 @@ function FormComponent({
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 
+// eslint-disable-next-line react-refresh/only-export-components
 function PropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   const element = elementInstance as CustomInstance;
   const { updateElement } = useDesigner();

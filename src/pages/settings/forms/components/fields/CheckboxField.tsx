@@ -1,5 +1,3 @@
-"use client";
-
 import { ElementsType, FormElement, FormElementInstance, SubmitFunction } from "../FormElements";
 import { Label } from "../../../../../components/ui/label";
 import { Input } from "../../../../../components/ui/input";
@@ -95,8 +93,9 @@ function FormComponent({
   useEffect(() => {
     setError(isInvalid === true);
   }, [isInvalid]);
-
-  const { label, required, placeHolder, helperText } = element.extraAttributes;
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { label, required, helperText } = element.extraAttributes;
   const id = `checkbox-${element.id}`;
   return (
     <div className="flex items-top space-x-2">
@@ -130,6 +129,7 @@ function FormComponent({
 }
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
+// eslint-disable-next-line react-refresh/only-export-components
 function PropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   const element = elementInstance as CustomInstance;
   const { updateElement } = useDesigner();

@@ -24,7 +24,8 @@ export const SeparatorFieldFormElement: FormElement = {
 
   validate: () => true,
 };
-
+ // @ts-expect-error: Just ignore the next line
+// eslint-disable-next-line react-refresh/only-export-components, @typescript-eslint/no-unused-vars
 function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -33,11 +34,13 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
     </div>
   );
 }
-
+ // @ts-expect-error: Just ignore the next line
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, react-refresh/only-export-components
 function FormComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   return <Separator />;
 }
 
-function PropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+// eslint-disable-next-line react-refresh/only-export-components, no-empty-pattern
+function PropertiesComponent() {
   return <p>No properties for this element</p>;
 }

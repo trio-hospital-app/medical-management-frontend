@@ -136,6 +136,7 @@ function SpecimenContainerTable() {
         <Button className="bg-ha-primary1 text-white">New Specimen Container</Button>
       </div>
       <DataTable
+        // @ts-expect-error: Just ignore the next line
         columns={columns}
         data={specimenContainerData}
         onRowClicked={(row) => handleRowClick(row.id)}

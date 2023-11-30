@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
 import BasicModal from "../../../../components/ui/modals/basicModal";

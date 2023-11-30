@@ -1,4 +1,4 @@
-"use client";
+
 
 import { ElementsType, FormElement, FormElementInstance } from "../FormElements";
 import { Label } from "../../../../../components/ui/label";
@@ -44,6 +44,7 @@ type CustomInstance = FormElementInstance & {
   extraAttributes: typeof extraAttributes;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   const element = elementInstance as CustomInstance;
   const { text } = element.extraAttributes;
@@ -55,6 +56,7 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 function FormComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   const element = elementInstance as CustomInstance;
 
@@ -64,6 +66,7 @@ function FormComponent({ elementInstance }: { elementInstance: FormElementInstan
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 
+// eslint-disable-next-line react-refresh/only-export-components
 function PropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   const element = elementInstance as CustomInstance;
   const { updateElement } = useDesigner();

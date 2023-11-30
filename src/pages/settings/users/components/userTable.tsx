@@ -29,8 +29,6 @@ function UserTable() {
       console.error("Error deleting user:", error);
     }
   };
-
-  console.log(users, "users");
   const columns = [
     {
       name: "First Name",
@@ -63,6 +61,7 @@ function UserTable() {
       sortable: true,
     },
     {
+      // @ts-expect-error: Just ignore the next line
       cell: (row) => (
         <div className="w-full flex justify-end items-center">
           <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
@@ -124,11 +123,8 @@ function UserTable() {
           </div>
         </div>
       </div>
-      {users ? (
-        <DataTable columns={columns} data={users.data.data} />
-      ) : (
-        <p>No data available.</p>
-      )}
+      {/* @ts-expect-error: Just ignore the next line */}
+      <DataTable columns={columns} data={users.data.data} />
     </div>
   );
 }

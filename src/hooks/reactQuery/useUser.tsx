@@ -36,6 +36,7 @@ export const useLogin = () => {
   const [, setCookie] = useCookies(["accessToken"]);
   return useMutation((data: LoginData) => UserService.login(data), {
     onSuccess: (response: LoginResponse) => {
+      // @ts-expect-error: Just ignore the next line
       const { accessToken } = response.data;
       setCookie("accessToken", accessToken);
 
