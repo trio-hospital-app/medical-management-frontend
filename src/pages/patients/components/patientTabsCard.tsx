@@ -4,7 +4,7 @@ import {
   TabsTrigger,
   TabsContent,
 } from "../../../components/ui/tabs";
-import PharmacyTable from "./tables/PharmacyTable";
+import PharmacyTable from "./tables/pharmacyTable";
 import DoctorsTable from "./tables/doctorsTable";
 import FinanceTable from "./tables/financeTable";
 import LabTable from "./tables/labTable";

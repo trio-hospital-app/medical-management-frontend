@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoMdSave } from "react-icons/io";
+import { useState } from "react";
 
 function Scheme() {
   const [schemes, setSchemes] = useState([
@@ -20,22 +20,22 @@ function Scheme() {
     ]);
   };
 
-  const handleDeleteScheme = (index) => {
+  const handleDeleteScheme = (index: number) => {
     const updatedSchemes = [...schemes];
     updatedSchemes.splice(index, 1);
     setSchemes(updatedSchemes);
   };
 
-  const handleInputChange = (index, field, value) => {
-    const updatedSchemes = [...schemes];
-    updatedSchemes[index][field] = value;
-    setSchemes(updatedSchemes);
-  };
+  // const handleInputChange = (index: number, field: string, value:string) => {
+  //   const updatedSchemes = [...schemes];
+  //   updatedSchemes[index][field] = value;
+  //   setSchemes(updatedSchemes);
+  // };
 
   return (
     <div className="grid">
       <div className=" overflow-y-auto">
-        {schemes.map((scheme, index) => (
+        {schemes.map((_, index) => (
           <div className="grid md:grid-cols-5 gap-3 items-center mt-5 bg-gray-100 p-2 rounded ">
             <div className="">
               <div className=" block">
@@ -88,7 +88,7 @@ function Scheme() {
       </div>
       <div className="flex items-center justify-between">
         <div
-          className="flex items-center justify-center gap-2 bg-ha-secondary1 p-2 mt-5 cursor-pointer rounded-md"
+          className="flex items-center justify-center gap-2 bg-ha-secondary1 p- mt-5 cursor-pointer rounded-md"
           onClick={handleAddScheme}
         >
           <FaPlus style={{ color: "#3f56cd" }} />

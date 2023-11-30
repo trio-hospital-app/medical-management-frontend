@@ -30,10 +30,12 @@ export const request = ({ headers, ...options }: AxiosRequestConfig) => {
 
       if (status >= 400 && status < 500) {
         toast.error(
+           // @ts-expect-error: Just ignore the next line
           `Client Error: ${status} - ${data.message || "Unknown Error"}`
         );
       } else if (status >= 500) {
         toast.error(
+           // @ts-expect-error: Just ignore the next line
           `Server Error: ${status} - ${data.message || "Unknown Error"}`
         );
       }

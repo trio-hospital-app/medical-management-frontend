@@ -1,4 +1,4 @@
-"use client";
+
 
 import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
@@ -10,7 +10,9 @@ const AlertDialog = AlertDialogPrimitive.Root;
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
+  // @ts-expect-error: The className prop is not recognized by AlertDialogPortalProps
 const AlertDialogPortal = ({ className, ...props }: AlertDialogPrimitive.AlertDialogPortalProps) => (
+   // @ts-expect-error: The className prop is not recognized by AlertDialogPortalProps
   <AlertDialogPrimitive.Portal className={cn(className)} {...props} />
 );
 AlertDialogPortal.displayName = AlertDialogPrimitive.Portal.displayName;

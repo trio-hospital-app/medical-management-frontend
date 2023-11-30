@@ -1,5 +1,5 @@
 import { Button } from "../../../../components/ui/button";
-
+ // @ts-expect-error: Just ignore the next line
 function Demographics({ setPresentTab }) {
   const handleNext = () => {
     setPresentTab(2);
