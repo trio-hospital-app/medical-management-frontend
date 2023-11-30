@@ -4,6 +4,7 @@ import { Button } from "../../../components/ui/button";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+
 interface Patient {
   id: number;
   firstName: string;
@@ -16,9 +17,16 @@ interface Patient {
   instructions: string;
   status: string;
   orderBy?: string;
+  date: string;
+  createdBy: string;
+  description: string;
+  scheduledDate: string;
+  scheduledBy: string;
+  closeDate: string;
+  performedBy: string;
 }
 
-function PatientTable() {
+function TaskTable() {
   const handleRowDelete = (row: Patient) => {
     console.log(row);
   };
@@ -39,53 +47,86 @@ function PatientTable() {
       grow: 2,
     },
     {
-      name: "Order Date",
+      name: "Date",
       cell: (row: Patient) => (
         <div className="text-left" onClick={() => handleRowClick(row.id)}>
-          {row.orderDate}
+          {row.date}
         </div>
       ),
-      selector: (row: Patient) => row.orderDate,
+      selector: (row: Patient) => row.date,
       sortable: true,
       width: "9rem",
     },
     {
-      name: "Ordered By",
+      name: "Created By",
       cell: (row: Patient) => (
         <div className="text-left" onClick={() => handleRowClick(row.id)}>
-          {row.orderBy}
+          {row.createdBy}
         </div>
       ),
-      selector: (row: Patient) => row.orderBy,
+      selector: (row: Patient) => row.createdBy,
       sortable: true,
       width: "11rem",
     },
     {
-      name: "Service Center",
+      name: "Description",
       cell: (row: Patient) => (
         <div className="text-left" onClick={() => handleRowClick(row.id)}>
-          {row.serviceCenter}
+          {row.description}
         </div>
       ),
-      selector: (row: Patient) => row.serviceCenter,
-      sortable: true,
-      grow: 2,
-    },
-    {
-      name: "Instructions",
-      cell: (row: Patient) => (
-        <div className="text-left" onClick={() => handleRowClick(row.id)}>
-          {row.instructions}
-        </div>
-      ),
-      selector: (row: Patient) => row.instructions,
+      selector: (row: Patient) => row.description,
       sortable: true,
       grow: 3,
     },
     {
+      name: "Scheduled Date",
+      cell: (row: Patient) => (
+        <div className="text-left" onClick={() => handleRowClick(row.id)}>
+          {row.scheduledDate}
+        </div>
+      ),
+      selector: (row: Patient) => row.scheduledDate,
+      sortable: true,
+      width: "9rem",
+    },
+    {
+      name: "Scheduled By",
+      cell: (row: Patient) => (
+        <div className="text-left" onClick={() => handleRowClick(row.id)}>
+          {row.scheduledBy}
+        </div>
+      ),
+      selector: (row: Patient) => row.scheduledBy,
+      sortable: true,
+      width: "11rem",
+    },
+    {
+      name: "Close Date",
+      cell: (row: Patient) => (
+        <div className="text-left" onClick={() => handleRowClick(row.id)}>
+          {row.closeDate}
+        </div>
+      ),
+      selector: (row: Patient) => row.closeDate,
+      sortable: true,
+      width: "9rem",
+    },
+    {
+      name: "Performed By",
+      cell: (row: Patient) => (
+        <div className="text-left" onClick={() => handleRowClick(row.id)}>
+          {row.performedBy}
+        </div>
+      ),
+      selector: (row: Patient) => row.performedBy,
+      sortable: true,
+      width: "11rem",
+    },
+    {
       name: "Status",
       cell: (row: Patient) => (
-        <div className="">
+        <div className="w-full">
           <Button
             className={` text-white w-full ${
               row.status === "Scheduled"
@@ -136,6 +177,13 @@ function PatientTable() {
       instructions: "give patient 2 glasses of water before the test",
       status: "Scheduled",
       orderBy: "Dr. Christopher Johnson",
+      date: "2021-09-22",
+      createdBy: "Dr. Christopher Johnson",
+      description: "Sample description 1",
+      scheduledDate: "2021-09-22",
+      scheduledBy: "Dr. Christopher Johnson",
+      closeDate: "2021-09-23",
+      performedBy: "Dr. Christopher Johnson",
     },
     {
       id: 2,
@@ -146,54 +194,18 @@ function PatientTable() {
       imagingId: "Lpqr123456",
       serviceCenter: "CT Scan Center",
       patientName: "Mason Martin",
-      instructions: "give patient 2 maleria tablets before the test",
+      instructions: "give patient 2 malaria tablets before the test",
       status: "Open",
       orderBy: "Dr. Elizabeth White",
-    },
-    {
-      id: 3,
-      firstName: "Ava",
-      lastName: "Cooper",
-      patientId: "3",
-      orderDate: "2021-09-26",
-      imagingId: "Lmno987654",
-      serviceCenter: "Ultrasound Department",
-      patientName: "Ava Cooper",
-      instructions: "GIve patient 5 injections before the test",
-      status: "Scheduled",
-      orderBy: "Dr. Benjamin Davis",
-    },
-    {
-      id: 4,
-      firstName: "Elijah",
-      lastName: "Diaz",
-      patientId: "4",
-      orderDate: "2021-09-28",
-      imagingId: "Lstu123456",
-      serviceCenter: "Cardiology Clinic",
-      patientName: "Elijah Diaz",
-      instructions: "Give patient 2 glasses of water before the test",
-      status: "Open",
-      orderBy: "Dr. Madison Smith",
-    },
-    {
-      id: 5,
-      firstName: "Oliver",
-      lastName: "Baker",
-      patientId: "5",
-      orderDate: "2021-09-30",
-      imagingId: "Lqwer123456",
-      serviceCenter: "Endoscopy Unit",
-      patientName: "Oliver Baker",
-      instructions: "Give patient 2 glasses of water before the test",
-      status: "Scheduled",
-      orderBy: "Dr. William Johnson",
+      date: "2023-11-17",
+      createdBy: "Dr. Elizabeth White",
+      description: "Sample description 2",
+      scheduledDate: "N/A",
+      scheduledBy: "N/A",
+      closeDate: "N/A",
+      performedBy: "N/A",
     },
   ];
-
-  // expnad rows
-
-  // const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
 
   const navigate = useNavigate();
 
@@ -218,4 +230,4 @@ function PatientTable() {
   );
 }
 
-export default PatientTable;
+export default TaskTable;
