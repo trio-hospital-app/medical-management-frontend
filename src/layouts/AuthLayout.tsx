@@ -1,33 +1,63 @@
-import { Button, Label } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { useState } from "react";
+import { useLogin } from "../hooks/reactQuery/useUser";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/ui/loader";
 
 function AuthLayout() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { mutate, isLoading, isSuccess } = useLogin();
+
+  const handleLogin = async () => {
+    try {
+      await mutate({ username, password });
+    } catch (error) {
+      console.error("Login failed", error);
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isSuccess) {
+    navigate("/dashboard");
+  }
   return (
     <div className="flex h-screen">
-      {/* Left Section (Form) */}
       <div className="flex-1 flex flex-col justify-center items-center  text-black bg-ha-primary1">
         <div className="space-y-6 w-[80%] flex items-center flex-col">
-          <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white">
-            Sign In
-          </h3>
+          <h3 className="text-2xl font-extrabold text-white">Sign In</h3>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="username" value="Your Username" />
+              <label htmlFor="username" className="text-white">
+                Your Username
+              </label>
             </div>
             <input
               id="username"
               className="w-[300px]"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
               required
             />
           </div>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="password" value="Your password" />
+              <label htmlFor="password" className="text-white">
+                Your Password
+              </label>
             </div>
-            <input id="password" type="password" className="w-[300px]" required/>
+            <input
+              id="password"
+              type="password"
+              className="w-[300px]"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
           </div>
           <div className="flex justify-between">
             <a
@@ -37,7 +67,7 @@ function AuthLayout() {
               Lost Password?
             </a>
           </div>
-          <div className="w-[300px] flex">
+          <div className="w-[300px] flex" onClick={handleLogin}>
             <Button className="w-full">Log in to your account</Button>
           </div>
         </div>

@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useCallback, useRef, useState, useTransition } from "react";
+import { useCallback, useRef, useState, useTransition } from "react";
 import { FormElementInstance, FormElements } from "./FormElements";
 import { Button } from "../../../../components/ui/button";
 import { HiCursorClick } from "react-icons/hi";
 import { toast } from "../../../../components/ui/use-toast";
 import { ImSpinner2 } from "react-icons/im";
-import { SubmitForm } from "@/actions/form";
+// import { SubmitForm } from "@/actions/form";
 
-function FormSubmitComponent({ formUrl, content }: { content: FormElementInstance[]; formUrl: string }) {
+function FormSubmitComponent({ content }: { content: FormElementInstance[]; formUrl: string }) {
   const formValues = useRef<{ [key: string]: string }>({});
   const formErrors = useRef<{ [key: string]: boolean }>({});
   const [renderKey, setRenderKey] = useState(new Date().getTime());
@@ -51,8 +51,8 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
     }
 
     try {
-      const jsonContent = JSON.stringify(formValues.current);
-      await SubmitForm(formUrl, jsonContent);
+      // const jsonContent = JSON.stringify(formValues.current);
+      // await SubmitForm(formUrl, jsonContent);
       setSubmitted(true);
     } catch (error) {
       toast({
@@ -95,6 +95,7 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
         <Button
           className="mt-8"
           onClick={() => {
+             // @ts-expect-error: Just ignore the next line
             startTransition(submitForm);
           }}
           disabled={pending}

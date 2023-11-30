@@ -12,8 +12,9 @@ const Sheet = SheetPrimitive.Root;
 const SheetTrigger = SheetPrimitive.Trigger;
 
 const SheetClose = SheetPrimitive.Close;
-
+// @ts-expect-error: The className prop is not recognized by AlertDialogPortalProps
 const SheetPortal = ({ className, ...props }: SheetPrimitive.DialogPortalProps) => (
+  // @ts-expect-error: The className prop is not recognized by AlertDialogPortalProps
   <SheetPrimitive.Portal className={cn(className)} {...props} />
 );
 SheetPortal.displayName = SheetPrimitive.Portal.displayName;

@@ -1,9 +1,34 @@
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+// import { QueryClient } from "react-query";
+import {
+  useDeleteUser,
+  useGetUsers,
+} from "../../../../hooks/reactQuery/useUser";
+import Loader from "../../../../components/ui/loader";
 
 function UserTable() {
+  const { data: users, isLoading } = useGetUsers();
+  const { mutate: deleteUser, isLoading: isDeleteUserLoading } =
+    useDeleteUser();
+  // const queryClient = new QueryClient();
+  if (isLoading || isDeleteUserLoading) {
+    return <Loader />;
+  }
+
+  const handleDeleteUser = async (id: string) => {
+    try {
+      // Perform the deletion
+      await deleteUser(id);
+
+      // Manually refetch the user data after successful deletion
+      // await queryClient.refetchQueries("users");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
   const columns = [
     {
       name: "First Name",
@@ -26,16 +51,17 @@ function UserTable() {
       sortable: true,
     },
     {
-      name: "Last Login",
-      selector: "lastLogin",
+      name: "Status",
+      selector: "status",
       sortable: true,
     },
     {
-      name: "Password Recovery",
-      selector: "passwordRecovery",
+      name: "Online",
+      selector: "online",
       sortable: true,
     },
     {
+      // @ts-expect-error: Just ignore the next line
       cell: (row) => (
         <div className="w-full flex justify-end items-center">
           <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
@@ -54,8 +80,7 @@ function UserTable() {
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => {
-                  // Handle delete user
-                  console.log("Delete User Clicked");
+                  handleDeleteUser(row.id);
                 }}
               >
                 Delete User
@@ -84,49 +109,9 @@ function UserTable() {
     },
   ];
 
-  const data = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      username: "johndoe",
-      email: "john.doe@example.com",
-      lastLogin: "2022-02-15",
-      passwordRecovery: "2022-02-20",
-    },
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      username: "johndoe",
-      email: "john.doe@example.com",
-      lastLogin: "2022-02-15",
-      passwordRecovery: "2022-02-20",
-    },
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      username: "johndoe",
-      email: "john.doe@example.com",
-      lastLogin: "2022-02-15",
-      passwordRecovery: "2022-02-20",
-    },
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      username: "johndoe",
-      email: "john.doe@example.com",
-      lastLogin: "2022-02-15",
-      passwordRecovery: "2022-02-20",
-    },
-    // Add more user data objects as needed
-  ];
-
   return (
     <div className="w-full">
-      <div className='border-b py-2 flex items-center justify-end'>
+      <div className="border-b py-2 flex items-center justify-end">
         <div className="relative w-[300px]">
           <input
             type="text"
@@ -138,7 +123,8 @@ function UserTable() {
           </div>
         </div>
       </div>
-      <DataTable columns={columns} data={data} />
+      {/* @ts-expect-error: Just ignore the next line */}
+      <DataTable columns={columns} data={users.data.data} />
     </div>
   );
 }

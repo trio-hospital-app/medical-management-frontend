@@ -1,16 +1,38 @@
-import React from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
+import BasicModal from "../../../../components/ui/modals/basicModal";
 
 function LabCenters() {
-  // Placeholder handleClick function
+  const [showCreate, setShowCreate] = useState(false);
   const handleClick = () => {
-    // Define the behavior for the click event here
-    console.log("Button clicked!");
+    setShowCreate(true);
   };
 
   return (
     <div className="w-full">
+      {showCreate && (
+        <BasicModal
+          title="New Lab Center"
+          setOpenModal={setShowCreate}
+          cancelTitle="Cancel"
+          openModal={showCreate}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {}}
+        >
+          <div className="grid">
+            <label>Name Of Center</label>
+            <input type="text" />
+          </div>
+          <div className="grid">
+            <label>Description</label>
+            <textarea rows={5}  className="border rounded-lg"/>
+          </div>
+        
+        </BasicModal>
+      )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
         <div className="relative w-[300px]">
           <input
@@ -22,7 +44,9 @@ function LabCenters() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white">New Lab Center</Button>
+        <Button className="bg-ha-primary1 text-white" onClick={handleClick}>
+          New Lab Center
+        </Button>
       </div>
 
       <div className="bg-white rounded-[.5rem] py-5 px-5 grid md:grid-cols-3 gap-2">

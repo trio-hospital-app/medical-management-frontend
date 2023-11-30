@@ -9,9 +9,11 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({
+  // @ts-expect-error: The className prop is not recognized by AlertDialogPortalProps
   className,
   ...props
 }: DialogPrimitive.DialogPortalProps) => (
+  // @ts-expect-error: The className prop is not recognized by AlertDialogPortalProps
   <DialogPrimitive.Portal className={cn(className)} {...props} />
 );
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;

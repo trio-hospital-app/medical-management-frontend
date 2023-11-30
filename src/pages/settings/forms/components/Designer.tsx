@@ -138,7 +138,8 @@ function Designer() {
 }
 
 function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
-  const { removeElement, selectedElement, setSelectedElement } = useDesigner();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { removeElement, setSelectedElement } = useDesigner();
 
   const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
   const topHalf = useDroppable({

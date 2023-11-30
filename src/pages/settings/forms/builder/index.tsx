@@ -21,14 +21,15 @@ import SaveFormBtn from "../components/SaveFormBtn";
 import PublishFormBtn from "../components/PublishFormBtn";
 
 function FormBuilder() {
-  const [form, setForm] = useState({
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const form = {
     // Provide default values for form properties
     id:1,
     content: "[]", // Default to an empty array as JSON string
     published: false,
     shareURL: "example-share-url",
     // Add other form properties with default values as needed
-  });
+  }
   const { setElements, setSelectedElement } = useDesigner();
   const [isReady, setIsReady] = useState(false);
 
