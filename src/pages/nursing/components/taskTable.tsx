@@ -1,9 +1,13 @@
 import { Dropdown } from "flowbite-react";
 import DataTable from "react-data-table-component";
 import { Button } from "../../../components/ui/button";
-
+import { useRef } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import AddTask from "./modal/addTask";
+import BasicModal from "../../../components/ui/modals/basicModal";
+import { useState } from "react";
+import MainSearchInput from "../../../components/ui/mainSearchInput";
 
 interface Patient {
   id: number;
@@ -27,25 +31,44 @@ interface Patient {
 }
 
 function TaskTable() {
+  const addTaskRef = useRef<any>(null);
+
+  const [addTask, setAddTask] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const handleChange = (event: any) => {
+    setSearch(event.target.value);
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      console.log(search);
+    }
+  };
+
+  // ref to call handleApiCall in AddTask
+  const handleApiCallFromAddTask = () => {
+    if (addTaskRef.current) {
+      addTaskRef.current.handleApiCall();
+    }
+  };
+
+  const addTaskHandler = () => {
+    console.log("add task");
+    handleApiCallFromAddTask();
+  };
+
+  const openAddTaskModal = () => {
+    setAddTask(true);
+    console.log("add task");
+  };
+
   const handleRowDelete = (row: Patient) => {
     console.log(row);
   };
 
   const columns: any = [
-    {
-      name: "Patient Name",
-      cell: (row: Patient) => (
-        <div
-          className="text-left capitalize"
-          onClick={() => handleRowClick(row.id)}
-        >
-          {row.patientName}
-        </div>
-      ),
-      selector: (row: Patient) => row.patientName,
-      sortable: true,
-      grow: 2,
-    },
     {
       name: "Date",
       cell: (row: Patient) => (
@@ -55,7 +78,7 @@ function TaskTable() {
       ),
       selector: (row: Patient) => row.date,
       sortable: true,
-      width: "9rem",
+      width: "full",
     },
     {
       name: "Created By",
@@ -66,7 +89,7 @@ function TaskTable() {
       ),
       selector: (row: Patient) => row.createdBy,
       sortable: true,
-      width: "11rem",
+      width: "full",
     },
     {
       name: "Description",
@@ -77,7 +100,7 @@ function TaskTable() {
       ),
       selector: (row: Patient) => row.description,
       sortable: true,
-      grow: 3,
+      // grow: 3,
     },
     {
       name: "Scheduled Date",
@@ -99,7 +122,7 @@ function TaskTable() {
       ),
       selector: (row: Patient) => row.scheduledBy,
       sortable: true,
-      width: "11rem",
+      width: "full",
     },
     {
       name: "Close Date",
@@ -110,7 +133,7 @@ function TaskTable() {
       ),
       selector: (row: Patient) => row.closeDate,
       sortable: true,
-      width: "9rem",
+      width: "full",
     },
     {
       name: "Performed By",
@@ -121,14 +144,14 @@ function TaskTable() {
       ),
       selector: (row: Patient) => row.performedBy,
       sortable: true,
-      width: "11rem",
+      width: "full",
     },
     {
       name: "Status",
       cell: (row: Patient) => (
         <div className="w-full">
           <Button
-            className={` text-white w-full ${
+            className={` text-white ${
               row.status === "Scheduled"
                 ? "bg-purple-400 hover:bg-purple-500"
                 : "bg-green-700 hover:bg-green-900"
@@ -200,10 +223,10 @@ function TaskTable() {
       date: "2023-11-17",
       createdBy: "Dr. Elizabeth White",
       description: "Sample description 2",
-      scheduledDate: "N/A",
-      scheduledBy: "N/A",
-      closeDate: "N/A",
-      performedBy: "N/A",
+      scheduledDate: "2021-09-22",
+      scheduledBy: "Christoper Johnson",
+      closeDate: "",
+      performedBy: "",
     },
   ];
 
@@ -216,7 +239,27 @@ function TaskTable() {
 
   return (
     <>
-      <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
+      <div>
+        <div className="border-b-2 shadow pb-5">
+          <span className="font-bold text-ha-primary1 px-10 py-2">Tasks</span>
+        </div>
+        <div className="flex flex-col md:flex-row justify-end items-center gap-5 px-10 pt-5">
+          <MainSearchInput
+            value={search}
+            placeholder="Search by Name"
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
+
+          <Button
+            onClick={openAddTaskModal}
+            className="hover:bg-blue-400 text-white bg-blue-500 w-[auto] mt-2"
+          >
+            Add Task
+          </Button>
+        </div>
+      </div>
+      <div className="rounded-[.5rem] px-10 bg-white shadow">
         <DataTable
           columns={columns}
           data={data}
@@ -226,6 +269,19 @@ function TaskTable() {
           }}
         />
       </div>
+      <BasicModal
+        title="Add Task"
+        setOpenModal={setAddTask}
+        cancelTitle="Cancel"
+        openModal={addTask}
+        showCancelButton={true}
+        submitTitle="Save"
+        showSubmitButton={true}
+        submitHandler={addTaskHandler}
+        size="5xl"
+      >
+        <AddTask ref={addTaskRef} />
+      </BasicModal>
     </>
   );
 }

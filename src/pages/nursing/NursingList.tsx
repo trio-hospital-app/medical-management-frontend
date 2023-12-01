@@ -2,19 +2,39 @@ import { useNavigate } from "react-router-dom";
 import CustomPatientCard from "../../components/ui/customPatientCard/customPatientCard";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import TaskTable from "./components/taskTable";
+import MainSearchInput from "../../components/ui/mainSearchInput";
+import { useState } from "react";
+import { Button } from "../../components/ui/button";
 
 const NursingList = () => {
   const navigate = useNavigate();
-  const goback = () => {
+  const [search, setSearch] = useState("");
+
+  const goBackHandler = () => {
     console.log("go back");
     navigate(-1);
   };
+
+  const addTaskHandler = () => {
+    console.log("add task");
+  };
+  const handleChange = (event: any) => {
+    setSearch(event.target.value);
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      console.log(search);
+    }
+  };
+
   return (
     <>
       <div>
         <div
           className="ml-5 flex items-center justify-start gap-1 w-[10%] my-5 cursor-pointer"
-          onClick={goback}
+          onClick={goBackHandler}
         >
           <div className="w-[2rem]">
             <KeyboardBackspaceIcon />
@@ -62,7 +82,9 @@ const NursingList = () => {
           </div>
         </div>
         <div className="py-5 my-5 bg-white shadow">
-          <TaskTable/>
+          
+          {/* tsk table  */}
+          <TaskTable />
         </div>
       </div>
     </>
