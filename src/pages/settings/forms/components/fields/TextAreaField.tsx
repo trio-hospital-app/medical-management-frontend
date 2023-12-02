@@ -65,7 +65,7 @@ type CustomInstance = FormElementInstance & {
 // eslint-disable-next-line react-refresh/only-export-components
 function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   const element = elementInstance as CustomInstance;
-   // @ts-expect-error: Just ignore the next line
+   
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { label, required, placeHolder, helperText, rows } = element.extraAttributes;
   return (

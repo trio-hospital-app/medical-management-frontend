@@ -2,41 +2,83 @@ import { FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoMdSave } from "react-icons/io";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAddPatient } from "../../../../hooks/reactQuery/usePatients";
+import Loader from "../../../../components/ui/loader";
+import { toast } from "react-toastify";
+import { Button } from "../../../../components/ui/button";
 
-function Scheme() {
-  const [schemes, setSchemes] = useState([
-    {
-      schemeType: "",
-      enrolleeId: "",
-      relationship: "",
-      expirationDate: "",
-    },
-  ]);
+function Scheme({ patient, setPatient, setPresentTab }) {
+  const navigate = useNavigate()
+  const [schemeData, setSchemeData] = useState({
+    schemes: [
+      {
+        schemeType: "",
+        enrolleeId: "",
+        relationship: "",
+        expirationDate: "",
+      },
+    ],
+  });
 
   const handleAddScheme = () => {
-    setSchemes([
-      ...schemes,
-      { schemeType: "", enrolleeId: "", relationship: "", expirationDate: "" },
-    ]);
+    setSchemeData((prevData) => ({
+      schemes: [
+        ...prevData.schemes,
+        {
+          schemeType: "",
+          enrolleeId: "",
+          relationship: "",
+          expirationDate: "",
+        },
+      ],
+    }));
   };
 
   const handleDeleteScheme = (index: number) => {
-    const updatedSchemes = [...schemes];
-    updatedSchemes.splice(index, 1);
-    setSchemes(updatedSchemes);
+    setSchemeData((prevData) => {
+      const updatedSchemes = [...prevData.schemes];
+      updatedSchemes.splice(index, 1);
+      return {
+        schemes: updatedSchemes,
+      };
+    });
   };
 
-  // const handleInputChange = (index: number, field: string, value:string) => {
-  //   const updatedSchemes = [...schemes];
-  //   updatedSchemes[index][field] = value;
-  //   setSchemes(updatedSchemes);
-  // };
+  const { mutate, isLoading, data } = useAddPatient();
+  if (isLoading) {
+    return <Loader />;
+  }
 
+  if (data && data?.status) {
+    toast.success("Patient added successfully");
+    navigate('/patients')
+  }
+
+  const handleSaveRecord = async () => {
+    // Attach schemeData to the patient.address object
+    setPatient((prevPatient) => ({
+      ...prevPatient,
+      address: {
+        ...prevPatient.address,
+        schemes: schemeData.schemes,
+      },
+    }));
+
+    await mutate(patient);
+  };
+  const handleBack = (e) => {
+    e.preventDefault();
+    setPresentTab(2);
+  };
   return (
     <div className="grid">
       <div className=" overflow-y-auto">
-        {schemes.map((_, index) => (
-          <div className="grid md:grid-cols-5 gap-3 items-center mt-5 bg-gray-100 p-2 rounded ">
+        {schemeData.schemes.map((scheme, index) => (
+          <div
+            key={index}
+            className="grid md:grid-cols-5 gap-3 items-center mt-5 bg-gray-100 p-2 rounded "
+          >
             <div className="">
               <div className=" block">
                 <label>Scheme</label>
@@ -88,18 +130,27 @@ function Scheme() {
       </div>
       <div className="flex items-center justify-between">
         <div
-          className="flex items-center justify-center gap-2 bg-ha-secondary1 p- mt-5 cursor-pointer rounded-md"
+          className="flex items-center w-[15%] justify-center gap-2 bg-ha-secondary1 p- mt-5 cursor-pointer rounded-md"
           onClick={handleAddScheme}
         >
           <FaPlus style={{ color: "#3f56cd" }} />
           <span className="text-ha-primary1">Add Scheme</span>
         </div>
-        <div
-          className="flex items-center justify-center gap-2 bg-ha-primary1 py-2 px-5 mt-5 cursor-pointer rounded-md"
-          onClick={handleAddScheme}
-        >
-          <IoMdSave style={{ color: "white" }} />
-          <span className="text-white">Save Patient Record</span>
+
+        <div className="flex items-center justify-end mt-5 gap-2">
+          <Button
+            className="hover:bg-blue-400 text-ha-primary1 border border-ha-primary1 w-[100px]"
+            onClick={handleBack}
+          >
+            Go Back
+          </Button>
+          <div
+            className="flex items-center justify-center gap-2 bg-ha-primary1 py-2 px-5 cursor-pointer rounded-md"
+            onClick={handleSaveRecord}
+          >
+            <IoMdSave style={{ color: "white" }} />
+            <span className="text-white">Save Patient Record</span>
+          </div>
         </div>
       </div>
     </div>

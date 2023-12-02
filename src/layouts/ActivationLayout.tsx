@@ -1,35 +1,52 @@
 import { Button } from "flowbite-react";
-import { useState } from "react";
-import { useLogin } from "../hooks/reactQuery/useUser";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useActivate } from "../hooks/reactQuery/useUser";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/ui/loader";
+import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
 
-function AuthLayout() {
+function ActivationLayout() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { mutate, isLoading, data } = useLogin();
+  const { mutate, isLoading, data } = useActivate();
+  const [, setCookie] = useCookies(["accessToken"]);
+  const { token } = useParams();
 
-  if(data && data?.status){
-    navigate('/dashboard')
+
+  useEffect(() => {
+    if (token) {
+      setCookie("accessToken", token);
+    }
+  }, [token]);
+
+  if(data?.status){
+    toast.success("Account activated successfully");
+    navigate('/login')
   }
   
-  const handleLogin = async () => {
+  const handleActivate = async () => {
     try {
-      await mutate({ username, password });
+      await mutate(
+        { username, password });
     } catch (error) {
       console.error("Login failed", error);
     }
   };
 
+
   if (isLoading) {
     return <Loader />;
   }
+
   return (
     <div className="flex h-screen">
       <div className="flex-1 flex flex-col justify-center items-center  text-black bg-ha-primary1">
         <div className="space-y-6 w-[80%] flex items-center flex-col">
-          <h3 className="text-2xl font-extrabold text-white">Sign In</h3>
+          <h3 className="text-2xl font-extrabold text-white">
+            User Activation
+          </h3>
           <div>
             <div className="mb-2 block">
               <label htmlFor="username" className="text-white">
@@ -59,16 +76,8 @@ function AuthLayout() {
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
-          <div className="flex justify-between">
-            <a
-              href="#"
-              className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
-            >
-              Lost Password?
-            </a>
-          </div>
-          <div className="w-[300px] flex" onClick={handleLogin}>
-            <Button className="w-full">Log in to your account</Button>
+          <div className="w-[300px] flex" onClick={handleActivate}>
+            <Button className="w-full">Activate your account</Button>
           </div>
         </div>
       </div>
@@ -79,11 +88,10 @@ function AuthLayout() {
           alt="Image description"
           style={{ width: "90%", height: "100%", objectFit: "contain" }}
         />
-
         <div />
       </div>
     </div>
   );
 }
 
-export default AuthLayout;
+export default ActivationLayout;

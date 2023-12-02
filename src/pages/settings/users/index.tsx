@@ -5,6 +5,9 @@ import BasicModal from "../../../components/ui/modals/basicModal";
 import AddUser from "./components/addUser";
 import { useRegister } from "../../../hooks/reactQuery/useUser";
 import Loader from "../../../components/ui/loader";
+import { toast } from "react-toastify";
+
+
 
 function Users() {
   const [showAddUser, setShowAddUser] = useState(false);
@@ -14,7 +17,6 @@ function Users() {
     email: "",
     role: [],
   });
-
   interface UserFormData {
     firstName: string;
     lastName: string;
@@ -22,17 +24,23 @@ function Users() {
     role: string[];
   }
 
-  const {mutate, isLoading} = useRegister();
-
-  const handleSubmit = async () => {
-    await mutate(formData);
-    setShowAddUser(false);
-  };
-
+  const {mutate, isLoading, data} = useRegister();
 
   if (isLoading) {
     return <Loader/>;
   }
+
+  if(data && data.status){
+    toast.success('User Created')
+  }
+
+  const handleSubmit = async () => {
+    await mutate(formData);
+    setShowAddUser(false);
+    toast.success('user added successfully')
+  };
+
+
 
   
   return (

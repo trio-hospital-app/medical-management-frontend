@@ -33,7 +33,7 @@ function SaveFormBtn({ id }: { id: number }) {
       className="gap-2"
       disabled={loading}
       onClick={() => {
-         // @ts-expect-error: Just ignore the next line
+         
         startTransition(updateFormContent);
       }}
     >

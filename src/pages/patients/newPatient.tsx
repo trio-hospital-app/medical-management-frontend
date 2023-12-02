@@ -10,6 +10,18 @@ import Scheme from "./components/newPatientFrom/scheme";
 const NewPatient = () => {
   const navigate = useNavigate();
   const [presentTab, setPresentTab] = useState(0);
+  const [patient, setPatient] = useState({
+    firstName: "",
+    lastName: "",
+    middleName: "",
+    gender: "",
+    phone: "",
+    occupation: "",
+    address: {
+      nextAppointment: null
+    },
+    salutation: "",
+  });
 
   return (
     <div className="">
@@ -49,12 +61,32 @@ const NewPatient = () => {
             activeStep={presentTab}
           />
         </div>
-            <form>
-              {presentTab === 0 && <PersonalInfo setPresentTab={setPresentTab}/>}
-              {presentTab === 1 && <Demographics setPresentTab={setPresentTab}/>}
-              {presentTab === 2 && <NextOfKin setPresentTab={setPresentTab}/>}
-              {presentTab === 3 && <Scheme/>}
-            </form>
+        <form>
+          {presentTab === 0 && (
+            <PersonalInfo
+              setPresentTab={setPresentTab}
+              patient={patient}
+              setPatient={setPatient}
+            />
+          )}
+          {presentTab === 1 && (
+            <Demographics
+              setPresentTab={setPresentTab}
+              patient={patient}
+              setPatient={setPatient}
+            />
+          )}
+          {presentTab === 2 && (
+            <NextOfKin
+              setPresentTab={setPresentTab}
+              setPatient={setPatient}
+              patient={patient}
+            />
+          )}
+          {presentTab === 3 && (
+            <Scheme  patient={patient} setPatient={setPatient} setPresentTab={setPresentTab}/>
+          )}
+        </form>
       </div>
     </div>
   );

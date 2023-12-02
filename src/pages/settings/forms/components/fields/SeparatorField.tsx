@@ -24,7 +24,7 @@ export const SeparatorFieldFormElement: FormElement = {
 
   validate: () => true,
 };
- // @ts-expect-error: Just ignore the next line
+ 
 // eslint-disable-next-line react-refresh/only-export-components, @typescript-eslint/no-unused-vars
 function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   return (
@@ -34,7 +34,7 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
     </div>
   );
 }
- // @ts-expect-error: Just ignore the next line
+ 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react-refresh/only-export-components
 function FormComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
   return <Separator />;
