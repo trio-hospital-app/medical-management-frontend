@@ -54,7 +54,7 @@ function ReportImaging() {
         >
           <AccordionItem className="AccordionItem" value="item-1">
             <AccordionTrigger>
-              <h1 className="text-ha-primary1">Choose Reporting Templete</h1>
+              <h1 className="text-ha-primary1">Choose Reporting Templete </h1>
             </AccordionTrigger>
             <AccordionContent>
               <div className="bg-gray-300 py-3 rounded-[1rem]">

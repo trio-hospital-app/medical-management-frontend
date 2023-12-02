@@ -40,17 +40,18 @@ function PatientTable() {
   };
 
   const getSpecimenTypeContent = (row: Patient) => (
-    <div className="flex items-center">
-      <div
-        style={{
-          width: "1.5rem",
-          height: "1.5rem",
-          borderRadius: "50%",
-          marginRight: "8px",
-          backgroundColor: row.color,
-        }}
-      ></div>
-      {row.specimenType}
+    <div className="flex md:flex-row flex-col items-center gap-2">
+      <div>
+        <p
+          style={{
+            width: "1.5rem",
+            height: "1.5rem",
+            borderRadius: "50%",
+            backgroundColor: row.color,
+          }}
+        ></p>
+      </div>
+      <span> {row.specimenType}</span>
     </div>
   );
 
@@ -62,57 +63,51 @@ function PatientTable() {
       ),
       selector: "patientName",
       sortable: true,
-      width: "10rem",
+      width: "full",
     },
-    {
-      name: "Patient ID",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.patientId}</div>
-      ),
-      selector: "patientId",
-      sortable: true,
-    },
+    // {
+    //   name: "Patient ID",
+    //   cell: (row: Patient) => <div className="text-left">{row.patientId}</div>,
+    //   selector: "patientId",
+    //   sortable: true,
+    // },
     {
       name: "Order Date",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.orderDate}</div>
-      ),
+      cell: (row: Patient) => <div className="text-left">{row.orderDate}</div>,
       selector: "orderDate",
       sortable: true,
       width: "full",
     },
+    // {
+    //   name: "Lab ID",
+    //   cell: (row: Patient) => <div className="text-left">{row.labId}</div>,
+    //   selector: "labId",
+    //   sortable: true,
+    //   // width: "9rem",
+    // },
     {
-      name: "Lab ID",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.labId}</div>
-      ),
-      selector: "labId",
-      sortable: true,
-      // width: "9rem",
-    },
-    {
-      name: "Lab Unit",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.labUnit}</div>
-      ),
+      name: "Lab Center",
+      cell: (row: Patient) => <div className="text-left">{row.labUnit}</div>,
       selector: "labUnit",
       sortable: true,
-      // width: "6rem",
+      // width: "full",
     },
     {
       name: "Panel Name",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.panelName}</div>
-      ),
+      cell: (row: Patient) => <div className="text-left">{row.panelName}</div>,
       selector: "panelName",
       sortable: true,
-      width: "full",
+      // width: "full",
     },
     {
       name: "Specimen Type",
-      cell: (row: Patient) => getSpecimenTypeContent(row),
+      cell: (row: Patient) => (
+        <div className="">
+          {getSpecimenTypeContent(row)}
+        </div>
+      ),
       sortable: true,
-      grow: 3,
+      // grow: 3,
     },
     {
       name: "Status",
@@ -173,10 +168,10 @@ function PatientTable() {
       firstName: "John",
       lastName: "Doe",
       patientId: "P001sus8sR",
-      orderDate: "2021-09-01 (09:20am UTC)",
+      orderDate: "2023-11-28 08:18",
       labId: "L0019sje7e",
-      labUnit: "mg/dL",
-      patientName: "abraham christopher",
+      labUnit: "Chemistry",
+      patientName: "abraham christopher ",
       specimenType: "Urine Analysis",
       panelName: "Hepatitis B Panel",
       status: "Take Specimen",
@@ -187,9 +182,9 @@ function PatientTable() {
       firstName: "Jane",
       lastName: "Smith",
       patientId: "2jdhd84ne9",
-      orderDate: "2021-09-03",
+      orderDate: "2023-11-28 08:18",
       labId: "3jj388eiw0",
-      labUnit: "mmol/L",
+      labUnit: "Serelogy",
       patientName: "Jane Smith",
       specimenType: "Blood Gas Analysis and me",
       panelName: "Hepatitis B Panel",
@@ -203,7 +198,7 @@ function PatientTable() {
       patientId: "P003s7sjsu",
       orderDate: "2021-09-05",
       labId: "32ekd0dle8",
-      labUnit: "g/L",
+      labUnit: "Serelogy",
       patientName: "Alice Johnson",
       specimenType: "Saliva Analysis",
       status: "Awaiting Approval",
@@ -215,9 +210,9 @@ function PatientTable() {
       firstName: "Bob",
       lastName: "Williams",
       patientId: "ksos9skrhi004",
-      orderDate: "2021-09-07",
+      orderDate: "2023-11-28 08:18",
       labId: "L0048sksoe",
-      labUnit: 75,
+      labUnit: "Microbiology",
       patientName: "Bob Williams",
       specimenType: "Hair Analysis",
       status: "Final Result",
@@ -231,7 +226,7 @@ function PatientTable() {
       patientId: "P009lkdid9005",
       orderDate: "2021-09-09",
       labId: "Lhdhjsdks094030305",
-      labUnit: "mg/dL",
+      labUnit: "Microbiology",
       patientName: "Eva Anderson",
       specimenType: "Blood",
       status: "Take Specimen",
