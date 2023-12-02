@@ -1,31 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import CustomPatientCard from "../../components/ui/customPatientCard/customPatientCard";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import TaskTable from "./components/taskTable";
-import { useState } from "react";
 
 const NursingList = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const goBackHandler = () => {
     console.log("go back");
     navigate(-1);
   };
 
-  const addTaskHandler = () => {
-    console.log("add task");
-  };
-  const handleChange = (event: any) => {
-    setSearch(event.target.value);
-  };
+  // const addTaskHandler = () => {
+  //   console.log("add task");
+  // };
+  // const handleChange = (event: any) => {
+  //   setSearch(event.target.value);
+  // };
 
-  const handleKeyDown = (event: any) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      console.log(search);
-    }
-  };
+  // const handleKeyDown = (event: any) => {
+  //   if (event.key === "Enter") {
+  //     event.preventDefault();
+  //     console.log(search);
+  //   }
+  // };
 
   return (
     <>

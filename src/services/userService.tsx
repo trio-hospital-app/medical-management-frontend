@@ -13,21 +13,21 @@ export interface LoginData {
   username: string;
   password: string;
 }
-export interface LoginResponse {
-  token: string;
-}
 
 export interface UsersResponse {
   users: User[];
 }
 
 class UserService {
+
   public async register(user: User) {
+
     const options: AxiosRequestConfig = {
       method: "POST",
       url: "/register",
       data: user,
     };
+
     const response = await request(options);
     return response;
   }
@@ -48,15 +48,37 @@ class UserService {
     };
     return request(options);
   }
-  public async login(data: LoginData): Promise<LoginResponse> {
+
+
+  public async login(data: LoginData){
     const options: AxiosRequestConfig = {
       method: "POST",
       url: "/login",
       data,
     };
+    
+    return await request(options);
+  }
+
+  public async updateUser(id: string, data:object){
+    const options: AxiosRequestConfig = {
+      method: "POST",
+      url: `/user/${id}`,
+      data,
+    };
+    
+    return await request(options);
+  }
+
+  public async activate(data: LoginData){
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: "/activate",
+      data,
+    };
     const response = await request(options);
-     // @ts-expect-error: Just ignore the next line
-    return response.data;
+     
+    return response;
   }
 }
 

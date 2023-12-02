@@ -129,7 +129,7 @@ function RadiologyTable() {
   const handleRowClick = (patientId: number) => {
     navigate(`/patients/${patientId}`);
   };
- // @ts-expect-error: Just ignore the next line
+ 
   const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
   
 
