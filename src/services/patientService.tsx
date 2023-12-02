@@ -41,6 +41,15 @@ class PatientService {
     return response;
   }
 
+  public async searchPatient(param: string | number) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/search/patient?search=${param}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async updatePatient(id: string, data: NewPatientData) {
     const options: AxiosRequestConfig = {
       method: "PUT",

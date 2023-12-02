@@ -1,21 +1,36 @@
-
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ElementsType, FormElement, FormElementInstance, SubmitFunction } from "../FormElements";
+import {
+  ElementsType,
+  FormElement,
+  FormElementInstance,
+  SubmitFunction,
+} from "../FormElements";
 import useDesigner from "../hooks/useDesigner";
 import { Input } from "../../../../../components/ui/input";
 import { Label } from "../../../../../components/ui/label";
 import { cn } from "../../../../../lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
+// import format from "date-fns";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { Button } from "../../../../../components/ui/button";
 import { Calendar } from "../../../../../components/ui/calendar";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../../../../components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "../../../../../components/ui/popover";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../../../../components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../../../../components/ui/popover";
 import { Switch } from "../../../../../components/ui/switch";
 
 const type: ElementsType = "DateField";
@@ -47,7 +62,10 @@ export const DateFieldFormElement: FormElement = {
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 
-  validate: (formElement: FormElementInstance, currentValue: string): boolean => {
+  validate: (
+    formElement: FormElementInstance,
+    currentValue: string
+  ): boolean => {
     const element = formElement as CustomInstance;
     if (element.extraAttributes.required) {
       return currentValue.length > 0;
@@ -62,7 +80,11 @@ type CustomInstance = FormElementInstance & {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+function DesignerComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) {
   const element = elementInstance as CustomInstance;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { label, required, helperText } = element.extraAttributes;
@@ -72,11 +94,16 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
         {label}
         {required && "*"}
       </Label>
-      <Button variant={"outline"} className="w-full justify-start text-left font-normal">
+      <Button
+        variant={"outline"}
+        className="w-full justify-start text-left font-normal"
+      >
         <CalendarIcon className="mr-2 h-4 w-4" />
         <span>Pick a date</span>
       </Button>
-      {helperText && <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>}
+      {helperText && (
+        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+      )}
     </div>
   );
 }
@@ -95,7 +122,9 @@ function FormComponent({
 }) {
   const element = elementInstance as CustomInstance;
 
-  const [date, setDate] = useState<Date | undefined>(defaultValue ? new Date(defaultValue) : undefined);
+  const [date, setDate] = useState<Date | undefined>(
+    defaultValue ? new Date(defaultValue) : undefined
+  );
 
   const [error, setError] = useState(false);
 
@@ -118,11 +147,11 @@ function FormComponent({
             className={cn(
               "w-full justify-start text-left font-normal",
               !date && "text-muted-foreground",
-              error && "border-red-500",
+              error && "border-red-500"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
+            {/* {date ? format(date, "PPP") : <span>Pick a date</span>} */}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
@@ -142,14 +171,27 @@ function FormComponent({
           />
         </PopoverContent>
       </Popover>
-      {helperText && <p className={cn("text-muted-foreground text-[0.8rem]", error && "text-red-500")}>{helperText}</p>}
+      {helperText && (
+        <p
+          className={cn(
+            "text-muted-foreground text-[0.8rem]",
+            error && "text-red-500"
+          )}
+        >
+          {helperText}
+        </p>
+      )}
     </div>
   );
 }
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 // eslint-disable-next-line react-refresh/only-export-components
-function PropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+function PropertiesComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) {
   const element = elementInstance as CustomInstance;
   const { updateElement } = useDesigner();
   const form = useForm<propertiesFormSchemaType>({
@@ -202,7 +244,8 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                 />
               </FormControl>
               <FormDescription>
-                The label of the field. <br /> It will be displayed above the field
+                The label of the field. <br /> It will be displayed above the
+                field
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -243,7 +286,10 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                 </FormDescription>
               </div>
               <FormControl>
-                <Switch checked={field.value} onCheckedChange={field.onChange} />
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
