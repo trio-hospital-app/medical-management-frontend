@@ -3,6 +3,7 @@ import CustomPatientCard from "../../../../components/ui/customPatientCard/custo
 import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect";
 import TextareaAutosize from "react-textarea-autosize";
 import SearchComponent from "../../../../components/ui/SearchComponent";
+import { useSearchPatient } from "../../../../hooks/reactQuery/usePatients";
 
 const countries = ["United States", "Canada", "France", "Germany"];
 const cities = ["New York", "Toronto", "Paris", "Berlin"];
@@ -10,22 +11,30 @@ const colors = ["Red", "Blue", "Green", "Yellow"];
 
 const NewLabOrder = () => {
   const [search, setSearch] = useState("");
-  const [foundRecode, setFoundRecode] = useState(false);
+  const [foundRecode, setFoundRecord] = useState(false);
   const [selectedLabCenter, setSelectedLabCenter] = useState([]);
   const [formComment, setFormComment] = useState("");
+
+  const { data, isLoading, refetch } = useSearchPatient(search);
+  if (isLoading) return <div>Loading...</div>;
+
+  console.log(data);
 
   const handleChange = (event: any) => {
     setSearch(event.target.value);
   };
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = async (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (event.key === "Enter") {
       event.preventDefault();
+      await refetch();
       console.log(search);
       if (search.trim() === "Abraham") {
-        setFoundRecode(true);
+        setFoundRecord(true);
       } else {
-        setFoundRecode(false);
+        setFoundRecord(false);
       }
     }
   };
