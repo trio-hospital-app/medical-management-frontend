@@ -2,9 +2,7 @@ import { useNavigate } from "react-router-dom";
 import CustomPatientCard from "../../components/ui/customPatientCard/customPatientCard";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import TaskTable from "./components/taskTable";
-import MainSearchInput from "../../components/ui/mainSearchInput";
 import { useState } from "react";
-import { Button } from "../../components/ui/button";
 
 const NursingList = () => {
   const navigate = useNavigate();

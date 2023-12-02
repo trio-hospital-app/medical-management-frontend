@@ -85,7 +85,7 @@ function PatientTable() {
     {
       name: "Status",
       cell: (row: Patient) => (
-        <div className="">
+        <div>
           <Button
             className={` text-white w-full ${
               row.status === "Scheduled"
