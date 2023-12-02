@@ -1,6 +1,6 @@
 import { Avatar, Dropdown } from "flowbite-react";
 
-function PatientInfoHeader() {
+function PatientInfoHeader({patientData}) {
   return (
     <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
       <div className="flex md:flex-row flex-col md:items-center justify-between border-b">

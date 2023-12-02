@@ -18,6 +18,7 @@ const NewPatient = () => {
     phone: "",
     occupation: "",
     address: {
+      image: 'https://cdn-icons-png.flaticon.com/512/666/666201.png',
       nextAppointment: null
     },
     salutation: "",
