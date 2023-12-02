@@ -16,7 +16,7 @@ class PatientService {
   public async addPatient(data: NewPatientData) {
     const options: AxiosRequestConfig = {
       method: "POST",
-      url: "/patient",
+      url: "/patients",
       data,
     };
     const response = await request(options);

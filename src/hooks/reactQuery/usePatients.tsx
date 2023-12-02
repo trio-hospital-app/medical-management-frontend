@@ -1,4 +1,3 @@
-// usePatients.ts
 import { useQuery, useMutation, QueryClient } from "react-query";
 import PatientService, {  NewPatientData } from "../../services/patientService";
 

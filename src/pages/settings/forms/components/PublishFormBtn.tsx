@@ -63,7 +63,7 @@ function PublishFormBtn({ id }: { id: number }) {
             disabled={loading}
             onClick={(e) => {
               e.preventDefault();
-               
+               // @ts-expect-error: Just ignore the next line
               startTransition(publishForm);
             }}
           >

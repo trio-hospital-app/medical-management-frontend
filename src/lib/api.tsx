@@ -28,7 +28,7 @@ export const request = ({ headers, ...options }: AxiosRequestConfig) => {
   }
 
   const onSuccess = (response: AxiosResponse) => {
-    return response;
+    return response.data
   };
 
   const onError = (error: AxiosError) => {
@@ -37,17 +37,17 @@ export const request = ({ headers, ...options }: AxiosRequestConfig) => {
   
       if (status === 401 || status === 403) {
         toast.error(
-          `Client Error: ${status} - ${(data as { message?: string })?.message || "Unknown Error, try Again"}`
+          `Client Error: ${status} - ${(data as { message?: string })?.message || "Error, try Again"}`
         );
         // Redirect to the login route for authentication
         navigateToLogin();
       } else if (status >= 400 && status < 500) {
         toast.error(
-          `Client Error: ${status} - ${(data as { message?: string })?.message || "Unknown Error, try Again"}`
+          `Client Error: ${status} - ${(data as { message?: string })?.message || "Error, try Again"}`
         );
       } else if (status >= 500) {
         toast.error(
-          `Server Error: ${status} - ${(data as { message?: string })?.message || "Unknown Error, try Again"}`
+          `Server Error: ${status} - ${(data as { message?: string })?.message || "Error, try Again"}`
         );
       }
     } else if (error.request) {

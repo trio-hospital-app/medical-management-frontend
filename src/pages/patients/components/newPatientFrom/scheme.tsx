@@ -46,6 +46,7 @@ function Scheme({ patient, setPatient, setPresentTab }) {
   };
 
   const { mutate, isLoading, data } = useAddPatient();
+
   if (isLoading) {
     return <Loader />;
   }
@@ -53,7 +54,7 @@ function Scheme({ patient, setPatient, setPresentTab }) {
   if (data && data?.status) {
     toast.success("Patient added successfully");
     navigate('/patients')
-  }
+  } 
 
   const handleSaveRecord = async () => {
     // Attach schemeData to the patient.address object
@@ -67,14 +68,16 @@ function Scheme({ patient, setPatient, setPresentTab }) {
 
     await mutate(patient);
   };
+
   const handleBack = (e) => {
     e.preventDefault();
     setPresentTab(2);
   };
+
   return (
     <div className="grid">
       <div className=" overflow-y-auto">
-        {schemeData.schemes.map((scheme, index) => (
+        {schemeData.schemes.map((_scheme, index) => (
           <div
             key={index}
             className="grid md:grid-cols-5 gap-3 items-center mt-5 bg-gray-100 p-2 rounded "

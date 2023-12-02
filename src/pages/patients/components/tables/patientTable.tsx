@@ -18,18 +18,23 @@ function PatientTable() {
 
   const {data:patientsData, isLoading} = useGetPatients()
 
-
+  console.log(patientsData, 'patientsData')
 
   if (isLoading) {
     return <Loader />;
   }
 
   interface Patient {
-    id: number;
+    lastAppointment: number;
+    phone: string,
     firstName: string;
     lastName: string;
     patientId: string;
     gender: string;
+    address: {
+      dob: string
+    };
+    id: string;
     dateOfBirth: string;
     phoneNumber: string;
     lastAppointmentDate: string;
@@ -55,7 +60,7 @@ function PatientTable() {
     },
     {
       name: "Date of Birth",
-      selector: (row: Patient) => row.address.dob,
+      selector: (row: Patient) => row.address?.dob,
       sortable: true,
       with: "200px",
     },
@@ -114,7 +119,7 @@ function PatientTable() {
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
         columns={columns}
-        data={patientsData?.data?.data.patients}
+        data={patientsData?.data.patients}
         onRowClicked={(row) => handleRowClick(row.id)}
       />
       {/* lab modal */}

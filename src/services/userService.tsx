@@ -19,12 +19,15 @@ export interface UsersResponse {
 }
 
 class UserService {
+
   public async register(user: User) {
+
     const options: AxiosRequestConfig = {
       method: "POST",
       url: "/register",
       data: user,
     };
+
     const response = await request(options);
     return response;
   }
@@ -45,10 +48,22 @@ class UserService {
     };
     return request(options);
   }
+
+
   public async login(data: LoginData){
     const options: AxiosRequestConfig = {
       method: "POST",
       url: "/login",
+      data,
+    };
+    
+    return await request(options);
+  }
+
+  public async updateUser(id: string, data:object){
+    const options: AxiosRequestConfig = {
+      method: "POST",
+      url: `/user/${id}`,
       data,
     };
     

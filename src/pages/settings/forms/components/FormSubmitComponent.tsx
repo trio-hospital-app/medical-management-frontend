@@ -95,7 +95,7 @@ function FormSubmitComponent({ content }: { content: FormElementInstance[]; form
         <Button
           className="mt-8"
           onClick={() => {
-             
+             // @ts-expect-error: Just ignore the next line
             startTransition(submitForm);
           }}
           disabled={pending}

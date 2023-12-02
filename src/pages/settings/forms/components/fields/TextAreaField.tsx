@@ -67,7 +67,7 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
   const element = elementInstance as CustomInstance;
    
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { label, required, placeHolder, helperText, rows } = element.extraAttributes;
+  const { label, required, placeHolder, helperText } = element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
       <Label>

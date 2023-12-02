@@ -1,6 +1,7 @@
-"use client";
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ElementsType, FormElement, FormElementInstance } from "../FormElements";
+import { ElementsType, FormElement } from "../FormElements";
 import { Label } from "../../../../../components/ui/label";
 
 import { RiSeparator } from "react-icons/ri";
@@ -25,8 +26,7 @@ export const SeparatorFieldFormElement: FormElement = {
   validate: () => true,
 };
  
-// eslint-disable-next-line react-refresh/only-export-components, @typescript-eslint/no-unused-vars
-function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+function DesignerComponent() {
   return (
     <div className="flex flex-col gap-2 w-full">
       <Label className="text-muted-foreground">Separator field</Label>
@@ -35,12 +35,10 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
   );
 }
  
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, react-refresh/only-export-components
-function FormComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+function FormComponent() {
   return <Separator />;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components, no-empty-pattern
 function PropertiesComponent() {
   return <p>No properties for this element</p>;
 }
