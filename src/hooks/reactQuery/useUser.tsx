@@ -38,7 +38,7 @@ export const useLogin = () => {
       if (response) {
         console.log("response:", response);
         // Check if the response exists (not void)
-        setCookie("accessToken", response.data?.data?.accessToken);
+        setCookie("accessToken", response.data?.accessToken);
         queryClient.invalidateQueries("login");
       } else {
         // Handle the case where the response is void

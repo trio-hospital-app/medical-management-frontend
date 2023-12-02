@@ -139,7 +139,7 @@ const AddTask = forwardRef((_props, ref) => {
 
       <div className="px-10 py-5 bg-white shadow border flex items-start justify-start gap-5 flex-col">
         <div className="flex items-start justify-center flex-col">
-          <span className="text-sm font-semibold text-gray-500">
+          <span className="text-sm font-semibold text-ha-primary1">
             Instruction
           </span>
           <span className="font-semibold capitalize">
@@ -168,6 +168,7 @@ const AddTask = forwardRef((_props, ref) => {
                 value={task.selectedTaskType}
                 onChange={(e) => handleTaskTypeChange(e, index)}
                 className="w-full"
+                
               >
                 <option value="" disabled>
                   Select Task Type
