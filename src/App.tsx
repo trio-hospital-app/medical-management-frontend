@@ -18,6 +18,7 @@ import NewPatient from "./pages/patients/newPatient";
 import Users from "./pages/settings/users";
 import LaboratoryManagement from "./pages/settings/laboratory";
 import RadiologyManagement from "./pages/settings/radiology";
+import ActivationLayout from "./layouts/ActivationLayout";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -33,7 +34,7 @@ function App() {
       <Routes>
         {/* login route */}
         <Route path="/login" element={<AuthLayout />} />
-
+        <Route path="/activate/:token" element={<ActivationLayout />} />
         {/* routes in the applayout */}
         <Route path="/" element={<AppLayout />}>
           <Route

@@ -4,7 +4,6 @@ import { useCookies } from "react-cookie";
 import UserService, {
   User,
   LoginData,
-  LoginResponse,
 } from "../../services/userService";
 
 // Create a new instance of QueryClient if it doesn't exist
@@ -35,12 +34,21 @@ export const useDeleteUser = () => {
 export const useLogin = () => {
   const [, setCookie] = useCookies(["accessToken"]);
   return useMutation((data: LoginData) => UserService.login(data), {
-    onSuccess: (response: LoginResponse) => {
-      // @ts-expect-error: Just ignore the next line
-      const { accessToken } = response.data;
-      setCookie("accessToken", accessToken);
+    onSuccess: (response) => {
+      if (response) {
+        console.log("response:", response);
+        // Check if the response exists (not void)
+        setCookie("accessToken", response.data?.data?.accessToken);
+        queryClient.invalidateQueries("login");
+      } else {
+        // Handle the case where the response is void
+        console.error("Login response is void");
+      }
 
-      queryClient.invalidateQueries("login");
     },
   });
+};
+
+export const useActivate = () => {
+  return useMutation((data: LoginData) => UserService.activate(data));
 };

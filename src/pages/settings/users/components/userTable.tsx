@@ -8,23 +8,23 @@ import {
   useGetUsers,
 } from "../../../../hooks/reactQuery/useUser";
 import Loader from "../../../../components/ui/loader";
+import { toast } from "react-toastify";
 
 function UserTable() {
   const { data: users, isLoading } = useGetUsers();
-  const { mutate: deleteUser, isLoading: isDeleteUserLoading } =
+  const { mutate: deleteUser, isLoading: isDeleteUserLoading, data:DeleteUserData } =
     useDeleteUser();
   // const queryClient = new QueryClient();
   if (isLoading || isDeleteUserLoading) {
     return <Loader />;
   }
+  if(DeleteUserData && DeleteUserData?.status){
+    toast.success('User Deleted')
+  }
 
   const handleDeleteUser = async (id: string) => {
     try {
-      // Perform the deletion
       await deleteUser(id);
-
-      // Manually refetch the user data after successful deletion
-      // await queryClient.refetchQueries("users");
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -61,7 +61,7 @@ function UserTable() {
       sortable: true,
     },
     {
-      // @ts-expect-error: Just ignore the next line
+      
       cell: (row) => (
         <div className="w-full flex justify-end items-center">
           <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">

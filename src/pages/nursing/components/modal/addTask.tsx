@@ -14,7 +14,7 @@ const multiSelectDatas = [
   { label: "Bed", value: "Bed" },
 ];
 
-const AddTask = forwardRef((props, ref) => {
+const AddTask = forwardRef((_props, ref) => {
   const [tasks, setTasks] = useState([
     {
       selectedTaskType: "",
@@ -48,6 +48,7 @@ const AddTask = forwardRef((props, ref) => {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleNursingService = (selectedItems: any, index: number) => {
     setTasks((prevTasks) =>
       prevTasks.map((task, i) =>

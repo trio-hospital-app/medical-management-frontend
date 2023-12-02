@@ -10,23 +10,23 @@ const options = [
   { label: "Nursing", value: "Nursing" },
 ];
 
- // @ts-expect-error: Just ignore the next line
+ 
 function AddUser({ setFormData }) {
   const [selected, setSelected] = useState([]);
 
 
   useEffect(() => {
-     // @ts-expect-error: Just ignore the next line
+     
     setFormData((prevData) => ({
       ...prevData,
-       // @ts-expect-error: Just ignore the next line
+       
       role: selected.map((item) => item?.value),
     }));
   }, [selected, setFormData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-     // @ts-expect-error: Just ignore the next line
+     
     setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
 

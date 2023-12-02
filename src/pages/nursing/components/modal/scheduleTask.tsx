@@ -9,7 +9,7 @@ const multiSelectDatas = [
   { label: "Drugs", value: "Drugs" },
   { label: "Bed", value: "Bed" },
 ];
-const ScheduleTask = forwardRef((props, ref) => {
+const ScheduleTask = forwardRef((_props, ref) => {
   const [formData, setFormData] = useState("");
   const [selectNursingService, setSelectNursingService] = useState([]);
 
@@ -19,6 +19,7 @@ const ScheduleTask = forwardRef((props, ref) => {
     console.log(selectNursingService);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleNursingService = (selectedItems: any) => {
     setSelectNursingService(selectedItems);
   };
