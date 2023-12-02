@@ -9,10 +9,12 @@ const SearchLab = () => {
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
 
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
     setSearch(event.target.value);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();

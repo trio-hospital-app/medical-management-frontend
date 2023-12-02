@@ -35,7 +35,7 @@ class PatientService {
   public async getPatientById(id: string) {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: `/patients/${id}`,
+      url: `/patient/${id}`,
     };
     const response = await request(options);
     return response;
