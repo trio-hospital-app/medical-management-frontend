@@ -229,17 +229,17 @@ const AddTask = forwardRef((props, ref) => {
               </div>
               <div className="w-full">
                 <div className=" block">
-                  <label htmlFor="patientid">Service Center</label>
+                  <label htmlFor="patientid">Nursing Services</label>
                 </div>
                 <CustomMultiSelect
                   options={multiSelectDatas}
-                  labelledBy="Select Service Center"
+                  labelledBy="Select Nursing Services"
                   onSelectChange={(selectedItems) =>
                     handleNursingService(selectedItems, index)
                   }
                   value={task.nursingService}
                   isMultiSelect={true}
-                  placeholder="Select Service Center"
+                  placeholder="Select Nursing Services"
                 />
               </div>
             </div>
