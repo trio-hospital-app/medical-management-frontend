@@ -1,32 +1,38 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import CustomPatientCard from "../../../../components/ui/customPatientCard/customPatientCard";
 import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect";
 import TextareaAutosize from "react-textarea-autosize";
 import SearchComponent from "../../../../components/ui/SearchComponent";
 import { useSearchPatient } from "../../../../hooks/reactQuery/usePatients";
+import { useGetClinicPanel } from "../../../../hooks/reactQuery/useClinicPanels";
 import { useGetClinicCenter } from "../../../../hooks/reactQuery/useClinicCenters";
+import { useGetSpecimen } from "../../../../hooks/reactQuery/useSpecimens";
 import Loader from "../../../../components/ui/loader";
 
-const countries = ["United States", "Canada", "France", "Germany"];
 const cities = ["New York", "Toronto", "Paris", "Berlin"];
-const colors = ["Red", "Blue", "Green", "Yellow"];
 
-const NewLabOrder = () => {
+const NewLabOrder = forwardRef((_props, ref) => {
   const [search, setSearch] = useState("");
   const [selectedLabCenter, setSelectedLabCenter] = useState([]);
+  const [selectLabPanel, setselectLabPanel] = useState([]);
+  const [selectSpecimen, setselectSpecimen] = useState([]);
   const [formComment, setFormComment] = useState("");
   const { data: pateintData, isLoading, refetch } = useSearchPatient(search);
   const { data: clinicCenterData } = useGetClinicCenter();
-  const foundRecord = pateintData?.status;
+  const { data: clinicPanelData } = useGetClinicPanel();
+  const { data: specimenData } = useGetSpecimen();
 
+  // function to set the search patien text
   const handleChange = (event: any) => {
     setSearch(event.target.value);
   };
 
-
-  // clinic center drop down data
+  // lab drop down data
   const clinicCenters = clinicCenterData?.data || [];
+  const clinicPanels = clinicPanelData?.data || [];
+  const specimens = specimenData?.data || [];
 
+  // console.log(specimenData.data);
   //function to search pateint
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLInputElement>
@@ -37,17 +43,21 @@ const NewLabOrder = () => {
     }
   };
 
-  const convertToOptions = (data: string[]) => {
-    return data.map((item) => ({ label: item, value: item }));
-  };
-
-  const handleLabCenterChange = (selectedItems: any) => {
-    console.log("Selected Lab Center:", selectedItems);
-    setSelectedLabCenter(selectedItems);
-  };
+  // if patient is found render it true/ false
+  const foundRecord = pateintData?.status;
 
   //patient info to render
   const patient = pateintData?.data[0];
+  //patient id to to sent to backen
+  const patientId = patient?.patientId;
+
+  const convertToOptions = (data: string[]) => {
+    return data.map((item, index) => ({
+      label: item,
+      value: item,
+      key: index,
+    }));
+  };
 
   // calculate age
   const calculateAge = (dob: string) => {
@@ -62,6 +72,30 @@ const NewLabOrder = () => {
     const currentYear = new Date().getFullYear();
     return currentYear - birthYear;
   };
+
+  const handleLabCenterChange = (selectedItems: any) => {
+    console.log("Selected Lab Center:", selectedItems);
+    setSelectedLabCenter(selectedItems);
+  };
+  const handleLabPanelChange = (selectedItems: any) => {
+    console.log("Selected lab panel:", selectedItems);
+    setselectLabPanel(selectedItems);
+  };
+  const handleSpecimenChange = (selectedItems: any) => {
+    console.log("Selected specimen type:", selectedItems);
+    setselectSpecimen(selectedItems);
+  };
+
+  const handleAddNewLabApi = () => {
+    console.log(patientId);
+    console.log(selectedLabCenter);
+    console.log(selectLabPanel);
+    console.log(selectSpecimen);
+    console.log(formComment);
+  };
+  useImperativeHandle(ref, () => ({
+    handleAddNewLabApi,
+  }));
 
   return (
     <div>
@@ -81,7 +115,7 @@ const NewLabOrder = () => {
       {foundRecord && patient && (
         <div>
           <CustomPatientCard
-            key={patient.id} // Make sure to set a unique key for the item
+            key={patient.id}
             patientName={`${patient?.salutation} ${patient?.firstName} ${patient?.middleName} ${patient?.lastName}`}
             patientID={patient?.patientId}
             patientEmail={patient.address.email}
@@ -110,6 +144,7 @@ const NewLabOrder = () => {
               value={selectedLabCenter}
               isMultiSelect={false}
               placeholder="Scheme"
+              key="scheme"
             />
           </div>
           <div className="mb-2 w-[48%]">
@@ -119,14 +154,18 @@ const NewLabOrder = () => {
             <CustomMultiSelect
               options={clinicCenters.map((center) => ({
                 label: center.center,
-                value: center.center,
+                value: center.id,
               }))}
               labelledBy="Select Service Center"
               onSelectChange={handleLabCenterChange}
-              value={selectedLabCenter}
+              value={(Array?.isArray(selectedLabCenter)
+                ? selectedLabCenter
+                : []
+              ).map((item) => item.id)}
               isMultiSelect={false}
               placeholder="Select Service Center"
             />
+            ˝
           </div>
         </div>
         <div className="mb-2 pt-5">
@@ -134,14 +173,38 @@ const NewLabOrder = () => {
             Lab Panel
           </label>
           <CustomMultiSelect
-            options={convertToOptions(countries)}
+            options={clinicPanels.map((panel) => ({
+              label: panel.panel,
+              value: panel.id,
+            }))}
             labelledBy="Select Lab Center"
-            onSelectChange={handleLabCenterChange}
-            value={selectedLabCenter}
+            onSelectChange={handleLabPanelChange}
+            value={(Array?.isArray(selectLabPanel) ? selectLabPanel : []).map(
+              (item) => item.id
+            )}
             isMultiSelect={false}
             placeholder="Select Lab Center"
           />
         </div>
+        <div className="mb-2 pt-5">
+          <label className="text-sm font-semibold text-ha-primary1">
+            Specimen Type
+          </label>
+          <CustomMultiSelect
+            options={specimens?.map((specimen) => ({
+              label: specimen.specimen,
+              value: specimen.id,
+            }))}
+            labelledBy="Select Specimen Type"
+            onSelectChange={handleSpecimenChange}
+            value={(Array?.isArray(selectSpecimen) ? selectSpecimen : []).map(
+              (item) => item.id
+            )}
+            isMultiSelect={false}
+            placeholder="Select Specimen Type"
+          />
+        </div>
+
         <div className="mb-2 pt-5">
           <label className="text-sm font-semibold text-ha-primary1">
             Comment
@@ -158,6 +221,6 @@ const NewLabOrder = () => {
       </div>
     </div>
   );
-};
+});
 
 export default NewLabOrder;
