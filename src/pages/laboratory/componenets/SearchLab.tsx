@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import NewLabOrder from "./modal/newLabOrder";
 import MainSearchInput from "../../../components/ui/mainSearchInput";
 
 const SearchLab = () => {
+  const addNewLabRef = useRef<any>(null);
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
-
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
@@ -29,6 +29,19 @@ const SearchLab = () => {
   const searchHandler = () => {
     console.log(search);
   };
+  
+  // ref to call handleApiCall in AddLab order starts here
+  const handleApiCallFromAddNewLabRef = () => {
+    if (addNewLabRef.current) {
+      addNewLabRef.current.handleAddNewLabApi();
+    }
+  };
+
+  const handleCreateNewLabOrder = () => {
+    handleApiCallFromAddNewLabRef();
+  };
+ // ends here
+
 
   return (
     <>
@@ -42,7 +55,7 @@ const SearchLab = () => {
             setNewLabOrderModal(true);
           }}
         >
-          <form className="">
+          <form>
             <MainSearchInput
               Label=" Search Patient"
               value={search}
@@ -62,11 +75,9 @@ const SearchLab = () => {
         showCancelButton={true}
         showSubmitButton={true}
         size="5xl"
-        submitHandler={() => {
-          console.log("save");
-        }}
+        submitHandler={handleCreateNewLabOrder}
       >
-        <NewLabOrder />
+        <NewLabOrder ref={addNewLabRef} />
       </BasicModal>
     </>
   );

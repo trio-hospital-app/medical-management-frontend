@@ -10,7 +10,7 @@ interface TakeSpecimenProps {
   religion: string;
   nationality: string;
   maritalStatus?: string;
-  age: string;
+  age: any;
   patientEmail?: string | number;
   imgSrc?: string;
   orderedBy?: string;
@@ -46,7 +46,7 @@ function customPatientCard({
           <div className="bg-white px-10 py-4 border-b mb-5">
             <div className="flex md:flex-row flex-col md:items-center justify-between py-1 border-b">
               <div className="flex items-start justify-center flex-col">
-                <span className="md:text-xl font-bold text-bold">
+                <span className="md:text-xl font-bold text-bold capitalize">
                   {patientName}
                 </span>
                 <div>
@@ -67,7 +67,7 @@ function customPatientCard({
                   >
                     Email:
                   </label>
-                  <span id="labID" className="text-ha-primary1 pl-1">
+                  <span id="labID" className="text-ha-primary1 pl-1 capitalize">
                     {patientEmail}
                   </span>
                 </div>
@@ -77,7 +77,7 @@ function customPatientCard({
                   {tests.map((test, index) => (
                     <span
                       key={index}
-                      className={`md:text-xl font-bold text-bold px-3 text-white rounded-[1rem] py-1 text-center my-1 ${
+                      className={`md:text-xl font-bold text-bold px-3 text-white rounded-[1rem] py-1 text-center my-1 capitalize ${
                         test.testNameBackgroundColor || "bg-pink-400"
                       }`}
                     >
@@ -88,11 +88,11 @@ function customPatientCard({
                 <div className="px-2">
                   <label
                     htmlFor="labID"
-                    className="text-sm font-semibold text-gray-500"
+                    className="text-sm font-semibold text-gray-500 capitalize"
                   >
                     {IdName}
                   </label>
-                  <span id="labID" className="text-ha-primary1 pl-1">
+                  <span id="labID" className="text-ha-primary1 pl-1 capitalize">
                     {labID}
                   </span>
                 </div>
@@ -116,7 +116,7 @@ function customPatientCard({
                   <span className="text-sm font-semibold text-gray-500">
                     Gender:
                   </span>
-                  <span className="font-semibold">{gender}</span>
+                  <span className="font-semibold capitalize">{gender}</span>
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
@@ -131,13 +131,15 @@ function customPatientCard({
                   <span className="text-sm font-semibold text-gray-500">
                     Religion:
                   </span>
-                  <span className="font-semibold">{religion}</span>
+                  <span className="font-semibold capitalize">{religion}</span>
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
                     Nationality:
                   </span>
-                  <span className="font-semibold">{nationality}</span>
+                  <span className="font-semibold capitalize">
+                    {nationality}
+                  </span>
                 </div>
               </div>
 
@@ -146,7 +148,9 @@ function customPatientCard({
                   <span className="text-sm font-semibold text-gray-500">
                     Marital Status:
                   </span>
-                  <span className="font-semibold">{maritalStatus}</span>
+                  <span className="font-semibold capitalize">
+                    {maritalStatus}
+                  </span>
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
@@ -162,7 +166,7 @@ function customPatientCard({
               <span className="text-sm font-semibold text-gray-500">
                 Orderd By:
               </span>
-              <span className="font-semibold">{orderedBy}</span>
+              <span className="font-semibold capitalize">{orderedBy}</span>
             </div>
             <div className="flex items-start justify-center flex-col">
               <span className="text-sm font-semibold text-gray-500">
@@ -177,7 +181,7 @@ function customPatientCard({
           <div className="bg-white px-10 py-4 border-b mb-5">
             <div className="flex md:flex-row flex-col md:items-center justify-between py-1 border-b">
               <div className="flex items-start justify-center flex-col">
-                <span className="md:text-xl font-bold text-bold">
+                <span className="md:text-xl font-bold text-bold capitalize">
                   {patientName}
                 </span>
                 <div>
@@ -198,7 +202,7 @@ function customPatientCard({
                   >
                     Email:
                   </label>
-                  <span id="labID" className="text-ha-primary1 pl-1">
+                  <span id="labID" className="text-ha-primary1 pl-1 capitalize">
                     {patientEmail}
                   </span>
                 </div>
@@ -222,7 +226,7 @@ function customPatientCard({
                   <span className="text-sm font-semibold text-gray-500">
                     Gender:
                   </span>
-                  <span className="font-semibold">{gender}</span>
+                  <span className="font-semibold capitalize">{gender}</span>
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
@@ -237,13 +241,15 @@ function customPatientCard({
                   <span className="text-sm font-semibold text-gray-500">
                     Religion:
                   </span>
-                  <span className="font-semibold">{religion}</span>
+                  <span className="font-semibold capitalize">{religion}</span>
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
                     Nationality:
                   </span>
-                  <span className="font-semibold">{nationality}</span>
+                  <span className="font-semibold capitalize">
+                    {nationality}
+                  </span>
                 </div>
               </div>
 
@@ -252,7 +258,9 @@ function customPatientCard({
                   <span className="text-sm font-semibold text-gray-500">
                     Marital Status:
                   </span>
-                  <span className="font-semibold">{maritalStatus}</span>
+                  <span className="font-semibold capitalize">
+                    {maritalStatus}
+                  </span>
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">

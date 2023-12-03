@@ -1,56 +1,110 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import CustomPatientCard from "../../../../components/ui/customPatientCard/customPatientCard";
 import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect";
 import TextareaAutosize from "react-textarea-autosize";
 import SearchComponent from "../../../../components/ui/SearchComponent";
 import { useSearchPatient } from "../../../../hooks/reactQuery/usePatients";
+import { useGetClinicPanel } from "../../../../hooks/reactQuery/useClinicPanels";
+import { useGetClinicCenter } from "../../../../hooks/reactQuery/useClinicCenters";
+import { useGetSpecimen } from "../../../../hooks/reactQuery/useSpecimens";
+import Loader from "../../../../components/ui/loader";
 
-const countries = ["United States", "Canada", "France", "Germany"];
 const cities = ["New York", "Toronto", "Paris", "Berlin"];
-const colors = ["Red", "Blue", "Green", "Yellow"];
 
-const NewLabOrder = () => {
+const NewLabOrder = forwardRef((_props, ref) => {
   const [search, setSearch] = useState("");
-  const [foundRecode, setFoundRecord] = useState(false);
   const [selectedLabCenter, setSelectedLabCenter] = useState([]);
+  const [selectLabPanel, setselectLabPanel] = useState([]);
+  const [selectSpecimen, setselectSpecimen] = useState([]);
   const [formComment, setFormComment] = useState("");
+  const { data: pateintData, isLoading, refetch } = useSearchPatient(search);
+  const { data: clinicCenterData } = useGetClinicCenter();
+  const { data: clinicPanelData } = useGetClinicPanel();
+  const { data: specimenData } = useGetSpecimen();
 
-  const { data, isLoading, refetch } = useSearchPatient(search);
-  if (isLoading) return <div>Loading...</div>;
-
-  console.log(data);
-
+  // function to set the search patien text
   const handleChange = (event: any) => {
     setSearch(event.target.value);
   };
 
+  // lab drop down data
+  const clinicCenters = clinicCenterData?.data || [];
+  const clinicPanels = clinicPanelData?.data || [];
+  const specimens = specimenData?.data || [];
+
+  // console.log(specimenData.data);
+  //function to search pateint
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
       await refetch();
-      console.log(search);
-      if (search.trim() === "Abraham") {
-        setFoundRecord(true);
-      } else {
-        setFoundRecord(false);
-      }
     }
   };
 
+  // if patient is found render it true/ false
+  const foundRecord = pateintData?.status;
+
+  //patient info to render
+  const patient = pateintData?.data[0];
+  //patient id to to sent to backen
+  const patientId = patient?.patientId;
+
   const convertToOptions = (data: string[]) => {
-    return data.map((item) => ({ label: item, value: item }));
+    return data.map((item, index) => ({
+      label: item,
+      value: item,
+      key: index,
+    }));
+  };
+
+  // calculate age
+  const calculateAge = (dob: string) => {
+    const dateOfBirth = new Date(dob);
+
+    // Check if dateOfBirth is a valid date
+    if (isNaN(dateOfBirth.getTime())) {
+      return "Not found";
+    }
+
+    const birthYear = dateOfBirth.getFullYear();
+    const currentYear = new Date().getFullYear();
+    return currentYear - birthYear;
   };
 
   const handleLabCenterChange = (selectedItems: any) => {
     console.log("Selected Lab Center:", selectedItems);
     setSelectedLabCenter(selectedItems);
   };
+  const handleLabPanelChange = (selectedItems: any) => {
+    console.log("Selected lab panel:", selectedItems);
+    setselectLabPanel(selectedItems);
+  };
+  const handleSpecimenChange = (selectedItems: any) => {
+    console.log("Selected specimen type:", selectedItems);
+    setselectSpecimen(selectedItems);
+  };
+
+  const handleAddNewLabApi = () => {
+    console.log(patientId);
+    console.log(selectedLabCenter);
+    console.log(selectLabPanel);
+    console.log(selectSpecimen);
+    console.log(formComment);
+  };
+  useImperativeHandle(ref, () => ({
+    handleAddNewLabApi,
+  }));
 
   return (
     <div>
+      {isLoading && (
+        <div>
+          <Loader />
+        </div>
+      )}
+
       <SearchComponent
         Label=" Search Patient"
         value={search}
@@ -58,29 +112,24 @@ const NewLabOrder = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-
-      {search?.length >= 3 && !foundRecode ? (
-        <div className="flex items-center justify-center h-[5rem] border mx-5 my-3 rounded-[1rem] border-ha-primary2">
-          <span className="text-ha-primary1">No Record Found</span>
-        </div>
-      ) : null}
-      {foundRecode ? (
+      {foundRecord && patient && (
         <div>
           <CustomPatientCard
-            patientName="Mr. Christopher Abraham"
-            patientID="12345667778"
-            patientEmail="Christopherabraham8@gmail.com"
+            key={patient.id}
+            patientName={`${patient?.salutation} ${patient?.firstName} ${patient?.middleName} ${patient?.lastName}`}
+            patientID={patient?.patientId}
+            patientEmail={patient.address.email}
             imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
-            gender="Male"
-            phoneNumber="12345667778"
-            religion="Christian"
-            nationality="Nigeria"
-            maritalStatus="Single"
-            age="32 years"
+            gender={patient?.gender}
+            phoneNumber={patient?.phone}
+            religion={patient?.address.religion}
+            nationality={patient?.address.country}
+            maritalStatus={patient?.address.maritalStatus}
+            age={calculateAge(patient?.address.dob)}
             layout={2}
           />
         </div>
-      ) : null}
+      )}
 
       <div className="flex flex-col justify-center px-4">
         <div className="flex flex-col md:flex-row items-center justify-between pt-5">
@@ -95,6 +144,7 @@ const NewLabOrder = () => {
               value={selectedLabCenter}
               isMultiSelect={false}
               placeholder="Scheme"
+              key="scheme"
             />
           </div>
           <div className="mb-2 w-[48%]">
@@ -102,13 +152,20 @@ const NewLabOrder = () => {
               Service Center
             </label>
             <CustomMultiSelect
-              options={convertToOptions(colors)}
+              options={clinicCenters.map((center) => ({
+                label: center.center,
+                value: center.id,
+              }))}
               labelledBy="Select Service Center"
               onSelectChange={handleLabCenterChange}
-              value={selectedLabCenter}
+              value={(Array?.isArray(selectedLabCenter)
+                ? selectedLabCenter
+                : []
+              ).map((item) => item.id)}
               isMultiSelect={false}
               placeholder="Select Service Center"
             />
+            ˝
           </div>
         </div>
         <div className="mb-2 pt-5">
@@ -116,14 +173,38 @@ const NewLabOrder = () => {
             Lab Panel
           </label>
           <CustomMultiSelect
-            options={convertToOptions(countries)}
+            options={clinicPanels.map((panel) => ({
+              label: panel.panel,
+              value: panel.id,
+            }))}
             labelledBy="Select Lab Center"
-            onSelectChange={handleLabCenterChange}
-            value={selectedLabCenter}
+            onSelectChange={handleLabPanelChange}
+            value={(Array?.isArray(selectLabPanel) ? selectLabPanel : []).map(
+              (item) => item.id
+            )}
             isMultiSelect={false}
             placeholder="Select Lab Center"
           />
         </div>
+        <div className="mb-2 pt-5">
+          <label className="text-sm font-semibold text-ha-primary1">
+            Specimen Type
+          </label>
+          <CustomMultiSelect
+            options={specimens?.map((specimen) => ({
+              label: specimen.specimen,
+              value: specimen.id,
+            }))}
+            labelledBy="Select Specimen Type"
+            onSelectChange={handleSpecimenChange}
+            value={(Array?.isArray(selectSpecimen) ? selectSpecimen : []).map(
+              (item) => item.id
+            )}
+            isMultiSelect={false}
+            placeholder="Select Specimen Type"
+          />
+        </div>
+
         <div className="mb-2 pt-5">
           <label className="text-sm font-semibold text-ha-primary1">
             Comment
@@ -140,6 +221,6 @@ const NewLabOrder = () => {
       </div>
     </div>
   );
-};
+});
 
 export default NewLabOrder;
