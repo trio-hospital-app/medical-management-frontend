@@ -1,57 +1,58 @@
 import { AxiosRequestConfig } from "axios";
 import { request } from "../lib/api";
 
-export interface NewClinicPanelData {
-    panel: string;
-    cost: number
+export interface NewSchemeData {
+  name: string;
+  discrption: string;
+  discount: number;
 }
 
-class clinicPanelService {
-  public async addClinicPanel(data: NewClinicPanelData) {
+class schemeService {
+  public async addScheme(data: NewSchemeData) {
     const options: AxiosRequestConfig = {
       method: "POST",
-      url: "/clinic-panel",
+      url: "/scheme",
       data,
     };
     const response = await request(options);
     return response;
   }
 
-  public async getClinicPanel() {
+  public async getScheme() {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: "/clinic-panels",
+      url: "/schemes",
     };
     const response = await request(options);
     return response;
   }
 
-  public async getClinicPanelById(id: string) {
+  public async getSchemeById(id: string) {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: `/clinic-panel/${id}`,
+      url: `/scheme/${id}`,
     };
     const response = await request(options);
     return response;
   }
 
-  public async updateClinicPanel(id: string, data: NewClinicPanelData) {
+  public async updateScheme(id: string, data: NewSchemeData) {
     const options: AxiosRequestConfig = {
       method: "PUT",
-      url: `/clinic-panel/${id}`,
+      url: `/scheme/${id}`,
       data,
     };
     const response = await request(options);
     return response;
   }
 
-  public async deleteClinicPanel(id: string) {
+  public async deleteScheme(id: string) {
     const options: AxiosRequestConfig = {
       method: "DELETE",
-      url: `/clinic-panel/${id}`,
+      url: `/scheme/${id}`,
     };
     return request(options);
   }
 }
 
-export default new clinicPanelService();
+export default new schemeService();
