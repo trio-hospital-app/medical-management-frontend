@@ -16,6 +16,7 @@ function AuthLayout() {
   
   const handleLogin = async () => {
     try {
+      if(!username || !password) return
       await mutate({ username, password });
     } catch (error) {
       console.error("Login failed", error);

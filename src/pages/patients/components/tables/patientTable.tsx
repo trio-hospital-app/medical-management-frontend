@@ -7,23 +7,14 @@ import { useState } from "react";
 import OrderLab from "../orderLab";
 import OrderRadiology from "../orderRadiology";
 import OrderDoctor from "../orderDoctor";
-import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
-import Loader from "../../../../components/ui/loader";
+// import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
+// import Loader from "../../../../components/ui/loader";
 
-function PatientTable() {
+function PatientTable({patientData}) {
   const navigate = useNavigate();
   const [showLabModal, setShowLabModal] = useState(false);
   const [showImagingModal, setShowImagingModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
-
-  const {data:patientsData, isLoading} = useGetPatients()
-
-  console.log(patientsData, 'patientsData')
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
   interface Patient {
     lastAppointment: number;
     phone: string,
@@ -34,6 +25,7 @@ function PatientTable() {
     address: {
       dob: string
     };
+    
     id: string;
     dateOfBirth: string;
     phoneNumber: string;
@@ -119,7 +111,7 @@ function PatientTable() {
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
         columns={columns}
-        data={patientsData?.data.patients}
+        data={patientData?.data ? patientData?.data : patientData}
         onRowClicked={(row) => handleRowClick(row.id)}
       />
       {/* lab modal */}
