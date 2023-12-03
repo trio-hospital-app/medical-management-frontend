@@ -6,8 +6,8 @@ function PatientInfoHeader({patientData}) {
     <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
       <div className="flex md:flex-row flex-col md:items-center justify-between border-b">
         <div className="flex items-start justify-center flex-col">
-          <span className="md:text-xl font-bold text-bold">Mr. Fredrick Luguard</span>
-          <span className="text-ha-primary1">{patientData.id}</span>
+          <span className="md:text-xl font-bold text-bold capitalize">{patientData?.salutation}. {patientData?.firstName} {patientData?.lastName}</span>
+          <span className="text-ha-primary1">{patientData?.patientId}</span>
         </div>
         <div>
           <Dropdown inline label={"Actions"}>
@@ -33,13 +33,13 @@ function PatientInfoHeader({patientData}) {
         <div className="flex items-start justify-center gap-2 flex-col ">
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">Gender:</span>
-            <span className="font-semibold">Male</span>
+            <span className="font-semibold capitalize">{patientData?.gender}</span>
           </div>
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">
               Phone Number:
             </span>
-            <span className="font-semibold">12345667778</span>
+            <span className="font-semibold">{patientData?.phone}</span>
           </div>
         </div>
 
@@ -48,13 +48,13 @@ function PatientInfoHeader({patientData}) {
             <span className="text-sm font-semibold text-gray-500">
               Religion:
             </span>
-            <span className="font-semibold">Christian</span>
+            <span className="font-semibold capitalize">{patientData?.address?.religion}</span>
           </div>
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">
               Nationality:
             </span>
-            <span className="font-semibold">Nigeria</span>
+            <span className="font-semibold capitalize">{patientData?.address?.country}</span>
           </div>
         </div>
 
@@ -63,13 +63,13 @@ function PatientInfoHeader({patientData}) {
             <span className="text-sm font-semibold text-gray-500">
               Marital Status:
             </span>
-            <span className="font-semibold">Single</span>
+            <span className="font-semibold capitalize">{patientData?.address?.maritalStatus}</span>
           </div>
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">
               Date of birth:
             </span>
-            <span className="font-semibold">23-04-1990</span> (32 years)
+            <span className="font-semibold">23-04-1990</span>
           </div>
         </div>
 
@@ -83,11 +83,6 @@ function PatientInfoHeader({patientData}) {
               <Dropdown inline arrowIcon={false} label={"View Schemes"}>
                 <Dropdown.Item>NHIS</Dropdown.Item>
                 <Dropdown.Item>Avocado</Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => "new function"}>
-                  Edit
-                </Dropdown.Item>
-                <Dropdown.Item>Change Image</Dropdown.Item>
-                <Dropdown.Item>Delete</Dropdown.Item> */}
               </Dropdown>
             </span>
           </div>
