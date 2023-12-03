@@ -4,6 +4,8 @@ import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect
 import TextareaAutosize from "react-textarea-autosize";
 import SearchComponent from "../../../../components/ui/SearchComponent";
 import { useSearchPatient } from "../../../../hooks/reactQuery/usePatients";
+import { useGetClinicCenter } from "../../../../hooks/reactQuery/useClinicCenters";
+import Loader from "../../../../components/ui/loader";
 
 const countries = ["United States", "Canada", "France", "Germany"];
 const cities = ["New York", "Toronto", "Paris", "Berlin"];
@@ -11,31 +13,27 @@ const colors = ["Red", "Blue", "Green", "Yellow"];
 
 const NewLabOrder = () => {
   const [search, setSearch] = useState("");
-  const [foundRecode, setFoundRecord] = useState(false);
   const [selectedLabCenter, setSelectedLabCenter] = useState([]);
   const [formComment, setFormComment] = useState("");
-
-  const { data, isLoading, refetch } = useSearchPatient(search);
-  if (isLoading) return <div>Loading...</div>;
-
-  console.log(data);
+  const { data: pateintData, isLoading, refetch } = useSearchPatient(search);
+  const { data: clinicCenterData } = useGetClinicCenter();
+  const foundRecord = pateintData?.status;
 
   const handleChange = (event: any) => {
     setSearch(event.target.value);
   };
 
+
+  // clinic center drop down data
+  const clinicCenters = clinicCenterData?.data || [];
+
+  //function to search pateint
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
       await refetch();
-      console.log(search);
-      if (search.trim() === "Abraham") {
-        setFoundRecord(true);
-      } else {
-        setFoundRecord(false);
-      }
     }
   };
 
@@ -48,8 +46,31 @@ const NewLabOrder = () => {
     setSelectedLabCenter(selectedItems);
   };
 
+  //patient info to render
+  const patient = pateintData?.data[0];
+
+  // calculate age
+  const calculateAge = (dob: string) => {
+    const dateOfBirth = new Date(dob);
+
+    // Check if dateOfBirth is a valid date
+    if (isNaN(dateOfBirth.getTime())) {
+      return "Not found";
+    }
+
+    const birthYear = dateOfBirth.getFullYear();
+    const currentYear = new Date().getFullYear();
+    return currentYear - birthYear;
+  };
+
   return (
     <div>
+      {isLoading && (
+        <div>
+          <Loader />
+        </div>
+      )}
+
       <SearchComponent
         Label=" Search Patient"
         value={search}
@@ -57,29 +78,24 @@ const NewLabOrder = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-
-      {search?.length >= 3 && !foundRecode ? (
-        <div className="flex items-center justify-center h-[5rem] border mx-5 my-3 rounded-[1rem] border-ha-primary2">
-          <span className="text-ha-primary1">No Record Found</span>
-        </div>
-      ) : null}
-      {foundRecode ? (
+      {foundRecord && patient && (
         <div>
           <CustomPatientCard
-            patientName="Mr. Christopher Abraham"
-            patientID="12345667778"
-            patientEmail="Christopherabraham8@gmail.com"
+            key={patient.id} // Make sure to set a unique key for the item
+            patientName={`${patient?.salutation} ${patient?.firstName} ${patient?.middleName} ${patient?.lastName}`}
+            patientID={patient?.patientId}
+            patientEmail={patient.address.email}
             imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
-            gender="Male"
-            phoneNumber="12345667778"
-            religion="Christian"
-            nationality="Nigeria"
-            maritalStatus="Single"
-            age="32 years"
+            gender={patient?.gender}
+            phoneNumber={patient?.phone}
+            religion={patient?.address.religion}
+            nationality={patient?.address.country}
+            maritalStatus={patient?.address.maritalStatus}
+            age={calculateAge(patient?.address.dob)}
             layout={2}
           />
         </div>
-      ) : null}
+      )}
 
       <div className="flex flex-col justify-center px-4">
         <div className="flex flex-col md:flex-row items-center justify-between pt-5">
@@ -101,7 +117,10 @@ const NewLabOrder = () => {
               Service Center
             </label>
             <CustomMultiSelect
-              options={convertToOptions(colors)}
+              options={clinicCenters.map((center) => ({
+                label: center.center,
+                value: center.center,
+              }))}
               labelledBy="Select Service Center"
               onSelectChange={handleLabCenterChange}
               value={selectedLabCenter}
