@@ -9,8 +9,6 @@ import { useGetClinicCenter } from "../../../../hooks/reactQuery/useClinicCenter
 import { useGetSpecimen } from "../../../../hooks/reactQuery/useSpecimens";
 import Loader from "../../../../components/ui/loader";
 import { useGetScheme } from "../../../../hooks/reactQuery/useSchemes";
-import { useAddLab } from "../../../../hooks/reactQuery/useLabs";
-import { toast } from "react-toastify";
 
 const NewLabOrder = ({
   setSelectedLabCenter,
@@ -214,6 +212,7 @@ const NewLabOrder = ({
               className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
               value={formComment}
               maxRows={4}
+              required
             />
           </div>
         </div>

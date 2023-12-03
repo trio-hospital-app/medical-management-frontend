@@ -6,8 +6,9 @@ import MainSearchInput from "../../../components/ui/mainSearchInput";
 import { useAddLab } from "../../../hooks/reactQuery/useLabs";
 import Loader from "../../../components/ui/loader";
 import { toast } from "react-toastify";
+import { useSearchPatient } from "../../../hooks/reactQuery/usePatients";
 
-const SearchLab = () => {
+const SearchLab = ({setLabSearch}) => {
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
   const [selectScheme, setSelectedScheme] = useState([]);
@@ -16,13 +17,22 @@ const SearchLab = () => {
   const [selectSpecimen, setselectSpecimen] = useState([]);
   const [formComment, setFormComment] = useState("");
   const [patientId, setPatientId] = useState("");
-
+  const {
+    data: patientData,
+    isLoading: loadingSearch,
+    refetch,
+  } = useSearchPatient(search);
   const { mutate, data, isLoading: NewLabLoading } = useAddLab();
 
-
-  if (NewLabLoading) {
+  if (NewLabLoading || loadingSearch) {
     return <Loader />;
   }
+
+  console.log(patientData?.data);
+
+  // setLabSearch(patientData?.data);
+
+
 
   if (data && data?.status) {
     toast.success("New Lab Order added successfully");
@@ -34,10 +44,10 @@ const SearchLab = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = async (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      console.log(search);
+      await refetch();
     }
   };
 
@@ -45,12 +55,12 @@ const SearchLab = () => {
     setSearch("");
   };
 
-  const searchHandler = () => {
-    console.log(search);
+  const searchHandler = async (event: any) => {
+    event.preventDefault();
+    await refetch();
   };
 
-
-// api call to create new lab order
+  // api call to create new lab order
   const handleCreateNewLabOrder = async () => {
     const LabData: any = {
       centerId: selectedLabCenter,
@@ -71,7 +81,7 @@ const SearchLab = () => {
           title="Laboratory Workbench"
           buttonTitle="New Lab Order"
           resetFilter={resetHandler}
-          search={searchHandler}
+          search={() => searchHandler(event)}
           handleCreate={() => {
             setNewLabOrderModal(true);
           }}
