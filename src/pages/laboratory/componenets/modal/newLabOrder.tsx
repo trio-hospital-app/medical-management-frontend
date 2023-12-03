@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import CustomPatientCard from "../../../../components/ui/customPatientCard/customPatientCard";
 import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect";

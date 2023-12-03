@@ -28,6 +28,7 @@ function ActivationLayout() {
   
   const handleActivate = async () => {
     try {
+      if(!username || !password) return
       await mutate(
         { username, password });
     } catch (error) {

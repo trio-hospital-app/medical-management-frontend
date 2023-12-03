@@ -12,12 +12,12 @@ import { toast } from "react-toastify";
 
 function UserTable() {
   const { data: users, isLoading } = useGetUsers();
-  const { mutate: deleteUser, isLoading: isDeleteUserLoading, data:DeleteUserData } =
-    useDeleteUser();
-  // const queryClient = new QueryClient();
+  const { mutate: deleteUser, isLoading: isDeleteUserLoading, data:DeleteUserData } = useDeleteUser();
+
   if (isLoading || isDeleteUserLoading) {
     return <Loader />;
   }
+
   if(DeleteUserData && DeleteUserData?.status){
     toast.success('User Deleted')
   }
@@ -124,7 +124,7 @@ function UserTable() {
         </div>
       </div>
       {/* @ts-expect-error: Just ignore the next line */}
-      <DataTable columns={columns} data={users.data.data} />
+      <DataTable columns={columns} data={users.data} />
     </div>
   );
 }
