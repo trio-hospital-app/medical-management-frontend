@@ -8,9 +8,11 @@ import {
   AccordionContent,
 } from "../../../../components/ui/accordion";
 import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
-function TakeSpecimen() {
+function TakeSpecimen(selectedRowData) {
   const [formData, setFormData] = useState("");
   const [dynamicFormRows, setDynamicFormRows] = useState([]);
+
+  console.log(selectedRowData);
 
   const tests = [
     {

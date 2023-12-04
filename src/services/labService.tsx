@@ -30,6 +30,15 @@ class labService {
     return response;
   }
 
+  public async searchLabPatient(param: string | number) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/search/lab?search=${param}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async getLabById(id: string) {
     const options: AxiosRequestConfig = {
       method: "GET",
