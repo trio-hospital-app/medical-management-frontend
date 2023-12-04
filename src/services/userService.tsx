@@ -41,6 +41,15 @@ class UserService {
     return response;
   }
 
+  public async getUsersByToken() {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/token`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async deleteUser(id: string) {
     const options: AxiosRequestConfig = {
       method: "DELETE",
