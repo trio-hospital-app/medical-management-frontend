@@ -26,6 +26,7 @@ const pageVariants = {
   exit: { opacity: 0, translateY: 10, transition: { duration: 0.5 } },
 };
 
+
 function App() {
   const location = useLocation();
 

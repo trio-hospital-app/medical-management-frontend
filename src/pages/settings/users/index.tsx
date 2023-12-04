@@ -7,8 +7,6 @@ import { useRegister } from "../../../hooks/reactQuery/useUser";
 import Loader from "../../../components/ui/loader";
 import { toast } from "react-toastify";
 
-
-
 function Users() {
   const [showAddUser, setShowAddUser] = useState(false);
   const [formData, setFormData] = useState<UserFormData>({
@@ -24,25 +22,21 @@ function Users() {
     role: string[];
   }
 
-  const {mutate, isLoading, data} = useRegister();
+  const { mutate, isLoading, data } = useRegister();
 
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
-  if(data && data.status){
-    toast.success('User Created')
+  if (data && data.status) {
+    toast.success("User Created");
   }
 
   const handleSubmit = async () => {
     await mutate(formData);
     setShowAddUser(false);
-    toast.success('user added successfully')
   };
 
-
-
-  
   return (
     <div>
       <BasicModal
