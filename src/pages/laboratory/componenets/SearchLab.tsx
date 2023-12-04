@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import BasicModal from "../../../components/ui/modals/basicModal";
@@ -8,7 +10,8 @@ import Loader from "../../../components/ui/loader";
 import { toast } from "react-toastify";
 import { useSearchLabPatient } from "../../../hooks/reactQuery/useLabs";
 
-const SearchLab = ({ setLabSearch }) => {
+const SearchLab = ({setLabSearch}) => {
+  console.log(setLabSearch)
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
   const [selectScheme, setSelectedScheme] = useState([]);
