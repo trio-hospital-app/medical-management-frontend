@@ -110,7 +110,7 @@ function UserTable() {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[50vh] p-5">
       <div className="border-b py-2 flex items-center justify-end">
         <div className="relative w-[300px]">
           <input
