@@ -1,15 +1,15 @@
 import { Button } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useActivate } from "../hooks/reactQuery/useUser";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../components/ui/loader";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 
 function ActivationLayout() {
+  const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const { mutate, isLoading, data } = useActivate();
   const [, setCookie] = useCookies(["accessToken"]);
   const location = useLocation();
@@ -17,21 +17,25 @@ function ActivationLayout() {
   const token = queryParams.get("token");
 
   useEffect(() => {
-    if (token) {
-      setCookie("accessToken", token);
-    }
-  }, [token]);
+    const activateAccount = async () => {
+      try {
+        if (token) {
+          setCookie("accessToken", token);
+        }
+      } catch (error) {
+        console.error("Activation failed", error);
+      }
+    };
 
-  if (data?.status) {
-    toast.success("Account activated successfully");
-    navigate("/login");
-  }
+    activateAccount();
+  }, [token]);
 
   const handleActivate = async () => {
     try {
+      if (!username || !password) return;
       await mutate({ username, password });
     } catch (error) {
-      console.error("Login failed", error);
+      console.error("Activation failed", error);
     }
   };
 
@@ -39,13 +43,16 @@ function ActivationLayout() {
     return <Loader />;
   }
 
+  if (data && data.status) {
+    toast.success("Account activated successfully");
+    navigate('/login');
+  }
+
   return (
     <div className="flex h-screen">
-      <div className="flex-1 flex flex-col justify-center items-center  text-black bg-ha-primary1">
+      <div className="flex-1 flex flex-col justify-center items-center text-black bg-ha-primary1">
         <div className="space-y-6 w-[80%] flex items-center flex-col">
-          <h3 className="text-2xl font-extrabold text-white">
-            User Activation
-          </h3>
+          <h3 className="text-2xl font-extrabold text-white">User Activation</h3>
           <div>
             <div className="mb-2 block">
               <label htmlFor="username" className="text-white">
@@ -75,8 +82,10 @@ function ActivationLayout() {
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
-          <div className="w-[300px] flex" onClick={handleActivate}>
-            <Button className="w-full">Activate your account</Button>
+          <div className="w-[300px] flex">
+            <Button className="w-full" onClick={handleActivate}>
+              Activate your account
+            </Button>
           </div>
         </div>
       </div>
@@ -87,7 +96,6 @@ function ActivationLayout() {
           alt="Image description"
           style={{ width: "90%", height: "100%", objectFit: "contain" }}
         />
-        <div />
       </div>
     </div>
   );
