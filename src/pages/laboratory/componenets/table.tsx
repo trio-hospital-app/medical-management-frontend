@@ -3,43 +3,29 @@ import { useState } from "react";
 import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
-import TakeSpecimen from "./modal/takeSpecimen";
 import FillSpecimen from "./modal/fillSpecimen";
 import AwaitingApproval from "./modal/awaitingApproval";
 import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
 
-interface Patient {
-  id: number;
-  firstName: string;
-  lastName: string;
-  patientId: string | number;
-  orderDate: any;
-  labId: string | number;
-  labUnit: string | number;
-  patientName: string;
-  specimenType: any;
-  status: any;
-  color?: any;
-  panelName?: string;
-}
-
-function PatientTable() {
-  const [takeSpecimen, setTakeSpecimen] = useState(false);
+function Table({ labSearch }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
   const [awaitingApproval, setAwaitingApproval] = useState(false);
   const [finalResult, setFinalResult] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState({});
 
-  const handleTakeSpecime = () => {
-    console.log("take specimen");
-    setTakeSpecimen(false);
+  const handleReceiveSpecime = () => {
+    setReceiveSpecimen(false);
   };
 
-  const handleRowDelete = (row: Patient) => {
+  const Data = labSearch?.data;
+
+  const handleRowDelete = (row, e) => {
+    e.stopPropagation();
     console.log(row);
   };
 
-  const getSpecimenTypeContent = (row: Patient) => (
+  const getSpecimenTypeContent = (row) => (
     <div className="flex md:flex-row flex-col items-center gap-2">
       <div>
         <p
@@ -47,96 +33,82 @@ function PatientTable() {
             width: "1.5rem",
             height: "1.5rem",
             borderRadius: "50%",
-            backgroundColor: row.color,
+            backgroundColor: row.specimenId.color,
           }}
         ></p>
       </div>
-      <span> {row.specimenType}</span>
+      <span> {row.specimenId.specimen}</span>
     </div>
   );
 
   const columns: any = [
     {
-      name: "Patient Name",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.patientName}</div>
+      name: "Name",
+      cell: (row) => (
+        <div className="text-left">
+          {row.patientId.firstName} {row.patientId.lastName}
+        </div>
       ),
       selector: "patientName",
       sortable: true,
       width: "full",
     },
-    // {
-    //   name: "Patient ID",
-    //   cell: (row: Patient) => <div className="text-left">{row.patientId}</div>,
-    //   selector: "patientId",
-    //   sortable: true,
-    // },
+
     {
       name: "Order Date",
-      cell: (row: Patient) => <div className="text-left">{row.orderDate}</div>,
+      cell: (row) => <div className="text-left">{row.createdAt}</div>,
       selector: "orderDate",
       sortable: true,
       width: "full",
     },
-    // {
-    //   name: "Lab ID",
-    //   cell: (row: Patient) => <div className="text-left">{row.labId}</div>,
-    //   selector: "labId",
-    //   sortable: true,
-    //   // width: "9rem",
-    // },
+
     {
-      name: "Lab Center",
-      cell: (row: Patient) => <div className="text-left">{row.labUnit}</div>,
-      selector: "labUnit",
+      name: "Lab Department",
+      selector: (row) => <div className="text-left">{row.centerId.center}</div>,
       sortable: true,
       // width: "full",
     },
     {
-      name: "Panel Name",
-      cell: (row: Patient) => <div className="text-left">{row.panelName}</div>,
+      name: "Lap Test",
+      cell: (row) => <div className="text-left">{row.panelId.panel}</div>,
       selector: "panelName",
       sortable: true,
       // width: "full",
     },
     {
       name: "Specimen Type",
-      cell: (row: Patient) => (
-        <div className="">
-          {getSpecimenTypeContent(row)}
-        </div>
-      ),
+      cell: (row) => <div className="">{getSpecimenTypeContent(row)}</div>,
       sortable: true,
       // grow: 3,
     },
     {
       name: "Status",
-      cell: (row: Patient) => (
+      cell: (row) => (
         <Button
           className={` text-white w-[9.5rem] ${
-            row.status === "Take Specimen"
+            row.status === "receive specimen"
               ? "bg-yellow-500 hover:bg-yellow-600"
-              : row.status === "Receive Specimen"
+              : row.status === "awaiting approval"
               ? "bg-blue-500 hover:bg-blue-600"
-              : row.status === "Awaiting Approval"
+              : row.status === "final result"
               ? "bg-green-500 hover:bg-green-600"
-              : row.status === "Final Result"
-              ? "bg-red-500 hover:bg-red-600"
-              : ""
+              : row.status === "'"
           }`}
-          onClick={() =>
-            row.status === "Take Specimen"
-              ? setTakeSpecimen(true)
-              : row.status === "Receive Specimen"
+          onClick={() => {
+            setSelectedRowData(row);
+            row.status === "receive specimen"
               ? setReceiveSpecimen(true)
-              : row.status === "Awaiting Approval" // Corrected status here
+              : row.status === "awaiting approval"
               ? setAwaitingApproval(true)
-              : row.status === "Final Result"
+              : row.status === "final result" // Corrected status here
               ? setFinalResult(true)
-              : null
-          }
+              : row.status === "null";
+          }}
         >
-          {row.status}
+          {row.status
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")}
         </Button>
       ),
       selector: "status",
@@ -144,10 +116,10 @@ function PatientTable() {
       width: "15rem",
     },
     {
-      cell: (row: Patient) => (
+      cell: (row) => (
         <Tooltip content="Cancle order">
           <MdOutlineCancel
-            onClick={() => handleRowDelete(row)}
+            onClick={handleRowDelete(row, event)}
             className="font-extrabold text-xl text-red-400"
           />
         </Tooltip>
@@ -157,109 +129,19 @@ function PatientTable() {
     },
   ];
 
-  const getRandomColor = () => {
-    // Generate a random hex color code
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
+  const handleRowClick = (row) => {
+    setSelectedRowData(row);
   };
-
-  const data: Patient[] = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "P001sus8sR",
-      orderDate: "2023-11-28 08:18",
-      labId: "L0019sje7e",
-      labUnit: "Chemistry",
-      patientName: "abraham christopher ",
-      specimenType: "Urine Analysis",
-      panelName: "Hepatitis B Panel",
-      status: "Take Specimen",
-      color: getRandomColor(),
-    },
-    {
-      id: 2,
-      firstName: "Jane",
-      lastName: "Smith",
-      patientId: "2jdhd84ne9",
-      orderDate: "2023-11-28 08:18",
-      labId: "3jj388eiw0",
-      labUnit: "Serelogy",
-      patientName: "Jane Smith",
-      specimenType: "Blood Gas Analysis and me",
-      panelName: "Hepatitis B Panel",
-      status: "Receive Specimen",
-      color: getRandomColor(),
-    },
-    {
-      id: 3,
-      firstName: "Alice",
-      lastName: "Johnson",
-      patientId: "P003s7sjsu",
-      orderDate: "2021-09-05",
-      labId: "32ekd0dle8",
-      labUnit: "Serelogy",
-      patientName: "Alice Johnson",
-      specimenType: "Saliva Analysis",
-      status: "Awaiting Approval",
-      panelName: "Hepatitis B Panel",
-      color: getRandomColor(),
-    },
-    {
-      id: 4,
-      firstName: "Bob",
-      lastName: "Williams",
-      patientId: "ksos9skrhi004",
-      orderDate: "2023-11-28 08:18",
-      labId: "L0048sksoe",
-      labUnit: "Microbiology",
-      patientName: "Bob Williams",
-      specimenType: "Hair Analysis",
-      status: "Final Result",
-      panelName: "Hepatitis B Panel",
-      color: getRandomColor(),
-    },
-    {
-      id: 5,
-      firstName: "Eva",
-      lastName: "Anderson",
-      patientId: "P009lkdid9005",
-      orderDate: "2021-09-09",
-      labId: "Lhdhjsdks094030305",
-      labUnit: "Microbiology",
-      patientName: "Eva Anderson",
-      specimenType: "Blood",
-      status: "Take Specimen",
-      panelName: "Hepatitis B Panel",
-      color: getRandomColor(),
-    },
-  ];
-
-  // expnad rows
-
-  // const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
 
   return (
     <>
       <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
-        <DataTable columns={columns} data={data} />
+        <DataTable
+          columns={columns}
+          data={Data}
+          onRowClicked={(row) => handleRowClick(row)}
+        />
       </div>
-
-      {/* // take specimen modal */}
-      <BasicModal
-        title="Take Specimen"
-        setOpenModal={setTakeSpecimen}
-        cancelTitle="Cancel"
-        openModal={takeSpecimen}
-        showCancelButton={true}
-        submitTitle="Save"
-        showSubmitButton={true}
-        style={{ width: "100%", height: "1/2" }}
-        submitHandler={handleTakeSpecime}
-        size="5xl"
-      >
-        <TakeSpecimen />
-      </BasicModal>
 
       {/* // receive specimen modal */}
       <BasicModal
@@ -270,9 +152,10 @@ function PatientTable() {
         showCancelButton={true}
         submitTitle="Save"
         showSubmitButton={true}
+        submitHandler={handleReceiveSpecime}
         size="5xl"
       >
-        <FillSpecimen />
+        <FillSpecimen selectedRowData={selectedRowData} />
       </BasicModal>
 
       {/* // awaiting specimen modal */}
@@ -307,4 +190,5 @@ function PatientTable() {
   );
 }
 
-export default PatientTable;
+export default Table;
+

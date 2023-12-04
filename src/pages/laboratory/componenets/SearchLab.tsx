@@ -6,9 +6,9 @@ import MainSearchInput from "../../../components/ui/mainSearchInput";
 import { useAddLab } from "../../../hooks/reactQuery/useLabs";
 import Loader from "../../../components/ui/loader";
 import { toast } from "react-toastify";
-import { useSearchPatient } from "../../../hooks/reactQuery/usePatients";
+import { useSearchLabPatient } from "../../../hooks/reactQuery/useLabs";
 
-const SearchLab = ({setLabSearch}) => {
+const SearchLab = ({ setLabSearch }) => {
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
   const [selectScheme, setSelectedScheme] = useState([]);
@@ -21,18 +21,14 @@ const SearchLab = ({setLabSearch}) => {
     data: patientData,
     isLoading: loadingSearch,
     refetch,
-  } = useSearchPatient(search);
+  } = useSearchLabPatient(search);
   const { mutate, data, isLoading: NewLabLoading } = useAddLab();
+
+  setLabSearch(patientData);
 
   if (NewLabLoading || loadingSearch) {
     return <Loader />;
   }
-
-  console.log(patientData?.data);
-
-  // setLabSearch(patientData?.data);
-
-
 
   if (data && data?.status) {
     toast.success("New Lab Order added successfully");
