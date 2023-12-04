@@ -1,7 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Avatar, Dropdown } from "flowbite-react";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useGetUserByToken } from "../../hooks/reactQuery/useUser";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function NavBar() {
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+  console.log(setCookie, cookies)
+  const navigate = useNavigate();
+  const { data } = useGetUserByToken();
+  const handleLogout = () => {
+    removeCookie("accessToken");
+    navigate("/login");
+  };
+
   return (
     <div className="w-full navbar shadow-md z-[60] bg-white fixed top-0 left-0 right-0 flex items-center justify-between">
       <div className="flex items-center w-[50%]">
@@ -23,27 +36,18 @@ function NavBar() {
           bordered
         />
         <div className="md:flex hidden flex-col items-start justify-center mx-5">
-          <span className="font-semibold text-ha-primary1">
-            Prof. Kenneth Igbenedion
+          <span className="font-semibold text-ha-primary1 capitalize">
+            {data?.data?.firstName} {data?.data?.lastName}
           </span>
-          <span className="text-sm text-gray-500">Doctor</span>
+          <span className="text-sm text-gray-500">{data?.data?.username}</span>
         </div>
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={<RiArrowDropDownLine />}
-        >
+        <Dropdown arrowIcon={false} inline label={<RiArrowDropDownLine />}>
           <Dropdown.Header>
-            <span className="block text-sm">Bonnie Green</span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+              <span className="text-sm text-gray-500">{data?.data?.email}</span>
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Earnings</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
         </Dropdown>
       </div>
     </div>

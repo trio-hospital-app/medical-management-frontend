@@ -15,6 +15,10 @@ export const useGetUsers = () => {
   return useQuery("users", UserService.getUsers);
 };
 
+export const useGetUserByToken = () => {
+  return useQuery(["token"], () => UserService.getUsersByToken());
+};
+
 // React Query hook for user registration
 export const useRegister = () => {
   return useMutation((user: User) => UserService.register(user), {
