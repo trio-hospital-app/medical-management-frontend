@@ -1,13 +1,42 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import NewLabOrder from "./modal/newLabOrder";
 import MainSearchInput from "../../../components/ui/mainSearchInput";
+import { useAddLab } from "../../../hooks/reactQuery/useLabs";
+import Loader from "../../../components/ui/loader";
+import { toast } from "react-toastify";
+import { useSearchPatient } from "../../../hooks/reactQuery/usePatients";
 
-const SearchLab = () => {
-  const addNewLabRef = useRef<any>(null);
+const SearchLab = ({setLabSearch}) => {
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
+  const [selectScheme, setSelectedScheme] = useState([]);
+  const [selectedLabCenter, setSelectedLabCenter] = useState([]);
+  const [selectLabPanel, setselectLabPanel] = useState([]);
+  const [selectSpecimen, setselectSpecimen] = useState([]);
+  const [formComment, setFormComment] = useState("");
+  const [patientId, setPatientId] = useState("");
+  const {
+    data: patientData,
+    isLoading: loadingSearch,
+    refetch,
+  } = useSearchPatient(search);
+  const { mutate, data, isLoading: NewLabLoading } = useAddLab();
+
+  if (NewLabLoading || loadingSearch) {
+    return <Loader />;
+  }
+
+  console.log(patientData?.data);
+
+  // setLabSearch(patientData?.data);
+
+
+
+  if (data && data?.status) {
+    toast.success("New Lab Order added successfully");
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
@@ -15,10 +44,10 @@ const SearchLab = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = async (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      console.log(search);
+      await refetch();
     }
   };
 
@@ -26,22 +55,24 @@ const SearchLab = () => {
     setSearch("");
   };
 
-  const searchHandler = () => {
-    console.log(search);
-  };
-  
-  // ref to call handleApiCall in AddLab order starts here
-  const handleApiCallFromAddNewLabRef = () => {
-    if (addNewLabRef.current) {
-      addNewLabRef.current.handleAddNewLabApi();
-    }
+  const searchHandler = async (event: any) => {
+    event.preventDefault();
+    await refetch();
   };
 
-  const handleCreateNewLabOrder = () => {
-    handleApiCallFromAddNewLabRef();
+  // api call to create new lab order
+  const handleCreateNewLabOrder = async () => {
+    const LabData: any = {
+      centerId: selectedLabCenter,
+      panelId: selectLabPanel,
+      patientId: patientId,
+      specimenId: selectSpecimen,
+      text: formComment,
+      schemeId: selectScheme,
+    };
+    await mutate(LabData);
+    setNewLabOrderModal(false);
   };
- // ends here
-
 
   return (
     <>
@@ -50,7 +81,7 @@ const SearchLab = () => {
           title="Laboratory Workbench"
           buttonTitle="New Lab Order"
           resetFilter={resetHandler}
-          search={searchHandler}
+          search={() => searchHandler(event)}
           handleCreate={() => {
             setNewLabOrderModal(true);
           }}
@@ -77,7 +108,19 @@ const SearchLab = () => {
         size="5xl"
         submitHandler={handleCreateNewLabOrder}
       >
-        <NewLabOrder ref={addNewLabRef} />
+        <NewLabOrder
+          setSelectedScheme={setSelectedScheme}
+          setSelectedLabCenter={setSelectedLabCenter}
+          setselectLabPanel={setselectLabPanel}
+          setselectSpecimen={setselectSpecimen}
+          setFormComment={setFormComment}
+          setPatientId={setPatientId}
+          selectLabPanel={selectLabPanel}
+          selectSpecimen={selectSpecimen}
+          selectScheme={selectScheme}
+          selectedLabCenter={selectedLabCenter}
+          formComment={formComment}
+        />
       </BasicModal>
     </>
   );
