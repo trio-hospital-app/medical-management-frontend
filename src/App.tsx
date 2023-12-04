@@ -34,7 +34,7 @@ function App() {
       <Routes>
         {/* login route */}
         <Route path="/login" element={<AuthLayout />} />
-        <Route path="/activate/:token" element={<ActivationLayout />} />
+        <Route path="/activate" element={<ActivationLayout />} />
         {/* routes in the applayout */}
         <Route path="/" element={<AppLayout />}>
           <Route

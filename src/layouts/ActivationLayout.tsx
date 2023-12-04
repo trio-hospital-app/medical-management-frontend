@@ -1,7 +1,7 @@
 import { Button } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useActivate } from "../hooks/reactQuery/useUser";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "../components/ui/loader";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
@@ -12,12 +12,15 @@ function ActivationLayout() {
   const navigate = useNavigate();
   const { mutate, isLoading, data } = useActivate();
   const [, setCookie] = useCookies(["accessToken"]);
-  const { token } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get("token");
 
-
-  if (token) {
-    setCookie("accessToken", token);
-  }
+  useEffect(() => {
+    if (token) {
+      setCookie("accessToken", token);
+    }
+  }, [token]);
 
   if (data?.status) {
     toast.success("Account activated successfully");
@@ -26,7 +29,6 @@ function ActivationLayout() {
 
   const handleActivate = async () => {
     try {
-      if (!username || !password) return;
       await mutate({ username, password });
     } catch (error) {
       console.error("Login failed", error);
