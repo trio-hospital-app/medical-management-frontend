@@ -5,6 +5,7 @@ import UserService, {
   User,
   LoginData,
 } from "../../services/userService";
+import { toast } from "react-toastify";
 
 // Create a new instance of QueryClient if it doesn't exist
 const queryClient = new QueryClient();
@@ -35,16 +36,13 @@ export const useLogin = () => {
   const [, setCookie] = useCookies(["accessToken"]);
   return useMutation((data: LoginData) => UserService.login(data), {
     onSuccess: (response) => {
-      if (response) {
-        console.log("response:", response);
-        // Check if the response exists (not void)
+      if (response && response.data && response.data.accessToken) {
         setCookie("accessToken", response.data?.accessToken);
         queryClient.invalidateQueries("login");
       } else {
-        // Handle the case where the response is void
-        console.error("Login response is void");
+        toast.error("Login error");
+        return
       }
-
     },
   });
 };
