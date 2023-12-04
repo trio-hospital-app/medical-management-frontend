@@ -1,6 +1,6 @@
 import { useQuery, useMutation, QueryClient } from "react-query";
 import ClinicPanelService, {
-  NewClinicPaneltData,
+  NewClinicPanelData,
 } from "../../services/clinicPanelService";
 
 const queryClient = new QueryClient();
@@ -17,7 +17,7 @@ export const useGetClinicPanelById = (id: string) => {
 
 export const useAddClinicPanel = () => {
   return useMutation(
-    (data: NewClinicPaneltData) => ClinicPanelService.addClinicPanel(data),
+    (data: NewClinicPanelData) => ClinicPanelService.addClinicPanel(data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("ClinicPanel");
@@ -28,7 +28,7 @@ export const useAddClinicPanel = () => {
 
 export const useUpdateClinicPanel = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: NewClinicPaneltData }) =>
+    ({ id, data }: { id: string; data: NewClinicPanelData }) =>
       ClinicPanelService.updateClinicPanel(id, data),
     {
       onSuccess: () => {

@@ -1,57 +1,61 @@
 import { AxiosRequestConfig } from "axios";
 import { request } from "../lib/api";
 
-export interface NewClinicPanelData {
-    panel: string;
-    cost: number
+export interface NewLabData {
+  centerId: string;
+  panelId: string;
+  patientId: string;
+  specimenId: string;
+  text: string;
+  schemeId: string;
 }
 
-class clinicPanelService {
-  public async addClinicPanel(data: NewClinicPanelData) {
+class labService {
+  public async addLab(data: NewLabData) {
     const options: AxiosRequestConfig = {
       method: "POST",
-      url: "/clinic-panel",
+      url: "/lab",
       data,
     };
     const response = await request(options);
     return response;
   }
 
-  public async getClinicPanel() {
+  public async getLab() {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: "/clinic-panels",
+      url: "/labs",
     };
     const response = await request(options);
     return response;
   }
 
-  public async getClinicPanelById(id: string) {
+  public async getLabById(id: string) {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: `/clinic-panel/${id}`,
+      url: `/lab${id}`,
     };
     const response = await request(options);
     return response;
   }
 
-  public async updateClinicPanel(id: string, data: NewClinicPanelData) {
+  public async updateLab(id: string, data: NewLabData) {
     const options: AxiosRequestConfig = {
       method: "PUT",
-      url: `/clinic-panel/${id}`,
+      url: `/lab/${id}`,
       data,
     };
     const response = await request(options);
     return response;
   }
 
-  public async deleteClinicPanel(id: string) {
+  public async deleteLab(id: string) {
     const options: AxiosRequestConfig = {
       method: "DELETE",
-      url: `/clinic-panel/${id}`,
+      url: `/lab/${id}`,
     };
     return request(options);
   }
 }
 
-export default new clinicPanelService();
+export default new labService();
