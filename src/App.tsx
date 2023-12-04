@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/dashboard";
 import Patients from "./pages/patients";
@@ -28,14 +28,13 @@ const pageVariants = {
 
 
 function App() {
-  const location = useLocation();
 
   return (
     <AnimatePresence>
       <Routes>
         {/* login route */}
         <Route path="/login" element={<AuthLayout />} />
-        <Route path="/activate/:token" element={<ActivationLayout />} />
+        <Route path="/activate" element={<ActivationLayout />} />
         {/* routes in the applayout */}
         <Route path="/" element={<AppLayout />}>
           <Route
