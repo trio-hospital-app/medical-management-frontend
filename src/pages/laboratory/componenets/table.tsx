@@ -7,6 +7,8 @@ import FillSpecimen from "./modal/fillSpecimen";
 import AwaitingApproval from "./modal/awaitingApproval";
 import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
+import { useGetLab } from "../../../hooks/reactQuery/useLabs";
+import Loader from "../../../components/ui/loader";
 
 function Table({ labSearch }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
@@ -14,33 +16,22 @@ function Table({ labSearch }) {
   const [finalResult, setFinalResult] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState({});
 
+  const { data: labData, isLoading:LoadingLab } = useGetLab();
+
+  if (LoadingLab) {
+    return <Loader />;
+  }
+
+  //render the lab data from the api call
+  const Data = labSearch?.data ? labSearch.data : labData?.data.labs;
+
   const handleReceiveSpecime = () => {
     setReceiveSpecimen(false);
   };
 
-  const Data = labSearch?.data;
-
-  const handleRowDelete = (row, e) => {
-    e.stopPropagation();
-    console.log(row);
+  const handleRowDelete = (row) => {
+    console.log(row.id);
   };
-
-  const getSpecimenTypeContent = (row) => (
-    <div className="flex md:flex-row flex-col items-center gap-2">
-      <div>
-        <p
-          style={{
-            width: "1.5rem",
-            height: "1.5rem",
-            borderRadius: "50%",
-            backgroundColor: row.specimenId.color,
-          }}
-        ></p>
-      </div>
-      <span> {row.specimenId.specimen}</span>
-    </div>
-  );
-
   const columns: any = [
     {
       name: "Name",
@@ -77,7 +68,23 @@ function Table({ labSearch }) {
     },
     {
       name: "Specimen Type",
-      cell: (row) => <div className="">{getSpecimenTypeContent(row)}</div>,
+      cell: (row) => (
+        <div>
+          <div className="flex md:flex-row flex-col items-center gap-2">
+            <div>
+              <p
+                style={{
+                  width: "1.5rem",
+                  height: "1.5rem",
+                  borderRadius: "50%",
+                  backgroundColor: row.specimenId.color,
+                }}
+              ></p>
+            </div>
+            <span> {row.specimenId.specimen}</span>
+          </div>
+        </div>
+      ),
       sortable: true,
       // grow: 3,
     },
@@ -119,7 +126,7 @@ function Table({ labSearch }) {
       cell: (row) => (
         <Tooltip content="Cancle order">
           <MdOutlineCancel
-            onClick={handleRowDelete(row, event)}
+            onClick={() => handleRowDelete(row)}
             className="font-extrabold text-xl text-red-400"
           />
         </Tooltip>
@@ -138,7 +145,7 @@ function Table({ labSearch }) {
       <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
         <DataTable
           columns={columns}
-          data={Data}
+          data={Data || []}
           onRowClicked={(row) => handleRowClick(row)}
         />
       </div>
@@ -191,4 +198,3 @@ function Table({ labSearch }) {
 }
 
 export default Table;
-
