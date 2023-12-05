@@ -37,7 +37,7 @@ function ForgotPassword() {
           <div>
             <div className="mb-2 block">
               <label htmlFor="username" className="text-white">
-                Your New username
+                Your Username or Email
               </label>
             </div>
             <input
