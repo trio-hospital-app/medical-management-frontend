@@ -1,4 +1,3 @@
-/* eslint-disable no-dupe-else-if */
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Cookies } from "react-cookie";
@@ -12,6 +11,9 @@ const navigateToLogin = () => {
   // You can replace this with your actual logic for navigation
   window.location.href = "/login";
 };
+
+// State to track shown errors
+const shownErrors = new Set();
 
 export const request = async (config) => {
   try {
@@ -34,34 +36,41 @@ export const request = async (config) => {
     if (axios.isAxiosError(error)) {
       const { status, data } = error.response || {};
 
-      if (status === 401 || status === 403) {
-        toast.error(
-          `Client Error: ${status} - ${
-            (data as { message?: string })?.message || "Error, try Again"
-          }`
-        );
+      // Generate a unique key for the error message
+      const errorKey = `${status}-${data?.message || "Network Error"}`;
 
-        // Redirect to the login route for authentication
-        navigateToLogin();
-      } else if (status >= 400 && status < 500) {
-        toast.error(
-          `Client Error: ${status} - ${
-            (data as { message?: string })?.message || "Error, try Again"
-          }`
-        );
-      } else if (status >= 500) {
-        toast.error(
-          `Server Error: ${status} - ${
-            (data as { message?: string })?.message || "Error, try Again"
-          }`
-        );
+      // Check if the error has been shown already
+      if (!shownErrors.has(errorKey)) {
+        shownErrors.add(errorKey);
+
+        // Show the error toast
+        if (status === 401 || status === 403) {
+          toast.error(
+            `Client Error: ${status} - ${
+              (data as { message?: string })?.message || "Error, try Again"
+            }`
+          );
+
+          // Redirect to the login route for authentication
+          navigateToLogin();
+        } else if (status >= 400 && status < 500) {
+          toast.error(
+            `Client Error: ${status} - ${
+              (data as { message?: string })?.message || "Error, try Again"
+            }`
+          );
+        } else if (status >= 500) {
+          toast.error(
+            `Server Error: ${status} - ${
+              (data as { message?: string })?.message || "Error, try Again"
+            }`
+          );
+        }
       }
-    } else if (axios.isAxiosError(error) && error.request) {
-      toast.error("Network Error: Unable to connect to the server");
     } else {
       toast.error("An Error Occurred: Please try again later");
     }
 
-    throw error; // Re-throw the error after handling
+    throw error;
   }
 };

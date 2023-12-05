@@ -11,7 +11,7 @@ export interface User {
 
 export interface LoginData {
   username: string;
-  password: string;
+  password?: string;
 }
 
 export interface UsersResponse {
@@ -83,6 +83,27 @@ class UserService {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: "/activate",
+      data,
+    };
+    const response = await request(options);
+     
+    return response;
+  }
+
+  public async forgot(data: {username: string}){
+    const options: AxiosRequestConfig = {
+      method: "POST",
+      url: "/forgot",
+      data,
+    };
+    
+    return await request(options);
+  }
+
+  public async reset(data: {password: string}){
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: "/reset",
       data,
     };
     const response = await request(options);

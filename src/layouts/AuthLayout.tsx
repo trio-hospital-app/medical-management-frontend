@@ -30,7 +30,7 @@ function AuthLayout() {
     <div className="flex h-screen">
       <div className="flex-1 flex flex-col justify-center items-center  text-black bg-ha-primary1">
         <div className="space-y-6 w-[80%] flex items-center flex-col">
-          <h3 className="text-2xl font-extrabold text-white">Sign In</h3>
+          <h3 className="text-3xl font-extrabold text-white">Login</h3>
           <div>
             <div className="mb-2 block">
               <label htmlFor="username" className="text-white">

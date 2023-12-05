@@ -54,3 +54,11 @@ export const useLogin = () => {
 export const useActivate = () => {
   return useMutation((data: LoginData) => UserService.activate(data));
 };
+
+export const useReset = () => {
+  return useMutation((data: {password:string}) => UserService.reset(data));
+};
+
+export const useForgot = () => {
+  return useMutation((data: {username:string}) => UserService.forgot(data));
+};
