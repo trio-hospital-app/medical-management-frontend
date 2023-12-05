@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/dashboard";
 import Patients from "./pages/patients";
@@ -19,6 +19,8 @@ import Users from "./pages/settings/users";
 import LaboratoryManagement from "./pages/settings/laboratory";
 import RadiologyManagement from "./pages/settings/radiology";
 import ActivationLayout from "./layouts/ActivationLayout";
+import ResetPassword from "./layouts/ResetPassword";
+import ForgotPassword from "./layouts/ForgotPassword";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -28,14 +30,15 @@ const pageVariants = {
 
 
 function App() {
-  const location = useLocation();
 
   return (
     <AnimatePresence>
       <Routes>
-        {/* login route */}
+        {/* routes outside apploayout */}
         <Route path="/login" element={<AuthLayout />} />
-        <Route path="/activate/:token" element={<ActivationLayout />} />
+        <Route path="/activate" element={<ActivationLayout />} />
+        <Route path="/reset" element={<ResetPassword />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
         {/* routes in the applayout */}
         <Route path="/" element={<AppLayout />}>
           <Route

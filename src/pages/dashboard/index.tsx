@@ -8,6 +8,7 @@ import { GiSkeleton } from "react-icons/gi";
 import { FaUserDoctor } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
+import { useGetUserByToken } from "../../hooks/reactQuery/useUser";
 // import Loader from '../../components/ui/loader'
 
 interface DashboardCardProps {
@@ -29,6 +30,9 @@ function DashboardCard({ to, icon, title }: DashboardCardProps) {
 }
 
 function Dashboard() {
+
+  const { data } = useGetUserByToken();
+  
   return (
     <div className="Dashboard w-full">
       <div className="relative h-[200px] bg-gradient-to-r to-ha-primary1 from-purple-500 rounded-[1rem] shadow">
@@ -42,7 +46,7 @@ function Dashboard() {
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white ml-3">
-          <h1 className="md:text-4xl text-xl font-bold mb-4"> 👋 Welcome Prof. Kenneth Igbenedion</h1>
+          <h1 className="md:text-4xl text-xl font-bold mb-4 capitalize"> 👋 Welcome {data?.data?.firstName} {data?.data?.lastName}</h1>
           <p className="md:text-lg">
             Today is a great day to save lives, continue where you left off 💉🩺💊.
           </p>

@@ -1,65 +1,76 @@
-import axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from "axios";
+import axios from "axios";
 import { toast } from "react-toastify";
 import { Cookies } from "react-cookie";
-
-const cookies = new Cookies();
-let access = "";
-if (typeof window !== "undefined") {
-  access = cookies.get("accessToken");
-}
 
 const client = axios.create({
   baseURL: "https://medopt-pilj.onrender.com/api/v1/",
 });
-const token = access;
 
 // Function to handle navigation
 const navigateToLogin = () => {
   // You can replace this with your actual logic for navigation
-  window.location.href = "/login";
+  // window.location.href = "/login";
 };
 
-export const request = ({ headers, ...options }: AxiosRequestConfig) => {
-  if (token) {
-    headers = {
-      ...headers,
-      medopt: token,
-    };
-  }
+// State to track shown errors
+const shownErrors = new Set();
 
-  const onSuccess = (response: AxiosResponse) => {
-    return response.data
-  };
+export const request = async (config) => {
+  try {
+    const cookies = new Cookies();
+    let access = "";
+    if (typeof window !== "undefined") {
+      access = cookies.get("accessToken");
+    }
 
-  const onError = (error: AxiosError) => {
-    if (error.response) {
-      const { status, data } = error.response;
-  
-      if (status === 401 || status === 403) {
-        toast.error(
-          `Client Error: ${status} - ${(data as { message?: string })?.message || "Error, try Again"}`
-        );
-        // Redirect to the login route for authentication
-        navigateToLogin();
-      } else if (status >= 400 && status < 500) {
-        toast.error(
-          `Client Error: ${status} - ${(data as { message?: string })?.message || "Error, try Again"}`
-        );
-      } else if (status >= 500) {
-        toast.error(
-          `Server Error: ${status} - ${(data as { message?: string })?.message || "Error, try Again"}`
-        );
+    if (access) {
+      config.headers = {
+        ...config.headers,
+        medopt: access ? access : "",
+      };
+    }
+
+    const response = await client(config);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const { status, data } = error.response || {};
+
+      // Generate a unique key for the error message
+      const errorKey = `${status}-${data?.message || "Network Error"}`;
+
+      // Check if the error has been shown already
+      if (!shownErrors.has(errorKey)) {
+        shownErrors.add(errorKey);
+
+        // Show the error toast
+        if (status === 401 || status === 403) {
+          toast.error(
+            `Client Error: ${status} - ${
+              (data as { message?: string })?.message || "Error, try Again"
+            }`
+          );
+
+          // Redirect to the login route for authentication
+          navigateToLogin();
+        } else if (status >= 400 && status < 500) {
+          toast.error(
+            `Client Error: ${status} - ${
+              (data as { message?: string })?.message || "Error, try Again"
+            }`
+          );
+        } else if (status >= 500) {
+          toast.error(
+            `Server Error: ${status} - ${
+              (data as { message?: string })?.message || "Error, try Again"
+            }`
+          );
+        }
       }
-    } else if (error.request) {
-      toast.error("Network Error: Unable to connect to the server");
     } else {
       toast.error("An Error Occurred: Please try again later");
     }
-  };
-  
 
-  // Include headers in the request
-  return client({ ...options, headers })
-    .then(onSuccess)
-    .catch(onError);
+    throw error;
+  }
 };

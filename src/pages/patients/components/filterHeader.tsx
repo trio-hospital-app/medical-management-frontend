@@ -24,6 +24,7 @@ function Patients({ setPatientdata }) {
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
+    event.preventDefault();
     if (event.key === "Enter") {
       event.preventDefault();
       await refetch();
@@ -37,6 +38,8 @@ function Patients({ setPatientdata }) {
   const searchHandler = async () => {
     await refetch();
   };
+
+  
   return (
     <div className="Patients">
       <FilterHeader
@@ -49,45 +52,6 @@ function Patients({ setPatientdata }) {
         }}
       >
         <form className="grid">
-          {/* <div className="">
-            <div className=" block">
-              <label htmlFor="patientid">Patient ID</label>
-            </div>
-            <input id="patientid" className="w-full" required />
-          </div>
-          <div className="">
-            <div className=" block">
-              <label htmlFor="firstName">First Name</label>
-            </div>
-            <input id="firstName" className="w-full" required />
-          </div>
-          <div className="">
-            <div className="block">
-              <label htmlFor="lastName">Last Name</label>
-            </div>
-            <input id="lastName" required className="w-full" />
-          </div>
-          <div className="">
-            <div className="block">
-              <label htmlFor="dob">Date Of Birth</label>
-            </div>
-            <input type="date" id="dob" name="dob" className="w-full" />
-          </div>
-          <div className="]">
-            <div className="block">
-              <label htmlFor="phoneNumber">Phone Number</label>
-            </div>
-            <input id="phoneNumber" className="w-full" type="number" required />
-          </div>
-          <div className="">
-            <div className=" block">
-              <label htmlFor="gender">Gender</label>
-            </div>
-            <select name="gender" id="gender" className="w-full">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div> */}
           <div className="flex w-full border rounded-lg items-center px-5">
             <div>
               <BiSearchAlt />

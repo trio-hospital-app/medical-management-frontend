@@ -1,25 +1,36 @@
 import { FaSearch } from "react-icons/fa";
 import DataTable from "react-data-table-component";
-import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-// import { QueryClient } from "react-query";
 import {
   useDeleteUser,
   useGetUsers,
 } from "../../../../hooks/reactQuery/useUser";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from "../../../../components/ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 function UserTable() {
+  const navigate = useNavigate()
   const { data: users, isLoading } = useGetUsers();
-  const { mutate: deleteUser, isLoading: isDeleteUserLoading, data:DeleteUserData } = useDeleteUser();
+  const {
+    mutate: deleteUser,
+    isLoading: isDeleteUserLoading,
+    data: DeleteUserData,
+  } = useDeleteUser();
 
   if (isLoading || isDeleteUserLoading) {
     return <Loader />;
   }
 
-  if(DeleteUserData && DeleteUserData?.status){
-    toast.success('User Deleted')
+  if (DeleteUserData && DeleteUserData?.status) {
+    toast.success("User Deleted");
   }
 
   const handleDeleteUser = async (id: string) => {
@@ -61,47 +72,50 @@ function UserTable() {
       sortable: true,
     },
     {
-      
       cell: (row) => (
         <div className="w-full flex justify-end items-center">
           <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
-            <Dropdown
-              arrowIcon={false}
-              inline
-              label={<BsThreeDotsVertical style={{ color: "black" }} />}
-            >
-              <Dropdown.Item
-                onClick={() => {
-                  // Handle reset password
-                  console.log("Reset Password Clicked");
-                }}
-              >
-                Reset Password
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  handleDeleteUser(row.id);
-                }}
-              >
-                Delete User
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  // Handle edit user
-                  console.log("Edit User Clicked");
-                }}
-              >
-                Edit User
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  // Handle deactivate user
-                  console.log("Deactivate User Clicked");
-                }}
-              >
-                Deactivate User
-              </Dropdown.Item>
-            </Dropdown>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="IconButton" aria-label="Customise options">
+                  <BsThreeDotsVertical style={{ color: "black" }} />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      navigate('/forgot')
+                    }}
+                  >
+                    Reset Password
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      handleDeleteUser(row.id);
+                    }}
+                  >
+                    Delete User
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      // Handle edit user
+                      console.log("Edit User Clicked");
+                    }}
+                  >
+                    Edit User
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      // Handle deactivate user
+                      console.log("Deactivate User Clicked");
+                    }}
+                  >
+                    Deactivate User
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenuPortal>
+            </DropdownMenu>
           </div>
         </div>
       ),
