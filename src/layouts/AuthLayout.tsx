@@ -1,7 +1,7 @@
 import { Button } from "flowbite-react";
 import { useState } from "react";
 import { useLogin } from "../hooks/reactQuery/useUser";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/ui/loader";
 
 function AuthLayout() {
@@ -61,12 +61,12 @@ function AuthLayout() {
             />
           </div>
           <div className="flex justify-between">
-            <a
-              href="#"
+            <Link
+              to="/forgot"
               className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
             >
               Lost Password?
-            </a>
+            </Link>
           </div>
           <div className="w-[300px] flex" onClick={handleLogin}>
             <Button className="w-full">Log in to your account</Button>
