@@ -7,78 +7,61 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "../../../../components/ui/accordion";
-import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
-function TakeSpecimen(selectedRowData) {
-  const [formData, setFormData] = useState("");
-  const [dynamicFormRows, setDynamicFormRows] = useState([]);
 
-  console.log(selectedRowData);
-  console.log(dynamicFormRows);
+function ReceiveSpecimen({ selectedRowData, receiveComent, setReceiveComent }) {
+  const [formComment, setforComment] = useState("");
 
-  console.log(selectedRowData?.selectedRowData);
+  console.log("selectedRowData", selectedRowData);
 
-  const { patientId, panelId, specimenId, orderBy, comment } =
-    selectedRowData?.selectedRowData;
+  const { patientId, panelId, specimenId, orderBy, comment } = selectedRowData;
 
   //function for date and time format
   function formatDateTime(inputDate) {
     const originalDate = new Date(inputDate);
-
     // Create an options object with the desired date and time format
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
       month: "numeric",
       year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: false,
     };
     return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
   }
 
+  //function to calculate age
   const calculateAge = (dob) => {
     const currentDate = new Date();
     const birthDate = new Date(dob);
-
     const age = currentDate.getFullYear() - birthDate.getFullYear();
-
     return age + " Years";
   };
 
   // date and time usage
   const orderedDate = formatDateTime(
-    selectedRowData?.selectedRowData.createdAt
+    selectedRowData?.createdAt
   );
-
-  const handleRowDataChange = (rowData: any) => {
-    setDynamicFormRows(rowData);
-  };
-  // console.log(comment);
 
   return (
     <>
       <div>
         <CustomLabHeader
           patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
-          patientID={`${patientId.patientId}`}
-          testName={panelId.panel || "Not Found"}
+          patientID={`${patientId?.patientId}`}
+          testName={panelId?.panel || "Not Found"}
           testNameBackgroundColor={`${specimenId.color}`}
-          labID={`${selectedRowData?.selectedRowData.id}`}
+          labID={`${selectedRowData?.selectedRowData?.id}`}
           IdName="Lab ID"
           patientEmail={`${patientId.address.email} `}
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
           gender={`${patientId?.gender}`}
-          phoneNumber={`${patientId.phone}`}
-          religion={`${patientId.address.religion}`}
-          nationality={`${patientId.address.country}`}
-          maritalStatus={`${patientId.address?.maritalStatus}`}
-          age={calculateAge("1909/12/4") || "Not Found"}
-          orderedBy={`${orderBy.firstName} ${orderBy.lastName}`}
+          phoneNumber={`${patientId?.phone}`}
+          religion={`${patientId?.address?.religion}`}
+          nationality={`${patientId?.address.country}`}
+          maritalStatus={`${patientId?.address?.maritalStatus}`}
+          age={calculateAge(patientId?.address?.dob) || "Not Found"}
+          orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
           orderedDate={orderedDate}
         />
       </div>
-
       {/* accordion */}
       <div className="px-4 max-h-[300px] overflow-y-scroll">
         <Accordion
@@ -130,30 +113,19 @@ function TakeSpecimen(selectedRowData) {
         </Accordion>
       </div>
 
-      {/* fill form are  */}
-
-      <div className="px-4">
-        <div className="bg-ha-primary2 px-4 py-4 font-bold rounded-[.3rem]">
-          <h1>Full Blood Count</h1>
-        </div>
-        <div>
-          <DynamicFormTable onRowDataChange={handleRowDataChange} />
-        </div>
-      </div>
-
       <div className="px-4">
         <span className="font-bold">Add Comment</span>
         <TextareaAutosize
           minRows={3}
           placeholder="Write a comment"
-          onChange={(e) => setFormData(e.target.value)}
+          onChange={(e) => setReceiveComent(e.target.value)}
           className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-          value={formData}
-          maxRows={4}
+          value={receiveComent}
+          maxRows={5}
         />
       </div>
     </>
   );
 }
 
-export default TakeSpecimen;
+export default ReceiveSpecimen;

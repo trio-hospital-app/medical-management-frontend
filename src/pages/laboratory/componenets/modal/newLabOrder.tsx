@@ -147,7 +147,7 @@ const NewLabOrder = ({
             </div>
             <div className="mb-2 w-[48%]">
               <label className="text-sm font-semibold text-ha-primary1">
-                Service Center
+                Department
               </label>
               <CustomMultiSelect
                 options={clinicCenters.map((center) => ({
@@ -167,7 +167,7 @@ const NewLabOrder = ({
           </div>
           <div className="mb-2 pt-5">
             <label className="text-sm font-semibold text-ha-primary1">
-              Lab Panel
+              Lab Test
             </label>
             <CustomMultiSelect
               options={clinicPanels.map((panel) => ({
