@@ -28,9 +28,7 @@ const pageVariants = {
   exit: { opacity: 0, translateY: 10, transition: { duration: 0.5 } },
 };
 
-
 function App() {
-
   return (
     <AnimatePresence>
       <Routes>
@@ -56,7 +54,6 @@ function App() {
             }
           />
 
-          
           <Route
             path="/patients"
             element={
@@ -72,7 +69,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/patients/:id"
             element={
@@ -87,7 +83,6 @@ function App() {
               </motion.div>
             }
           />
-
 
           <Route
             path="/nursing/:id"
@@ -118,7 +113,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/opd"
             element={
@@ -133,7 +127,6 @@ function App() {
               </motion.div>
             }
           />
-
 
           <Route
             path="/laboratory"
@@ -150,7 +143,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/radiology"
             element={
@@ -165,7 +157,6 @@ function App() {
               </motion.div>
             }
           />
-
 
           <Route
             path="/pharmacy"
@@ -182,7 +173,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/nursing"
             element={
@@ -198,7 +188,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/settings/users"
             element={
@@ -213,7 +202,6 @@ function App() {
               </motion.div>
             }
           />
-
 
           <Route
             path="/settings/forms"

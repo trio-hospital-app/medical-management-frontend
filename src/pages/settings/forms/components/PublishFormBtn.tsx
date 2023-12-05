@@ -22,13 +22,13 @@ function PublishFormBtn({ id }: { id: number }) {
 
   async function publishForm() {
     try {
-      console.log(id)
+      console.log(id);
       // await PublishForm(id);
       toast({
         title: "Success",
         description: "Your form is now available to the public",
       });
-      navigate(0)
+      navigate(0);
     } catch (error) {
       toast({
         title: "Error",
@@ -49,11 +49,12 @@ function PublishFormBtn({ id }: { id: number }) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. After publishing you will not be able to edit this form. <br />
+            This action cannot be undone. After publishing you will not be able
+            to edit this form. <br />
             <br />
             <span className="font-medium">
-              By publishing this form you will make it available to the public and you will be able to collect
-              submissions.
+              By publishing this form you will make it available to the public
+              and you will be able to collect submissions.
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -63,7 +64,7 @@ function PublishFormBtn({ id }: { id: number }) {
             disabled={loading}
             onClick={(e) => {
               e.preventDefault();
-               // @ts-expect-error: Just ignore the next line
+              // @ts-expect-error: Just ignore the next line
               startTransition(publishForm);
             }}
           >

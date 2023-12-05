@@ -21,17 +21,17 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
 
     const missingFields = requiredFields.filter(
       (field) =>
-        nextOfKinData[field] === undefined || nextOfKinData[field] === ""
+        nextOfKinData[field] === undefined || nextOfKinData[field] === "",
     );
 
     if (missingFields.length > 0) {
       const friendlyFieldNames = missingFields.map((field) =>
-        field.replace("nok.", "")
+        field.replace("nok.", ""),
       );
       toast.error(
         `Please fill in the following required fields: ${friendlyFieldNames.join(
-          ", "
-        )}`
+          ", ",
+        )}`,
       );
       return;
     }
@@ -83,7 +83,9 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
           <input
             className="w-full"
             required
-            value={nextOfKinData.relationship || patient?.address?.nok?.relationship}
+            value={
+              nextOfKinData.relationship || patient?.address?.nok?.relationship
+            }
             onChange={(e) => handleChange("relationship", e.target.value)}
           />
         </div>
@@ -97,7 +99,9 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
               name="phoneCode"
               id="phoneCode"
               className="w-full"
-              value={nextOfKinData.phoneCode || patient?.address?.nok?.phoneCode}
+              value={
+                nextOfKinData.phoneCode || patient?.address?.nok?.phoneCode
+              }
               onChange={(e) => handleChange("phoneCode", e.target.value)}
             >
               <option value=""></option>
@@ -113,7 +117,9 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
               className="w-full"
               required
               type="number"
-              value={nextOfKinData.phoneNumber || patient?.address?.nok?.phoneNumber}
+              value={
+                nextOfKinData.phoneNumber || patient?.address?.nok?.phoneNumber
+              }
               onChange={(e) => handleChange("phoneNumber", e.target.value)}
             />
           </div>
@@ -127,7 +133,9 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
             className="w-full"
             required
             type="number"
-            value={nextOfKinData.postalCode || patient?.address?.nok?.postalCode}
+            value={
+              nextOfKinData.postalCode || patient?.address?.nok?.postalCode
+            }
             onChange={(e) => handleChange("postalCode", e.target.value)}
           />
         </div>

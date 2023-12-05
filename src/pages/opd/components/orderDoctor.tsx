@@ -41,7 +41,7 @@ function OrderDoctor() {
             labelledBy="Lab Test"
           />
         </div>
-        
+
         <div className="">
           <div className=" block">
             <label htmlFor="patientid">Type of Visit</label>

@@ -16,7 +16,7 @@ function Table({ labSearch }) {
   const [finalResult, setFinalResult] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState({});
 
-  const { data: labData, isLoading:LoadingLab } = useGetLab();
+  const { data: labData, isLoading: LoadingLab } = useGetLab();
 
   if (LoadingLab) {
     return <Loader />;
@@ -96,20 +96,20 @@ function Table({ labSearch }) {
             row.status === "receive specimen"
               ? "bg-yellow-500 hover:bg-yellow-600"
               : row.status === "awaiting approval"
-              ? "bg-blue-500 hover:bg-blue-600"
-              : row.status === "final result"
-              ? "bg-green-500 hover:bg-green-600"
-              : row.status === "'"
+                ? "bg-blue-500 hover:bg-blue-600"
+                : row.status === "final result"
+                  ? "bg-green-500 hover:bg-green-600"
+                  : row.status === "'"
           }`}
           onClick={() => {
             setSelectedRowData(row);
             row.status === "receive specimen"
               ? setReceiveSpecimen(true)
               : row.status === "awaiting approval"
-              ? setAwaitingApproval(true)
-              : row.status === "final result" // Corrected status here
-              ? setFinalResult(true)
-              : row.status === "null";
+                ? setAwaitingApproval(true)
+                : row.status === "final result" // Corrected status here
+                  ? setFinalResult(true)
+                  : row.status === "null";
           }}
         >
           {row.status

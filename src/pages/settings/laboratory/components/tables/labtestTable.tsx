@@ -172,7 +172,7 @@ function LabTestsTable() {
           showSubmitButton={true}
           submitHandler={() => {}}
         >
-         <NewLabTests/>
+          <NewLabTests />
         </BasicModal>
       )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">

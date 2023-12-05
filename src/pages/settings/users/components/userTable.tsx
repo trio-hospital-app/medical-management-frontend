@@ -17,7 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function UserTable() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { data: users, isLoading } = useGetUsers();
   const {
     mutate: deleteUser,
@@ -85,7 +85,7 @@ function UserTable() {
                 <DropdownMenuContent>
                   <DropdownMenuItem
                     onClick={() => {
-                      navigate('/forgot')
+                      navigate("/forgot");
                     }}
                   >
                     Reset Password

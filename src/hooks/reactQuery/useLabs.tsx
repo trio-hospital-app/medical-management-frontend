@@ -13,14 +13,14 @@ export const useGetLabById = (id: string) => {
 
 export const useSearchLabPatient = (
   param: string | number,
-  isEnabled: boolean = false
+  isEnabled: boolean = false,
 ) => {
   return useQuery(
     ["searchLabPatient", param],
     () => LabService.searchLabPatient(param),
     {
       enabled: isEnabled,
-    }
+    },
   );
 };
 
@@ -40,7 +40,7 @@ export const useUpdateLab = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Lab");
       },
-    }
+    },
   );
 };
 

@@ -2,7 +2,6 @@ import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
 
 function DoctorsTable() {
-
   interface Patient {
     id: number;
     firstName: string;
@@ -122,14 +121,13 @@ function DoctorsTable() {
       selector: (row: Patient) => row.lastAppointmentDate,
       sortable: true,
       with: "500px",
-    }
+    },
   ];
-  
+
   const navigate = useNavigate();
   const handleRowClick = (patientId: number) => {
     navigate(`/patients/${patientId}`);
   };
-
 
   return (
     <div>

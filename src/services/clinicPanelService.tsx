@@ -2,8 +2,8 @@ import { AxiosRequestConfig } from "axios";
 import { request } from "../lib/api";
 
 export interface NewClinicPanelData {
-    panel: string;
-    cost: number
+  panel: string;
+  cost: number;
 }
 
 class clinicPanelService {

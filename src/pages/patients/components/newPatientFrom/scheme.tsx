@@ -7,9 +7,10 @@ import { useAddPatient } from "../../../../hooks/reactQuery/usePatients";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
 import { Button } from "../../../../components/ui/button";
+import { useGetScheme } from "../../../../hooks/reactQuery/useSchemes";
 
 function Scheme({ patient, setPatient, setPresentTab }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [schemeData, setSchemeData] = useState({
     schemes: [
       {
@@ -20,6 +21,8 @@ function Scheme({ patient, setPatient, setPresentTab }) {
       },
     ],
   });
+
+  const { data: schemes } = useGetScheme();
 
   const handleAddScheme = () => {
     setSchemeData((prevData) => ({
@@ -53,8 +56,8 @@ function Scheme({ patient, setPatient, setPresentTab }) {
 
   if (data && data?.status) {
     toast.success("Patient added successfully");
-    navigate('/patients')
-  } 
+    navigate("/patients");
+  }
 
   const handleSaveRecord = async () => {
     // Attach schemeData to the patient.address object
@@ -88,10 +91,11 @@ function Scheme({ patient, setPatient, setPresentTab }) {
               </div>
               <select name="gender" id="gender" className="w-full">
                 <option value="walk-in"></option>
-                <option value="walk-in">Single</option>
-                <option value="walk-in">Married</option>
-                <option value="appointment">Divorced</option>
-                <option value="appointment">Widowed</option>
+                {schemes?.data?.map((el) => (
+                  <option value={el.name} className="capitalize">
+                    {el?.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="">
@@ -107,10 +111,10 @@ function Scheme({ patient, setPatient, setPresentTab }) {
               </div>
               <select name="gender" id="gender" className="w-full">
                 <option value="walk-in"></option>
-                <option value="walk-in">Single</option>
-                <option value="walk-in">Married</option>
-                <option value="appointment">Divorced</option>
-                <option value="appointment">Widowed</option>
+                <option value="Self">Self</option>
+                <option value="Insurance">Insurance</option>
+                <option value="Cooperate">Cooperate</option>
+                <option value="Family">Family</option>
               </select>
             </div>
 

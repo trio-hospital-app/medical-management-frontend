@@ -44,14 +44,12 @@ function OrderLab() {
           />
         </div>
 
-
         <div className="">
           <div className=" block">
             <label htmlFor="patientid">Service Center</label>
           </div>
           <input id="patientid" className="w-full" required />
         </div>
-
 
         <div className="">
           <div className=" block">
@@ -69,7 +67,12 @@ function OrderLab() {
           <div className=" block">
             <label htmlFor="patientid">Comment</label>
           </div>
-          <textarea id="patientid" className="w-full border rounded-lg border-gray-400" required rows={5}/>
+          <textarea
+            id="patientid"
+            className="w-full border rounded-lg border-gray-400"
+            required
+            rows={5}
+          />
         </div>
       </form>
     </div>

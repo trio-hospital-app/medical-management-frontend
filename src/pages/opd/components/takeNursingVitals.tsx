@@ -1,5 +1,3 @@
-
-
 function TakeNursingVitals() {
   return (
     <div>

@@ -130,7 +130,9 @@ function ReportImaging() {
       </div>
 
       <div className="px-4">
-        <label htmlFor="quill" className="text-ha-primary1 font-semibold">Add Report</label>
+        <label htmlFor="quill" className="text-ha-primary1 font-semibold">
+          Add Report
+        </label>
         <QuilEditor updateQuillData={updateQuillData} />
       </div>
     </>

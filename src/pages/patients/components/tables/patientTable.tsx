@@ -7,25 +7,26 @@ import { useState } from "react";
 import OrderLab from "../orderLab";
 import OrderRadiology from "../orderRadiology";
 import OrderDoctor from "../orderDoctor";
-// import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
-// import Loader from "../../../../components/ui/loader";
+import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
 
-function PatientTable({patientData}) {
+function PatientTable({ patientData }) {
   const navigate = useNavigate();
   const [showLabModal, setShowLabModal] = useState(false);
   const [showImagingModal, setShowImagingModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
+  const { data } = useGetPatients();
+  console.log(data);
   interface Patient {
     lastAppointment: number;
-    phone: string,
+    phone: string;
     firstName: string;
     lastName: string;
     patientId: string;
     gender: string;
     address: {
-      dob: string
+      dob: string;
     };
-    
+
     id: string;
     dateOfBirth: string;
     phoneNumber: string;
@@ -72,7 +73,11 @@ function PatientTable({patientData}) {
       cell: () => (
         <div className=" w-full flex justify-end items-center">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
-            <Dropdown arrowIcon={false} inline label={<BsThreeDotsVertical  style={{color: "black"}}/>}>
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={<BsThreeDotsVertical style={{ color: "black" }} />}
+            >
               <Dropdown.Item
                 onClick={() => {
                   setShowLabModal(true);
@@ -102,7 +107,6 @@ function PatientTable({patientData}) {
     },
   ];
 
-
   const handleRowClick = (id: string) => {
     navigate(`/patients/${id}`);
   };
@@ -111,7 +115,7 @@ function PatientTable({patientData}) {
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
         columns={columns}
-        data={patientData?.data ? patientData?.data : patientData}
+        data={patientData?.data ? patientData?.data : data?.data.patients}
         onRowClicked={(row) => handleRowClick(row.id)}
       />
       {/* lab modal */}

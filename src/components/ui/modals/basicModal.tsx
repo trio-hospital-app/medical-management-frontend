@@ -9,7 +9,7 @@ interface BasicModalProps {
   openModal: boolean;
   submitTitle: string;
   showCancelButton?: boolean;
-  size?:string;
+  size?: string;
   showSubmitButton?: boolean;
   cancelTitle: string;
   style?: CSSProperties;
@@ -36,7 +36,7 @@ function BasicModal({
   return (
     <div>
       <Modal
-       className="z-[100]"
+        className="z-[100]"
         show={openModal}
         size={size}
         dismissible

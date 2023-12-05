@@ -1,4 +1,3 @@
-
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
 

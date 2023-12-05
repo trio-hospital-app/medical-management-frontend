@@ -1,5 +1,9 @@
-
-import { ElementsType, FormElement, FormElementInstance, SubmitFunction } from "../FormElements";
+import {
+  ElementsType,
+  FormElement,
+  FormElementInstance,
+  SubmitFunction,
+} from "../FormElements";
 import { Label } from "../../../../../components/ui/label";
 import { Input } from "../../../../../components/ui/input";
 import { z } from "zod";
@@ -8,7 +12,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import useDesigner from "../hooks/useDesigner";
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../../../../components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../../../../components/ui/form";
 import { Switch } from "../../../../../components/ui/switch";
 import { cn } from "../../../../../lib/utils";
 import { BsTextareaResize } from "react-icons/bs";
@@ -48,7 +60,10 @@ export const TextAreaFormElement: FormElement = {
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 
-  validate: (formElement: FormElementInstance, currentValue: string): boolean => {
+  validate: (
+    formElement: FormElementInstance,
+    currentValue: string,
+  ): boolean => {
     const element = formElement as CustomInstance;
     if (element.extraAttributes.required) {
       return currentValue.length > 0;
@@ -63,9 +78,13 @@ type CustomInstance = FormElementInstance & {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-function DesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+function DesignerComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) {
   const element = elementInstance as CustomInstance;
-   
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { label, required, placeHolder, helperText } = element.extraAttributes;
   return (
@@ -75,7 +94,9 @@ function DesignerComponent({ elementInstance }: { elementInstance: FormElementIn
         {required && "*"}
       </Label>
       <Textarea readOnly disabled placeholder={placeHolder} />
-      {helperText && <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>}
+      {helperText && (
+        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+      )}
     </div>
   );
 }
@@ -101,7 +122,8 @@ function FormComponent({
     setError(isInvalid === true);
   }, [isInvalid]);
 
-  const { label, required, placeHolder, helperText, rows } = element.extraAttributes;
+  const { label, required, placeHolder, helperText, rows } =
+    element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
       <Label className={cn(error && "text-red-500")}>
@@ -122,7 +144,16 @@ function FormComponent({
         }}
         value={value}
       />
-      {helperText && <p className={cn("text-muted-foreground text-[0.8rem]", error && "text-red-500")}>{helperText}</p>}
+      {helperText && (
+        <p
+          className={cn(
+            "text-muted-foreground text-[0.8rem]",
+            error && "text-red-500",
+          )}
+        >
+          {helperText}
+        </p>
+      )}
     </div>
   );
 }
@@ -130,7 +161,11 @@ function FormComponent({
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 
 // eslint-disable-next-line react-refresh/only-export-components
-function PropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+function PropertiesComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) {
   const element = elementInstance as CustomInstance;
   const { updateElement } = useDesigner();
   const form = useForm<propertiesFormSchemaType>({
@@ -187,7 +222,8 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                 />
               </FormControl>
               <FormDescription>
-                The label of the field. <br /> It will be displayed above the field
+                The label of the field. <br /> It will be displayed above the
+                field
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -268,7 +304,10 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                 </FormDescription>
               </div>
               <FormControl>
-                <Switch checked={field.value} onCheckedChange={field.onChange} />
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

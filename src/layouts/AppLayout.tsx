@@ -9,7 +9,6 @@ function AppLayout() {
   const access = cookies.get("accessToken");
   const location = useLocation();
 
-
   return (
     <div className="w-full h-full">
       <NavBar />

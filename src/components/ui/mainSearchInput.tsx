@@ -18,9 +18,7 @@ const MainSearchInput: React.FC<SearchComponentProps> = ({
 }) => {
   return (
     <div className="">
-      <label className="text-sm font-semibold text-ha-primary1">
-        {Label}
-      </label>
+      <label className="text-sm font-semibold text-ha-primary1">{Label}</label>
       <form
         action=""
         className="flex items-center justify-start border width-full px-5 mt-2 rounded-[.5rem]"

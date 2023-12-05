@@ -134,9 +134,9 @@ function LabTable() {
   const handleRowClick = (patientId: number) => {
     navigate(`/patients/${patientId}`);
   };
-  
+
   const ExpandedComponent = () => (
-    <div className="m-5 p-5 shadow rounded-md" >
+    <div className="m-5 p-5 shadow rounded-md">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger>Hi</AccordionTrigger>

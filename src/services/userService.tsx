@@ -19,9 +19,7 @@ export interface UsersResponse {
 }
 
 class UserService {
-
   public async register(user: User) {
-
     const options: AxiosRequestConfig = {
       method: "POST",
       url: "/register",
@@ -58,56 +56,55 @@ class UserService {
     return request(options);
   }
 
-
-  public async login(data: LoginData){
+  public async login(data: LoginData) {
     const options: AxiosRequestConfig = {
       method: "POST",
       url: "/login",
       data,
     };
-    
+
     return await request(options);
   }
 
-  public async updateUser(id: string, data:object){
+  public async updateUser(id: string, data: object) {
     const options: AxiosRequestConfig = {
       method: "POST",
       url: `/user/${id}`,
       data,
     };
-    
+
     return await request(options);
   }
 
-  public async activate(data: LoginData){
+  public async activate(data: LoginData) {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: "/activate",
       data,
     };
     const response = await request(options);
-     
+
     return response;
   }
 
-  public async forgot(data: {username: string}){
+  public async forgot(data: { username: string }) {
     const options: AxiosRequestConfig = {
       method: "POST",
       url: "/forgot",
       data,
     };
-    
+
     return await request(options);
   }
 
-  public async reset(data: {password: string}){
+  public async reset(data: { password: string }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: "/reset",
       data,
     };
     const response = await request(options);
-     
+
     return response;
   }
 }

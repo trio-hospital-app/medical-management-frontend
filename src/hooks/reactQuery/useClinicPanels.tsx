@@ -11,7 +11,7 @@ export const useGetClinicPanel = () => {
 
 export const useGetClinicPanelById = (id: string) => {
   return useQuery(["ClinicPanel", id], () =>
-    ClinicPanelService.getClinicPanelById(id)
+    ClinicPanelService.getClinicPanelById(id),
   );
 };
 
@@ -22,7 +22,7 @@ export const useAddClinicPanel = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("ClinicPanel");
       },
-    }
+    },
   );
 };
 
@@ -34,17 +34,14 @@ export const useUpdateClinicPanel = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("ClinicPanel");
       },
-    }
+    },
   );
 };
 
 export const useDeleteClinicPanel = () => {
-  return useMutation(
-    (id: string) => ClinicPanelService.deleteClinicPanel(id),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("ClinicPanel");
-      },
-    }
-  );
+  return useMutation((id: string) => ClinicPanelService.deleteClinicPanel(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("ClinicPanel");
+    },
+  });
 };

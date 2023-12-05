@@ -97,8 +97,8 @@ function PatientTable() {
               row.status === "Report"
                 ? setReportModal(true)
                 : row.status === "Capture"
-                ? setCaptureModal(true)
-                : null
+                  ? setCaptureModal(true)
+                  : null
             }
           >
             {row.status}

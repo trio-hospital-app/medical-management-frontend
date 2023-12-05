@@ -77,7 +77,6 @@ input {
   border-radius: 0.5rem;
 }
 
-
 .custom-input {
   background-color: rgb(250, 247, 255) !important;
   border: 0.5px solid #3f56cd !important;
@@ -173,11 +172,11 @@ footer {
   }
 
   /* Add your custom styles for red background and white text */
-  /* .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
+/* .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
     background-color: #e8ebff !important;
     color: black;
   }
-} */ 
+} */
 
 @media (max-width: 768px) {
   .custom-bg-black {

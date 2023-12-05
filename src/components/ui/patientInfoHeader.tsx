@@ -5,7 +5,9 @@ function PatientInfoHeader() {
     <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
       <div className="flex md:flex-row flex-col md:items-center justify-between border-b">
         <div className="flex items-start justify-center flex-col">
-          <span className="md:text-xl font-bold text-bold">Mr. Fredrick Luguard</span>
+          <span className="md:text-xl font-bold text-bold">
+            Mr. Fredrick Luguard
+          </span>
           <span className="text-ha-primary1">12345667778</span>
         </div>
         <div>

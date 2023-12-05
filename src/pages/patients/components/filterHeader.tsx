@@ -22,7 +22,7 @@ function Patients({ setPatientdata }) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -38,7 +38,6 @@ function Patients({ setPatientdata }) {
     await refetch();
   };
 
-  
   return (
     <div className="Patients">
       <FilterHeader

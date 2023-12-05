@@ -10,23 +10,20 @@ const options = [
   { label: "Nursing", value: "Nursing" },
 ];
 
- 
 function AddUser({ setFormData }) {
   const [selected, setSelected] = useState([]);
 
-
   useEffect(() => {
-     
     setFormData((prevData) => ({
       ...prevData,
-       
+
       role: selected.map((item) => item?.value),
     }));
   }, [selected, setFormData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-     
+
     setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
 

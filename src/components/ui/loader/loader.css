@@ -4,15 +4,17 @@
   display: flex;
   font: 1em/1.5 sans-serif;
   height: 100vh;
-  transition: background-color var(--trans-dur), color var(--trans-dur);
+  transition:
+    background-color var(--trans-dur),
+    color var(--trans-dur);
 }
 :root {
-    --hue: 223;
-    --bg: hsla(var(--hue), 90%, 10%, 0.8); /* Adjust the alpha value as needed */
-    --fg: hsl(var(--hue), 90%, 90%);
-    --primary: hsl(var(--hue), 90%, 50%);
-    --trans-dur: 0.3s;
-  }
+  --hue: 223;
+  --bg: hsla(var(--hue), 90%, 10%, 0.8); /* Adjust the alpha value as needed */
+  --fg: hsl(var(--hue), 90%, 90%);
+  --primary: hsl(var(--hue), 90%, 50%);
+  --trans-dur: 0.3s;
+}
 .pl {
   --dur: 3s;
   margin: auto;

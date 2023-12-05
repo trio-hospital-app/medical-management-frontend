@@ -51,7 +51,9 @@ function LaboratoryManagement() {
             <TabsContent value="lab-test">
               <LabTestsTable />
             </TabsContent>
-            <TabsContent value="observation"><ObservationsTable/></TabsContent>
+            <TabsContent value="observation">
+              <ObservationsTable />
+            </TabsContent>
             <TabsContent value="specimen-container">
               <SpecimenContainerTable />
             </TabsContent>

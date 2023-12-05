@@ -6,7 +6,6 @@ import CustomLabHeader from "../../../../components/ui/customPatientCard/customP
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 function FinalResult() {
-
   const tests = [
     {
       testName: "Full Blood Count",

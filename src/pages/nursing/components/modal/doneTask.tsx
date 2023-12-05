@@ -83,13 +83,13 @@ const doneTask = () => {
           <div className=" flex flex-col md:flex-row items-center justify-between py-2 ">
             <div>
               <span className="text-sm font-semibold text-gray-500">
-              Performed by:
+                Performed by:
               </span>
               <span className="text-md font-bold"> Dr. Babs Maninasara</span>
             </div>
             <div>
               <span className="text-sm font-semibold text-gray-500">
-              Performed At:
+                Performed At:
               </span>
               <span className="text-md font-bold"> 2023-11-30, 00:00</span>
             </div>
