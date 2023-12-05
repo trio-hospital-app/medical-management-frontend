@@ -19,6 +19,8 @@ import Users from "./pages/settings/users";
 import LaboratoryManagement from "./pages/settings/laboratory";
 import RadiologyManagement from "./pages/settings/radiology";
 import ActivationLayout from "./layouts/ActivationLayout";
+import ResetPassword from "./layouts/ResetPassword";
+import ForgotPassword from "./layouts/ForgotPassword";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -32,9 +34,11 @@ function App() {
   return (
     <AnimatePresence>
       <Routes>
-        {/* login route */}
+        {/* routes outside apploayout */}
         <Route path="/login" element={<AuthLayout />} />
         <Route path="/activate" element={<ActivationLayout />} />
+        <Route path="/reset" element={<ResetPassword />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
         {/* routes in the applayout */}
         <Route path="/" element={<AppLayout />}>
           <Route

@@ -1,16 +1,15 @@
 import { Button } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { useActivate } from "../hooks/reactQuery/useUser";
+import { useReset } from "../hooks/reactQuery/useUser";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../components/ui/loader";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 
-function ActivationLayout() {
+function ResetPassword() {
   const navigate = useNavigate()
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { mutate, isLoading, data } = useActivate();
+  const { mutate, isLoading, data } = useReset();
   const [, setCookie] = useCookies(["accessToken"]);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -23,17 +22,21 @@ function ActivationLayout() {
           setCookie("accessToken", token);
         }
       } catch (error) {
-        console.error("Activation failed", error);
+        console.error("reset failed", error);
       }
     };
 
     activateAccount();
+    
   }, [token]);
 
   const handleActivate = async () => {
     try {
-      if (!username || !password) return;
-      await mutate({ username, password });
+      if (!password) return;
+      await mutate({
+          password: password,
+        //   username: ""
+      });
     } catch (error) {
       console.error("Activation failed", error);
     }
@@ -44,7 +47,7 @@ function ActivationLayout() {
   }
 
   if (data && data.status) {
-    toast.success("Account activated successfully");
+    toast.success("Account Reset successfully");
     navigate('/login');
   }
 
@@ -52,25 +55,11 @@ function ActivationLayout() {
     <div className="flex h-screen">
       <div className="flex-1 flex flex-col justify-center items-center text-black bg-ha-primary1">
         <div className="space-y-6 w-[80%] flex items-center flex-col">
-          <h3 className="text-3xl font-extrabold text-white">User Activation</h3>
-          <div>
-            <div className="mb-2 block">
-              <label htmlFor="username" className="text-white">
-                Your Username
-              </label>
-            </div>
-            <input
-              id="username"
-              className="w-[300px]"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-              required
-            />
-          </div>
+          <h3 className="text-3xl font-extrabold text-white">Password Reset</h3>
           <div>
             <div className="mb-2 block">
               <label htmlFor="password" className="text-white">
-                Your Password
+                Your New Password
               </label>
             </div>
             <input
@@ -84,7 +73,7 @@ function ActivationLayout() {
           </div>
           <div className="w-[300px] flex">
             <Button className="w-full" onClick={handleActivate}>
-              Activate your account
+              Reset Your Password
             </Button>
           </div>
         </div>
@@ -101,4 +90,4 @@ function ActivationLayout() {
   );
 }
 
-export default ActivationLayout;
+export default ResetPassword;
