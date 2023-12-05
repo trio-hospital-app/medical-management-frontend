@@ -46,7 +46,7 @@ function Dashboard() {
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white ml-3">
-          <h1 className="md:text-4xl text-xl font-bold mb-4"> 👋 Welcome {data?.data?.firstName} {data?.data?.lastName}</h1>
+          <h1 className="md:text-4xl text-xl font-bold mb-4 capitalize"> 👋 Welcome {data?.data?.firstName} {data?.data?.lastName}</h1>
           <p className="md:text-lg">
             Today is a great day to save lives, continue where you left off 💉🩺💊.
           </p>
