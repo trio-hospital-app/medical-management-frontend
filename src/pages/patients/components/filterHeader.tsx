@@ -24,7 +24,6 @@ function Patients({ setPatientdata }) {
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    event.preventDefault();
     if (event.key === "Enter") {
       event.preventDefault();
       await refetch();
