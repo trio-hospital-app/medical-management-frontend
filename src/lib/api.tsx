@@ -31,6 +31,7 @@ export const request = async (config) => {
     }
 
     const response = await client(config);
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
