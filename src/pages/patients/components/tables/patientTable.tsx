@@ -8,14 +8,20 @@ import OrderLab from "../orderLab";
 import OrderRadiology from "../orderRadiology";
 import OrderDoctor from "../orderDoctor";
 import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
+import Loader from "../../../../components/ui/loader";
+import { formatDate } from "../../../../hooks/formattedDate";
 
 function PatientTable({ patientData }) {
   const navigate = useNavigate();
   const [showLabModal, setShowLabModal] = useState(false);
   const [showImagingModal, setShowImagingModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
-  const { data } = useGetPatients();
-  console.log(data);
+  const { data, isLoading } = useGetPatients();
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   interface Patient {
     lastAppointment: number;
     phone: string;
@@ -38,36 +44,31 @@ function PatientTable({ patientData }) {
       name: "Patient Name",
       selector: (row: Patient) => `${row.firstName} ${row.lastName}`,
       sortable: true,
-      with: "200px",
+      width: "300px",
     },
     {
       name: "Patient ID",
       selector: (row: Patient) => row.patientId,
       sortable: true,
-      with: "200px",
     },
     {
       name: "Gender",
       selector: (row: Patient) => row.gender,
-      sortable: true,
     },
     {
       name: "Date of Birth",
-      selector: (row: Patient) => row.address?.dob,
+      selector: (row: Patient) => formatDate(row.address?.dob),
       sortable: true,
-      with: "200px",
     },
     {
       name: "Phone Number",
       selector: (row: Patient) => row.phone,
       sortable: true,
-      with: "200px",
     },
     {
-      name: "Date of Last Appointment",
-      selector: (row: Patient) => row.lastAppointment,
+      name: "Last Appointment",
+      selector: (row: Patient) => formatDate(row.lastAppointment),
       sortable: true,
-      with: "500px",
     },
     {
       cell: () => (
