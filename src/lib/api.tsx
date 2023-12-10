@@ -9,7 +9,7 @@ const client = axios.create({
 // Function to handle navigation
 const navigateToLogin = () => {
   // You can replace this with your actual logic for navigation
-  // window.location.href = "/login";
+  window.location.href = "/login";
 };
 
 // State to track shown errors
@@ -31,7 +31,6 @@ export const request = async (config) => {
     }
 
     const response = await client(config);
-
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -49,7 +48,7 @@ export const request = async (config) => {
           toast.error(
             `Client Error: ${status} - ${
               (data as { message?: string })?.message || "Error, try Again"
-            }`,
+            }`
           );
 
           // Redirect to the login route for authentication
@@ -58,13 +57,13 @@ export const request = async (config) => {
           toast.error(
             `Client Error: ${status} - ${
               (data as { message?: string })?.message || "Error, try Again"
-            }`,
+            }`
           );
         } else if (status >= 500) {
           toast.error(
             `Server Error: ${status} - ${
               (data as { message?: string })?.message || "Error, try Again"
-            }`,
+            }`
           );
         }
       }

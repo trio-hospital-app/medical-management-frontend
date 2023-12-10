@@ -3,10 +3,10 @@ import { Button } from "../button";
 interface FilterHeaderProps {
   children: React.ReactNode;
   title: string;
-  buttonTitle: string;
+  buttonTitle?: string;
   resetFilter: () => void;
   search: () => void;
-  handleCreate: () => void;
+  handleCreate?: () => void;
 }
 
 function FilterHeader({
@@ -21,12 +21,14 @@ function FilterHeader({
     <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
       <div className="flex flex-col md:flex-row items-center justify-between pb-1 border-b">
         <span className="text-xl font-bold">{title}</span>
-        <Button
-          onClick={handleCreate}
-          className="bg-ha-primary1 text-white  hover:bg-blue-900"
-        >
-          {buttonTitle}
-        </Button>
+        {buttonTitle && (
+          <Button
+            onClick={handleCreate}
+            className="bg-ha-primary1 text-white  hover:bg-blue-900"
+          >
+            {buttonTitle}
+          </Button>
+        )}
       </div>
 
       <div className="py-3">{children}</div>

@@ -196,13 +196,13 @@ const PatientDetails = ({ data }) => {
               className="w-100 mb-1"
               style={{ fontWeight: 500, fontSize: "12px", color: "#828282" }}
             >
-              Relationship:
+              Address:
             </div>
             <div
               className="capitalize"
               style={{ fontWeight: 500, fontSize: "16px", color: "#333333" }}
             >
-              {data?.address?.nok.relationship}
+              {data?.address?.address}
             </div>
           </div>
           <div className="content w-100 mb-3">
@@ -210,13 +210,55 @@ const PatientDetails = ({ data }) => {
               className="w-100 mb-1"
               style={{ fontWeight: 500, fontSize: "12px", color: "#828282" }}
             >
-              Relationship:
+              City:
             </div>
             <div
               className="capitalize"
               style={{ fontWeight: 500, fontSize: "16px", color: "#333333" }}
             >
-              {data?.address?.nok.relationship}
+              {data?.address?.city}
+            </div>
+          </div>
+          <div className="content w-100 mb-3">
+            <div
+              className="w-100 mb-1"
+              style={{ fontWeight: 500, fontSize: "12px", color: "#828282" }}
+            >
+              Country:
+            </div>
+            <div
+              className="capitalize"
+              style={{ fontWeight: 500, fontSize: "16px", color: "#333333" }}
+            >
+              {data?.address?.country}
+            </div>
+          </div>
+          <div className="content w-100 mb-3">
+            <div
+              className="w-100 mb-1"
+              style={{ fontWeight: 500, fontSize: "12px", color: "#828282" }}
+            >
+              State:
+            </div>
+            <div
+              className="capitalize"
+              style={{ fontWeight: 500, fontSize: "16px", color: "#333333" }}
+            >
+              {data?.address?.state}
+            </div>
+          </div>
+          <div className="content w-100 mb-3">
+            <div
+              className="w-100 mb-1"
+              style={{ fontWeight: 500, fontSize: "12px", color: "#828282" }}
+            >
+              LGA:
+            </div>
+            <div
+              className="capitalize"
+              style={{ fontWeight: 500, fontSize: "16px", color: "#333333" }}
+            >
+              {data?.address?.lga}
             </div>
           </div>
         </div>
