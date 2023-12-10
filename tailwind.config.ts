@@ -13,11 +13,6 @@ const tailwindConfig: Config = {
   ],
   theme: {
     extend: {
-      // backgroundImage: {
-      //   'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-      //   'gradient-conic':
-      //     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
-      // },
       colors: {
         ha: {
           primary1: "#3f56cd",
@@ -25,14 +20,6 @@ const tailwindConfig: Config = {
           secondary1: "#E7EBFF",
         },
       },
-      // screens: {
-      //   xs: '480px',
-      //   ss: '620px',
-      //   sm: '768px',
-      //   md: '1060px',
-      //   lg: '1200px',
-      //   xl: '1700px'
-      // }
     },
   },
   plugins: [],

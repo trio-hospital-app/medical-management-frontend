@@ -1,26 +1,56 @@
 import DataTable from "react-data-table-component";
-import { Dropdown } from "flowbite-react";
+import { Dropdown, Pagination } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderLab from "../orderLab";
 import OrderRadiology from "../orderRadiology";
 import OrderDoctor from "../orderDoctor";
-import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
-import Loader from "../../../../components/ui/loader";
+// import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
+// import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
+import PatientService from "../../../../services/patientService";
+import Loader from "../../../../components/ui/loader";
 
 function PatientTable({ patientData }) {
+  interface PageData {
+    data: {
+      totalItems: number;
+      patients: Patient[]; // Assuming patients is an array of Patient
+      // Add other properties if needed
+    };
+    // Add other properties if needed
+  }
   const navigate = useNavigate();
+  const [pageData, setPageData] = useState<PageData>(null);
   const [showLabModal, setShowLabModal] = useState(false);
   const [showImagingModal, setShowImagingModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
-  const { data, isLoading } = useGetPatients();
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const fetchData = async (newpage) => {
+    try {
+      const data = await PatientService.getPatients(newpage);
+      setPageData(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
 
   if (isLoading) {
     return <Loader />;
   }
+  const handlePageChange = async (page) => {
+    setPage(page);
+  };
 
   interface Patient {
     lastAppointment: number;
@@ -61,7 +91,7 @@ function PatientTable({ patientData }) {
       sortable: true,
     },
     {
-      name: "Phone Number",
+      name: "Phone",
       selector: (row: Patient) => row.phone,
       sortable: true,
     },
@@ -69,6 +99,7 @@ function PatientTable({ patientData }) {
       name: "Last Appointment",
       selector: (row: Patient) => formatDate(row.lastAppointment),
       sortable: true,
+      width: "200px",
     },
     {
       cell: () => (
@@ -116,9 +147,22 @@ function PatientTable({ patientData }) {
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
         columns={columns}
-        data={patientData?.data ? patientData?.data : data?.data.patients}
+        data={
+          patientData?.data ? patientData.data : pageData?.data?.patients || []
+        }
         onRowClicked={(row) => handleRowClick(row.id)}
       />
+      <div className="flex items-center justify-end">
+        <Pagination
+          currentPage={page}
+          totalPages={
+            pageData?.data?.totalItems > 20
+              ? pageData?.data?.totalItems / 20
+              : pageData?.data?.totalItems
+          }
+          onPageChange={handlePageChange}
+        />
+      </div>
       {/* lab modal */}
       <BasicModal
         title="Order Laboratory Tests"

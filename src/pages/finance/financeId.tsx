@@ -1,10 +1,10 @@
 import PatientInfoHeader from "../../components/patientInfoHeader";
 import Loader from "../../components/ui/loader";
 import { useGetPatientById } from "../../hooks/reactQuery/usePatients";
-import PatientTabsCard from "./components/patientTabsCard";
+import FinanceTabsCard from "./components/financeTabsCard";
 import { useParams } from "react-router-dom";
 
-function PatientId() {
+function FinanceId() {
   const { id } = useParams();
 
   const { isLoading, data } = useGetPatientById(id);
@@ -16,9 +16,9 @@ function PatientId() {
   return (
     <div className="Patients">
       <PatientInfoHeader patientData={data.data} />
-      <PatientTabsCard id={id} />
+      <FinanceTabsCard />
     </div>
   );
 }
 
-export default PatientId;
+export default FinanceId;
