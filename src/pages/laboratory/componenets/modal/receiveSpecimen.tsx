@@ -1,6 +1,5 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
 import TextareaAutosize from "react-textarea-autosize";
-import { useState } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -8,10 +7,7 @@ import {
   AccordionContent,
 } from "../../../../components/ui/accordion";
 
-function ReceiveSpecimen({ selectedRowData, receiveComent, setReceiveComent }) {
-  const [formComment, setforComment] = useState("");
-
-  console.log("selectedRowData", selectedRowData);
+function ReceiveSpecimen({ selectedRowData, receiveComment, setReceiveComment }) {
 
   const { patientId, panelId, specimenId, orderBy, comment } = selectedRowData;
 
@@ -36,9 +32,7 @@ function ReceiveSpecimen({ selectedRowData, receiveComent, setReceiveComent }) {
   };
 
   // date and time usage
-  const orderedDate = formatDateTime(
-    selectedRowData?.createdAt
-  );
+  const orderedDate = formatDateTime(selectedRowData?.createdAt);
 
   return (
     <>
@@ -48,7 +42,7 @@ function ReceiveSpecimen({ selectedRowData, receiveComent, setReceiveComent }) {
           patientID={`${patientId?.patientId}`}
           testName={panelId?.panel || "Not Found"}
           testNameBackgroundColor={`${specimenId.color}`}
-          labID={`${selectedRowData?.selectedRowData?.id}`}
+          labID={`${selectedRowData?.id}`}
           IdName="Lab ID"
           patientEmail={`${patientId.address.email} `}
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
@@ -118,9 +112,9 @@ function ReceiveSpecimen({ selectedRowData, receiveComent, setReceiveComent }) {
         <TextareaAutosize
           minRows={3}
           placeholder="Write a comment"
-          onChange={(e) => setReceiveComent(e.target.value)}
+          onChange={(e) => setReceiveComment(e.target.value)}
           className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-          value={receiveComent}
+          value={receiveComment}
           maxRows={5}
         />
       </div>

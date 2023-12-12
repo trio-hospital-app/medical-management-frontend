@@ -23,6 +23,7 @@ const SearchLab = ({setLabSearch}) => {
     data: patientData,
     isLoading: loadingSearch,
     refetch,
+    isError: errorSearch,
   } = useSearchLabPatient(search);
   const { mutate, data, isLoading: NewLabLoading } = useAddLab();
 
@@ -30,6 +31,8 @@ const SearchLab = ({setLabSearch}) => {
 
   if (NewLabLoading || loadingSearch) {
     return <Loader />;
+  } else if (errorSearch) {
+    return <div>error</div>;
   }
 
   if (data && data?.status) {

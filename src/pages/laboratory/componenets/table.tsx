@@ -7,18 +7,26 @@ import BasicModal from "../../../components/ui/modals/basicModal";
 import AwaitingApproval from "./modal/awaitingApproval";
 import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
-import { useGetLab } from "../../../hooks/reactQuery/useLabs";
+import { useGetLab, useUpdateReceiveLab } from "../../../hooks/reactQuery/useLabs";
 import Loader from "../../../components/ui/loader";
 import ReceiveSpecimen from "./modal/receiveSpecimen";
+
 function Table({ labSearch }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
   useState("");
   const [awaitingApproval, setAwaitingApproval] = useState(false);
   const [finalResult, setFinalResult] = useState(false);
-  const [receiveComent, setReceiveComent] = useState("");
+  const [receiveComment, setReceiveComment] = useState("");
   const [selectedRowData, setSelectedRowData] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const { data: labData, isLoading: LoadingLab } = useGetLab();
+
+  //react query for receiving specimen
+  const {
+    mutate,
+    data: receiveSpecimenData,
+    isLoading: receiveSpecimeLoading,
+  } = useUpdateReceiveLab();
 
   if (LoadingLab) {
     return <Loader />;
@@ -43,15 +51,9 @@ function Table({ labSearch }) {
     return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
   }
 
-  const handleReceiveSpecime = () => {
-    setReceiveSpecimen(false);
-  };
-
   const handleRowDelete = (row) => {
     console.log(row.id);
   };
-
-  console.log("selectedId", selectedId);
 
   const columns: any = [
     {
@@ -162,6 +164,13 @@ function Table({ labSearch }) {
     },
   ];
 
+  const handleReceiveSpecimeApi = async () => {
+    const receiveCommnent = {
+      text: receiveComment,
+    };
+    await mutate({ id: selectedId, data: receiveCommnent });
+  };
+
   // here is the role is being selected
   return (
     <>
@@ -182,13 +191,13 @@ function Table({ labSearch }) {
         showCancelButton={true}
         submitTitle="Save"
         showSubmitButton={true}
-        submitHandler={handleReceiveSpecime}
+        submitHandler={handleReceiveSpecimeApi}
         size="5xl"
       >
         <ReceiveSpecimen
           selectedRowData={selectedRowData}
-          setReceiveComent={setReceiveComent}
-          receiveComent={receiveComent}
+          setReceiveComment={setReceiveComment}
+          receiveComment={receiveComment}
         />
       </BasicModal>
 
@@ -207,6 +216,7 @@ function Table({ labSearch }) {
       </BasicModal> */}
 
       {/* // awaiting specimen modal */}
+
       <BasicModal
         title="Awaiting Approval"
         setOpenModal={setAwaitingApproval}

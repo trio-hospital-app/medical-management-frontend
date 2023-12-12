@@ -32,14 +32,15 @@ export const useAddLab = () => {
   });
 };
 
-export const useUpdateLab = () => {
+export const useUpdateReceiveLab = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: NewLabData }) =>
-      LabService.updateLab(id, data),
+    ({ id, data }: { id: string; data: {text: string} }) =>
+      LabService.updateReceiveLab(id, data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("Lab");
       },
+      
     }
   );
 };

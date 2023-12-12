@@ -7,14 +7,13 @@ import { useCookies } from "react-cookie";
 
 function NavBar() {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
-  console.log(setCookie, cookies)
   const navigate = useNavigate();
+
   const { data } = useGetUserByToken();
   const handleLogout = () => {
     removeCookie("accessToken");
     navigate("/login");
   };
-
   return (
     <div className="w-full navbar shadow-md z-[60] bg-white fixed top-0 left-0 right-0 flex items-center justify-between">
       <div className="flex items-center w-[50%]">
@@ -39,7 +38,9 @@ function NavBar() {
           <span className="font-semibold text-ha-primary1 capitalize">
             {data?.data?.firstName} {data?.data?.lastName}
           </span>
-          <span className="text-sm text-gray-500">{data?.data?.username}</span>
+          <span className="text-sm text-gray-500">
+            {`${data?.data?.username} ${data?.data?.role}`}{" "}
+          </span>
         </div>
         <Dropdown arrowIcon={false} inline label={<RiArrowDropDownLine />}>
           <Dropdown.Header>

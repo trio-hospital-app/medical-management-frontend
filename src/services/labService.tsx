@@ -48,10 +48,10 @@ class labService {
     return response;
   }
 
-  public async updateLab(id: string, data: NewLabData) {
+  public async updateReceiveLab(id: string, data: { text: string }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
-      url: `/lab/${id}`,
+      url: `/lab/take/${id}`,
       data,
     };
     const response = await request(options);
