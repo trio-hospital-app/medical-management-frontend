@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../../../../components/ui/button";
 
 function SpecimenContainerTable() {
-
   interface SpecimenContainer {
     id: number;
     specimenName: string;
@@ -56,7 +55,7 @@ function SpecimenContainerTable() {
     // Add other data objects as needed
   ];
 
-  specimenContainerData.forEach(item => {
+  specimenContainerData.forEach((item) => {
     item.color = getRandomColor();
   });
 
@@ -68,12 +67,19 @@ function SpecimenContainerTable() {
       width: "200px",
     },
     {
-        name: "Color",
-        selector: (row: SpecimenContainer) => (
-          <div style={{ backgroundColor: row.color, width: "25px", height: "25px", borderRadius: '50px' }} />
-        ),
-        sortable: true,
-      },
+      name: "Color",
+      selector: (row: SpecimenContainer) => (
+        <div
+          style={{
+            backgroundColor: row.color,
+            width: "25px",
+            height: "25px",
+            borderRadius: "50px",
+          }}
+        />
+      ),
+      sortable: true,
+    },
     {
       name: "Description",
       selector: (row: SpecimenContainer) => row.description,
@@ -85,36 +91,36 @@ function SpecimenContainerTable() {
       sortable: true,
     },
     {
-        cell: () => (
-          <div className=" w-full flex justify-end items-center">
-            <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
-              <Dropdown
-                arrowIcon={false}
-                inline
-                label={<BsThreeDotsVertical style={{ color: "black" }} />}
+      cell: () => (
+        <div className=" w-full flex justify-end items-center">
+          <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={<BsThreeDotsVertical style={{ color: "black" }} />}
+            >
+              <Dropdown.Item
+                onClick={() => {
+                  // setShowLabModal(true);
+                }}
               >
-                <Dropdown.Item
-                  onClick={() => {
-                    // setShowLabModal(true);
-                  }}
-                >
-                  Edit
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    // setShowImagingModal(true);
-                  }}
-                >
-                  Delete
-                </Dropdown.Item>
-              </Dropdown>
-            </div>
+                Edit
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  // setShowImagingModal(true);
+                }}
+              >
+                Delete
+              </Dropdown.Item>
+            </Dropdown>
           </div>
-        ),
-        sortable: false,
-      },
+        </div>
+      ),
+      sortable: false,
+    },
   ];
-  
+
   const navigate = useNavigate();
   const handleRowClick = (specimenContainerId: number) => {
     navigate(`/specimencontainers/${specimenContainerId}`);
@@ -133,7 +139,9 @@ function SpecimenContainerTable() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white">New Specimen Container</Button>
+        <Button className="bg-ha-primary1 text-white">
+          New Specimen Container
+        </Button>
       </div>
       <DataTable
         // @ts-expect-error: Just ignore the next line

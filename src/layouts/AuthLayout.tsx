@@ -10,13 +10,13 @@ function AuthLayout() {
   const navigate = useNavigate();
   const { mutate, isLoading, data } = useLogin();
 
-  if(data && data?.status){
-    navigate('/dashboard')
+  if (data && data?.status) {
+    navigate("/dashboard");
   }
-  
+
   const handleLogin = async () => {
     try {
-      if(!username || !password) return
+      if (!username || !password) return;
       await mutate({ username, password });
     } catch (error) {
       console.error("Login failed", error);

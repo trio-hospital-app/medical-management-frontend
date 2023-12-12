@@ -23,16 +23,19 @@ function DashboardCard({ to, icon, title }: DashboardCardProps) {
       to={to}
       className="group w-full bg-white shadow-md rounded-md transition-transform transform hover:scale-105 flex items-center"
     >
-      <div className="text-3xl bg-ha-primary1 p-5 h-full text-white">{icon}</div>
-      <h2 className="text-lg text-ha-primary1 p-5 bg-ha-secondary1 w-full h-full font-medium">{title}</h2>
+      <div className="text-3xl bg-ha-primary1 p-5 h-full text-white">
+        {icon}
+      </div>
+      <h2 className="text-lg text-ha-primary1 p-5 bg-ha-secondary1 w-full h-full font-medium">
+        {title}
+      </h2>
     </Link>
   );
 }
 
 function Dashboard() {
-
   const { data } = useGetUserByToken();
-  
+
   return (
     <div className="Dashboard w-full">
       <div className="relative h-[200px] bg-gradient-to-r to-ha-primary1 from-purple-500 rounded-[1rem] shadow">
@@ -46,9 +49,13 @@ function Dashboard() {
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white ml-3">
-          <h1 className="md:text-4xl text-xl font-bold mb-4 capitalize"> 👋 Welcome {data?.data?.firstName} {data?.data?.lastName}</h1>
+          <h1 className="md:text-4xl text-xl font-bold mb-4 capitalize">
+            {" "}
+            👋 Welcome {data?.data?.firstName} {data?.data?.lastName}
+          </h1>
           <p className="md:text-lg">
-            Today is a great day to save lives, continue where you left off 💉🩺💊.
+            Today is a great day to save lives, continue where you left off
+            💉🩺💊.
           </p>
         </div>
       </div>

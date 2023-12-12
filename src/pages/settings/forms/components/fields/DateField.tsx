@@ -64,7 +64,7 @@ export const DateFieldFormElement: FormElement = {
 
   validate: (
     formElement: FormElementInstance,
-    currentValue: string
+    currentValue: string,
   ): boolean => {
     const element = formElement as CustomInstance;
     if (element.extraAttributes.required) {
@@ -123,7 +123,7 @@ function FormComponent({
   const element = elementInstance as CustomInstance;
 
   const [date, setDate] = useState<Date | undefined>(
-    defaultValue ? new Date(defaultValue) : undefined
+    defaultValue ? new Date(defaultValue) : undefined,
   );
 
   const [error, setError] = useState(false);
@@ -147,7 +147,7 @@ function FormComponent({
             className={cn(
               "w-full justify-start text-left font-normal",
               !date && "text-muted-foreground",
-              error && "border-red-500"
+              error && "border-red-500",
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -175,7 +175,7 @@ function FormComponent({
         <p
           className={cn(
             "text-muted-foreground text-[0.8rem]",
-            error && "text-red-500"
+            error && "text-red-500",
           )}
         >
           {helperText}

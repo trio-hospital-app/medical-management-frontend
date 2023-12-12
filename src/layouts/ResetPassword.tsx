@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 
 function ResetPassword() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const { mutate, isLoading, data } = useReset();
   const [, setCookie] = useCookies(["accessToken"]);
@@ -27,14 +27,13 @@ function ResetPassword() {
     };
 
     activateAccount();
-    
   }, [token]);
 
   const handleActivate = async () => {
     try {
       if (!password) return;
       await mutate({
-          password: password,
+        password: password,
         //   username: ""
       });
     } catch (error) {
@@ -48,7 +47,7 @@ function ResetPassword() {
 
   if (data && data.status) {
     toast.success("Account Reset successfully");
-    navigate('/login');
+    navigate("/login");
   }
 
   return (

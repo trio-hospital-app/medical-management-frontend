@@ -20,7 +20,7 @@ export const useAddSpecimen = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Specimen");
       },
-    }
+    },
   );
 };
 
@@ -32,7 +32,7 @@ export const useUpdateSpecimen = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Specimen");
       },
-    }
+    },
   );
 };
 

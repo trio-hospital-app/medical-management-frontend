@@ -3,8 +3,10 @@ import PatientService, { NewPatientData } from "../../services/patientService";
 
 const queryClient = new QueryClient();
 
-export const useGetPatients = () => {
-  return useQuery("patients", PatientService.getPatients);
+export const useGetPatients = (page: number) => {
+  return useQuery(["patients", page], () => PatientService.getPatients(page), {
+    enabled: false,
+  });
 };
 
 export const useGetPatientById = (id: string) => {

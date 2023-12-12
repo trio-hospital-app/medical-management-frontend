@@ -21,12 +21,6 @@ function Table({ labSearch }) {
   const [selectedId, setSelectedId] = useState("");
   const { data: labData, isLoading: LoadingLab } = useGetLab();
 
-  //react query for receiving specimen
-  const {
-    mutate,
-    data: receiveSpecimenData,
-    isLoading: receiveSpecimeLoading,
-  } = useUpdateReceiveLab();
 
   if (LoadingLab) {
     return <Loader />;
@@ -123,10 +117,10 @@ function Table({ labSearch }) {
             row.status === "receive specimen"
               ? "bg-yellow-500 hover:bg-yellow-600"
               : row.status === "awaiting approval"
-              ? "bg-blue-500 hover:bg-blue-600"
-              : row.status === "final result"
-              ? "bg-green-500 hover:bg-green-600"
-              : row.status === "'"
+                ? "bg-blue-500 hover:bg-blue-600"
+                : row.status === "final result"
+                  ? "bg-green-500 hover:bg-green-600"
+                  : row.status === "'"
           }`}
           onClick={() => {
             setSelectedRowData(row);
@@ -134,10 +128,10 @@ function Table({ labSearch }) {
             row.status === "receive specimen"
               ? setReceiveSpecimen(true)
               : row.status === "awaiting approval"
-              ? setAwaitingApproval(true)
-              : row.status === "final result"
-              ? setFinalResult(true)
-              : row.status === "null";
+                ? setAwaitingApproval(true)
+                : row.status === "final result" // Corrected status here
+                  ? setFinalResult(true)
+                  : row.status === "null";
           }}
         >
           {row.status
@@ -168,7 +162,7 @@ function Table({ labSearch }) {
     const receiveCommnent = {
       text: receiveComment,
     };
-    await mutate({ id: selectedId, data: receiveCommnent });
+    // await mutate({ id: selectedId, data: receiveCommnent });
   };
 
   // here is the role is being selected

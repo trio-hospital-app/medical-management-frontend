@@ -21,6 +21,8 @@ import RadiologyManagement from "./pages/settings/radiology";
 import ActivationLayout from "./layouts/ActivationLayout";
 import ResetPassword from "./layouts/ResetPassword";
 import ForgotPassword from "./layouts/ForgotPassword";
+import Finance from "./pages/finance";
+import FinanceId from "./pages/finance/financeId";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -28,9 +30,7 @@ const pageVariants = {
   exit: { opacity: 0, translateY: 10, transition: { duration: 0.5 } },
 };
 
-
 function App() {
-
   return (
     <AnimatePresence>
       <Routes>
@@ -55,8 +55,6 @@ function App() {
               </motion.div>
             }
           />
-
-          
           <Route
             path="/patients"
             element={
@@ -71,8 +69,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/patients/:id"
             element={
@@ -87,8 +83,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/nursing/:id"
             element={
@@ -117,8 +111,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/opd"
             element={
@@ -133,8 +125,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/laboratory"
             element={
@@ -149,8 +139,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/radiology"
             element={
@@ -165,8 +153,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/pharmacy"
             element={
@@ -181,8 +167,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/nursing"
             element={
@@ -197,8 +181,35 @@ function App() {
               </motion.div>
             }
           />
-
-
+          FinanceId
+          <Route
+            path="/finance"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Finance />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/finance/:id"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <FinanceId />
+              </motion.div>
+            }
+          />
           <Route
             path="/settings/users"
             element={
@@ -213,8 +224,6 @@ function App() {
               </motion.div>
             }
           />
-
-
           <Route
             path="/settings/forms"
             element={
@@ -229,7 +238,6 @@ function App() {
               </motion.div>
             }
           />
-
           <Route
             path="/settings/forms/:id"
             element={
@@ -258,7 +266,6 @@ function App() {
               </motion.div>
             }
           />
-
           <Route
             path="/settings/radiology"
             element={

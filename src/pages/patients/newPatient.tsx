@@ -18,8 +18,8 @@ const NewPatient = () => {
     phone: "",
     occupation: "",
     address: {
-      image: 'https://cdn-icons-png.flaticon.com/512/666/666201.png',
-      nextAppointment: null
+      image: "https://cdn-icons-png.flaticon.com/512/666/666201.png",
+      nextAppointment: null,
     },
     salutation: "",
   });
@@ -85,7 +85,11 @@ const NewPatient = () => {
             />
           )}
           {presentTab === 3 && (
-            <Scheme  patient={patient} setPatient={setPatient} setPresentTab={setPresentTab}/>
+            <Scheme
+              patient={patient}
+              setPatient={setPatient}
+              setPresentTab={setPresentTab}
+            />
           )}
         </form>
       </div>

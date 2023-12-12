@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import { FaPlus, FaMinus } from 'react-icons/fa'; // Import the icons you want to use
+import { useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa"; // Import the icons you want to use
 
 function NewObservation() {
   const [referenceRangeInputs, setReferenceRangeInputs] = useState([0]);
 
   const addInput = () => {
-    setReferenceRangeInputs([...referenceRangeInputs, referenceRangeInputs.length]);
+    setReferenceRangeInputs([
+      ...referenceRangeInputs,
+      referenceRangeInputs.length,
+    ]);
   };
 
   const removeInput = () => {
@@ -17,23 +20,23 @@ function NewObservation() {
   };
   return (
     <div className="p-2 grid gap-2">
-    <div className="grid">
-      <label>Name Of Observation e.g (Malaria Parasite)</label>
-      <input type="text" />
-    </div>
-    <div className="grid">
-      <label>Observation Value e.g (Haematology)</label>
-      <select name="" id="">
-        <option value="">Text</option>
-        <option value="">Decimal</option>
-        <option value="">Number</option>
-      </select>
-    </div>
-    <div className="grid">
-      <label>Unit of measurement e.g (mmol/l)</label>
-      <input type="text" />
-    </div>
-    <div className="grid">
+      <div className="grid">
+        <label>Name Of Observation e.g (Malaria Parasite)</label>
+        <input type="text" />
+      </div>
+      <div className="grid">
+        <label>Observation Value e.g (Haematology)</label>
+        <select name="" id="">
+          <option value="">Text</option>
+          <option value="">Decimal</option>
+          <option value="">Number</option>
+        </select>
+      </div>
+      <div className="grid">
+        <label>Unit of measurement e.g (mmol/l)</label>
+        <input type="text" />
+      </div>
+      <div className="grid">
         <label>Reference Range</label>
         {referenceRangeInputs.map((index) => (
           <input key={index} type="number" />
@@ -47,8 +50,8 @@ function NewObservation() {
           </button>
         </div>
       </div>
-  </div>
-  )
+    </div>
+  );
 }
 
-export default NewObservation
+export default NewObservation;

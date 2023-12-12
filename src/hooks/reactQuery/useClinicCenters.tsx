@@ -11,7 +11,7 @@ export const useGetClinicCenter = () => {
 
 export const useGetClinicCenterById = (id: string) => {
   return useQuery(["clinicCenter", id], () =>
-    ClinicCenterService.getClinicCenterById(id)
+    ClinicCenterService.getClinicCenterById(id),
   );
 };
 
@@ -22,7 +22,7 @@ export const useAddClinicCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("clinicCenter");
       },
-    }
+    },
   );
 };
 
@@ -34,7 +34,7 @@ export const useUpdateClinicCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("clinicCenter");
       },
-    }
+    },
   );
 };
 
@@ -45,6 +45,6 @@ export const useDeleteClinicCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("clinicCenter");
       },
-    }
+    },
   );
 };

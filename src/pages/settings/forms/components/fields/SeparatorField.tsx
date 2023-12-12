@@ -25,7 +25,7 @@ export const SeparatorFieldFormElement: FormElement = {
 
   validate: () => true,
 };
- 
+
 function DesignerComponent() {
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -34,7 +34,7 @@ function DesignerComponent() {
     </div>
   );
 }
- 
+
 function FormComponent() {
   return <Separator />;
 }

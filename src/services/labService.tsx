@@ -42,7 +42,16 @@ class labService {
   public async getLabById(id: string) {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: `/lab${id}`,
+      url: `/lab/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async getPatientLab(id: string) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/labs/user/${id}`,
     };
     const response = await request(options);
     return response;

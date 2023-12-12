@@ -23,10 +23,10 @@ class PatientService {
     return response;
   }
 
-  public async getPatients() {
+  public async getPatients(page) {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: "/patients",
+      url: `/patients?page=${page}`,
     };
     const response = await request(options);
     return response;

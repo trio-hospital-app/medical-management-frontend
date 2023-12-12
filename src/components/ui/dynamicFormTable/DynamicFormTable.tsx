@@ -30,7 +30,7 @@ const DynamicFormTable: React.FC<DynamicFormTableProps> = ({
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
-    rowIndex: number
+    rowIndex: number,
   ) => {
     const { name, value } = event.target;
     const updatedRows = [...rows];

@@ -8,6 +8,7 @@ import { FaUserDoctor } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
+import { GiReceiveMoney } from "react-icons/gi";
 
 function SideBar() {
   return (
@@ -35,6 +36,9 @@ function SideBar() {
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
               <span className="hidden lg:flex">Nursing</span>
+            </Sidebar.Item>
+            <Sidebar.Item as={Link} to="/finance" icon={GiReceiveMoney}>
+              <span className="hidden lg:flex">Finance</span>
             </Sidebar.Item>
             <Sidebar.Item icon={IoMdSettings}>
               <span className="hidden lg:flex">

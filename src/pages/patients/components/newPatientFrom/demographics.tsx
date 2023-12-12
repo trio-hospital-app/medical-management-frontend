@@ -34,12 +34,12 @@ function Demographics({ setPresentTab, patient, setPatient }) {
     if (missingFields.length > 0) {
       // Handle validation error by showing a more specific error message
       const friendlyFieldNames = missingFields.map((field) =>
-        field.replace("address.", "")
+        field.replace("address.", ""),
       );
       toast.error(
         `Please fill in the following required fields: ${friendlyFieldNames.join(
-          ", "
-        )}`
+          ", ",
+        )}`,
       );
       console.log("patient", patient);
       return;
@@ -51,7 +51,7 @@ function Demographics({ setPresentTab, patient, setPatient }) {
   const handleChange = (
     fieldName: string,
     value: string,
-    nestedField: string | null = null
+    nestedField: string | null = null,
   ) => {
     // Update the patient state with the new value
     setPatient((prevPatient) => {

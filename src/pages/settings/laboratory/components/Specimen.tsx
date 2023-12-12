@@ -42,7 +42,9 @@ function Specimen() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white" onClick={handleClick}>New Specimen</Button>
+        <Button className="bg-ha-primary1 text-white" onClick={handleClick}>
+          New Specimen
+        </Button>
       </div>
 
       <div className="bg-white rounded-[.5rem] py-5 px-5 grid md:grid-cols-3 gap-2">

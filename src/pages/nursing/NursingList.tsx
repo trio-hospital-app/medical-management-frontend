@@ -81,7 +81,6 @@ const NursingList = () => {
           </div>
         </div>
         <div className="py-5 my-5 bg-white shadow">
-          
           {/* tsk table  */}
           <TaskTable />
         </div>

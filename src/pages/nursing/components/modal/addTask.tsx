@@ -38,13 +38,13 @@ const AddTask = forwardRef((_props, ref) => {
 
   const handleTaskTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
-    index: number
+    index: number,
   ) => {
     const { value } = event.target;
     setTasks((prevTasks) =>
       prevTasks.map((task, i) =>
-        i === index ? { ...task, selectedTaskType: value } : task
-      )
+        i === index ? { ...task, selectedTaskType: value } : task,
+      ),
     );
   };
 
@@ -52,15 +52,15 @@ const AddTask = forwardRef((_props, ref) => {
   const handleNursingService = (selectedItems: any, index: number) => {
     setTasks((prevTasks) =>
       prevTasks.map((task, i) =>
-        i === index ? { ...task, nursingService: selectedItems } : task
-      )
+        i === index ? { ...task, nursingService: selectedItems } : task,
+      ),
     );
   };
 
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     index: number,
-    type: string
+    type: string,
   ) => {
     const { value } = event.target;
     setTasks((prevTasks) =>
@@ -73,32 +73,32 @@ const AddTask = forwardRef((_props, ref) => {
                 [type]: value,
               },
             }
-          : task
-      )
+          : task,
+      ),
     );
   };
 
   const handleNoteChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
-    index: number
+    index: number,
   ) => {
     const { value } = event.target;
     setTasks((prevTasks) =>
       prevTasks.map((task, i) =>
-        i === index ? { ...task, noteData: value } : task
-      )
+        i === index ? { ...task, noteData: value } : task,
+      ),
     );
   };
 
   const handleDispositionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
-    index: number
+    index: number,
   ) => {
     const { value } = event.target;
     setTasks((prevTasks) =>
       prevTasks.map((task, i) =>
-        i === index ? { ...task, dispositionData: value } : task
-      )
+        i === index ? { ...task, dispositionData: value } : task,
+      ),
     );
   };
 
@@ -168,7 +168,6 @@ const AddTask = forwardRef((_props, ref) => {
                 value={task.selectedTaskType}
                 onChange={(e) => handleTaskTypeChange(e, index)}
                 className="w-full"
-                
               >
                 <option value="" disabled>
                   Select Task Type

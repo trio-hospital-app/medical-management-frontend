@@ -9,7 +9,7 @@ const client = axios.create({
 // Function to handle navigation
 const navigateToLogin = () => {
   // You can replace this with your actual logic for navigation
-  // window.location.href = "/login";
+  window.location.href = "/login";
 };
 
 // State to track shown errors

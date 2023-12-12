@@ -10,7 +10,8 @@ import Loader from "../../../components/ui/loader";
 import { toast } from "react-toastify";
 import { useSearchLabPatient } from "../../../hooks/reactQuery/useLabs";
 
-const SearchLab = ({setLabSearch}) => {
+const SearchLab = ({ setLabSearch }) => {
+  console.log(setLabSearch);
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
   const [selectScheme, setSelectedScheme] = useState([]);

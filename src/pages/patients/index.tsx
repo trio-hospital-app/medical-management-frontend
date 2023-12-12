@@ -3,12 +3,12 @@ import FilterHeader from "./components/filterHeader";
 import PatientTable from "./components/tables/patientTable";
 
 function Patients() {
-  const [patientData, setPatientdata] = useState([])
+  const [patientData, setPatientdata] = useState([]);
 
   return (
     <div className="Patients">
-      <FilterHeader setPatientdata={setPatientdata}/>
-      <PatientTable patientData={patientData}/>
+      <FilterHeader setPatientdata={setPatientdata} />
+      <PatientTable patientData={patientData} />
     </div>
   );
 }

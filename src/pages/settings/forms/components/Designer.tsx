@@ -1,16 +1,30 @@
-
 import { useState } from "react";
 import DesignerSidebar from "./DesignerSidebar";
-import { DragEndEvent, useDndMonitor, useDraggable, useDroppable } from "@dnd-kit/core";
+import {
+  DragEndEvent,
+  useDndMonitor,
+  useDraggable,
+  useDroppable,
+} from "@dnd-kit/core";
 import { cn } from "../../../../lib/utils";
 import useDesigner from "./hooks/useDesigner";
-import { ElementsType, FormElementInstance, FormElements } from "./FormElements";
+import {
+  ElementsType,
+  FormElementInstance,
+  FormElements,
+} from "./FormElements";
 import { idGenerator } from "../../../../lib/idGenerator";
 import { Button } from "../../../../components/ui/button";
 import { BiSolidTrash } from "react-icons/bi";
 
 function Designer() {
-  const { elements, addElement, selectedElement, setSelectedElement, removeElement } = useDesigner();
+  const {
+    elements,
+    addElement,
+    selectedElement,
+    setSelectedElement,
+    removeElement,
+  } = useDesigner();
 
   const droppable = useDroppable({
     id: "designer-drop-area",
@@ -25,32 +39,40 @@ function Designer() {
       if (!active || !over) return;
 
       const isDesignerBtnElement = active.data?.current?.isDesignerBtnElement;
-      const isDroppingOverDesignerDropArea = over.data?.current?.isDesignerDropArea;
+      const isDroppingOverDesignerDropArea =
+        over.data?.current?.isDesignerDropArea;
 
-      const droppingSidebarBtnOverDesignerDropArea = isDesignerBtnElement && isDroppingOverDesignerDropArea;
+      const droppingSidebarBtnOverDesignerDropArea =
+        isDesignerBtnElement && isDroppingOverDesignerDropArea;
 
       // First scenario
       if (droppingSidebarBtnOverDesignerDropArea) {
         const type = active.data?.current?.type;
-        const newElement = FormElements[type as ElementsType].construct(idGenerator());
+        const newElement =
+          FormElements[type as ElementsType].construct(idGenerator());
 
         addElement(elements.length, newElement);
         return;
       }
 
-      const isDroppingOverDesignerElementTopHalf = over.data?.current?.isTopHalfDesignerElement;
+      const isDroppingOverDesignerElementTopHalf =
+        over.data?.current?.isTopHalfDesignerElement;
 
-      const isDroppingOverDesignerElementBottomHalf = over.data?.current?.isBottomHalfDesignerElement;
+      const isDroppingOverDesignerElementBottomHalf =
+        over.data?.current?.isBottomHalfDesignerElement;
 
       const isDroppingOverDesignerElement =
-        isDroppingOverDesignerElementTopHalf || isDroppingOverDesignerElementBottomHalf;
+        isDroppingOverDesignerElementTopHalf ||
+        isDroppingOverDesignerElementBottomHalf;
 
-      const droppingSidebarBtnOverDesignerElement = isDesignerBtnElement && isDroppingOverDesignerElement;
+      const droppingSidebarBtnOverDesignerElement =
+        isDesignerBtnElement && isDroppingOverDesignerElement;
 
       // Second scenario
       if (droppingSidebarBtnOverDesignerElement) {
         const type = active.data?.current?.type;
-        const newElement = FormElements[type as ElementsType].construct(idGenerator());
+        const newElement =
+          FormElements[type as ElementsType].construct(idGenerator());
 
         const overId = over.data?.current?.elementId;
 
@@ -78,7 +100,9 @@ function Designer() {
         const activeId = active.data?.current?.elementId;
         const overId = over.data?.current?.elementId;
 
-        const activeElementIndex = elements.findIndex((el) => el.id === activeId);
+        const activeElementIndex = elements.findIndex(
+          (el) => el.id === activeId,
+        );
 
         const overElementIndex = elements.findIndex((el) => el.id === overId);
 
@@ -115,7 +139,9 @@ function Designer() {
           )}
         >
           {!droppable.isOver && elements.length === 0 && (
-            <p className="text-3xl text-muted-foreground flex flex-grow items-center font-bold">Drop here</p>
+            <p className="text-3xl text-muted-foreground flex flex-grow items-center font-bold">
+              Drop here
+            </p>
           )}
 
           {droppable.isOver && elements.length === 0 && (
@@ -189,8 +215,14 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
         setSelectedElement(element);
       }}
     >
-      <div ref={topHalf.setNodeRef} className="absolute w-full h-1/2 rounded-t-md" />
-      <div ref={bottomHalf.setNodeRef} className="absolute  w-full bottom-0 h-1/2 rounded-b-md" />
+      <div
+        ref={topHalf.setNodeRef}
+        className="absolute w-full h-1/2 rounded-t-md"
+      />
+      <div
+        ref={bottomHalf.setNodeRef}
+        className="absolute  w-full bottom-0 h-1/2 rounded-b-md"
+      />
       {mouseIsOver && (
         <>
           <div className="absolute right-0 h-full">
@@ -206,11 +238,15 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
             </Button>
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse">
-            <p className="text-muted-foreground text-sm">Click for properties or drag to move</p>
+            <p className="text-muted-foreground text-sm">
+              Click for properties or drag to move
+            </p>
           </div>
         </>
       )}
-      {topHalf.isOver && <div className="absolute top-0 w-full rounded-md h-[7px] bg-primary rounded-b-none" />}
+      {topHalf.isOver && (
+        <div className="absolute top-0 w-full rounded-md h-[7px] bg-primary rounded-b-none" />
+      )}
       <div
         className={cn(
           "flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100",
@@ -219,7 +255,9 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
       >
         <DesignerElement elementInstance={element} />
       </div>
-      {bottomHalf.isOver && <div className="absolute bottom-0 w-full rounded-md h-[7px] bg-primary rounded-t-none" />}
+      {bottomHalf.isOver && (
+        <div className="absolute bottom-0 w-full rounded-md h-[7px] bg-primary rounded-t-none" />
+      )}
     </div>
   );
 }

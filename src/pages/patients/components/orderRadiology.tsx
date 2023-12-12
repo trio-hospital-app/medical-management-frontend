@@ -41,7 +41,7 @@ function OrderRadiology() {
             labelledBy="Lab Test"
           />
         </div>
-        
+
         <div className="">
           <div className=" block">
             <label htmlFor="patientid">Imaging Diagnosis</label>

@@ -23,7 +23,6 @@ function ObservationsTable() {
     { id: 8, name: "EEG", modality: "X-ray Unit" },
     { id: 9, name: "2-D Echo", modality: "X-ray Unit" },
     { id: 10, name: "ECG", modality: "X-ray Unit" },
-
   ];
 
   const columns = [

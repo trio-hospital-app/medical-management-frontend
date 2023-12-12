@@ -1,10 +1,7 @@
 // useUser.ts
 import { useQuery, useMutation, QueryClient } from "react-query";
 import { useCookies } from "react-cookie";
-import UserService, {
-  User,
-  LoginData,
-} from "../../services/userService";
+import UserService, { User, LoginData } from "../../services/userService";
 import { toast } from "react-toastify";
 
 // Create a new instance of QueryClient if it doesn't exist
@@ -45,7 +42,7 @@ export const useLogin = () => {
         queryClient.invalidateQueries("login");
       } else {
         toast.error("Login error");
-        return
+        return;
       }
     },
   });
@@ -56,9 +53,9 @@ export const useActivate = () => {
 };
 
 export const useReset = () => {
-  return useMutation((data: {password:string}) => UserService.reset(data));
+  return useMutation((data: { password: string }) => UserService.reset(data));
 };
 
 export const useForgot = () => {
-  return useMutation((data: {username:string}) => UserService.forgot(data));
+  return useMutation((data: { username: string }) => UserService.forgot(data));
 };

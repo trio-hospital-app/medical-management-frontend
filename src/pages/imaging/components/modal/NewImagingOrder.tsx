@@ -76,7 +76,7 @@ const NewLabOrder = () => {
         <div className="flex flex-col md:flex-row items-center justify-between pt-5">
           <div className="mb-2 w-[48%]">
             <label className="text-sm font-semibold text-ha-primary1">
-              Scheme 
+              Scheme
             </label>
             <CustomMultiSelect
               options={convertToOptions(cities)}

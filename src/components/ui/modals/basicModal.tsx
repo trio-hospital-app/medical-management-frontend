@@ -7,11 +7,11 @@ interface BasicModalProps {
   title: string;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   openModal: boolean;
-  submitTitle: string;
+  submitTitle?: string;
   showCancelButton?: boolean;
-  size?:string;
+  size?: string;
   showSubmitButton?: boolean;
-  cancelTitle: string;
+  cancelTitle?: string;
   style?: CSSProperties;
   submitHandler?: () => void;
 }
@@ -36,7 +36,7 @@ function BasicModal({
   return (
     <div>
       <Modal
-       className="z-[100]"
+        className="z-[100]"
         show={openModal}
         size={size}
         dismissible

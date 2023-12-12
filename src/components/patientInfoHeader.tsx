@@ -1,24 +1,33 @@
 import { Avatar, Dropdown } from "flowbite-react";
+import BasicModal from "./ui/modals/basicModal";
+import PatientDetails from "../pages/patients/components/patientdetails";
+import { useState } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function PatientInfoHeader({patientData}) {
+function PatientInfoHeader({ patientData }) {
+  const [showDetails, setshowDetails] = useState(false);
   return (
     <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
       <div className="flex md:flex-row flex-col md:items-center justify-between border-b">
         <div className="flex items-start justify-center flex-col">
-          <span className="md:text-xl font-bold text-bold capitalize">{patientData?.salutation}. {patientData?.firstName} {patientData?.lastName}</span>
+          <span className="md:text-xl font-bold text-bold capitalize">
+            {patientData?.salutation}. {patientData?.firstName}{" "}
+            {patientData?.lastName}
+          </span>
           <span className="text-ha-primary1">{patientData?.patientId}</span>
         </div>
-        <div>
+        {/* <div>
           <Dropdown inline label={"Actions"}>
-            <Dropdown.Item>View Patient Details</Dropdown.Item>
+            <Dropdown.Item onClick={() => setshowDetails(true)}>
+              View Patient Details
+            </Dropdown.Item>
             <Dropdown.Item>Book Appointment</Dropdown.Item>
             <Dropdown.Item>Make Deposit</Dropdown.Item>
             <Dropdown.Item onClick={() => "new function"}>Edit</Dropdown.Item>
             <Dropdown.Item>Change Image</Dropdown.Item>
             <Dropdown.Item>Delete</Dropdown.Item>
           </Dropdown>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col md:flex-row  md:items-start justify-between mt-5">
         <div>
@@ -33,7 +42,9 @@ function PatientInfoHeader({patientData}) {
         <div className="flex items-start justify-center gap-2 flex-col ">
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">Gender:</span>
-            <span className="font-semibold capitalize">{patientData?.gender}</span>
+            <span className="font-semibold capitalize">
+              {patientData?.gender}
+            </span>
           </div>
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">
@@ -48,13 +59,17 @@ function PatientInfoHeader({patientData}) {
             <span className="text-sm font-semibold text-gray-500">
               Religion:
             </span>
-            <span className="font-semibold capitalize">{patientData?.address?.religion}</span>
+            <span className="font-semibold capitalize">
+              {patientData?.address?.religion}
+            </span>
           </div>
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">
               Nationality:
             </span>
-            <span className="font-semibold capitalize">{patientData?.address?.country}</span>
+            <span className="font-semibold capitalize">
+              {patientData?.address?.country}
+            </span>
           </div>
         </div>
 
@@ -63,7 +78,9 @@ function PatientInfoHeader({patientData}) {
             <span className="text-sm font-semibold text-gray-500">
               Marital Status:
             </span>
-            <span className="font-semibold capitalize">{patientData?.address?.maritalStatus}</span>
+            <span className="font-semibold capitalize">
+              {patientData?.address?.maritalStatus}
+            </span>
           </div>
           <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">
@@ -94,6 +111,15 @@ function PatientInfoHeader({patientData}) {
           </div>
         </div>
       </div>
+
+      <BasicModal
+        title="Patient Information"
+        setOpenModal={setshowDetails}
+        openModal={showDetails}
+        size="4xl"
+      >
+        <PatientDetails data={patientData} />
+      </BasicModal>
     </div>
   );
 }

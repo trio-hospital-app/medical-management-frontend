@@ -59,7 +59,9 @@ const ScheduleTask = forwardRef((_props, ref) => {
           </div>
         </div>
         <div>
-          <p className="text-lg py-2 px-4 font-extrabold text-ha-primary1">Task</p>
+          <p className="text-lg py-2 px-4 font-extrabold text-ha-primary1">
+            Task
+          </p>
           <div className="border border-black px-5 py-5 flex flex-col md:flex-col">
             <div className=" flex flex-col md:flex-row items-center justify-between py-2">
               <div>

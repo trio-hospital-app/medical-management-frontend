@@ -48,7 +48,7 @@ const NewLabOrder = ({
 
   //function to search patient
   const handleKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -138,7 +138,7 @@ const NewLabOrder = ({
                 labelledBy="Scheme"
                 onSelectChange={handleSchemeChange}
                 value={(Array?.isArray(selectScheme) ? selectScheme : []).map(
-                  (item) => item.id
+                  (item) => item.id,
                 )}
                 isMultiSelect={false}
                 placeholder="Scheme"
@@ -177,7 +177,7 @@ const NewLabOrder = ({
               labelledBy="Select Lab Center"
               onSelectChange={handleLabPanelChange}
               value={(Array?.isArray(selectLabPanel) ? selectLabPanel : []).map(
-                (item) => item.id
+                (item) => item.id,
               )}
               isMultiSelect={false}
               placeholder="Select Lab Center"
@@ -195,7 +195,7 @@ const NewLabOrder = ({
               labelledBy="Select Specimen Type"
               onSelectChange={handleSpecimenChange}
               value={(Array?.isArray(selectSpecimen) ? selectSpecimen : []).map(
-                (item) => item.id
+                (item) => item.id,
               )}
               isMultiSelect={false}
               placeholder="Select Specimen Type"

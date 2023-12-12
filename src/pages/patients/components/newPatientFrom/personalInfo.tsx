@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import { Button } from "../../../../components/ui/button";
 
-
 function PersonalInfo({ setPresentTab, patient, setPatient }) {
   const handleNext = (e) => {
     e.preventDefault();
@@ -38,12 +37,12 @@ function PersonalInfo({ setPresentTab, patient, setPatient }) {
     if (missingFields.length > 0) {
       // Handle validation error by showing a more specific error message
       const friendlyFieldNames = missingFields.map((field) =>
-        field.replace("address.", "")
+        field.replace("address.", ""),
       );
       toast.error(
         `Please fill in the following required fields: ${friendlyFieldNames.join(
-          ", "
-        )}`
+          ", ",
+        )}`,
       );
       console.log("patient", patient);
       return;
@@ -61,7 +60,7 @@ function PersonalInfo({ setPresentTab, patient, setPatient }) {
   const handleChange = (
     fieldName: string,
     value: string,
-    nestedField: string | null = null
+    nestedField: string | null = null,
   ) => {
     // Update the patient state with the new value
     setPatient((prevPatient) => {
@@ -146,7 +145,12 @@ function PersonalInfo({ setPresentTab, patient, setPatient }) {
           <div className=" block">
             <label>Date of Birth</label>
           </div>
-          <input className="w-full" required type="date" onChange={(e) => handleChange("address", e.target.value, 'dob')} />
+          <input
+            className="w-full"
+            required
+            type="date"
+            onChange={(e) => handleChange("address", e.target.value, "dob")}
+          />
         </div>
         <div className="">
           <div className=" block">

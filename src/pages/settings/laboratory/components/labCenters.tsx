@@ -28,9 +28,8 @@ function LabCenters() {
           </div>
           <div className="grid">
             <label>Description</label>
-            <textarea rows={5}  className="border rounded-lg"/>
+            <textarea rows={5} className="border rounded-lg" />
           </div>
-        
         </BasicModal>
       )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
