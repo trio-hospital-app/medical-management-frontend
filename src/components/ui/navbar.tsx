@@ -7,7 +7,6 @@ import { useCookies } from "react-cookie";
 
 function NavBar() {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
-  console.log(setCookie, cookies);
   const navigate = useNavigate();
 
   const { data } = useGetUserByToken();

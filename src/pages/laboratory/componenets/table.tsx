@@ -1,15 +1,17 @@
 import { Tooltip } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
-// import FillSpecimen from "./modal/fillSpecimen";
 import AwaitingApproval from "./modal/awaitingApproval";
+import FillSpecimen from "./modal/fillSpecimen"
 import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
-import { useGetLab, useUpdateReceiveLab } from "../../../hooks/reactQuery/useLabs";
+import { useUpdateReceiveLab } from "../../../hooks/reactQuery/useLabs";
 import Loader from "../../../components/ui/loader";
 import ReceiveSpecimen from "./modal/receiveSpecimen";
+import labService from "../../../services/labService";
+import { toast } from "react-toastify";
 
 function Table({ labSearch }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
@@ -18,16 +20,38 @@ function Table({ labSearch }) {
   const [finalResult, setFinalResult] = useState(false);
   const [receiveComment, setReceiveComment] = useState("");
   const [selectedRowData, setSelectedRowData] = useState([]);
+  const [fillResult, setFillResult] = useState([])
   const [selectedId, setSelectedId] = useState("");
-  const { data: labData, isLoading: LoadingLab } = useGetLab();
+  const [page, setPage] = useState(1);
+  const [pageData, setPageData] = useState(null);
+  const [loading, setIsLoading] = useState(true);
+
+  const { mutate, data: receiveData, isLoading:receiveLoader  } = useUpdateReceiveLab();
+
+  if(receiveData && receiveData.status){
+    toast('Recieve  Specimen Completed')
+    setReceiveSpecimen(false)
+  }
+
+  const fetchData = async (newpage) => {
+    try {
+      const data = await labService.getLab(newpage);
+      setPageData(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
 
 
-  if (LoadingLab) {
+  if (loading || receiveLoader) {
     return <Loader />;
   }
 
-  //render the lab data from the api call
-  const Data = labSearch?.data ? labSearch.data : labData?.data.labs;
 
   //function for date and time format
   function formatDateTime(inputDate) {
@@ -48,6 +72,18 @@ function Table({ labSearch }) {
   const handleRowDelete = (row) => {
     console.log(row.id);
   };
+
+  const handlePageChange = async (page) => {
+    setPage(page);
+  };
+
+  const handleReceiveSpecimeApi = async () => {
+    const receiveCommnent = {
+      text: receiveComment
+    };
+    await mutate({ id: selectedId, data: receiveCommnent });
+  };
+
 
   const columns: any = [
     {
@@ -158,12 +194,7 @@ function Table({ labSearch }) {
     },
   ];
 
-  const handleReceiveSpecimeApi = async () => {
-    const receiveCommnent = {
-      text: receiveComment,
-    };
-    // await mutate({ id: selectedId, data: receiveCommnent });
-  };
+ 
 
   // here is the role is being selected
   return (
@@ -171,10 +202,17 @@ function Table({ labSearch }) {
       <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
         <DataTable
           columns={columns}
-          data={Data || []}
+        data={pageData?.data?.labs
+          ? pageData.data.labs
+          : labSearch?.data?.labs}
+
           // onRowClicked={(row) => handleRowClick(row)}
+          pagination
+        onChangePage={handlePageChange}
         />
       </div>
+
+     
 
       {/* // receive specimen modal */}
       <BasicModal
@@ -221,7 +259,11 @@ function Table({ labSearch }) {
         showSubmitButton={true}
         size="5xl"
       >
-        <AwaitingApproval />
+       <FillSpecimen 
+       selectedRowData={selectedRowData}
+       setFillResult={setFillResult}
+       fillResult={fillResult}
+ />
       </BasicModal>
 
       {/* final result modal */}

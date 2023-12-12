@@ -21,10 +21,10 @@ class labService {
     return response;
   }
 
-  public async getLab() {
+  public async getLab(page: number) {
     const options: AxiosRequestConfig = {
       method: "GET",
-      url: "/labs",
+      url: `/labs?page=${page}`,
     };
     const response = await request(options);
     return response;
@@ -58,6 +58,16 @@ class labService {
   }
 
   public async updateReceiveLab(id: string, data: { text: string }) {
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: `/lab/take/${id}`,
+      data,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async updateAwaitApprovalLab(id: string, data: { text: string }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: `/lab/take/${id}`,

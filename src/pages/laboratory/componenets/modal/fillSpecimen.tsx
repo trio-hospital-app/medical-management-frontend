@@ -8,17 +8,13 @@ import {
   AccordionContent,
 } from "../../../../components/ui/accordion";
 import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
-function TakeSpecimen(selectedRowData) {
+function TakeSpecimen({selectedRowData, fillResult, setFillResult}) {
   const [formData, setFormData] = useState("");
   const [dynamicFormRows, setDynamicFormRows] = useState([]);
 
-  console.log(selectedRowData);
-  console.log(dynamicFormRows);
-
-  console.log(selectedRowData?.selectedRowData);
 
   const { patientId, panelId, specimenId, orderBy, comment } =
-    selectedRowData?.selectedRowData;
+    selectedRowData;
 
   //function for date and time format
   function formatDateTime(inputDate) {
@@ -48,13 +44,14 @@ function TakeSpecimen(selectedRowData) {
 
   // date and time usage
   const orderedDate = formatDateTime(
-    selectedRowData?.selectedRowData.createdAt
+    selectedRowData.createdAt
   );
 
   const handleRowDataChange = (rowData: any) => {
     setDynamicFormRows(rowData);
   };
-  // console.log(comment);
+  
+  console.log(dynamicFormRows);
 
   return (
     <>
@@ -64,7 +61,7 @@ function TakeSpecimen(selectedRowData) {
           patientID={`${patientId.patientId}`}
           testName={panelId.panel || "Not Found"}
           testNameBackgroundColor={`${specimenId.color}`}
-          labID={`${selectedRowData?.selectedRowData.id}`}
+          labID={`${selectedRowData.id}`}
           IdName="Lab ID"
           patientEmail={`${patientId.address.email} `}
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"

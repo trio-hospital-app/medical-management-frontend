@@ -3,9 +3,9 @@ import LabService, { NewLabData } from "../../services/labService";
 
 const queryClient = new QueryClient();
 
-export const useGetLab = () => {
-  return useQuery("Lab", LabService.getLab);
-};
+// export const useGetLab = () => {
+//   return useQuery("Lab", LabService.getLab);
+// };
 
 export const useGetLabById = (id: string) => {
   return useQuery(["Lab", id], () => LabService.getLabById(id));
@@ -44,7 +44,18 @@ export const useUpdateReceiveLab = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Lab");
       },
-      
+    }
+  );
+};
+
+export const useUpdateAwaitAprovalLab = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: {text: string} }) =>
+      LabService.updateReceiveLab(id, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Lab");
+      },
     }
   );
 };
