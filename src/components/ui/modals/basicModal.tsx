@@ -10,6 +10,7 @@ interface BasicModalProps {
   submitTitle?: string;
   showCancelButton?: boolean;
   size?: string;
+  isDisable?: boolean;
   showSubmitButton?: boolean;
   cancelTitle?: string;
   style?: CSSProperties;
@@ -23,6 +24,7 @@ function BasicModal({
   openModal,
   cancelTitle,
   size,
+  isDisable,
   submitTitle,
   showCancelButton,
   showSubmitButton,
@@ -64,6 +66,7 @@ function BasicModal({
 
           {showSubmitButton && (
             <Button
+              disabled={isDisable ? true : false}
               onClick={() => {
                 submitHandler ? submitHandler() : handleDefaultSubmit();
               }}
