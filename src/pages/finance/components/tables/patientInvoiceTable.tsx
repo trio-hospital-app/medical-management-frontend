@@ -1,5 +1,3 @@
-
-
 function PatientInvoiceTable() {
   return <div>PatientInvoiceTable</div>;
 }

@@ -7,8 +7,16 @@ export const useGetLab = () => {
   return useQuery("Lab", LabService.getLab);
 };
 
+export const useGetLabCenters = () => {
+  return useQuery("LabCenters", LabService.getLabCenters);
+};
+
 export const useGetLabById = (id: string) => {
   return useQuery(["Lab", id], () => LabService.getLabById(id));
+};
+
+export const useGetLabCenterById = (id: string) => {
+  return useQuery(["LabCenter", id], () => LabService.getLabCenter(id));
 };
 
 export const useGetPatientLab = (id: string) => {
@@ -36,6 +44,17 @@ export const useAddLab = () => {
   });
 };
 
+export const useAddLabCenter = () => {
+  return useMutation(
+    (data: { center: string }) => LabService.createLabCenter(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("LabCenters");
+      },
+    }
+  );
+};
+
 export const useUpdateLab = () => {
   return useMutation(
     ({ id, data }: { id: string; data: NewLabData }) =>
@@ -48,10 +67,30 @@ export const useUpdateLab = () => {
   );
 };
 
+export const useUpdateLabCenter = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: { center: string } }) =>
+      LabService.editLabCenter({ id, data }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("LabCenters");
+      },
+    }
+  );
+};
+
 export const useDeleteLab = () => {
   return useMutation((id: string) => LabService.deleteLab(id), {
     onSuccess: () => {
       queryClient.invalidateQueries("Lab");
+    },
+  });
+};
+
+export const useDeleteLabCenter = () => {
+  return useMutation((id: string) => LabService.deleteLabCenter(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("LabCenters");
     },
   });
 };

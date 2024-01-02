@@ -1,5 +1,5 @@
 import DataTable from "react-data-table-component";
-import { Dropdown, Pagination } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 import OrderLab from "../orderLab";
 import OrderRadiology from "../orderRadiology";
 import OrderDoctor from "../orderDoctor";
-// import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
-// import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
 import PatientService from "../../../../services/patientService";
 import Loader from "../../../../components/ui/loader";
@@ -17,10 +15,8 @@ function PatientTable({ patientData }) {
   interface PageData {
     data: {
       totalItems: number;
-      patients: Patient[]; // Assuming patients is an array of Patient
-      // Add other properties if needed
+      patients: Patient[];
     };
-    // Add other properties if needed
   }
   const navigate = useNavigate();
   const [pageData, setPageData] = useState<PageData>(null);
@@ -151,18 +147,9 @@ function PatientTable({ patientData }) {
           patientData?.data ? patientData.data : pageData?.data?.patients || []
         }
         onRowClicked={(row) => handleRowClick(row.id)}
+        pagination
+        onChangePage={handlePageChange}
       />
-      <div className="flex items-center justify-end">
-        <Pagination
-          currentPage={page}
-          totalPages={
-            pageData?.data?.totalItems > 20
-              ? pageData?.data?.totalItems / 20
-              : pageData?.data?.totalItems
-          }
-          onPageChange={handlePageChange}
-        />
-      </div>
       {/* lab modal */}
       <BasicModal
         title="Order Laboratory Tests"

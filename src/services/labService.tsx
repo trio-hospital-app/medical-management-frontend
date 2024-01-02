@@ -30,6 +30,59 @@ class labService {
     return response;
   }
 
+  public async getLabCenters() {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: "/clinic-centers",
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async getLabCenter(id) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/clinic-center/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async editLabCenter({
+    id,
+    data,
+  }: {
+    id: string;
+    data: { center: string };
+  }) {
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: `/clinic-center/${id}`,
+      data,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async deleteLabCenter(id: string) {
+    const options: AxiosRequestConfig = {
+      method: "DELETE",
+      url: `/clinic-center/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async createLabCenter(body: { center: string }) {
+    const options: AxiosRequestConfig = {
+      method: "POST",
+      url: `/clinic-center`,
+      data: body,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async searchLabPatient(param: string | number) {
     const options: AxiosRequestConfig = {
       method: "GET",
