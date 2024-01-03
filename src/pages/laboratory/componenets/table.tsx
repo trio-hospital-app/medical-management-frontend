@@ -4,7 +4,7 @@ import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import AwaitingApproval from "./modal/awaitingApproval";
-import FillSpecimen from "./modal/fillSpecimen"
+import FillSpecimen from "./modal/fillSpecimen";
 import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
 import { useUpdateReceiveLab } from "../../../hooks/reactQuery/useLabs";
@@ -20,17 +20,21 @@ function Table({ labSearch }) {
   const [finalResult, setFinalResult] = useState(false);
   const [receiveComment, setReceiveComment] = useState("");
   const [selectedRowData, setSelectedRowData] = useState([]);
-  const [fillResult, setFillResult] = useState([])
+  const [fillResult, setFillResult] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
   const [loading, setIsLoading] = useState(true);
 
-  const { mutate, data: receiveData, isLoading:receiveLoader  } = useUpdateReceiveLab();
+  const {
+    mutate,
+    data: receiveData,
+    isLoading: receiveLoader,
+  } = useUpdateReceiveLab();
 
-  if(receiveData && receiveData.status){
-    toast('Recieve  Specimen Completed')
-    setReceiveSpecimen(false)
+  if (receiveData && receiveData.status) {
+    toast("Recieve  Specimen Completed");
+    setReceiveSpecimen(false);
   }
 
   const fetchData = async (newpage) => {
@@ -47,11 +51,9 @@ function Table({ labSearch }) {
     fetchData(page);
   }, [page]);
 
-
   if (loading || receiveLoader) {
     return <Loader />;
   }
-
 
   //function for date and time format
   function formatDateTime(inputDate) {
@@ -79,11 +81,10 @@ function Table({ labSearch }) {
 
   const handleReceiveSpecimeApi = async () => {
     const receiveCommnent = {
-      text: receiveComment
+      text: receiveComment,
     };
     await mutate({ id: selectedId, data: receiveCommnent });
   };
-
 
   const columns: any = [
     {
@@ -134,11 +135,11 @@ function Table({ labSearch }) {
                   width: "1.5rem",
                   height: "1.5rem",
                   borderRadius: "50%",
-                  backgroundColor: row.specimenId.color,
+                  backgroundColor: row.panelId.specimenId.color,
                 }}
               ></p>
             </div>
-            <span> {row.specimenId.specimen}</span>
+            <span> {row.panelId.specimenId.specimen}</span>
           </div>
         </div>
       ),
@@ -194,25 +195,22 @@ function Table({ labSearch }) {
     },
   ];
 
- 
-
   // here is the role is being selected
   return (
     <>
       <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
         <DataTable
           columns={columns}
-        data={pageData?.data?.labs
-          ? pageData.data.labs
-          : labSearch?.data?.labs}
-
+          data={
+            labSearch?.data && labSearch?.data.length > 0
+              ? labSearch?.data
+              : pageData?.data?.labs
+          }
           // onRowClicked={(row) => handleRowClick(row)}
           pagination
-        onChangePage={handlePageChange}
+          onChangePage={handlePageChange}
         />
       </div>
-
-     
 
       {/* // receive specimen modal */}
       <BasicModal
@@ -259,11 +257,11 @@ function Table({ labSearch }) {
         showSubmitButton={true}
         size="5xl"
       >
-       <FillSpecimen 
-       selectedRowData={selectedRowData}
-       setFillResult={setFillResult}
-       fillResult={fillResult}
- />
+        <FillSpecimen
+          selectedRowData={selectedRowData}
+          setFillResult={setFillResult}
+          fillResult={fillResult}
+        />
       </BasicModal>
 
       {/* final result modal */}

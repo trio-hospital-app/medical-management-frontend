@@ -6,22 +6,15 @@ import TextareaAutosize from "react-textarea-autosize";
 import SearchComponent from "../../../../components/ui/SearchComponent";
 import { useSearchPatient } from "../../../../hooks/reactQuery/usePatients";
 import { useGetClinicPanel } from "../../../../hooks/reactQuery/useClinicPanels";
-import { useGetClinicCenter } from "../../../../hooks/reactQuery/useClinicCenters";
-import { useGetSpecimen } from "../../../../hooks/reactQuery/useSpecimens";
 import Loader from "../../../../components/ui/loader";
-import { useGetScheme } from "../../../../hooks/reactQuery/useSchemes";
 
 const NewLabOrder = ({
-  setSelectedLabCenter,
   setSelectedScheme,
   setselectLabPanel,
-  setselectSpecimen,
   setFormComment,
   setPatientId,
   formComment,
   selectLabPanel,
-  selectSpecimen,
-  selectedLabCenter,
   selectScheme,
 }) => {
   const [search, setSearch] = useState("");
@@ -29,26 +22,25 @@ const NewLabOrder = ({
     data: patientData,
     isLoading: loadingSearch,
     refetch,
+    isError: errorSearch,
   } = useSearchPatient(search);
-  const { data: schemerData } = useGetScheme();
-  const { data: clinicCenterData } = useGetClinicCenter();
   const { data: clinicPanelData } = useGetClinicPanel();
-  const { data: specimenData } = useGetSpecimen();
 
-  // function to set the search patien text
-  const handleChange = (event: any) => {
-    setSearch(event.target.value);
-  };
+
 
   // lab drop down data
-  const schemes = schemerData?.data || [];
-  const clinicCenters = clinicCenterData?.data || [];
+  const schemes = patientData?.schemeId || [];
   const clinicPanels = clinicPanelData?.data || [];
-  const specimens = specimenData?.data || [];
+
+
+    // function to set the search patien text
+    const handleChange = (event: any) => {
+      setSearch(event.target.value);
+    };
 
   //function to search patient
   const handleKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>,
+    event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -62,6 +54,7 @@ const NewLabOrder = ({
   //patient info to render
   const patient = patientData?.data[0];
   setPatientId(patient?.id);
+
 
   // calculate age
   const calculateAge = (dob: string) => {
@@ -80,19 +73,10 @@ const NewLabOrder = ({
   const handleSchemeChange = (selectedItems: any) => {
     setSelectedScheme(selectedItems);
   };
-  const handleLabCenterChange = (selectedItems: any) => {
-    setSelectedLabCenter(selectedItems);
-  };
+
   const handleLabPanelChange = (selectedItems: any) => {
     setselectLabPanel(selectedItems);
   };
-  const handleSpecimenChange = (selectedItems: any) => {
-    setselectSpecimen(selectedItems);
-  };
-
-  // if (loadingSearch) {
-  //   return <Loader />;
-  // }
 
   return (
     <div>
@@ -124,6 +108,12 @@ const NewLabOrder = ({
           </div>
         )}
 
+        {errorSearch && (
+          <div className="flex justify-center items-center">
+            <p className="text-red-600 font-bold mt-10">No Patient Found</p>
+          </div>
+        )}
+
         <div className="flex flex-col justify-center px-4">
           <div className="flex flex-col md:flex-row items-center justify-between pt-5">
             <div className="mb-2 w-[48%]">
@@ -138,7 +128,7 @@ const NewLabOrder = ({
                 labelledBy="Scheme"
                 onSelectChange={handleSchemeChange}
                 value={(Array?.isArray(selectScheme) ? selectScheme : []).map(
-                  (item) => item.id,
+                  (item) => item.id
                 )}
                 isMultiSelect={false}
                 placeholder="Scheme"
@@ -150,58 +140,20 @@ const NewLabOrder = ({
                 Department
               </label>
               <CustomMultiSelect
-                options={clinicCenters.map((center) => ({
-                  label: center.center,
-                  value: center.id,
+                options={clinicPanels.map((panel) => ({
+                  label: panel.panel,
+                  value: panel.id,
                 }))}
-                labelledBy="Select Service Center"
-                onSelectChange={handleLabCenterChange}
-                value={(Array?.isArray(selectedLabCenter)
-                  ? selectedLabCenter
+                labelledBy="Select Lab Center"
+                onSelectChange={handleLabPanelChange}
+                value={(Array?.isArray(selectLabPanel)
+                  ? selectLabPanel
                   : []
                 ).map((item) => item.id)}
-                isMultiSelect={false}
-                placeholder="Select Service Center"
+                placeholder="Select Lab Center"
               />
             </div>
           </div>
-          <div className="mb-2 pt-5">
-            <label className="text-sm font-semibold text-ha-primary1">
-              Lab Test
-            </label>
-            <CustomMultiSelect
-              options={clinicPanels.map((panel) => ({
-                label: panel.panel,
-                value: panel.id,
-              }))}
-              labelledBy="Select Lab Center"
-              onSelectChange={handleLabPanelChange}
-              value={(Array?.isArray(selectLabPanel) ? selectLabPanel : []).map(
-                (item) => item.id,
-              )}
-              isMultiSelect={false}
-              placeholder="Select Lab Center"
-            />
-          </div>
-          <div className="mb-2 pt-5">
-            <label className="text-sm font-semibold text-ha-primary1">
-              Specimen Type
-            </label>
-            <CustomMultiSelect
-              options={specimens?.map((specimen) => ({
-                label: specimen.specimen,
-                value: specimen.id,
-              }))}
-              labelledBy="Select Specimen Type"
-              onSelectChange={handleSpecimenChange}
-              value={(Array?.isArray(selectSpecimen) ? selectSpecimen : []).map(
-                (item) => item.id,
-              )}
-              isMultiSelect={false}
-              placeholder="Select Specimen Type"
-            />
-          </div>
-
           <div className="mb-2 pt-5">
             <label className="text-sm font-semibold text-ha-primary1">
               Comment

@@ -11,15 +11,13 @@ import { toast } from "react-toastify";
 import { useSearchLabPatient } from "../../../hooks/reactQuery/useLabs";
 
 const SearchLab = ({ setLabSearch }) => {
-  console.log(setLabSearch);
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
   const [selectScheme, setSelectedScheme] = useState([]);
-  const [selectedLabCenter, setSelectedLabCenter] = useState([]);
   const [selectLabPanel, setselectLabPanel] = useState([]);
-  const [selectSpecimen, setselectSpecimen] = useState([]);
   const [formComment, setFormComment] = useState("");
   const [patientId, setPatientId] = useState("");
+  // const [disableCreate, setDisableCreate] = useState(true);
   const {
     data: patientData,
     isLoading: loadingSearch,
@@ -62,19 +60,21 @@ const SearchLab = ({ setLabSearch }) => {
     await refetch();
   };
 
+
   // api call to create new lab order
   const handleCreateNewLabOrder = async () => {
     const LabData: any = {
-      centerId: selectedLabCenter,
       panelId: selectLabPanel,
       patientId: patientId,
-      specimenId: selectSpecimen,
       text: formComment,
       schemeId: selectScheme,
     };
+    console.log(LabData);
     await mutate(LabData);
     setNewLabOrderModal(false);
   };
+  
+
 
   return (
     <>
@@ -104,23 +104,20 @@ const SearchLab = ({ setLabSearch }) => {
         setOpenModal={setNewLabOrderModal}
         openModal={newLabOrderModal}
         cancelTitle="Cancel"
-        submitTitle="Save"
+        submitTitle="Create"
         showCancelButton={true}
         showSubmitButton={true}
+        // isDisable={disableCreate}
         size="5xl"
         submitHandler={handleCreateNewLabOrder}
       >
         <NewLabOrder
           setSelectedScheme={setSelectedScheme}
-          setSelectedLabCenter={setSelectedLabCenter}
           setselectLabPanel={setselectLabPanel}
-          setselectSpecimen={setselectSpecimen}
           setFormComment={setFormComment}
           setPatientId={setPatientId}
           selectLabPanel={selectLabPanel}
-          selectSpecimen={selectSpecimen}
           selectScheme={selectScheme}
-          selectedLabCenter={selectedLabCenter}
           formComment={formComment}
         />
       </BasicModal>
