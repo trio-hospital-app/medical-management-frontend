@@ -94,3 +94,77 @@ export const useDeleteLabCenter = () => {
     },
   });
 };
+
+//specimen
+export const useSpecimens = () => {
+  return useQuery("specimens", LabService.getSpecimens);
+};
+
+export const useAddSpecimen = () => {
+  return useMutation(
+    (data: {
+      specimen: string;
+      color: string;
+      description: string;
+      type: string;
+    }) => LabService.createSpecimen(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("specimens");
+      },
+    }
+  );
+};
+
+export const useUpdateSpecimen = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: { specimen: string; color: string } }) =>
+      LabService.editSpecimen({ id, data }), // Fix the missing comma here
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("specimens");
+      },
+    }
+  );
+};
+
+export const useDeleteLabSpecimen = () => {
+  return useMutation((id: string) => LabService.deleteSpecimen(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("specimens");
+    },
+  });
+};
+
+//Lab Tests
+export const useGetLabTests = () => {
+  return useQuery("labTests", LabService.getLabTests);
+};
+
+export const useAddLabTest = () => {
+  return useMutation((data) => LabService.createLabTest(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("labTest");
+    },
+  });
+};
+
+export const useUpdateLabTest = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: { specimen: string; color: string } }) =>
+      LabService.editLabTests({ id, data }), // Fix the missing comma here
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("labTest");
+      },
+    }
+  );
+};
+
+export const useDeleteLabTest = () => {
+  return useMutation((id: string) => LabService.deleteLabTest(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("labTest");
+    },
+  });
+};

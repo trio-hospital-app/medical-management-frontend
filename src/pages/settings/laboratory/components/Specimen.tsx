@@ -1,33 +1,215 @@
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
-import { useState } from "react";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { SketchPicker } from "react-color";
 import BasicModal from "../../../../components/ui/modals/basicModal";
+import {
+  useAddSpecimen,
+  useSpecimens,
+  useUpdateSpecimen,
+  useDeleteLabSpecimen,
+} from "../../../../hooks/reactQuery/useLabs";
+import Loader from "../../../../components/ui/loader";
+import { toast } from "react-toastify";
+import DeleteWarningModal from "../../../../components/ui/modals/deletWarningModal";
 
-function Specimen() {
+function Departments() {
   const [showCreate, setShowCreate] = useState(false);
-  const handleClick = () => {
+  const [backgroundColor, setBackgroundColor] = useState("#fff");
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [specimen, setSpecimen] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("");
+  const [id, setId] = useState("");
+  const { data: specimens, isLoading: LoadingLab } = useSpecimens();
+  const {
+    data: deleteData,
+    isLoading: LoadingDelete,
+    mutate: deleteMutate,
+  } = useDeleteLabSpecimen();
+  const {
+    mutate: createMutate,
+    isLoading: createLoading,
+    data: createData,
+  } = useAddSpecimen();
+
+  const {
+    mutate: editMutate,
+    isLoading: editLoading,
+    data: editData,
+  } = useUpdateSpecimen();
+  if (createLoading || editLoading || LoadingLab || LoadingDelete) {
+    return <Loader />;
+  }
+
+  if (createData?.status) {
+    toast.success("Specimen Container Added successfully");
+  }
+
+  if (deleteData?.status) {
+    toast.success("Specimen Container Deleted");
+  }
+
+  if (editData?.status) {
+    toast.success("Specimen Container Updated successfully");
+  }
+
+  const handleCreate = () => {
     setShowCreate(true);
   };
+  const handleDelete = (id) => {
+    setId(id);
+    setShowDelete(true);
+  };
+
+  const handleEdit = (id, content) => {
+    setId(id);
+    setSpecimen(content.specimen);
+    setDescription(content.description);
+    setType(content.type);
+    setBackgroundColor(content.color);
+    setShowEdit(true);
+  };
+
+  const createSpecimen = async () => {
+    const data = { specimen, color: backgroundColor, description, type };
+    try {
+      await createMutate(data);
+      setShowCreate(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const editSpecimen = async () => {
+    const data = {
+      id,
+      data: { specimen, color: backgroundColor, description, type },
+    };
+    try {
+      await editMutate(data);
+      setShowEdit(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteDepartment = async () => {
+    try {
+      await deleteMutate(id);
+      setShowDelete(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleChangeComplete = async (color) => {
+    setBackgroundColor(color.hex);
+  };
+
   return (
     <div className="w-full">
       {showCreate && (
         <BasicModal
-          title="New Lab Specimen"
+          title="New Specimen Container"
           setOpenModal={setShowCreate}
           cancelTitle="Cancel"
           openModal={showCreate}
           showCancelButton={true}
           submitTitle="Submit"
           showSubmitButton={true}
-          submitHandler={() => {}}
+          submitHandler={createSpecimen}
         >
-          <div className="grid">
-            <label>Name Of Specimen e.g (Blood, Stool)</label>
-            <input type="text" />
+          <div className="grid gap-3">
+            <div className="grid">
+              <label>Name Of Vacutainer or Specimen Container e.g (EDTA)</label>
+              <input type="text" onChange={(e) => setType(e.target.value)} />
+            </div>
+
+            <div className="grid">
+              <label>Description</label>
+              <textarea
+                className="border"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
+            <div className="grid">
+              <label>Specimen (Blood)</label>
+              <input
+                type="text"
+                onChange={(e) => setSpecimen(e.target.value)}
+              />
+            </div>
+            <div className="grid py-3">
+              <label>Pick Container Color</label>
+              <SketchPicker
+                color={backgroundColor}
+                onChangeComplete={handleChangeComplete}
+              />
+            </div>
           </div>
-          <div className="grid">
-            <label>Description</label>
-            <textarea rows={5} className="border rounded-lg" />
+        </BasicModal>
+      )}
+      {showDelete && (
+        <DeleteWarningModal
+          setOpenModal={setShowDelete}
+          openModal={showDelete}
+          showCancelButton
+          confirmTitle="Delete"
+          confirmHandler={deleteDepartment}
+        />
+      )}
+      {showEdit && (
+        <BasicModal
+          title=" Edit Department"
+          setOpenModal={setShowEdit}
+          cancelTitle="Cancel"
+          openModal={showEdit}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {
+            editSpecimen();
+          }}
+        >
+          <div className="grid gap-3">
+            <div className="grid">
+              <label>Name Of Vacutainer or Specimen Container e.g (EDTA)</label>
+              <input
+                type="text"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+              />
+            </div>
+
+            <div className="grid">
+              <label>Description</label>
+              <textarea
+                value={description}
+                className="border"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
+            <div className="grid">
+              <label>Specimen (Blood)</label>
+              <input
+                type="text"
+                value={specimen}
+                onChange={(e) => setSpecimen(e.target.value)}
+              />
+            </div>
+            <div className="grid py-3">
+              <label>Pick Container Color</label>
+              <SketchPicker
+                color={backgroundColor}
+                onChangeComplete={handleChangeComplete}
+              />
+            </div>
           </div>
         </BasicModal>
       )}
@@ -42,73 +224,58 @@ function Specimen() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white" onClick={handleClick}>
-          New Specimen
+        <Button className="bg-ha-primary1 text-white" onClick={handleCreate}>
+          New Department
         </Button>
       </div>
 
-      <div className="bg-white rounded-[.5rem] py-5 px-5 grid md:grid-cols-3 gap-2">
-        <div className="border px-5 py-3 h-[200px] rounded-[1rem] grid gap-3">
-          <h5 className="text-xl font-bold tracking-tight text-gray-900">
-            Noteworthy technology acquisitions 2021
-          </h5>
-
-          <p className="text-sm text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-
+      <div className="py-5 px-5 grid md:grid-cols-3 gap-2">
+        {specimens?.data?.map((el) => (
           <div
-            className="w-full flex items-center justify-center bg-gray-500 rounded-[.5rem] text-white hover:bg-gray-600 cursor-pointer"
-            onClick={handleClick}
+            className="shadow-lg hover:bg-white bg-ha-primary2 grid p-2"
+            key={el.id}
           >
-            <span>Edit Specimen </span>
-            <svg
-              className="-mr-1 ml-2 h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              style={{ backgroundColor: el?.color }}
+              className={`p-2 rounded-top-[1rem] flex items-center justify-center font-bold capitalize text-lg`}
             >
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-        </div>
-        <div className="border px-5 py-3 h-[200px] rounded-[1rem] grid gap-3">
-          <h5 className="text-xl font-bold tracking-tight text-gray-900">
-            Noteworthy technology acquisitions 2021
-          </h5>
+              {el.type}
+            </div>
+            <div className="flex items-center justify-center flex-col p-3 gap-5">
+              <div className="flex items-center justify-start p-3">
+                {el?.description}
+              </div>
 
-          <p className="text-sm text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-
-          <div
-            className="w-full flex items-center justify-center bg-gray-500 rounded-[.5rem] text-white hover:bg-gray-600 cursor-pointer"
-            onClick={handleClick}
-          >
-            <span> Edit Specimen </span>
-            <svg
-              className="-mr-1 ml-2 h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
+              <div className="w-full flex items-center justify-between px-3">
+                <div className=" justify-start items-center">
+                  <span className="capitalize border-ha-primary1 p-2 border shadow-lg rounded-3xl">
+                    {el?.specimen}
+                  </span>
+                </div>
+                <div className="w-full flex items-center justify-end gap-5">
+                  <FaEdit
+                    className="text-ha-primary1 text-lg cursor-pointer"
+                    onClick={() => handleEdit(el?.id, el)}
+                  />
+                  <MdDelete
+                    className="text-red-500 text-lg cursor-pointer"
+                    onClick={() => handleDelete(el?.id)}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
+
+      {specimens?.data?.length === 0 && (
+        <div className="flex items-center flex-col justify-center w-full h-[400px]">
+          <img src="/empty-list.svg" alt="empty" className="w-[50%] h-[60%]" />
+          <h3>No Specimen have been added yet </h3>
+        </div>
+      )}
     </div>
   );
 }
 
-export default Specimen;
+export default Departments;

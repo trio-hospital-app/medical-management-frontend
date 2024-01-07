@@ -3,7 +3,6 @@ import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import LabService from "../../../../services/labService";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import {
   useAddLabCenter,
@@ -190,9 +189,9 @@ function Departments() {
         ))}
       </div>
 
-      {departments.length === 0 && (
+      {departments?.data?.length === 0 && (
         <div className="flex items-center flex-col justify-center w-full h-[400px]">
-          <img src="/empty.jpg" alt="empty" className="w-[50%] h-[60%]" />
+          <img src="/empty-list.svg" alt="empty" className="w-[50%] h-[60%]" />
           <h3>No Department have been added yet </h3>
         </div>
       )}

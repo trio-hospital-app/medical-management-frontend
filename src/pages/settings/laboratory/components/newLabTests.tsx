@@ -1,49 +1,63 @@
-import { useState } from "react";
-import { MultiSelect } from "react-multi-select-component";
+function NewLabTests({ createFormData, setCreateFormData }) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCreateFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-function NewLabTests() {
-  const [selected, setSelected] = useState([]);
-  const options = [
-    { label: "Grapes 🍇", value: "grapes" },
-    { label: "Mango 🥭", value: "mango" },
-    { label: "Strawberry 🍓", value: "strawberry", disabled: true },
-  ];
   return (
-    <div className="p-2 grid gap-2">
+    <div className="p-2 grid gap-4">
       <div className="grid">
-        <label>Name Of Test e.g (Malaria Parasite)</label>
-        <input type="text" />
-      </div>
-      <div className="grid">
-        <label>Laboratory Observation</label>
-        <MultiSelect
-          options={options}
-          value={selected}
-          onChange={setSelected}
-          labelledBy="Lab Test"
+        <label htmlFor="testName">Name Of Test e.g (Malaria Parasite)</label>
+        <input
+          type="text"
+          id="testName"
+          name="panel"
+          value={createFormData.panel}
+          onChange={handleInputChange}
         />
       </div>
       <div className="grid">
-        <label>Laboratory Container e.g (Plain Bottle, EDTA)</label>
-        <select name="" id="">
-          <option value="">EDTA</option>
-          <option value="">Plain Bottle</option>
+        <label htmlFor="labContainer">
+          Laboratory Container e.g (Plain Bottle, EDTA)
+        </label>
+        <select
+          id="labContainer"
+          name="specimenId"
+          value={createFormData.specimenId}
+          onChange={handleInputChange}
+        >
+          <option value="">Select...</option>
+          <option value="EDTA">EDTA</option>
+          <option value="Plain Bottle">Plain Bottle</option>
         </select>
       </div>
       <div className="grid">
-        <label>Laboratory Department e.g (Haematology)</label>
-        <select name="" id="">
-          <option value="">Haematology</option>
-          <option value="">Microbiology</option>
+        <label htmlFor="labDepartment">
+          Laboratory Department e.g (Haematology)
+        </label>
+        <select
+          id="labDepartment"
+          name="centerId"
+          value={createFormData.centerId}
+          onChange={handleInputChange}
+        >
+          <option value="">Select...</option>
+          <option value="Haematology">Haematology</option>
+          <option value="Microbiology">Microbiology</option>
         </select>
       </div>
       <div className="grid">
-        <label>Billing Price</label>
-        <input type="number" />
-      </div>
-      <div className="grid">
-        <label>Cost Price</label>
-        <input type="number" />
+        <label htmlFor="costPrice">Cost Price</label>
+        <input
+          type="number"
+          id="costPrice"
+          name="cost"
+          value={createFormData.cost}
+          onChange={handleInputChange}
+        />
       </div>
     </div>
   );

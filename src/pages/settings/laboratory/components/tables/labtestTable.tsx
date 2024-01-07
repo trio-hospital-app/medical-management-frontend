@@ -6,88 +6,63 @@ import { Button } from "../../../../../components/ui/button";
 import { useState } from "react";
 import BasicModal from "../../../../../components/ui/modals/basicModal";
 import NewLabTests from "../newLabTests";
+import Loader from "../../../../../components/ui/loader";
+import {
+  useAddLabTest,
+  useGetLabTests,
+  //   useUpdateLabTest,
+  //   useDeleteLabTest,
+} from "../../../../../hooks/reactQuery/useLabs";
+import { toast } from "react-toastify";
 
 function LabTestsTable() {
+  const [showCreate, setShowCreate] = useState(false);
+  const { data: pageData, isLoading: LoadingLabTests } = useGetLabTests();
+  const {
+    mutate: createMutate,
+    isLoading: createLoading,
+    data: createData,
+  } = useAddLabTest();
+  const [createFormData, setCreateFormData] = useState({
+    panel: "",
+    labObservation: [],
+    cost: "",
+    specimenId: "",
+    centerId: 0,
+  });
+
+  if (LoadingLabTests || createLoading) {
+    return <Loader />;
+  }
+
+  if (createData?.status) {
+    toast.success("Lab Test Added successfully");
+  }
+
+  const createLabTests = async () => {
+    try {
+      await createMutate(createFormData);
+      setShowCreate(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   interface LabTest {
     id: number;
-    name: string;
+    panel: string;
     observations: string;
     specimenType: string;
     labUnit: string;
     backgroundColor: string;
   }
 
-  const labTestData: LabTest[] = [
-    {
-      id: 1,
-      name: "STOOL M/C/S",
-      observations: "STOOL M/C/S",
-      specimenType: "Plain Bottle",
-      labUnit: "Serelogy",
-      backgroundColor: "#F0F0F0",
-    },
-    {
-      id: 2,
-      name: "STOOL ANALYSIS",
-      observations: "stool analysis",
-      specimenType: "Contact Laboratory",
-      labUnit: "Microbiology",
-      backgroundColor: "blue",
-    },
-    {
-      id: 3,
-      name: "PSA",
-      observations: "PSA",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "purple",
-    },
-    {
-      id: 4,
-      name: "BHCG",
-      observations: "BHCG",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "gray",
-    },
-    {
-      id: 5,
-      name: "URINE M/C/S",
-      observations: "URINE M/C/S",
-      specimenType: "Flouride Oxalate",
-      labUnit: "Microbiology",
-      backgroundColor: "red",
-    },
-    {
-      id: 6,
-      name: "FBS",
-      observations: "FBS",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "yellow",
-    },
-    {
-      id: 7,
-      name: "RBS",
-      observations: "RBS",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "purple",
-    },
-  ];
-
   const columns = [
     {
       name: "Name",
-      selector: (row: LabTest) => row.name,
+      selector: (row: LabTest) => row.panel,
       sortable: true,
-      width: "250px",
-    },
-    {
-      name: "Observations",
-      selector: (row: LabTest) => row.observations,
-      sortable: true,
-      width: "250px",
+      width: "300px",
     },
     {
       name: "Specimen Type",
@@ -96,7 +71,8 @@ function LabTestsTable() {
           className="p-2 w-[70%] flex items-center justify-center rounded-lg"
           style={{
             backgroundColor: row.backgroundColor,
-            color: isLightColor(row.backgroundColor) ? "black" : "white",
+            // color: isLightColor(row.backgroundColor) ? "black" : "white",
+            color: "white",
           }}
         >
           {row.specimenType}
@@ -144,17 +120,16 @@ function LabTestsTable() {
   ];
 
   // Function to check if a color is light or dark
-  const isLightColor = (color: string): boolean => {
-    // Calculate the perceived luminance of the color
-    const luminance =
-      (0.299 * parseInt(color.substr(1, 2), 16) +
-        0.587 * parseInt(color.substr(3, 2), 16) +
-        0.114 * parseInt(color.substr(5, 2), 16)) /
-      255;
-    return luminance > 0.5;
-  };
+  // const isLightColor = (color: string): boolean => {
+  //   // Calculate the perceived luminance of the color
+  //   const luminance =
+  //     (0.299 * parseInt(color.substr(1, 2), 16) +
+  //       0.587 * parseInt(color.substr(3, 2), 16) +
+  //       0.114 * parseInt(color.substr(5, 2), 16)) /
+  //     255;
+  //   return luminance > 0.5;
+  // };
 
-  const [showCreate, setShowCreate] = useState(false);
   const handleClick = () => {
     setShowCreate(true);
   };
@@ -170,9 +145,14 @@ function LabTestsTable() {
           showCancelButton={true}
           submitTitle="Submit"
           showSubmitButton={true}
-          submitHandler={() => {}}
+          submitHandler={() => {
+            createLabTests;
+          }}
         >
-          <NewLabTests />
+          <NewLabTests
+            createFormData={createFormData}
+            setCreateFormData={setCreateFormData}
+          />
         </BasicModal>
       )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
@@ -190,7 +170,7 @@ function LabTestsTable() {
           New Lab Test
         </Button>
       </div>
-      <DataTable columns={columns} data={labTestData} />
+      <DataTable columns={columns} data={pageData?.data || []} />
     </div>
   );
 }

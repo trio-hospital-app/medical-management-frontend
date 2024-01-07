@@ -44,6 +44,7 @@ function PatientTable({ patientData }) {
   if (isLoading) {
     return <Loader />;
   }
+  
   const handlePageChange = async (page) => {
     setPage(page);
   };
