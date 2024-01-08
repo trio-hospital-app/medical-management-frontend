@@ -13,6 +13,7 @@ import {
   useUpdateLabTest,
   useDeleteLabTest,
   useSpecimens,
+  useGetLabCenters,
 } from "../../../../../hooks/reactQuery/useLabs";
 import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
@@ -25,12 +26,14 @@ function LabTestsTable() {
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const { data: specimens, isLoading: LoadingLab } = useSpecimens();
+  const { data: departments, isLoading: LoadingLabCenter } = useGetLabCenters();
   const { data: pageData, isLoading: LoadingLabTests } = useGetLabTests();
   const {
     mutate: editMutate,
     isLoading: editLoading,
     data: editData,
   } = useUpdateLabTest();
+
   const {
     data: deleteData,
     isLoading: LoadingDelete,
@@ -42,13 +45,11 @@ function LabTestsTable() {
     data: createData,
   } = useAddLabTest();
 
-  const centerId =
-    typeof process !== "undefined" ? process.env.REACT_APP_API_CLINIC : null;
   const [createFormData, setCreateFormData] = useState({
     panel: "",
     cost: 0,
     specimenId: "",
-    centerId: centerId,
+    centerId: "",
   });
 
   if (
@@ -56,7 +57,8 @@ function LabTestsTable() {
     createLoading ||
     LoadingDelete ||
     editLoading ||
-    LoadingLab
+    LoadingLab ||
+    LoadingLabCenter
   ) {
     return <Loader />;
   }
@@ -221,6 +223,7 @@ function LabTestsTable() {
             createFormData={createFormData}
             setCreateFormData={setCreateFormData}
             specimens={specimens}
+            departments={departments}
           />
         </BasicModal>
       )}

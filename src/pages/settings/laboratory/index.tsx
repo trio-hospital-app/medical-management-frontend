@@ -7,7 +7,7 @@ import {
 import Specimen from "./components/Specimen";
 import Departments from "./components/departments";
 import LabTestsTable from "./components/tables/labtestTable";
-import ObservationsTable from "./components/tables/observationsTable";
+// import ObservationsTable from "./components/tables/observationsTable";
 
 function LaboratoryManagement() {
   return (
@@ -24,11 +24,11 @@ function LaboratoryManagement() {
             <TabsList>
               <TabsTrigger value="lab-test">Laboratory Tests</TabsTrigger>
             </TabsList>
-            <TabsList>
+            {/* <TabsList>
               <TabsTrigger value="observation">Observations</TabsTrigger>
-            </TabsList>
+            </TabsList> */}
             <TabsList>
-              <TabsTrigger value="specimen">Specimen</TabsTrigger>
+              <TabsTrigger value="specimen">Specimen Containers</TabsTrigger>
             </TabsList>
           </div>
           <div className="px-5">
@@ -38,9 +38,9 @@ function LaboratoryManagement() {
             <TabsContent value="lab-test">
               <LabTestsTable />
             </TabsContent>
-            <TabsContent value="observation">
+            {/* <TabsContent value="observation">
               <ObservationsTable />
-            </TabsContent>
+            </TabsContent> */}
             <TabsContent value="specimen">
               <Specimen />
             </TabsContent>

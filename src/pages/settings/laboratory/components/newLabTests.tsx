@@ -1,4 +1,9 @@
-function NewLabTests({ createFormData, setCreateFormData, specimens }) {
+function NewLabTests({
+  createFormData,
+  setCreateFormData,
+  specimens,
+  departments,
+}) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCreateFormData((prevData) => ({
@@ -19,10 +24,26 @@ function NewLabTests({ createFormData, setCreateFormData, specimens }) {
           onChange={handleInputChange}
         />
       </div>
+
       <div className="grid">
-        <label htmlFor="labDepartment">
+        <label htmlFor="centerId">
           Laboratory Department e.g (Haematology)
         </label>
+        <select
+          id="centerId"
+          name="centerId"
+          value={createFormData.centerId}
+          onChange={handleInputChange}
+          // disabled={LoadingLab}
+        >
+          <option value="">Select...</option>
+          {departments?.data?.map((el) => (
+            <option value={el.id}>{el.center}</option>
+          ))}
+        </select>
+      </div>
+      <div className="grid">
+        <label htmlFor="labDepartment">Specimen e.g (Blood)</label>
         <select
           id="labDepartment"
           name="specimenId"
