@@ -19,7 +19,7 @@ function PatientTable({ patientData }) {
     console.log(page);
     await refetch(page);
     await queryClient.prefetchQuery(["patients", page], () =>
-      PatientService.getPatients(page)
+      PatientService.getPatients(page),
     );
   };
 

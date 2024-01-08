@@ -16,7 +16,7 @@ function PatientInfoHeader({ patientData }) {
           </span>
           <span className="text-ha-primary1">{patientData?.patientId}</span>
         </div>
-        {/* <div>
+        <div>
           <Dropdown inline label={"Actions"}>
             <Dropdown.Item onClick={() => setshowDetails(true)}>
               View Patient Details
@@ -27,7 +27,7 @@ function PatientInfoHeader({ patientData }) {
             <Dropdown.Item>Change Image</Dropdown.Item>
             <Dropdown.Item>Delete</Dropdown.Item>
           </Dropdown>
-        </div> */}
+        </div>
       </div>
       <div className="flex flex-col md:flex-row  md:items-start justify-between mt-5">
         <div>

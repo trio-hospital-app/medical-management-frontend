@@ -7,8 +7,16 @@ const queryClient = new QueryClient();
 //   return useQuery("Lab", LabService.getLab);
 // };
 
+export const useGetLabCenters = () => {
+  return useQuery("LabCenters", LabService.getLabCenters);
+};
+
 export const useGetLabById = (id: string) => {
   return useQuery(["Lab", id], () => LabService.getLabById(id));
+};
+
+export const useGetLabCenterById = (id: string) => {
+  return useQuery(["LabCenter", id], () => LabService.getLabCenter(id));
 };
 
 export const useGetPatientLab = (id: string) => {
@@ -36,9 +44,21 @@ export const useAddLab = () => {
   });
 };
 
+export const useAddLabCenter = () => {
+  return useMutation(
+    (data: { center: string }) => LabService.createLabCenter(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("LabCenters");
+      },
+    }
+  );
+};
+
+// export const useUpdateLab = () => {
 export const useUpdateReceiveLab = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: {text: string} }) =>
+    ({ id, data }: { id: string; data: { text: string } }) =>
       LabService.updateReceiveLab(id, data),
     {
       onSuccess: () => {
@@ -50,7 +70,7 @@ export const useUpdateReceiveLab = () => {
 
 export const useUpdateAwaitAprovalLab = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: {text: string} }) =>
+    ({ id, data }: { id: string; data: { text: string } }) =>
       LabService.updateReceiveLab(id, data),
     {
       onSuccess: () => {
@@ -60,10 +80,111 @@ export const useUpdateAwaitAprovalLab = () => {
   );
 };
 
+export const useUpdateLabCenter = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: { center: string } }) =>
+      LabService.editLabCenter({ id, data }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("LabCenters");
+      },
+    }
+  );
+};
+
 export const useDeleteLab = () => {
   return useMutation((id: string) => LabService.deleteLab(id), {
     onSuccess: () => {
       queryClient.invalidateQueries("Lab");
+    },
+  });
+};
+
+export const useDeleteLabCenter = () => {
+  return useMutation((id: string) => LabService.deleteLabCenter(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("LabCenters");
+    },
+  });
+};
+
+//specimen
+export const useSpecimens = () => {
+  return useQuery("specimens", LabService.getSpecimens);
+};
+
+export const useAddSpecimen = () => {
+  return useMutation(
+    (data: {
+      specimen: string;
+      color: string;
+      description: string;
+      type: string;
+    }) => LabService.createSpecimen(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("specimens");
+      },
+    }
+  );
+};
+
+export const useUpdateSpecimen = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: { specimen: string; color: string } }) =>
+      LabService.editSpecimen({ id, data }), // Fix the missing comma here
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("specimens");
+      },
+    }
+  );
+};
+
+export const useDeleteLabSpecimen = () => {
+  return useMutation((id: string) => LabService.deleteSpecimen(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("specimens");
+    },
+  });
+};
+
+//Lab Tests
+type LabTests = {
+  panel: string;
+  cost: number;
+  specimenId: string;
+  centerId: string;
+};
+
+export const useGetLabTests = () => {
+  return useQuery("labTests", LabService.getLabTests);
+};
+
+export const useAddLabTest = () => {
+  return useMutation((data: LabTests) => LabService.createLabTest(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("labTest");
+    },
+  });
+};
+
+export const useUpdateLabTest = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: LabTests }) =>
+      LabService.editLabTests({ id, data }), // Fix the missing comma here
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("labTest");
+      },
+    }
+  );
+};
+
+export const useDeleteLabTest = () => {
+  return useMutation((id: string) => LabService.deleteLabTest(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("labTest");
     },
   });
 };

@@ -11,7 +11,7 @@ import LabTable from "./tables/labTable";
 import NursingTable from "./tables/nursingTable";
 import RadiologyTable from "./tables/radiologyTable";
 
-function PatientTabsCard({id}) {
+function PatientTabsCard({ id }) {
   return (
     <div className="bg-white rounded-[.5rem] py-5 w-full h-full">
       <Tabs defaultValue="doctor">

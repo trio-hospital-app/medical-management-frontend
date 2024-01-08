@@ -15,14 +15,14 @@ export const useGetPatientById = (id: string) => {
 
 export const useSearchPatient = (
   param: string | number,
-  isEnabled: boolean = false
+  isEnabled: boolean = false,
 ) => {
   return useQuery(
     ["searchPatient", param],
     () => PatientService.searchPatient(param),
     {
       enabled: isEnabled,
-    }
+    },
   );
 };
 
@@ -33,7 +33,7 @@ export const useAddPatient = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("patients");
       },
-    }
+    },
   );
 };
 
@@ -45,7 +45,7 @@ export const useUpdatePatient = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("patients");
       },
-    }
+    },
   );
 };
 

@@ -1,121 +1,155 @@
-import { Dropdown } from "flowbite-react";
+// import { Dropdown } from "flowbite-react";
 import DataTable from "react-data-table-component";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaSearch } from "react-icons/fa";
+// import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaEdit, FaSearch } from "react-icons/fa";
 import { Button } from "../../../../../components/ui/button";
 import { useState } from "react";
 import BasicModal from "../../../../../components/ui/modals/basicModal";
 import NewLabTests from "../newLabTests";
+import Loader from "../../../../../components/ui/loader";
+import {
+  useAddLabTest,
+  useGetLabTests,
+  useUpdateLabTest,
+  useDeleteLabTest,
+  useSpecimens,
+} from "../../../../../hooks/reactQuery/useLabs";
+import { toast } from "react-toastify";
+import { MdDelete } from "react-icons/md";
+import DeleteWarningModal from "../../../../../components/ui/modals/deletWarningModal";
+import EditLabTests from "../editLabTests";
 
 function LabTestsTable() {
-  interface LabTest {
-    id: number;
-    name: string;
-    observations: string;
-    specimenType: string;
-    labUnit: string;
-    backgroundColor: string;
+  const [showCreate, setShowCreate] = useState(false);
+  const [id, setId] = useState("");
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const { data: specimens, isLoading: LoadingLab } = useSpecimens();
+  const { data: pageData, isLoading: LoadingLabTests } = useGetLabTests();
+  const {
+    mutate: editMutate,
+    isLoading: editLoading,
+    data: editData,
+  } = useUpdateLabTest();
+  const {
+    data: deleteData,
+    isLoading: LoadingDelete,
+    mutate: deleteMutate,
+  } = useDeleteLabTest();
+  const {
+    mutate: createMutate,
+    isLoading: createLoading,
+    data: createData,
+  } = useAddLabTest();
+
+  const centerId =
+    typeof process !== "undefined" ? process.env.REACT_APP_API_CLINIC : null;
+  const [createFormData, setCreateFormData] = useState({
+    panel: "",
+    cost: 0,
+    specimenId: "",
+    centerId: centerId,
+  });
+
+  if (
+    LoadingLabTests ||
+    createLoading ||
+    LoadingDelete ||
+    editLoading ||
+    LoadingLab
+  ) {
+    return <Loader />;
   }
 
-  const labTestData: LabTest[] = [
-    {
-      id: 1,
-      name: "STOOL M/C/S",
-      observations: "STOOL M/C/S",
-      specimenType: "Plain Bottle",
-      labUnit: "Serelogy",
-      backgroundColor: "#F0F0F0",
-    },
-    {
-      id: 2,
-      name: "STOOL ANALYSIS",
-      observations: "stool analysis",
-      specimenType: "Contact Laboratory",
-      labUnit: "Microbiology",
-      backgroundColor: "blue",
-    },
-    {
-      id: 3,
-      name: "PSA",
-      observations: "PSA",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "purple",
-    },
-    {
-      id: 4,
-      name: "BHCG",
-      observations: "BHCG",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "gray",
-    },
-    {
-      id: 5,
-      name: "URINE M/C/S",
-      observations: "URINE M/C/S",
-      specimenType: "Flouride Oxalate",
-      labUnit: "Microbiology",
-      backgroundColor: "red",
-    },
-    {
-      id: 6,
-      name: "FBS",
-      observations: "FBS",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "yellow",
-    },
-    {
-      id: 7,
-      name: "RBS",
-      observations: "RBS",
-      specimenType: "Lithium Heparin",
-      labUnit: "Chemistry",
-      backgroundColor: "purple",
-    },
-  ];
+  if (deleteData?.status) {
+    toast.success("Lab Test Deleted");
+  }
+
+  if (createData?.status) {
+    toast.success("Lab Test Added successfully");
+  }
+
+  if (editData?.status) {
+    toast.success("Lab Test Updated successfully");
+  }
+
+  const createLabTests = async () => {
+    console.log(createFormData);
+    try {
+      await createMutate(createFormData);
+      setShowCreate(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const editLabTest = async () => {
+    const data = {
+      id,
+      data: createFormData,
+    };
+    try {
+      await editMutate(data);
+      setShowEdit(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleDelete = (id) => {
+    setId(id);
+    setShowDelete(true);
+  };
+  const deletePanel = async () => {
+    try {
+      await deleteMutate(id);
+      setShowDelete(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const handleEdit = (id, content) => {
+    console.log(content, id);
+    setId(id);
+    setShowEdit(true);
+    setCreateFormData(content);
+  };
 
   const columns = [
     {
       name: "Name",
-      selector: (row: LabTest) => row.name,
+      selector: (row) => row.panel,
       sortable: true,
-      width: "250px",
-    },
-    {
-      name: "Observations",
-      selector: (row: LabTest) => row.observations,
-      sortable: true,
-      width: "250px",
+      width: "350px",
     },
     {
       name: "Specimen Type",
-      cell: (row: LabTest) => (
+      cell: (row) => (
         <div
-          className="p-2 w-[70%] flex items-center justify-center rounded-lg"
+          className="p-2 w-full flex items-center justify-center rounded-lg"
           style={{
-            backgroundColor: row.backgroundColor,
-            color: isLightColor(row.backgroundColor) ? "black" : "white",
+            backgroundColor: row?.specimenId?.color,
+            // color: isLightColor(row.backgroundColor) ? "black" : "white",
+            color: "white",
           }}
         >
-          {row.specimenType}
+          {row?.specimenId?.type}
         </div>
       ),
-      selector: (row: LabTest) => row.specimenType,
+      selector: (row) => row?.specimenId?.type,
       sortable: true,
       width: "250px",
     },
     {
-      name: "Lab Unit",
-      selector: (row: LabTest) => row.labUnit,
+      name: "Description",
+      selector: (row) => row?.specimenId?.description,
       sortable: true,
-      width: "200px",
+      width: "350px",
     },
     {
-      cell: () => (
+      cell: (row) => (
         <div className=" w-full flex justify-end items-center">
-          <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
+          {/* <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown
               arrowIcon={false}
               inline
@@ -136,6 +170,16 @@ function LabTestsTable() {
                 Delete
               </Dropdown.Item>
             </Dropdown>
+          </div> */}
+          <div className="w-full flex items-center justify-end gap-5">
+            <FaEdit
+              className="text-ha-primary1 text-lg cursor-pointer"
+              onClick={() => handleEdit(row?.id, row)}
+            />
+            <MdDelete
+              className="text-red-500 text-lg cursor-pointer"
+              onClick={() => handleDelete(row?.id)}
+            />
           </div>
         </div>
       ),
@@ -144,17 +188,16 @@ function LabTestsTable() {
   ];
 
   // Function to check if a color is light or dark
-  const isLightColor = (color: string): boolean => {
-    // Calculate the perceived luminance of the color
-    const luminance =
-      (0.299 * parseInt(color.substr(1, 2), 16) +
-        0.587 * parseInt(color.substr(3, 2), 16) +
-        0.114 * parseInt(color.substr(5, 2), 16)) /
-      255;
-    return luminance > 0.5;
-  };
+  // const isLightColor = (color: string): boolean => {
+  //   // Calculate the perceived luminance of the color
+  //   const luminance =
+  //     (0.299 * parseInt(color.substr(1, 2), 16) +
+  //       0.587 * parseInt(color.substr(3, 2), 16) +
+  //       0.114 * parseInt(color.substr(5, 2), 16)) /
+  //     255;
+  //   return luminance > 0.5;
+  // };
 
-  const [showCreate, setShowCreate] = useState(false);
   const handleClick = () => {
     setShowCreate(true);
   };
@@ -170,10 +213,45 @@ function LabTestsTable() {
           showCancelButton={true}
           submitTitle="Submit"
           showSubmitButton={true}
-          submitHandler={() => {}}
+          submitHandler={() => {
+            createLabTests();
+          }}
         >
-          <NewLabTests />
+          <NewLabTests
+            createFormData={createFormData}
+            setCreateFormData={setCreateFormData}
+            specimens={specimens}
+          />
         </BasicModal>
+      )}
+      {showEdit && (
+        <BasicModal
+          title="Edit Lab Test"
+          setOpenModal={setShowCreate}
+          cancelTitle="Cancel"
+          openModal={showCreate}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {
+            editLabTest();
+          }}
+        >
+          <EditLabTests
+            createFormData={createFormData}
+            setCreateFormData={setCreateFormData}
+            specimens={specimens}
+          />
+        </BasicModal>
+      )}
+      {showDelete && (
+        <DeleteWarningModal
+          setOpenModal={setShowDelete}
+          openModal={showDelete}
+          showCancelButton
+          confirmTitle="Delete"
+          confirmHandler={deletePanel}
+        />
       )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
         <div className="relative w-[300px]">
@@ -190,7 +268,7 @@ function LabTestsTable() {
           New Lab Test
         </Button>
       </div>
-      <DataTable columns={columns} data={labTestData} />
+      <DataTable columns={columns} data={pageData?.data || []} />
     </div>
   );
 }
