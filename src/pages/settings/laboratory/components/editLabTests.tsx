@@ -1,4 +1,4 @@
-function NewLabTests({ createFormData, setCreateFormData, specimens }) {
+function EditLabTests({ createFormData, setCreateFormData, specimens }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCreateFormData((prevData) => ({
@@ -26,7 +26,7 @@ function NewLabTests({ createFormData, setCreateFormData, specimens }) {
         <select
           id="labDepartment"
           name="specimenId"
-          value={createFormData.specimenId}
+          value={createFormData.specimenId.id}
           onChange={handleInputChange}
           // disabled={LoadingLab}
         >
@@ -50,4 +50,4 @@ function NewLabTests({ createFormData, setCreateFormData, specimens }) {
   );
 }
 
-export default NewLabTests;
+export default EditLabTests;

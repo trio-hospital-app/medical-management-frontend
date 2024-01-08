@@ -219,7 +219,12 @@ class labService {
     const response = await request(options);
     return response;
   }
-  public async createLabTest(body) {
+  public async createLabTest(body: {
+    panel: string;
+    cost: number;
+    specimenId: string;
+    centerId: string;
+  }) {
     const options: AxiosRequestConfig = {
       method: "POST",
       url: `/clinic-panel`,

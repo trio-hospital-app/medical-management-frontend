@@ -137,12 +137,19 @@ export const useDeleteLabSpecimen = () => {
 };
 
 //Lab Tests
+type LabTests = {
+  panel: string;
+  cost: number;
+  specimenId: string;
+  centerId: string;
+};
+
 export const useGetLabTests = () => {
   return useQuery("labTests", LabService.getLabTests);
 };
 
 export const useAddLabTest = () => {
-  return useMutation((data) => LabService.createLabTest(data), {
+  return useMutation((data: LabTests) => LabService.createLabTest(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("labTest");
     },
@@ -151,7 +158,7 @@ export const useAddLabTest = () => {
 
 export const useUpdateLabTest = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: { specimen: string; color: string } }) =>
+    ({ id, data }: { id: string; data: LabTests }) =>
       LabService.editLabTests({ id, data }), // Fix the missing comma here
     {
       onSuccess: () => {
