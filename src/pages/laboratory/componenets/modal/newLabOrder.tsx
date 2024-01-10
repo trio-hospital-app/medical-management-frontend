@@ -55,6 +55,8 @@ const NewLabOrder = ({
   const patient = patientData?.data[0];
   setPatientId(patient?.id);
 
+  console.log(patient);
+
 
   // calculate age
   const calculateAge = (dob: string) => {
@@ -137,7 +139,7 @@ const NewLabOrder = ({
             </div>
             <div className="mb-2 w-[48%]">
               <label className="text-sm font-semibold text-ha-primary1">
-                Department
+                Lab Test
               </label>
               <CustomMultiSelect
                 options={clinicPanels.map((panel) => ({

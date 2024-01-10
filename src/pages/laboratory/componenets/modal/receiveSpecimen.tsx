@@ -7,9 +7,13 @@ import {
   AccordionContent,
 } from "../../../../components/ui/accordion";
 
-function ReceiveSpecimen({ selectedRowData, receiveComment, setReceiveComment }) {
-
-  const { patientId, panelId, specimenId, orderBy, comment } = selectedRowData;
+function ReceiveSpecimen({
+  selectedRowData,
+  receiveComment,
+  setReceiveComment,
+}) {
+  const { patientId, panelId, orderBy, comment } = selectedRowData;
+  console.log(patientId);
 
   //function for date and time format
   function formatDateTime(inputDate) {
@@ -28,7 +32,7 @@ function ReceiveSpecimen({ selectedRowData, receiveComment, setReceiveComment })
     const currentDate = new Date();
     const birthDate = new Date(dob);
     const age = currentDate.getFullYear() - birthDate.getFullYear();
-    return age + " Years";
+    return age + " Year Old";
   };
 
   // date and time usage
@@ -41,17 +45,21 @@ function ReceiveSpecimen({ selectedRowData, receiveComment, setReceiveComment })
           patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
           patientID={`${patientId?.patientId}`}
           testName={panelId?.panel || "Not Found"}
-          testNameBackgroundColor={`${specimenId.color}`}
+          testNameBackgroundColor={`${panelId?.specimenId.color}`}
           labID={`${selectedRowData?.id}`}
           IdName="Lab ID"
-          patientEmail={`${patientId.address.email} `}
+          patientEmail={`${patientId?.address.email} `}
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
           gender={`${patientId?.gender}`}
           phoneNumber={`${patientId?.phone}`}
           religion={`${patientId?.address?.religion}`}
           nationality={`${patientId?.address.country}`}
           maritalStatus={`${patientId?.address?.maritalStatus}`}
-          age={calculateAge(patientId?.address?.dob) || "Not Found"}
+          age={
+            patientId?.address?.dob
+              ? calculateAge(patientId.address.dob)
+              : "Not Found"
+          }
           orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
           orderedDate={orderedDate}
         />
