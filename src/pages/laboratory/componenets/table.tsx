@@ -12,10 +12,10 @@ import Loader from "../../../components/ui/loader";
 import ReceiveSpecimen from "./modal/receiveSpecimen";
 import labService from "../../../services/labService";
 import { toast } from "react-toastify";
+import { useQuery, useQueryClient } from 'react-query';
 
-function Table({ labSearch }) {
+function Table({ labSearch, reload, setReload }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
-  useState("");
   const [awaitingApproval, setAwaitingApproval] = useState(false);
   const [finalResult, setFinalResult] = useState(false);
   const [receiveComment, setReceiveComment] = useState("");
@@ -25,6 +25,7 @@ function Table({ labSearch }) {
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
   const [loading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
   const {
     mutate,
@@ -37,23 +38,38 @@ function Table({ labSearch }) {
     setReceiveSpecimen(false);
   }
 
-  const fetchData = async (newpage) => {
-    try {
-      const data = await labService.getLab(newpage);
-      setPageData(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-    }
-  };
+  const { data: labData, isLoading: labLoading } = useQuery(
+    ['labs', page],
+    () => labService.getLab(page),
+  );
+  
   useEffect(() => {
-    fetchData(page);
-  }, [page]);
+    setPageData(labData);
+  }, [labData]);
+  
 
-  if (loading || receiveLoader) {
-    return <Loader />;
-  }
+  // const fetchData = async (newpage) => {
+  //   try {
+  //     const data = await labService.getLab(newpage);
+  //     setPageData(data);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchData(page);
+  // }, [page]);
+
+  // useEffect(() => {
+  //   if (reload) {
+  //     fetchData(page);
+  //     setReload(false);
+  //   }
+  // }, [reload]);
+
+  console.log(pageData?.data?.labs);
 
   //function for date and time format
   function formatDateTime(inputDate) {
@@ -80,11 +96,25 @@ function Table({ labSearch }) {
   };
 
   const handleReceiveSpecimeApi = async () => {
-    const receiveCommnent = {
-      text: receiveComment,
-    };
-    await mutate({ id: selectedId, data: receiveCommnent });
+    console.log(reload);
+    try {
+      const receiveCommnent = {
+        text: receiveComment,
+      };
+      await mutate({ id: selectedId, data: receiveCommnent });
+      setReceiveSpecimen(false);
+      // setReload(true);
+    } catch (error) {
+      // Handle the error here
+      console.error("An error occurred:", error);
+    }
   };
+
+  console.log("Rendering Table component");
+  console.log("Page:", page);
+  console.log("Reload:", reload);
+  console.log("Lab Search Data:", labSearch?.data);
+  console.log("Page Data:", pageData?.data?.labs);
 
   const columns: any = [
     {
@@ -194,11 +224,13 @@ function Table({ labSearch }) {
       width: "3rem",
     },
   ];
-
   // here is the role is being selected
   return (
     <>
-      <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
+      {/* {loading && <Loader />} */}
+      {receiveLoader && <Loader />}
+      {/* {labLoading && <Loader />} */}
+      <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
           columns={columns}
           data={
@@ -206,7 +238,6 @@ function Table({ labSearch }) {
               ? labSearch?.data
               : pageData?.data?.labs
           }
-          // onRowClicked={(row) => handleRowClick(row)}
           pagination
           onChangePage={handlePageChange}
         />
