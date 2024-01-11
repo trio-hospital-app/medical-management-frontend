@@ -53,7 +53,7 @@ class PatientService {
   public async updatePatient(id: string, data: NewPatientData) {
     const options: AxiosRequestConfig = {
       method: "PUT",
-      url: `/patients/${id}`,
+      url: `/patient/${id}`,
       data,
     };
     const response = await request(options);
@@ -63,7 +63,7 @@ class PatientService {
   public async deletePatient(id: string) {
     const options: AxiosRequestConfig = {
       method: "DELETE",
-      url: `/patients/${id}`,
+      url: `/patient/${id}`,
     };
     return request(options);
   }

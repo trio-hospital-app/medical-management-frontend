@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { Button } from "../../../../components/ui/button";
 
 function NextOfKin({ setPresentTab, setPatient, patient }) {
   const [nextOfKinData, setNextOfKinData] = useState({
     name: "",
     relationship: "",
-    phoneCode: "",
+    // phoneCode: "",
     phoneNumber: "",
     postalCode: "",
     address: "",
@@ -17,24 +17,25 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
 
   const handleNext = () => {
     // Validate the form fields
-    const requiredFields = Object.keys(nextOfKinData);
+    // const requiredFields = Object.keys(nextOfKinData);
 
-    const missingFields = requiredFields.filter(
-      (field) =>
-        nextOfKinData[field] === undefined || nextOfKinData[field] === "",
-    );
+    // const missingFields = requiredFields.filter(
+    //   (field) =>
+    //     nextOfKinData[field] === undefined || nextOfKinData[field] === ""
+    // );
 
-    if (missingFields.length > 0) {
-      const friendlyFieldNames = missingFields.map((field) =>
-        field.replace("nok.", ""),
-      );
-      toast.error(
-        `Please fill in the following required fields: ${friendlyFieldNames.join(
-          ", ",
-        )}`,
-      );
-      return;
-    }
+    // if (missingFields.length > 0) {
+    //   const friendlyFieldNames = missingFields.map((field) =>
+    //     field.replace("nok.", "")
+    //   );
+
+    //   toast.error(
+    //     `Please fill in the following required fields: ${friendlyFieldNames.join(
+    //       ", "
+    //     )}`
+    //   );
+    //   return;
+    // }
 
     // Update the patient state with the NextOfKin data
     setPatient((prevPatient) => ({
@@ -91,7 +92,7 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
         </div>
 
         <div className="flex gap-2">
-          <div className="w-[20%]">
+          {/* <div className="w-[20%]">
             <div className="block">
               <label>Code</label>
             </div>
@@ -107,9 +108,9 @@ function NextOfKin({ setPresentTab, setPatient, patient }) {
               <option value=""></option>
               <option value="+234">+234</option>
             </select>
-          </div>
+          </div> */}
 
-          <div className="w-[80%]">
+          <div className="w-[100%]">
             <div className="block">
               <label>Phone Number</label>
             </div>

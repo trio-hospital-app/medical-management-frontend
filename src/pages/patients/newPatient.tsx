@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Stepper } from "react-form-stepper";
 import PersonalInfo from "./components/newPatientFrom/personalInfo";
 import Demographics from "./components/newPatientFrom/demographics";
@@ -8,21 +8,28 @@ import NextOfKin from "./components/newPatientFrom/nextOfKin";
 import Scheme from "./components/newPatientFrom/scheme";
 
 const NewPatient = () => {
+  const location = useLocation();
+  const patientData = location?.state
+    ? location?.state
+    : {
+        firstName: "",
+        lastName: "",
+        middleName: "",
+        gender: "",
+        phone: "",
+        occupation: "",
+        schemeId: [],
+        address: {
+          image: "https://cdn-icons-png.flaticon.com/512/666/666201.png",
+          nextAppointment: null,
+        },
+        salutation: "",
+      };
+
+  console.log(location?.state);
   const navigate = useNavigate();
   const [presentTab, setPresentTab] = useState(0);
-  const [patient, setPatient] = useState({
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    gender: "",
-    phone: "",
-    occupation: "",
-    address: {
-      image: "https://cdn-icons-png.flaticon.com/512/666/666201.png",
-      nextAppointment: null,
-    },
-    salutation: "",
-  });
+  const [patient, setPatient] = useState(patientData);
 
   return (
     <div className="">

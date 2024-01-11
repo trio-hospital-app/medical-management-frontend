@@ -23,6 +23,7 @@ import ResetPassword from "./layouts/ResetPassword";
 import ForgotPassword from "./layouts/ForgotPassword";
 import Finance from "./pages/finance";
 import FinanceId from "./pages/finance/financeId";
+import FinanceManagement from "./pages/settings/finance";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -181,7 +182,6 @@ function App() {
               </motion.div>
             }
           />
-          FinanceId
           <Route
             path="/finance"
             element={
@@ -193,6 +193,20 @@ function App() {
                 exit="exit"
               >
                 <Finance />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/settings/finance"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <FinanceManagement />
               </motion.div>
             }
           />
