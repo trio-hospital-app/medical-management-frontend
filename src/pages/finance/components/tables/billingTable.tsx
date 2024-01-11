@@ -31,6 +31,7 @@ function BillingTable() {
   if (makepaymentUpdate && makepaymentUpdate.status) {
     // Optional: Handle success after all payments are made
     toast("All payments made successfully");
+    setShowPaymentModal(false);
   }
   const department = (row) => {
     if (row.itemType === "labs") {
@@ -134,14 +135,17 @@ function BillingTable() {
             <div>
               {selectedRows.map((row, index) => (
                 <div
-                  className="flex items-center justify-around p-1 border rounded"
+                  className="grid grid-cols-5 p-1 border rounded"
                   key={index}
                 >
                   <div>{formatDate(row.createdAt)}</div>
                   <div>{source(row)}</div>
                   <div>{department(row)}</div>
                   <div>{row.amount}</div>
-                  <button onClick={() => onDeleteRow(index)}>
+                  <button
+                    onClick={() => onDeleteRow(index)}
+                    className="flex items-center justify-center"
+                  >
                     <MdDelete className="text-red-500 text-lg" />
                   </button>
                 </div>
