@@ -10,7 +10,7 @@ import Loader from "../../../components/ui/loader";
 import { toast } from "react-toastify";
 import { useSearchLabPatient } from "../../../hooks/reactQuery/useLabs";
 
-const SearchLab = ({ setLabSearch }) => {
+const SearchLab = ({ setLabSearch, setReload }) => {
   const [search, setSearch] = useState("");
   const [newLabOrderModal, setNewLabOrderModal] = useState(false);
   const [selectScheme, setSelectedScheme] = useState([]);
@@ -22,17 +22,11 @@ const SearchLab = ({ setLabSearch }) => {
     data: patientData,
     isLoading: loadingSearch,
     refetch,
-    isError: errorSearch,
   } = useSearchLabPatient(search);
+  
   const { mutate, data, isLoading: NewLabLoading } = useAddLab();
 
   setLabSearch(patientData);
-
-  if (NewLabLoading || loadingSearch) {
-    return <Loader />;
-  } else if (errorSearch) {
-    return <div>error</div>;
-  }
 
   if (data && data?.status) {
     toast.success("New Lab Order added successfully");
@@ -60,24 +54,23 @@ const SearchLab = ({ setLabSearch }) => {
     await refetch();
   };
 
-
   // api call to create new lab order
   const handleCreateNewLabOrder = async () => {
     const LabData: any = {
-      panelId: selectLabPanel,
+      panelArr: selectLabPanel,
       patientId: patientId,
       text: formComment,
-      schemeId: selectScheme,
+      // schemeId: selectScheme,
     };
-    console.log(LabData);
     await mutate(LabData);
     setNewLabOrderModal(false);
+    setReload(true);
   };
-  
-
 
   return (
     <>
+      {loadingSearch && <Loader />}
+      {NewLabLoading && <Loader />}
       <div className="Patients">
         <FilterHeader
           title="Laboratory Workbench"
