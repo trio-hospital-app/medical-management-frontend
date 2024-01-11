@@ -202,7 +202,9 @@ function Scheme({ patient, setPatient, setPresentTab }) {
             onClick={handleSaveRecord}
           >
             <IoMdSave style={{ color: "white" }} />
-            <span className="text-white">Save Patient Record</span>
+            <span className="text-white">
+              {location.search ? "Edit Patient Record" : "Save Patient Record"}
+            </span>
           </div>
         </div>
       </div>
