@@ -27,7 +27,7 @@ export const useUpdateScheme = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Scheme");
       },
-    },
+    }
   );
 };
 

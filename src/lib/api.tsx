@@ -48,7 +48,7 @@ export const request = async (config) => {
           toast.error(
             `Client Error: ${status} - ${
               (data as { message?: string })?.message || "Error, try Again"
-            }`,
+            }`
           );
 
           // Redirect to the login route for authentication
@@ -57,13 +57,13 @@ export const request = async (config) => {
           toast.error(
             `Client Error: ${status} - ${
               (data as { message?: string })?.message || "Error, try Again"
-            }`,
+            }`
           );
         } else if (status >= 500) {
           toast.error(
             `Server Error: ${status} - ${
               (data as { message?: string })?.message || "Error, try Again"
-            }`,
+            }`
           );
         }
       }

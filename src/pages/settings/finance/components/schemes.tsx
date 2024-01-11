@@ -3,58 +3,56 @@ import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { SketchPicker } from "react-color";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import {
-  useAddSpecimen,
-  useSpecimens,
-  useUpdateSpecimen,
-  useDeleteLabSpecimen,
-} from "../../../../hooks/reactQuery/useLabs";
+  useAddScheme,
+  useGetScheme,
+  useUpdateScheme,
+  useDeleteScheme,
+} from "../../../../hooks/reactQuery/useSchemes";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
 import DeleteWarningModal from "../../../../components/ui/modals/deletWarningModal";
 
-function Departments() {
+function Schemes() {
   const [showCreate, setShowCreate] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState("#fff");
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const [specimen, setSpecimen] = useState("");
-  const [description, setDescription] = useState("");
-  const [type, setType] = useState("");
   const [id, setId] = useState("");
-  const { data: specimens, isLoading: LoadingLab } = useSpecimens();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const { data: specimens, isLoading: LoadingLab } = useGetScheme();
   const {
     data: deleteData,
     isLoading: LoadingDelete,
     mutate: deleteMutate,
-  } = useDeleteLabSpecimen();
+  } = useDeleteScheme();
   const {
     mutate: createMutate,
     isLoading: createLoading,
     data: createData,
-  } = useAddSpecimen();
+  } = useAddScheme();
 
   const {
     mutate: editMutate,
     isLoading: editLoading,
     data: editData,
-  } = useUpdateSpecimen();
+  } = useUpdateScheme();
   if (createLoading || editLoading || LoadingLab || LoadingDelete) {
     return <Loader />;
   }
 
   if (createData?.status) {
-    toast.success("Specimen Container Added successfully");
+    toast.success("Scheme Added successfully");
   }
 
   if (deleteData?.status) {
-    toast.success("Specimen Container Deleted");
+    toast.success("Scheme Deleted");
   }
 
   if (editData?.status) {
-    toast.success("Specimen Container Updated successfully");
+    toast.success("Scheme Updated successfully");
   }
 
   const handleCreate = () => {
@@ -67,15 +65,14 @@ function Departments() {
 
   const handleEdit = (id, content) => {
     setId(id);
-    setSpecimen(content.specimen);
+    setName(content.name);
     setDescription(content.description);
-    setType(content.type);
-    setBackgroundColor(content.color);
+    setDiscount(content.discount);
     setShowEdit(true);
   };
 
   const createSpecimen = async () => {
-    const data = { specimen, color: backgroundColor, description, type };
+    const data = { name, description, discount };
     try {
       await createMutate(data);
       setShowCreate(false);
@@ -87,7 +84,7 @@ function Departments() {
   const editSpecimen = async () => {
     const data = {
       id,
-      data: { specimen, color: backgroundColor, description, type },
+      data: { name, description, discount },
     };
     try {
       await editMutate(data);
@@ -106,10 +103,6 @@ function Departments() {
     }
   };
 
-  const handleChangeComplete = async (color) => {
-    setBackgroundColor(color.hex);
-  };
-
   return (
     <div className="w-full">
       {showCreate && (
@@ -125,8 +118,8 @@ function Departments() {
         >
           <div className="grid gap-3">
             <div className="grid">
-              <label>Name Of Vacutainer or Specimen Container e.g (EDTA)</label>
-              <input type="text" onChange={(e) => setType(e.target.value)} />
+              <label>Name of Scheme</label>
+              <input type="text" onChange={(e) => setName(e.target.value)} />
             </div>
 
             <div className="grid">
@@ -138,17 +131,10 @@ function Departments() {
             </div>
 
             <div className="grid">
-              <label>Specimen (Blood)</label>
+              <label>Discount</label>
               <input
-                type="text"
-                onChange={(e) => setSpecimen(e.target.value)}
-              />
-            </div>
-            <div className="grid py-3">
-              <label>Pick Container Color</label>
-              <SketchPicker
-                color={backgroundColor}
-                onChangeComplete={handleChangeComplete}
+                type="number"
+                onChange={(e) => setDiscount(e.target.value)}
               />
             </div>
           </div>
@@ -178,11 +164,11 @@ function Departments() {
         >
           <div className="grid gap-3">
             <div className="grid">
-              <label>Name Of Vacutainer or Specimen Container e.g (EDTA)</label>
+              <label>Name of Scheme</label>
               <input
                 type="text"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
 
@@ -196,18 +182,11 @@ function Departments() {
             </div>
 
             <div className="grid">
-              <label>Specimen (Blood)</label>
+              <label>Discount</label>
               <input
-                type="text"
-                value={specimen}
-                onChange={(e) => setSpecimen(e.target.value)}
-              />
-            </div>
-            <div className="grid py-3">
-              <label>Pick Container Color</label>
-              <SketchPicker
-                color={backgroundColor}
-                onChangeComplete={handleChangeComplete}
+                type="number"
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
               />
             </div>
           </div>
@@ -236,10 +215,9 @@ function Departments() {
             key={el.id}
           >
             <div
-              style={{ backgroundColor: el?.color }}
-              className={`p-2 rounded-top-[1rem] flex items-center justify-center font-bold capitalize text-lg`}
+              className={`p-2 bg-ha-primary1 text-white rounded-top-[1rem] flex items-center justify-center font-bold capitalize text-lg`}
             >
-              {el.type}
+              {el.name}
             </div>
             <div className="flex items-center justify-center flex-col p-3 gap-5">
               <div className="flex items-center justify-start p-3">
@@ -248,11 +226,11 @@ function Departments() {
 
               <div className="w-full flex items-center justify-between px-3">
                 <div className=" justify-start items-center">
-                  <span className="capitalize border-ha-primary1 p-2 border shadow-lg rounded-3xl">
-                    {el?.specimen}
+                  <span className="capitalize cursor-pointer border-ha-primary1 p-2 border shadow-lg rounded-3xl">
+                    View Price List
                   </span>
                 </div>
-                <div className="w-full flex items-center justify-end gap-5">
+                <div className="flex items-center justify-end gap-5">
                   <FaEdit
                     className="text-ha-primary1 text-lg cursor-pointer"
                     onClick={() => handleEdit(el?.id, el)}
@@ -278,4 +256,4 @@ function Departments() {
   );
 }
 
-export default Departments;
+export default Schemes;

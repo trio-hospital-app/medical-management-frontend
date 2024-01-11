@@ -3,7 +3,7 @@ import { request } from "../lib/api";
 
 export interface NewSchemeData {
   name: string;
-  discrption: string;
+  description: string;
   discount: number;
 }
 

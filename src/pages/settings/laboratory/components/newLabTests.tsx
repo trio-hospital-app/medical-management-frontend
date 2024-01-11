@@ -43,7 +43,7 @@ function NewLabTests({
         </select>
       </div>
       <div className="grid">
-        <label htmlFor="labDepartment">Specimen e.g (Blood)</label>
+        <label htmlFor="labDepartment">Specimen Container</label>
         <select
           id="labDepartment"
           name="specimenId"

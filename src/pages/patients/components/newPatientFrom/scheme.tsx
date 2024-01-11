@@ -2,15 +2,22 @@ import { FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoMdSave } from "react-icons/io";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAddPatient } from "../../../../hooks/reactQuery/usePatients";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useAddPatient,
+  useUpdatePatient,
+} from "../../../../hooks/reactQuery/usePatients";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
 import { Button } from "../../../../components/ui/button";
 import { useGetScheme } from "../../../../hooks/reactQuery/useSchemes";
+import { MultiSelect } from "react-multi-select-component";
 
 function Scheme({ patient, setPatient, setPresentTab }) {
+  const location = useLocation();
+  const { data: schemes } = useGetScheme();
   const navigate = useNavigate();
+  const [selected, setSelected] = useState([]);
   const [schemeData, setSchemeData] = useState({
     schemes: [
       {
@@ -21,8 +28,6 @@ function Scheme({ patient, setPatient, setPresentTab }) {
       },
     ],
   });
-
-  const { data: schemes } = useGetScheme();
 
   const handleAddScheme = () => {
     setSchemeData((prevData) => ({
@@ -48,30 +53,64 @@ function Scheme({ patient, setPatient, setPresentTab }) {
     });
   };
 
-  const { mutate, isLoading, data } = useAddPatient();
+  const {
+    mutate: addmutate,
+    isLoading: addIsLoading,
+    data: addData,
+  } = useAddPatient();
+  const {
+    mutate: updatemutate,
+    isLoading: updateIsLoading,
+    data: updateData,
+  } = useUpdatePatient();
 
-  if (isLoading) {
+  if (addIsLoading || updateIsLoading) {
     return <Loader />;
   }
 
-  if (data && data?.status) {
+  if (addData && addData?.status) {
     toast.success("Patient added successfully");
+    navigate("/patients");
+  }
+  if (updateData && updateData?.status) {
+    toast.success("Patient updated successfully");
     navigate("/patients");
   }
 
   const handleSaveRecord = async () => {
+    // console.log(patients);
+    const { addedBy, ...others } = patient;
+    console.log(others);
+    if (location.search && patient.id) {
+      console.log(others);
+      await updatemutate({ id: patient.id, data: others });
+    } else {
+      await addmutate(patient);
+    }
+  };
+  const mappedOptions = schemes?.data
+    ? schemes.data.map((scheme) => ({
+        label: scheme.name,
+        value: scheme.id,
+      }))
+    : [];
+
+  const handleChange = (selectedOptions) => {
+    setSelected(selectedOptions);
+    const selectedData = selectedOptions.map((data) => {
+      return { scheme: data.value };
+    });
     // Attach schemeData to the patient.address object
     setPatient((prevPatient) => ({
       ...prevPatient,
       address: {
         ...prevPatient.address,
-        schemes: schemeData.schemes,
       },
+      schemeId: selectedData,
     }));
 
-    await mutate(patient);
+    console.log(selectedOptions, selectedData, patient);
   };
-
   const handleBack = (e) => {
     e.preventDefault();
     setPresentTab(2);
@@ -79,33 +118,40 @@ function Scheme({ patient, setPatient, setPresentTab }) {
 
   return (
     <div className="grid">
-      <div className=" overflow-y-auto">
-        {schemeData.schemes.map((_scheme, index) => (
-          <div
-            key={index}
-            className="grid md:grid-cols-5 gap-3 items-center mt-5 bg-gray-100 p-2 rounded "
-          >
-            <div className="">
-              <div className=" block">
-                <label>Scheme</label>
-              </div>
-              <select name="gender" id="gender" className="w-full">
+      <div className=" overflow-y-auto h-[500px]">
+        {schemes?.data &&
+          schemeData.schemes.map((_scheme, index) => (
+            <div
+              key={index}
+              className="flex w-full gap-3 items-enter mt-5 bg-gray-100 p-2 rounded "
+            >
+              <div className="w-full">
+                <div className=" block">
+                  <label>Scheme</label>
+                </div>
+                <MultiSelect
+                  options={mappedOptions}
+                  value={selected}
+                  onChange={handleChange}
+                  labelledBy="Select"
+                />
+                {/* <select name="gender" id="gender" className="w-full" onChange={}>
                 <option value="walk-in"></option>
                 {schemes?.data?.map((el) => (
-                  <option value={el.name} className="capitalize">
+                  <option value={el.id} className="capitalize">
                     {el?.name}
                   </option>
                 ))}
-              </select>
-            </div>
-            <div className="">
+              </select> */}
+              </div>
+              {/* <div className="">
               <div className=" block">
                 <label>Enrollee ID</label>
               </div>
               <input className="w-full" required />
-            </div>
+            </div> */}
 
-            <div className="">
+              {/* <div className="">
               <div className=" block">
                 <label>Relationship with Enrollee</label>
               </div>
@@ -116,24 +162,24 @@ function Scheme({ patient, setPatient, setPresentTab }) {
                 <option value="Cooperate">Cooperate</option>
                 <option value="Family">Family</option>
               </select>
-            </div>
+            </div> */}
 
-            <div className="">
+              {/* <div className="">
               <div className=" block">
                 <label>Scheme Expiration Date</label>
               </div>
               <input className="w-full" required type="date" />
-            </div>
+            </div> */}
 
-            <div
-              className="flex items-center justify-end gap-2 cursor-pointer"
-              onClick={() => handleDeleteScheme(index)}
-            >
-              <MdDelete className="text-red-500" />
-              <span className="text-red-500">delete</span>
+              <div
+                className="flex items-center justify-end gap-2 cursor-pointer"
+                onClick={() => handleDeleteScheme(index)}
+              >
+                <MdDelete className="text-red-500" />
+                <span className="text-red-500">delete</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
       <div className="flex items-center justify-between">
         <div
@@ -156,7 +202,9 @@ function Scheme({ patient, setPatient, setPresentTab }) {
             onClick={handleSaveRecord}
           >
             <IoMdSave style={{ color: "white" }} />
-            <span className="text-white">Save Patient Record</span>
+            <span className="text-white">
+              {location.search ? "Edit Patient Record" : "Save Patient Record"}
+            </span>
           </div>
         </div>
       </div>

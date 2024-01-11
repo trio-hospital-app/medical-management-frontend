@@ -2,10 +2,12 @@ import { Avatar, Dropdown } from "flowbite-react";
 import BasicModal from "./ui/modals/basicModal";
 import PatientDetails from "../pages/patients/components/patientdetails";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function PatientInfoHeader({ patientData }) {
   const [showDetails, setshowDetails] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className="bg-white px-10 py-4 rounded-[.5rem] shadow mb-5">
       <div className="flex md:flex-row flex-col md:items-center justify-between border-b">
@@ -23,7 +25,13 @@ function PatientInfoHeader({ patientData }) {
             </Dropdown.Item>
             <Dropdown.Item>Book Appointment</Dropdown.Item>
             <Dropdown.Item>Make Deposit</Dropdown.Item>
-            <Dropdown.Item onClick={() => "new function"}>Edit</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() =>
+                navigate("/patients/new?edit", { state: patientData })
+              }
+            >
+              Edit
+            </Dropdown.Item>
             <Dropdown.Item>Change Image</Dropdown.Item>
             <Dropdown.Item>Delete</Dropdown.Item>
           </Dropdown>
