@@ -32,7 +32,7 @@ function Table({ labSearch, reload, setReload }) {
     isLoading: receiveLoader,
   } = useUpdateReceiveLab();
 
-  if (receiveData.status) {
+  if (receiveData && receiveData.status) {
     toast("Recieve  Specimen Completed");
   }
 
@@ -98,7 +98,6 @@ function Table({ labSearch, reload, setReload }) {
       };
       await mutate({ id: selectedId, data: receiveCommnent });
       setReceiveSpecimen(false);
-      setReload(true);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred:", error);
@@ -217,9 +216,9 @@ function Table({ labSearch, reload, setReload }) {
   // here is the role is being selected
   return (
     <>
-      {loading && <Loader />}
+      {/* {loading && <Loader />} */}
       {receiveLoader && <Loader />}
-      {labLoading && <Loader />}
+      {/* {labLoading && <Loader />} */}
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
           columns={columns}
