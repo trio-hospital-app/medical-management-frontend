@@ -25,7 +25,6 @@ function Table({ labSearch, reload, setReload }) {
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
   const [loading, setIsLoading] = useState(true);
-  const queryClient = useQueryClient();
 
   const {
     mutate,
@@ -33,9 +32,8 @@ function Table({ labSearch, reload, setReload }) {
     isLoading: receiveLoader,
   } = useUpdateReceiveLab();
 
-  if (receiveData && receiveData.status) {
+  if (receiveData.status) {
     toast("Recieve  Specimen Completed");
-    setReceiveSpecimen(false);
   }
 
   const { data: labData, isLoading: labLoading } = useQuery(
@@ -48,26 +46,24 @@ function Table({ labSearch, reload, setReload }) {
   }, [labData]);
   
 
-  // const fetchData = async (newpage) => {
-  //   try {
-  //     const data = await labService.getLab(newpage);
-  //     setPageData(data);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setIsLoading(false);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchData(page);
-  // }, [page]);
+  const fetchData = async (newpage) => {
+    try {
+      const data = await labService.getLab(newpage);
+      setPageData(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
 
-  // useEffect(() => {
-  //   if (reload) {
-  //     fetchData(page);
-  //     setReload(false);
-  //   }
-  // }, [reload]);
+  if (reload) {
+    fetchData(page);
+    setReload(false);
+  }
 
   console.log(pageData?.data?.labs);
 
@@ -96,25 +92,19 @@ function Table({ labSearch, reload, setReload }) {
   };
 
   const handleReceiveSpecimeApi = async () => {
-    console.log(reload);
     try {
       const receiveCommnent = {
         text: receiveComment,
       };
       await mutate({ id: selectedId, data: receiveCommnent });
       setReceiveSpecimen(false);
-      // setReload(true);
+      setReload(true);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred:", error);
     }
   };
 
-  console.log("Rendering Table component");
-  console.log("Page:", page);
-  console.log("Reload:", reload);
-  console.log("Lab Search Data:", labSearch?.data);
-  console.log("Page Data:", pageData?.data?.labs);
 
   const columns: any = [
     {
@@ -227,9 +217,9 @@ function Table({ labSearch, reload, setReload }) {
   // here is the role is being selected
   return (
     <>
-      {/* {loading && <Loader />} */}
+      {loading && <Loader />}
       {receiveLoader && <Loader />}
-      {/* {labLoading && <Loader />} */}
+      {labLoading && <Loader />}
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
           columns={columns}

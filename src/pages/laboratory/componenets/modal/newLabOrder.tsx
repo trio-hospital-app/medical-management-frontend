@@ -54,23 +54,7 @@ const NewLabOrder = ({
   //patient info to render
   const patient = patientData?.data[0];
   setPatientId(patient?.id);
-
-  console.log(patient);
-
-
-  // calculate age
-  const calculateAge = (dob: string) => {
-    const dateOfBirth = new Date(dob);
-
-    // Check if dateOfBirth is a valid date
-    if (isNaN(dateOfBirth.getTime())) {
-      return "Not found";
-    }
-
-    const birthYear = dateOfBirth.getFullYear();
-    const currentYear = new Date().getFullYear();
-    return currentYear - birthYear;
-  };
+  console.log(patient, 'i wan tot get scheme id here')
 
   const handleSchemeChange = (selectedItems: any) => {
     setSelectedScheme(selectedItems);
@@ -104,7 +88,7 @@ const NewLabOrder = ({
               religion={patient?.address.religion}
               nationality={patient?.address.country}
               maritalStatus={patient?.address.maritalStatus}
-              age={calculateAge(patient?.address.dob)}
+              age={patient?.address.dob}
               layout={2}
             />
           </div>

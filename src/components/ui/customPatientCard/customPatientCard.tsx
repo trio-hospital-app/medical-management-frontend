@@ -151,7 +151,7 @@ function customPatientCard({
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
-                    Age
+                    Date of Birth:
                   </span>
                   <span className="font-semibold">{age}</span>
                 </div>
@@ -261,7 +261,7 @@ function customPatientCard({
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
-                    Age
+                    Date of Birth:
                   </span>
                   <span className="font-semibold">{age}</span>
                 </div>

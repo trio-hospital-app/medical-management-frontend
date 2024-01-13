@@ -55,11 +55,7 @@ function ReceiveSpecimen({
           religion={`${patientId?.address?.religion}`}
           nationality={`${patientId?.address.country}`}
           maritalStatus={`${patientId?.address?.maritalStatus}`}
-          age={
-            patientId?.address?.dob
-              ? calculateAge(patientId.address.dob)
-              : "Not Found"
-          }
+          age={patientId?.address?.dob ? patientId?.address?.dob : "Not Found"}
           orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
           orderedDate={orderedDate}
         />
