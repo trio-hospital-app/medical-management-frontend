@@ -199,7 +199,7 @@ function customPatientCard({
                   >
                     Email:
                   </label>
-                  <span id="labID" className="text-ha-primary1 pl-1 capitalize">
+                  <span id="labID" className="text-ha-primary1 pl-1">
                     {patientEmail}
                   </span>
                 </div>

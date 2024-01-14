@@ -70,8 +70,8 @@ export const useUpdateReceiveLab = () => {
 
 export const useUpdateAwaitAprovalLab = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: { text: string } }) =>
-      LabService.updateReceiveLab(id, data),
+    ({ id, data }: { id: string; data }) =>
+      LabService.updateAwaitApprovalLab(id, data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("Lab");

@@ -4,16 +4,19 @@ import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import AwaitingApproval from "./modal/awaitingApproval";
-import FillSpecimen from "./modal/fillSpecimen";
+import FillSpecimen from "./modal/fillResult";
 import CancelLabOrder from "./modal/cancelLabOrder";
 import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
-import { useUpdateReceiveLab } from "../../../hooks/reactQuery/useLabs";
+import {
+  useUpdateReceiveLab,
+  useUpdateAwaitAprovalLab,
+} from "../../../hooks/reactQuery/useLabs";
 import Loader from "../../../components/ui/loader";
 import ReceiveSpecimen from "./modal/receiveSpecimen";
 import labService from "../../../services/labService";
 import { toast } from "react-toastify";
-import { useQuery} from "react-query";
+import { useQuery } from "react-query";
 
 function Table({ labSearch, reload, setReload }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
@@ -27,11 +30,18 @@ function Table({ labSearch, reload, setReload }) {
   const [pageData, setPageData] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const {
-    mutate,
-    status: receiveStatus,
-  } = useUpdateReceiveLab();
+  const { mutate: mutateReceive, status: receiveStatus } =
+    useUpdateReceiveLab();
 
+  const {
+    mutate: mutateAwaiting,
+    status: ResultStatus,
+  } = useUpdateAwaitAprovalLab();
+
+
+  if (ResultStatus === "success") {
+    toast.success("Lab order approved successfully");
+  }
   if (receiveStatus === "success") {
     toast.success("Lab order received successfully");
   }
@@ -91,8 +101,20 @@ function Table({ labSearch, reload, setReload }) {
       const receiveCommnent = {
         text: receiveComment,
       };
-      await mutate({ id: selectedId, data: receiveCommnent });
+      await mutateReceive({ id: selectedId, data: receiveCommnent });
       setReceiveSpecimen(false);
+      setReload(true);
+    } catch (error) {
+      // Handle the error here
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const handleFillSpecimeApi = async () => {
+    try {
+      const LabResult = fillResult;
+      await mutateAwaiting({ id: selectedId, data: LabResult });
+      setAwaitingApproval(false);
       setReload(true);
     } catch (error) {
       // Handle the error here
@@ -248,7 +270,6 @@ function Table({ labSearch, reload, setReload }) {
         <ReceiveSpecimen
           selectedRowData={selectedRowData}
           setReceiveComment={setReceiveComment}
-          receiveComment={receiveComment}
         />
       </BasicModal>
 
@@ -276,12 +297,12 @@ function Table({ labSearch, reload, setReload }) {
         showCancelButton={true}
         submitTitle="Approve"
         showSubmitButton={true}
+        submitHandler={handleFillSpecimeApi}
         size="5xl"
       >
         <FillSpecimen
           selectedRowData={selectedRowData}
           setFillResult={setFillResult}
-          fillResult={fillResult}
         />
       </BasicModal>
 

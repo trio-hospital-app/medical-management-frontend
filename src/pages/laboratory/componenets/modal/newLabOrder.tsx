@@ -28,10 +28,7 @@ const NewLabOrder = ({
 
 
 
-  // lab drop down data
-  const schemes = patientData?.schemeId || [];
-  const clinicPanels = clinicPanelData?.data || [];
-
+ 
 
     // function to set the search patien text
     const handleChange = (event: any) => {
@@ -53,8 +50,12 @@ const NewLabOrder = ({
 
   //patient info to render
   const patient = patientData?.data[0];
+
+   // lab drop down data
+   const schemes = patient?.schemeId || [];
+   const clinicPanels = clinicPanelData?.data || [];
+ 
   setPatientId(patient?.id);
-  console.log(patient, 'i wan tot get scheme id here')
 
   const handleSchemeChange = (selectedItems: any) => {
     setSelectedScheme(selectedItems);
