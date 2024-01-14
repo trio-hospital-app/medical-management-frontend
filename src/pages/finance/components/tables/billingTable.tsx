@@ -21,18 +21,26 @@ function BillingTable() {
     useUserFinance(id);
 
   const {
-    data: makepaymentUpdate,
     isLoading: LoadingMakePayment,
+    status: makepaymentUpdate,
     mutate: makePaymentMutate,
+
   } = useMakePayment();
-  if (LoadinguserFinance || LoadingMakePayment) {
+
+  if (LoadingMakePayment ) {
     return <Loader />;
   }
-  if (makepaymentUpdate && makepaymentUpdate.status) {
-    // Optional: Handle success after all payments are made
-    toast("All payments made successfully");
-    setShowPaymentModal(false);
+  if (makepaymentUpdate) {
+    toast.success("Payment made successfully");
   }
+
+
+  // if (makepaymentUpdate && makepaymentUpdate.status) {
+  //   // Optional: Handle success after all payments are made
+  //   toast("All payments made successfully");
+  //   setShowPaymentModal(false);
+  // }
+
   const department = (row) => {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.panel;
