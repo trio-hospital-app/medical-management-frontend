@@ -17,20 +17,24 @@ const SearchLab = ({ setLabSearch, setReload }) => {
   const [selectLabPanel, setselectLabPanel] = useState([]);
   const [formComment, setFormComment] = useState("");
   const [patientId, setPatientId] = useState("");
-  // const [disableCreate, setDisableCreate] = useState(true);
   const {
     data: patientData,
     isLoading: loadingSearch,
     refetch,
   } = useSearchLabPatient(search);
-  
-  const { mutate, data, isLoading: NewLabLoading } = useAddLab();
 
   setLabSearch(patientData);
 
-  if (data && data?.status) {
-    toast.success("New Lab Order added successfully");
+  const {
+    mutate,
+    status: addLabStatus,
+    isLoading: NewLabLoading,
+  } = useAddLab();
+
+ if (addLabStatus === "success") {
+    toast.success("Lab order created successfully");
   }
+
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {

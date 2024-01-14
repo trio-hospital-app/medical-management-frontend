@@ -76,7 +76,7 @@ function customPatientCard({
                   <span
                     className={`md:text-xl font-bold text-bold px-3 rounded-[1rem] py-1 text-center my-1 capitalize`}
                     style={{
-                      backgroundColor: testNameBackgroundColor || "pink", // Default color is pink
+                      backgroundColor: testNameBackgroundColor || "white"
                     }}
                   >
                     {testName}

@@ -56,22 +56,22 @@ function TakeSpecimen({selectedRowData, fillResult, setFillResult}) {
   return (
     <>
       <div>
-        <CustomLabHeader
+      <CustomLabHeader
           patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
-          patientID={`${patientId.patientId}`}
-          testName={panelId.panel || "Not Found"}
-          testNameBackgroundColor={`${specimenId.color}`}
-          labID={`${selectedRowData.id}`}
+          patientID={`${patientId?.patientId}`}
+          testName={panelId?.panel || "Not Found"}
+          testNameBackgroundColor={`${panelId?.specimenId.color}`}
+          labID={`${selectedRowData?.id}`}
           IdName="Lab ID"
-          patientEmail={`${patientId.address.email} `}
+          patientEmail={`${patientId?.address.email} `}
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
           gender={`${patientId?.gender}`}
-          phoneNumber={`${patientId.phone}`}
-          religion={`${patientId.address.religion}`}
-          nationality={`${patientId.address.country}`}
-          maritalStatus={`${patientId.address?.maritalStatus}`}
-          age={calculateAge("1909/12/4") || "Not Found"}
-          orderedBy={`${orderBy.firstName} ${orderBy.lastName}`}
+          phoneNumber={`${patientId?.phone}`}
+          religion={`${patientId?.address?.religion}`}
+          nationality={`${patientId?.address.country}`}
+          maritalStatus={`${patientId?.address?.maritalStatus}`}
+          age={patientId?.address?.dob ? patientId?.address?.dob : "Not Found"}
+          orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
           orderedDate={orderedDate}
         />
       </div>
