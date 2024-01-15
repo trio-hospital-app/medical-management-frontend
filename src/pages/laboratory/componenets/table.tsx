@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
-import AwaitingApproval from "./modal/awaitingApproval";
 import FillSpecimen from "./modal/fillResult";
 import CancelLabOrder from "./modal/cancelLabOrder";
 import FinalResult from "./modal/finalResult";
@@ -33,11 +32,8 @@ function Table({ labSearch, reload, setReload }) {
   const { mutate: mutateReceive, status: receiveStatus } =
     useUpdateReceiveLab();
 
-  const {
-    mutate: mutateAwaiting,
-    status: ResultStatus,
-  } = useUpdateAwaitAprovalLab();
-
+  const { mutate: mutateAwaiting, status: ResultStatus } =
+    useUpdateAwaitAprovalLab();
 
   if (ResultStatus === "success") {
     toast.success("Lab order approved successfully");
@@ -193,19 +189,21 @@ function Table({ labSearch, reload, setReload }) {
                 ? "bg-blue-500 hover:bg-blue-600"
                 : row.status === "final result"
                   ? "bg-green-500 hover:bg-green-600"
-                  : row.status === "'"
+                  : row.status === ""
           }`}
           onClick={() => {
+            if (!row.paid) return;
             setSelectedRowData(row);
             setSelectedId(row.id);
             row.status === "receive specimen"
               ? setReceiveSpecimen(true)
               : row.status === "awaiting approval"
                 ? setAwaitingApproval(true)
-                : row.status === "final result" // Corrected status here
+                : row.status === "final result"
                   ? setFinalResult(true)
                   : row.status === "null";
           }}
+          disabled={!row.paid}
         >
           {row.status
             .split(" ")
@@ -218,14 +216,20 @@ function Table({ labSearch, reload, setReload }) {
       width: "15rem",
     },
     {
-      cell: (row) => (
-        <Tooltip content="Cancle order">
-          <MdOutlineCancel
-            onClick={() => openDeleteRow(row)}
-            className="font-extrabold text-xl text-red-400"
-          />
-        </Tooltip>
-      ),
+      cell: (row) => {
+        if (row.status === "receive specimen") {
+          return (
+            <Tooltip content="Cancel order">
+              <MdOutlineCancel
+                onClick={() => openDeleteRow(row)}
+                className="font-extrabold text-xl text-red-400"
+              />
+            </Tooltip>
+          );
+        } else {
+          return null;
+        }
+      },
       sortable: false,
       width: "3rem",
     },
@@ -270,24 +274,9 @@ function Table({ labSearch, reload, setReload }) {
         <ReceiveSpecimen
           selectedRowData={selectedRowData}
           setReceiveComment={setReceiveComment}
+          receiveComment={receiveComment}
         />
       </BasicModal>
-
-      {/* <BasicModal
-        title="Fill Result"
-        setOpenModal={setReceiveSpecimen}
-        cancelTitle="Cancel"
-        openModal={receiveSpecimen}
-        showCancelButton={true}
-        submitTitle="Save"
-        showSubmitButton={true}
-        submitHandler={handleReceiveSpecime}
-        size="5xl"
-      >
-        <FillSpecimen selectedRowData={selectedRowData} />
-      </BasicModal> */}
-
-      {/* // awaiting specimen modal */}
 
       <BasicModal
         title="Awaiting Approval"
@@ -318,7 +307,7 @@ function Table({ labSearch, reload, setReload }) {
         showSubmitButton={true}
         size="5xl"
       >
-        <FinalResult />
+        <FinalResult selectedRowData={selectedRowData} />
       </BasicModal>
     </>
   );

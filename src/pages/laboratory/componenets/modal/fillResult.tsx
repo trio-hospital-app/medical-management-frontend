@@ -76,8 +76,8 @@ function FillSpecimen({ selectedRowData, setFillResult }) {
             <AccordionTrigger>
               <h1 className="text-ha-primary1"> Previous Comments</h1>
             </AccordionTrigger>
-            {comment && comment.length > 0 ? (
-              comment.map((c, index) => (
+            {comment && comment?.length > 0 ? (
+              comment?.map((c, index) => (
                 <AccordionContent key={index}>
                   <div className="bg-gray-300 py-3 rounded-[1rem]">
                     <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
@@ -94,14 +94,15 @@ function FillSpecimen({ selectedRowData, setFillResult }) {
                           Date:
                         </span>
                         <span className="font-bold">
-                          {formatDateTime(new Date(c.time))}
+                          {formatDateTime(new Date(c?.time))}
                         </span>
                       </div>
                     </div>
                     <hr className="mx-5 " />
                     <div className="px-10 py-2">
-                      <span className="font-bold text-justify capitalize">
-                        {c.text}
+                      <span className="font-bold text-justify">
+                      {c?.text.charAt(0).toUpperCase() +
+                          c.text.slice(1).toLowerCase()}
                       </span>
                     </div>
                   </div>
@@ -119,24 +120,14 @@ function FillSpecimen({ selectedRowData, setFillResult }) {
       {/* fill form are  */}
 
       <div className="px-4">
-        <div className="bg-ha-primary2 px-4 py-4 font-bold rounded-[.3rem]">
-          <h1>Full Blood Count</h1>
+        <div className={`px-4 py-4 font-bold rounded-[.3rem]`}  style={{
+                      backgroundColor: panelId?.specimenId.color || "white"
+                    }}>
+          <h1 className="capitalize font-extrabold text-2xl">{panelId?.panel}</h1>
         </div>
         <div>
           <DynamicFormTable onRowDataChange={handleRowDataChange} />
         </div>
-      </div>
-
-      <div className="px-4">
-        <span className="font-bold">Add Comment</span>
-        <TextareaAutosize
-          minRows={3}
-          placeholder="Write a comment"
-          onChange={(e) => setFormData(e.target.value)}
-          className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-          value=""
-          maxRows={4}
-        />
       </div>
     </>
   );
