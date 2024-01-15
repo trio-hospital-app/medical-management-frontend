@@ -25,9 +25,11 @@ function BillingTable() {
     isLoading: LoadingMakePayment,
     mutate: makePaymentMutate,
   } = useMakePayment();
+
   if (LoadinguserFinance || LoadingMakePayment) {
     return <Loader />;
   }
+  
   if (makepaymentUpdate && makepaymentUpdate.status) {
     // Optional: Handle success after all payments are made
     toast("All payments made successfully");
