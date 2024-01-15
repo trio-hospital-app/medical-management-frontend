@@ -1,140 +1,83 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
-// import Accordion from "@mui/material/Accordion";
-// import AccordionSummary from "@mui/material/AccordionSummary";
-// import AccordionDetails from "@mui/material/AccordionDetails";
-// import Typography from "@mui/material/Typography";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Loader from "../../../../components/ui/loader";
+import { useGetLabById } from "../../../../hooks/reactQuery/useLabs";
+function FinalResult({ selectedRowData }) {
+  const { patientId, panelId, orderBy } = selectedRowData;
+  const id = selectedRowData?.id;
 
-function FinalResult() {
-  const tests = [
-    {
-      testName: "Full Blood Count",
-      testNameBackgroundColor: "bg-green-700",
-    },
-  ];
+  const { data, isLoading } = useGetLabById(id);
+
+  const result = data?.data?.result || [];
+
+  //function for date and time format
+  function formatDateTime(inputDate) {
+    const originalDate = new Date(inputDate);
+    // Create an options object with the desired date and time format
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    };
+    return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
+  }
+
+  // date and time usage
+  const orderedDate = formatDateTime(selectedRowData?.createdAt);
+
+  const renderObservations = () => {
+    if (!result || !result || result.length === 0) {
+      return (
+        <tr>
+          <td>No observations found.</td>
+        </tr>
+      );
+    }
+
+    return result?.map((item) => (
+      <tr key={item.id}>
+        <td className="pl-4">{item.observation}</td>
+        <td className="pl-4">{item.unit}</td>
+        <td className="pl-4">{item.value}</td>
+        <td className="pl-4">{item.range}</td>
+      </tr>
+    ));
+  };
+
   return (
     <>
       <div>
         <CustomLabHeader
-          patientName="Mr. christopher Abraham"
-          patientID="12345667778"
-          tests={tests}
-          labID="12345667778"
+          patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
+          patientID={`${patientId?.patientId}`}
+          testName={panelId?.panel || "Not Found"}
+          testNameBackgroundColor={`${panelId?.specimenId.color}`}
+          labID={`${selectedRowData?.id}`}
           IdName="Lab ID"
+          patientEmail={`${patientId?.address.email} `}
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
-          gender="Male"
-          patientEmail="Christopherabraham8@gmail.com"
-          phoneNumber="12345667778"
-          religion="Christian"
-          nationality="Nigeria"
-          maritalStatus="Single"
-          age="32 years"
-          orderedBy="Dr. Alexander Ifeanyichukwu"
-          orderedDate="23-04-2023 (9:10 am UTC)"
+          gender={`${patientId?.gender}`}
+          phoneNumber={`${patientId?.phone}`}
+          religion={`${patientId?.address?.religion}`}
+          nationality={`${patientId?.address.country}`}
+          maritalStatus={`${patientId?.address?.maritalStatus}`}
+          age={patientId?.address?.dob ? patientId?.address?.dob : "Not Found"}
+          orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
+          orderedDate={orderedDate}
         />
       </div>
 
-      {/* accordion */}
-      {/* <div className="px-4 max-h-[300px] overflow-y-scroll">
-        <Accordion
-          style={{
-            backgroundColor: "#E8EBFF",
-            overflowY: "scroll",
-            maxHeight: "300px",
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>
-              <p className="font-bold"> Previous Comments</p>
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <div className="bg-gray-300 py-3 rounded-[1rem]">
-                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">
-                      christopher Abraham
-                    </span>
-                  </div>
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">Date:</span>
-                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-                  </div>
-                </div>
-                <hr className="mx-5 " />
-                <div className="px-10 py-2">
-                  <span className="font-bold text-justify capitalize">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-                  </span>
-                </div>
-              </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
-              <div className="bg-gray-300 py-3 rounded-[1rem]">
-                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">
-                      christopher Abraham
-                    </span>
-                  </div>
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">Date:</span>
-                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-                  </div>
-                </div>
-                <hr className="mx-5 " />
-                <div className="px-10 py-2">
-                  <span className="font-bold text-justify capitalize">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-                  </span>
-                </div>
-              </div>
-            </Typography>
-          </AccordionDetails>
-          <AccordionDetails>
-            <Typography>
-              <div className="bg-gray-300 py-3 rounded-[1rem]">
-                <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">By:</span>
-                    <span className="font-bold capitalize">
-                      christopher Abraham
-                    </span>
-                  </div>
-                  <div className="flex items-start justify-center flex-col">
-                    <span className="text-sm font-sm text-gray-500">Date:</span>
-                    <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-                  </div>
-                </div>
-                <hr className="mx-5 " />
-                <div className="px-10 py-2">
-                  <span className="font-bold text-justify capitalize">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-                  </span>
-                </div>
-              </div>
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      </div> */}
-
       {/* fill form are  */}
 
-      <div className="px-4">
-        <div className="bg-ha-primary2 px-4 py-3 font-bold rounded-[.3rem]">
-          <h1>Full Blood Count</h1>
+      <div className="px-4 border py-4 shadow">
+        <div
+          className={`px-4 py-4 font-bold rounded-[.3rem]`}
+          style={{
+            backgroundColor: panelId?.specimenId.color || "white",
+          }}
+        >
+          <h1 className="capitalize font-extrabold text-2xl">
+            {panelId?.panel}
+          </h1>
         </div>
         <div>
           <table
@@ -168,180 +111,13 @@ function FinalResult() {
                   References Range
                 </th>
               </tr>
-              <tr className="font-semibold">
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  Full Blood Count
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  19
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  3090
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  456 - 70
-                </td>
-              </tr>
-              <tr className="font-semibold">
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  Full Blood Count
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  19
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  3090
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  456 - 70
-                </td>
-              </tr>
-              <tr className="font-semibold">
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  Full Blood Count
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  19
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  3090
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  456 - 70
-                </td>
-              </tr>
-              <tr className="font-semibold">
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  Full Blood Count
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  19
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  3090
-                </td>
-                <td
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
-                >
-                  456 - 70
-                </td>
-              </tr>
+              {isLoading && <Loader />}
+
+              {renderObservations()}
             </tbody>
           </table>
         </div>
       </div>
-
-      <div className="px-4">
-        <span className="font-bold mx-3">Comment</span>
-        <div>
-          <div className="bg-gray-300 py-3 mb-3 rounded-[1rem]">
-            <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-              <div className="flex items-start justify-center flex-col">
-                <span className="text-sm font-sm text-gray-500">By:</span>
-                <span className="font-bold capitalize">
-                  christopher Abraham
-                </span>
-              </div>
-              <div className="flex items-start justify-center flex-col">
-                <span className="text-sm font-sm text-gray-500">Date:</span>
-                <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-              </div>
-            </div>
-            <hr className="mx-5 " />
-            <div className="px-10 py-2">
-              <span className="font-bold text-justify capitalize">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-              </span>
-            </div>
-          </div>
-          {/* <div className="bg-gray-300 py-3 rounded-[1rem]">
-            <div className="px-10 py-2 flex items-start justify-between gap-5 flex-col md:flex-row ">
-              <div className="flex items-start justify-center flex-col">
-                <span className="text-sm font-sm text-gray-500">By:</span>
-                <span className="font-bold capitalize">
-                  christopher Abraham
-                </span>
-              </div>
-              <div className="flex items-start justify-center flex-col">
-                <span className="text-sm font-sm text-gray-500">Date:</span>
-                <span className="font-bold">23-04-2023 (9:10 am UTC)</span>
-              </div>
-            </div>
-            <hr className="mx-5 " />
-            <div className="px-10 py-2">
-              <span className="font-bold text-justify capitalize">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam, voluptatum? wkfslkhjflskfljskjf;skldjfd
-              </span>
-            </div>
-          </div> */}
-        </div>
-      </div>
-      {/* <div className="px-4 py-7">
-        <div className=" flex items-center justify-start gap-3">
-          <span className="font-bold text-ha-primary1">Add Comment</span>
-          <Button onClick={() => setOpenCommenTextArea(!openCommenTextArea)}>
-            <BsFillPencilFill />
-          </Button>
-        </div>
-        {openCommenTextArea && (
-          <TextareaAutosize
-            minRows={3}
-            placeholder="Write a comment"
-            onChange={(e) => setFormData(e.target.value)}
-            className={`w-[98%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-            value={formData}
-            maxRows={5}
-          />
-        )}
-      </div> */}
     </>
   );
 }
