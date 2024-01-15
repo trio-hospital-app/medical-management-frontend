@@ -9,7 +9,7 @@ import {
 } from "../../../../components/ui/accordion";
 import { useGetPatientLab } from "../../../../hooks/reactQuery/useLabs";
 import Loader from "../../../../components/ui/loader";
-import { formatDate } from "../../../../hooks/formattedDate";
+import { formatDate, formatDate1 } from "../../../../hooks/formattedDate";
 
 function LabTable({ id }) {
   const { isLoading, data: patientLab } = useGetPatientLab(id);
@@ -56,26 +56,54 @@ function LabTable({ id }) {
     },
   ];
 
-  const ExpandedComponent = () => (
-    <div className="m-5 p-5 shadow rounded-md">
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Hi</AccordionTrigger>
-          <AccordionContent> I am a content</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Hi</AccordionTrigger>
-          <AccordionContent> I am a content</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-4x">
-          <AccordionTrigger>Hi</AccordionTrigger>
-          <AccordionContent> I am a content</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Hi</AccordionTrigger>
-          <AccordionContent> I am a content</AccordionContent>
-        </AccordionItem>
-      </Accordion>
+  const ExpandedComponent = ({ data }) => (
+    <div className="relative">
+      <div className="m-5 p-5 bg-black">
+        <div className="w-full h-full grid grid-cols-4 bg-black text-white">
+          <span className="w-full flex items-center justify-start">Observation</span>
+          <span className="w-full flex items-center justify-start">Range</span>
+          <span className="w-full flex items-center justify-start">Unit</span>
+          <span className="w-full flex items-center justify-start">Value</span>
+        </div></div>
+      <div className="m-5 p-5 shadow text-black rounded-md">
+        {data?.result.length > 0 ? data?.result?.map((el) => (
+          <div className="w-full h-full grid grid-cols-4 p-2 border">
+            <span className="w-full flex items-center justify-start">{el?.observation}</span>
+            <span className="w-full flex items-center justify-start">{el?.range}</span>
+            <span className="w-full flex items-center justify-start">{el?.unit}</span>
+            <span className="w-full flex items-center justify-start">{el?.value}</span>
+          </div>
+        )):  <div className="flex items-center flex-col justify-center w-full h-[100px]">
+        <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
+        <h3>Lab result yet to be filled </h3>
+      </div>}
+      </div>
+      {data?.comment && <div className="m-5">
+        <div className="flex items-center justify-end w-[50%]">
+          <Accordion type="single" collapsible className="w-full p-5 bg-ha-primary2 rounded-lg">
+            <AccordionItem value="item-1">
+              <AccordionTrigger> Result Comments</AccordionTrigger>
+              {data?.comment.map((el) => (
+                el?.text && (
+                  <AccordionContent key={el?.id}>
+                    <div  className=" rounded w-full grid bg-white mb-2 p-2">
+                    <div className="flex items-center justify-between ">
+                      <span className="w-full flex items-center justify-start capitalize">
+                        <span className="font-bold">By:</span> {el?.by?.firstName} {el?.by?.lastName}
+                      </span>
+                      <span className="w-full flex items-center justify-end font-bold">{formatDate1(el?.time)}</span>
+                    </div>
+                    <div className="flex items-center justify-start mt-2 capitalize font-bold">{el?.text}</div>
+                    </div>
+                  
+                  </AccordionContent>
+                )
+              ))}
+
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </div>}
     </div>
   );
 
@@ -83,7 +111,7 @@ function LabTable({ id }) {
     <div>
       <DataTable
         columns={columns}
-        data={patientLab ? patientLab.data.labs : []}
+        data={patientLab ? patientLab?.data?.labs : []}
         expandableRows
         expandableRowsComponent={ExpandedComponent}
       />
@@ -92,3 +120,4 @@ function LabTable({ id }) {
 }
 
 export default LabTable;
+
