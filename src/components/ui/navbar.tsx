@@ -15,7 +15,7 @@ function NavBar() {
     navigate("/login");
   };
   return (
-    <div className="w-full navbar shadow-md z-[60] bg-white fixed top-0 left-0 right-0 flex items-center justify-between">
+    <div className="w-full navbar shadow-md z-[40] bg-white fixed top-0 left-0 right-0 flex items-center justify-between">
       <div className="flex items-center w-[50%]">
         <div>
           <Avatar

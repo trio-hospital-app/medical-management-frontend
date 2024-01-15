@@ -8,6 +8,7 @@ export interface NewLabData {
   specimenId: string;
   text: string;
   schemeId: string;
+  LabResult: Array<any>;
 }
 
 class labService {
@@ -120,10 +121,10 @@ class labService {
     return response;
   }
 
-  public async updateAwaitApprovalLab(id: string, data: { text: string }) {
+  public async updateAwaitApprovalLab(id: string, data) {
     const options: AxiosRequestConfig = {
       method: "PUT",
-      url: `/lab/take/${id}`,
+      url: `/lab/result/${id}`,
       data,
     };
     const response = await request(options);

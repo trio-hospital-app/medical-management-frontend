@@ -9,7 +9,6 @@ import {
 
 function ReceiveSpecimen({
   selectedRowData,
-  receiveComment,
   setReceiveComment,
 }) {
   const { patientId, panelId, orderBy, comment } = selectedRowData;
@@ -26,14 +25,6 @@ function ReceiveSpecimen({
     };
     return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
   }
-
-  //function to calculate age
-  const calculateAge = (dob) => {
-    const currentDate = new Date();
-    const birthDate = new Date(dob);
-    const age = currentDate.getFullYear() - birthDate.getFullYear();
-    return age + " Year Old";
-  };
 
   // date and time usage
   const orderedDate = formatDateTime(selectedRowData?.createdAt);
@@ -55,11 +46,7 @@ function ReceiveSpecimen({
           religion={`${patientId?.address?.religion}`}
           nationality={`${patientId?.address.country}`}
           maritalStatus={`${patientId?.address?.maritalStatus}`}
-          age={
-            patientId?.address?.dob
-              ? calculateAge(patientId.address.dob)
-              : "Not Found"
-          }
+          age={patientId?.address?.dob ? patientId?.address?.dob : "Not Found"}
           orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
           orderedDate={orderedDate}
         />
@@ -122,7 +109,7 @@ function ReceiveSpecimen({
           placeholder="Write a comment"
           onChange={(e) => setReceiveComment(e.target.value)}
           className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-          value={receiveComment}
+          value=''
           maxRows={5}
         />
       </div>

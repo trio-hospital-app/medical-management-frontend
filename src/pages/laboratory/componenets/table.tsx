@@ -4,15 +4,19 @@ import DataTable from "react-data-table-component";
 import { MdOutlineCancel } from "react-icons/md";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import AwaitingApproval from "./modal/awaitingApproval";
-import FillSpecimen from "./modal/fillSpecimen";
+import FillSpecimen from "./modal/fillResult";
+import CancelLabOrder from "./modal/cancelLabOrder";
 import FinalResult from "./modal/finalResult";
 import { Button } from "../../../components/ui/button";
-import { useUpdateReceiveLab } from "../../../hooks/reactQuery/useLabs";
+import {
+  useUpdateReceiveLab,
+  useUpdateAwaitAprovalLab,
+} from "../../../hooks/reactQuery/useLabs";
 import Loader from "../../../components/ui/loader";
 import ReceiveSpecimen from "./modal/receiveSpecimen";
 import labService from "../../../services/labService";
 import { toast } from "react-toastify";
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from "react-query";
 
 function Table({ labSearch, reload, setReload }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
@@ -24,53 +28,49 @@ function Table({ labSearch, reload, setReload }) {
   const [selectedId, setSelectedId] = useState("");
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
-  const [loading, setIsLoading] = useState(true);
-  const queryClient = useQueryClient();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const { mutate: mutateReceive, status: receiveStatus } =
+    useUpdateReceiveLab();
 
   const {
-    mutate,
-    data: receiveData,
-    isLoading: receiveLoader,
-  } = useUpdateReceiveLab();
+    mutate: mutateAwaiting,
+    status: ResultStatus,
+  } = useUpdateAwaitAprovalLab();
 
-  if (receiveData && receiveData.status) {
-    toast("Recieve  Specimen Completed");
-    setReceiveSpecimen(false);
+
+  if (ResultStatus === "success") {
+    toast.success("Lab order approved successfully");
+  }
+  if (receiveStatus === "success") {
+    toast.success("Lab order received successfully");
   }
 
   const { data: labData, isLoading: labLoading } = useQuery(
-    ['labs', page],
-    () => labService.getLab(page),
+    ["labs", page],
+    () => labService.getLab(page)
   );
-  
+
   useEffect(() => {
     setPageData(labData);
   }, [labData]);
-  
 
-  // const fetchData = async (newpage) => {
-  //   try {
-  //     const data = await labService.getLab(newpage);
-  //     setPageData(data);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setIsLoading(false);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchData(page);
-  // }, [page]);
+  const fetchData = async (newpage) => {
+    try {
+      const data = await labService.getLab(newpage);
+      setPageData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
 
-  // useEffect(() => {
-  //   if (reload) {
-  //     fetchData(page);
-  //     setReload(false);
-  //   }
-  // }, [reload]);
-
-  console.log(pageData?.data?.labs);
-
+  if (reload) {
+    fetchData(page);
+    setReload(false);
+  }
   //function for date and time format
   function formatDateTime(inputDate) {
     const originalDate = new Date(inputDate);
@@ -87,8 +87,9 @@ function Table({ labSearch, reload, setReload }) {
     return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
   }
 
-  const handleRowDelete = (row) => {
-    console.log(row.id);
+  const openDeleteRow = (row) => {
+    setSelectedRowData(row);
+    setDeleteDialogOpen(true);
   };
 
   const handlePageChange = async (page) => {
@@ -96,25 +97,30 @@ function Table({ labSearch, reload, setReload }) {
   };
 
   const handleReceiveSpecimeApi = async () => {
-    console.log(reload);
     try {
       const receiveCommnent = {
         text: receiveComment,
       };
-      await mutate({ id: selectedId, data: receiveCommnent });
+      await mutateReceive({ id: selectedId, data: receiveCommnent });
       setReceiveSpecimen(false);
-      // setReload(true);
+      setReload(true);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred:", error);
     }
   };
 
-  console.log("Rendering Table component");
-  console.log("Page:", page);
-  console.log("Reload:", reload);
-  console.log("Lab Search Data:", labSearch?.data);
-  console.log("Page Data:", pageData?.data?.labs);
+  const handleFillSpecimeApi = async () => {
+    try {
+      const LabResult = fillResult;
+      await mutateAwaiting({ id: selectedId, data: LabResult });
+      setAwaitingApproval(false);
+      setReload(true);
+    } catch (error) {
+      // Handle the error here
+      console.error("An error occurred:", error);
+    }
+  };
 
   const columns: any = [
     {
@@ -215,7 +221,7 @@ function Table({ labSearch, reload, setReload }) {
       cell: (row) => (
         <Tooltip content="Cancle order">
           <MdOutlineCancel
-            onClick={() => handleRowDelete(row)}
+            onClick={() => openDeleteRow(row)}
             className="font-extrabold text-xl text-red-400"
           />
         </Tooltip>
@@ -227,9 +233,7 @@ function Table({ labSearch, reload, setReload }) {
   // here is the role is being selected
   return (
     <>
-      {/* {loading && <Loader />} */}
-      {receiveLoader && <Loader />}
-      {/* {labLoading && <Loader />} */}
+      {labLoading && <Loader />}
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
           columns={columns}
@@ -242,6 +246,14 @@ function Table({ labSearch, reload, setReload }) {
           onChangePage={handlePageChange}
         />
       </div>
+
+      {/* // delete dialog */}
+      <CancelLabOrder
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        deleteDialogOpen={deleteDialogOpen}
+        selectedRowData={selectedRowData}
+        setReload={setReload}
+      />
 
       {/* // receive specimen modal */}
       <BasicModal
@@ -258,7 +270,6 @@ function Table({ labSearch, reload, setReload }) {
         <ReceiveSpecimen
           selectedRowData={selectedRowData}
           setReceiveComment={setReceiveComment}
-          receiveComment={receiveComment}
         />
       </BasicModal>
 
@@ -286,12 +297,12 @@ function Table({ labSearch, reload, setReload }) {
         showCancelButton={true}
         submitTitle="Approve"
         showSubmitButton={true}
+        submitHandler={handleFillSpecimeApi}
         size="5xl"
       >
         <FillSpecimen
           selectedRowData={selectedRowData}
           setFillResult={setFillResult}
-          fillResult={fillResult}
         />
       </BasicModal>
 

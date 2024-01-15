@@ -38,7 +38,7 @@ function BasicModal({
   return (
     <div>
       <Modal
-        className="z-[100]"
+        className="z-[100] backdrop-blur-sm"
         show={openModal}
         size={size}
         dismissible

@@ -8,13 +8,12 @@ import {
   AccordionContent,
 } from "../../../../components/ui/accordion";
 import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
-function TakeSpecimen({selectedRowData, fillResult, setFillResult}) {
+
+function FillSpecimen({ selectedRowData, setFillResult }) {
   const [formData, setFormData] = useState("");
   const [dynamicFormRows, setDynamicFormRows] = useState([]);
 
-
-  const { patientId, panelId, specimenId, orderBy, comment } =
-    selectedRowData;
+  const { patientId, panelId, orderBy, comment } = selectedRowData;
 
   //function for date and time format
   function formatDateTime(inputDate) {
@@ -33,45 +32,35 @@ function TakeSpecimen({selectedRowData, fillResult, setFillResult}) {
     return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
   }
 
-  const calculateAge = (dob) => {
-    const currentDate = new Date();
-    const birthDate = new Date(dob);
-
-    const age = currentDate.getFullYear() - birthDate.getFullYear();
-
-    return age + " Years";
-  };
-
   // date and time usage
-  const orderedDate = formatDateTime(
-    selectedRowData.createdAt
-  );
+  const orderedDate = formatDateTime(selectedRowData.createdAt);
 
   const handleRowDataChange = (rowData: any) => {
     setDynamicFormRows(rowData);
   };
-  
-  console.log(dynamicFormRows);
+
+  // here is where am passing the data to the parent component
+  setFillResult(dynamicFormRows);
 
   return (
     <>
       <div>
         <CustomLabHeader
           patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
-          patientID={`${patientId.patientId}`}
-          testName={panelId.panel || "Not Found"}
-          testNameBackgroundColor={`${specimenId.color}`}
-          labID={`${selectedRowData.id}`}
+          patientID={`${patientId?.patientId}`}
+          testName={panelId?.panel || "Not Found"}
+          testNameBackgroundColor={`${panelId?.specimenId.color}`}
+          labID={`${selectedRowData?.id}`}
           IdName="Lab ID"
-          patientEmail={`${patientId.address.email} `}
+          patientEmail={`${patientId?.address.email} `}
           imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
           gender={`${patientId?.gender}`}
-          phoneNumber={`${patientId.phone}`}
-          religion={`${patientId.address.religion}`}
-          nationality={`${patientId.address.country}`}
-          maritalStatus={`${patientId.address?.maritalStatus}`}
-          age={calculateAge("1909/12/4") || "Not Found"}
-          orderedBy={`${orderBy.firstName} ${orderBy.lastName}`}
+          phoneNumber={`${patientId?.phone}`}
+          religion={`${patientId?.address?.religion}`}
+          nationality={`${patientId?.address.country}`}
+          maritalStatus={`${patientId?.address?.maritalStatus}`}
+          age={patientId?.address?.dob ? patientId?.address?.dob : "Not Found"}
+          orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
           orderedDate={orderedDate}
         />
       </div>
@@ -145,7 +134,7 @@ function TakeSpecimen({selectedRowData, fillResult, setFillResult}) {
           placeholder="Write a comment"
           onChange={(e) => setFormData(e.target.value)}
           className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-          value={formData}
+          value=""
           maxRows={4}
         />
       </div>
@@ -153,4 +142,4 @@ function TakeSpecimen({selectedRowData, fillResult, setFillResult}) {
   );
 }
 
-export default TakeSpecimen;
+export default FillSpecimen;
