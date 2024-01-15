@@ -1,5 +1,4 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
-import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import {
   Accordion,
@@ -10,7 +9,6 @@ import {
 import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
 
 function FillSpecimen({ selectedRowData, setFillResult }) {
-  const [formData, setFormData] = useState("");
   const [dynamicFormRows, setDynamicFormRows] = useState([]);
 
   const { patientId, panelId, orderBy, comment } = selectedRowData;
