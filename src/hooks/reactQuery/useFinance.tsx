@@ -8,9 +8,13 @@ export const useUserFinance = (id: string) => {
 };
 
 export const useMakePayment = () => {
-  return useMutation((id) => FinanceService.makePayment(id), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("Finance");
-    },
-  });
+  return useMutation(
+    (params: { id: string; data: { receipt: string; paymentType: string } }) =>
+      FinanceService.makePayment(params.id, params.data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Finance");
+      },
+    }
+  );
 };

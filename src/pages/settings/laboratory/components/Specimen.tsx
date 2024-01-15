@@ -15,7 +15,7 @@ import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
 import DeleteWarningModal from "../../../../components/ui/modals/deletWarningModal";
 
-function Departments() {
+function Specimen() {
   const [showCreate, setShowCreate] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("#fff");
   const [showEdit, setShowEdit] = useState(false);
@@ -24,7 +24,7 @@ function Departments() {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [id, setId] = useState("");
-  const { data: specimens, isLoading: LoadingLab } = useSpecimens();
+  const { data: specimens, isLoading: LoadingLab, refetch } = useSpecimens();
   const {
     data: deleteData,
     isLoading: LoadingDelete,
@@ -47,14 +47,20 @@ function Departments() {
 
   if (createData?.status) {
     toast.success("Specimen Container Added successfully");
+     createMutate(null)
+    refetch()
   }
 
   if (deleteData?.status) {
     toast.success("Specimen Container Deleted");
+    deleteMutate(null)
+    refetch()
   }
 
   if (editData?.status) {
     toast.success("Specimen Container Updated successfully");
+    editMutate(null)
+    refetch()
   }
 
   const handleCreate = () => {
@@ -278,4 +284,4 @@ function Departments() {
   );
 }
 
-export default Departments;
+export default Specimen;

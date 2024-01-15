@@ -1,4 +1,4 @@
-function EditLabTests({ createFormData, setCreateFormData, specimens }) {
+function EditLabTests({ createFormData, setCreateFormData, specimens,  departments, }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCreateFormData((prevData) => ({
@@ -20,6 +20,23 @@ function EditLabTests({ createFormData, setCreateFormData, specimens }) {
         />
       </div>
       <div className="grid">
+        <label htmlFor="centerId">
+          Laboratory Department e.g (Haematology)
+        </label>
+        <select
+          id="centerId"
+          name="centerId"
+          value={createFormData.centerId}
+          onChange={handleInputChange}
+          // disabled={LoadingLab}
+        >
+          <option value="">Select...</option>
+          {departments?.data?.map((el) => (
+            <option value={el.id}>{el.center}</option>
+          ))}
+        </select>
+      </div>
+      {/* <div className="grid">
         <label htmlFor="labDepartment">
           Laboratory Department e.g (Haematology)
         </label>
@@ -35,7 +52,7 @@ function EditLabTests({ createFormData, setCreateFormData, specimens }) {
             <option value={el.id}>{el.type}</option>
           ))}
         </select>
-      </div>
+      </div> */}
       <div className="grid">
         <label htmlFor="costPrice">Cost Price</label>
         <input

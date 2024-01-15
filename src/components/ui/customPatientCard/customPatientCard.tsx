@@ -76,7 +76,7 @@ function customPatientCard({
                   <span
                     className={`md:text-xl font-bold text-bold px-3 rounded-[1rem] py-1 text-center my-1 capitalize`}
                     style={{
-                      backgroundColor: testNameBackgroundColor || "pink", // Default color is pink
+                      backgroundColor: testNameBackgroundColor || "white"
                     }}
                   >
                     {testName}
@@ -151,7 +151,7 @@ function customPatientCard({
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
-                    Age
+                    Date of Birth:
                   </span>
                   <span className="font-semibold">{age}</span>
                 </div>
@@ -199,7 +199,7 @@ function customPatientCard({
                   >
                     Email:
                   </label>
-                  <span id="labID" className="text-ha-primary1 pl-1 capitalize">
+                  <span id="labID" className="text-ha-primary1 pl-1">
                     {patientEmail}
                   </span>
                 </div>
@@ -261,7 +261,7 @@ function customPatientCard({
                 </div>
                 <div className="flex items-start justify-center flex-col">
                   <span className="text-sm font-semibold text-gray-500">
-                    Age
+                    Date of Birth:
                   </span>
                   <span className="font-semibold">{age}</span>
                 </div>
