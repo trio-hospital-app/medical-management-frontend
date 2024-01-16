@@ -204,13 +204,9 @@ function PatientTable() {
     },
   ];
 
-  // expnad rows
-
-  // const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
-
   return (
     <>
-      <div className="rounded-[.5rem] px-10 py-14 bg-white shadow">
+      <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable columns={columns} data={data} />
       </div>
 
