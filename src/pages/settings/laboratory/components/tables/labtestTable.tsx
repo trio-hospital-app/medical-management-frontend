@@ -27,7 +27,7 @@ function LabTestsTable() {
   const [showDelete, setShowDelete] = useState(false);
   const { data: specimens, isLoading: LoadingLab } = useSpecimens();
   const { data: departments, isLoading: LoadingLabCenter } = useGetLabCenters();
-  const { data: pageData, isLoading: LoadingLabTests } = useGetLabTests();
+  const { data: pageData, isLoading: LoadingLabTests, refetch } = useGetLabTests();
   const {
     mutate: editMutate,
     isLoading: editLoading,
@@ -65,14 +65,20 @@ function LabTestsTable() {
 
   if (deleteData?.status) {
     toast.success("Lab Test Deleted");
+    deleteMutate(null)
+    refetch()
   }
 
   if (createData?.status) {
     toast.success("Lab Test Added successfully");
+    createMutate(null)
+    refetch()
   }
 
   if (editData?.status) {
     toast.success("Lab Test Updated successfully");
+    editMutate(null)
+    refetch()
   }
 
   const createLabTests = async () => {
@@ -151,28 +157,6 @@ function LabTestsTable() {
     {
       cell: (row) => (
         <div className=" w-full flex justify-end items-center">
-          {/* <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
-            <Dropdown
-              arrowIcon={false}
-              inline
-              label={<BsThreeDotsVertical style={{ color: "black" }} />}
-            >
-              <Dropdown.Item
-                onClick={() => {
-                  // setShowLabModal(true);
-                }}
-              >
-                Edit
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  // setShowImagingModal(true);
-                }}
-              >
-                Delete
-              </Dropdown.Item>
-            </Dropdown>
-          </div> */}
           <div className="w-full flex items-center justify-end gap-5">
             <FaEdit
               className="text-ha-primary1 text-lg cursor-pointer"
@@ -189,18 +173,8 @@ function LabTestsTable() {
     },
   ];
 
-  // Function to check if a color is light or dark
-  // const isLightColor = (color: string): boolean => {
-  //   // Calculate the perceived luminance of the color
-  //   const luminance =
-  //     (0.299 * parseInt(color.substr(1, 2), 16) +
-  //       0.587 * parseInt(color.substr(3, 2), 16) +
-  //       0.114 * parseInt(color.substr(5, 2), 16)) /
-  //     255;
-  //   return luminance > 0.5;
-  // };
-
   const handleClick = () => {
+    setId('')
     setShowCreate(true);
   };
 
@@ -244,6 +218,7 @@ function LabTestsTable() {
             createFormData={createFormData}
             setCreateFormData={setCreateFormData}
             specimens={specimens}
+            departments={departments}
           />
         </BasicModal>
       )}

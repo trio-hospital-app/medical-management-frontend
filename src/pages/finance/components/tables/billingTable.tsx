@@ -6,17 +6,21 @@ import {
 import Loader from "../../../../components/ui/loader";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../../../../hooks/formattedDate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { MdDelete } from "react-icons/md";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { toast } from "react-toastify";
+import generateCode from '../../../../lib/generateId'
+import { useGetUserByToken } from "../../../../hooks/reactQuery/useUser";
 
 function BillingTable() {
   const { id } = useParams();
   const [selectedRows, setSelectedRows] = useState([]);
   const [total, setTotal] = useState();
+  const [PaymentType, setPaymentType] = useState('')
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const { data: userData } = useGetUserByToken();
   const { data: userFinance, isLoading: LoadinguserFinance } =
     useUserFinance(id);
 
@@ -27,12 +31,15 @@ function BillingTable() {
 
   } = useMakePayment();
 
-  if (LoadingMakePayment ) {
+  if (LoadingMakePayment) {
     return <Loader />;
   }
-  if (makepaymentUpdate) {
-    toast.success("Payment made successfully");
-  }
+
+    if (makepaymentUpdate === 'success') {
+      toast.success("Payment made successfully");
+      // Reset the success status
+      makePaymentMutate(null);
+    }
 
 
   // if (makepaymentUpdate && makepaymentUpdate.status) {
@@ -61,7 +68,7 @@ function BillingTable() {
     {
       name: "Bill Source",
       selector: (row) => {
-        source(row);
+        return <div>{source(row)}</div>
       },
       sortable: true,
     },
@@ -69,7 +76,8 @@ function BillingTable() {
     {
       name: "Description",
       selector: (row) => {
-        department(row);
+        return <div className="capitalize">{department(row)}</div>
+
       },
       sortable: true,
     },
@@ -125,6 +133,11 @@ function BillingTable() {
     console.log(selectedRows);
   };
 
+  const handlePaymentTypeChange = (event) => {
+    setPaymentType(event.target.value);
+  };
+
+
   const SelectedRowsDisplay = ({ selectedRows, onDeleteRow }) => {
     return (
       <>
@@ -138,7 +151,7 @@ function BillingTable() {
             <h3>No Bill have been added yet </h3>
           </div>
         ) : (
-          <div className="p-3">
+          <div className="p-3 grid gap-3">
             <h2 className="font-bold text-lg my-1">Selected Bills:</h2>
             <div>
               {selectedRows.map((row, index) => (
@@ -160,6 +173,16 @@ function BillingTable() {
               ))}
             </div>
 
+
+            <div className="flex flex-col">
+              <label className="font-bold">Select Payment Option</label>
+              <select value={PaymentType} onChange={handlePaymentTypeChange}>
+                <option value=""></option>
+                <option value="cash">Cash</option>
+                <option value="pos">POS</option>
+                <option value="transfer">Transfer</option>
+              </select>
+            </div>
             <div className="font-bold text-lg flex items-center justify-start my-2">
               Total Payment:{" "}
               <span className="flex items-center justify-start ml-1">
@@ -185,14 +208,19 @@ function BillingTable() {
   };
 
   const makePayment = async () => {
+    const receiptId = generateCode(userData?.data?.id)
     if (selectedRows?.length === 0) {
       // Optional: Handle success after all payments are made
-      toast("No Bill selected");
+      toast.error("No Bill selected");
+    }
+    if(!PaymentType){
+      toast.error('Select a payment type')
+      return
     }
     try {
       await Promise.all(
         selectedRows?.map(async (row) => {
-          await makePaymentMutate(row.id);
+          await makePaymentMutate({ id: row.id, data: { receipt: receiptId, paymentType: PaymentType } });
         })
       );
     } catch (error) {
@@ -234,7 +262,7 @@ function BillingTable() {
         className="pt-10"
       />
       <div className="absolute rounded top-0 left-0 right-0 text-white bg-ha-primary1 p-2 flex items-center justify-between">
-        <h1 className="font-bold">Total: NGN 0.00</h1>
+        <h1 className="font-bold">Total: NGN {total}</h1>
         <button
           className="bg-white text-ha-primary1 px-4 py-1 rounded-lg font-bold hover:bg-slate-200"
           onClick={() => setShowPaymentModal(true)}

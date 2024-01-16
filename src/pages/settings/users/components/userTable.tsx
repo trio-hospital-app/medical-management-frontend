@@ -60,15 +60,11 @@ function UserTable() {
       name: "Email",
       selector: "email",
       sortable: true,
+      width: "250px"
     },
     {
       name: "Status",
       selector: "status",
-      sortable: true,
-    },
-    {
-      name: "Online",
-      selector: "online",
       sortable: true,
     },
     {

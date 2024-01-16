@@ -164,7 +164,7 @@ export const useGetLabTests = () => {
 export const useAddLabTest = () => {
   return useMutation((data: LabTests) => LabService.createLabTest(data), {
     onSuccess: () => {
-      queryClient.invalidateQueries("labTest");
+      queryClient.invalidateQueries("labTests");
     },
   });
 };
@@ -175,7 +175,7 @@ export const useUpdateLabTest = () => {
       LabService.editLabTests({ id, data }), // Fix the missing comma here
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("labTest");
+        queryClient.invalidateQueries("labTests");
       },
     }
   );
@@ -184,7 +184,7 @@ export const useUpdateLabTest = () => {
 export const useDeleteLabTest = () => {
   return useMutation((id: string) => LabService.deleteLabTest(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries("labTest");
+      queryClient.invalidateQueries("labTests");
     },
   });
 };

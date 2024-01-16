@@ -22,7 +22,7 @@ function Schemes() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [discount, setDiscount] = useState(0);
-  const { data: specimens, isLoading: LoadingLab } = useGetScheme();
+  const { data: specimens, isLoading: LoadingLab, refetch } = useGetScheme();
   const {
     data: deleteData,
     isLoading: LoadingDelete,
@@ -45,14 +45,20 @@ function Schemes() {
 
   if (createData?.status) {
     toast.success("Scheme Added successfully");
+    createMutate(null)
+    refetch()
   }
 
   if (deleteData?.status) {
     toast.success("Scheme Deleted");
+    deleteMutate(null)
+    refetch()
   }
 
   if (editData?.status) {
     toast.success("Scheme Updated successfully");
+    editMutate(null)
+    refetch()
   }
 
   const handleCreate = () => {
