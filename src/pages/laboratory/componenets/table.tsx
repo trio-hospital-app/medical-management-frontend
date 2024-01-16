@@ -67,6 +67,7 @@ function Table({ labSearch, reload, setReload }) {
     fetchData(page);
     setReload(false);
   }
+
   //function for date and time format
   function formatDateTime(inputDate) {
     const originalDate = new Date(inputDate);
@@ -277,7 +278,6 @@ function Table({ labSearch, reload, setReload }) {
           receiveComment={receiveComment}
         />
       </BasicModal>
-
 
       <BasicModal
         title="Awaiting Approval"
