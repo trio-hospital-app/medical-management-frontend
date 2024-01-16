@@ -1,8 +1,20 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
 import Loader from "../../../../components/ui/loader";
 import { useGetLabById } from "../../../../hooks/reactQuery/useLabs";
-function FinalResult({ selectedRowData }) {
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "../../../../components/ui/accordion";
+import { BsPencilFill } from "react-icons/bs";
+import { Tooltip } from "flowbite-react";
+import { useState } from "react";
+import EditFormTable from "../../../../components/ui/dynamicFormTable/EditFormTable";
+
+function FinalResult({ selectedRowData, setReload }) {
   const { patientId, panelId, orderBy } = selectedRowData;
+  const [isEditMode, setIsEditMode] = useState(false);
   const id = selectedRowData?.id;
 
   const { data, isLoading } = useGetLabById(id);
@@ -45,32 +57,10 @@ function FinalResult({ selectedRowData }) {
 
   return (
     <>
-      <div>
-        <CustomLabHeader
-          patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
-          patientID={`${patientId?.patientId}`}
-          testName={panelId?.panel || "Not Found"}
-          testNameBackgroundColor={`${panelId?.specimenId.color}`}
-          labID={`${selectedRowData?.id}`}
-          IdName="Lab ID"
-          patientEmail={`${patientId?.address.email} `}
-          imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
-          gender={`${patientId?.gender}`}
-          phoneNumber={`${patientId?.phone}`}
-          religion={`${patientId?.address?.religion}`}
-          nationality={`${patientId?.address.country}`}
-          maritalStatus={`${patientId?.address?.maritalStatus}`}
-          age={patientId?.address?.dob ? patientId?.address?.dob : "Not Found"}
-          orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
-          orderedDate={orderedDate}
-        />
-      </div>
-
-      {/* fill form are  */}
-
+      {/* accordion */}
       <div className="px-4 border py-4 shadow">
         <div
-          className={`px-4 py-4 font-bold rounded-[.3rem]`}
+          className={`px-4 py-4 font-bold flex justify-between items-center rounded-[.3rem]`}
           style={{
             backgroundColor: panelId?.specimenId.color || "white",
           }}
@@ -78,6 +68,9 @@ function FinalResult({ selectedRowData }) {
           <h1 className="capitalize font-extrabold text-2xl">
             {panelId?.panel}
           </h1>
+          <Tooltip content="Edit Lab Result">
+            <BsPencilFill onClick={() => setIsEditMode(!isEditMode)} />
+          </Tooltip>
         </div>
         <div>
           <table
@@ -118,6 +111,47 @@ function FinalResult({ selectedRowData }) {
           </table>
         </div>
       </div>
+
+      {isEditMode && (
+        <EditFormTable
+          onRowDataChange={() => {}}
+          initialRows={result}
+          selectedId={id}
+          setReload={setReload}
+          setIsEditMode={setIsEditMode}
+        />
+      )}
+
+      <Accordion
+        collapsible
+        type="single"
+        className="bg-ha-primary2 px-4 rounded-[.3rem]"
+      >
+        <AccordionItem className="AccordionItem" value="item-1">
+          <AccordionTrigger>
+            <h1 className="text-ha-primary1">Patient Info</h1>
+          </AccordionTrigger>
+
+          <AccordionContent>
+            <CustomLabHeader
+              patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
+              patientID={`${patientId?.patientId}`}
+              patientEmail={`${patientId?.address.email} `}
+              imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
+              gender={`${patientId?.gender}`}
+              phoneNumber={`${patientId?.phone}`}
+              religion={`${patientId?.address?.religion}`}
+              nationality={`${patientId?.address.country}`}
+              maritalStatus={`${patientId?.address?.maritalStatus}`}
+              age={
+                patientId?.address?.dob ? patientId?.address?.dob : "Not Found"
+              }
+              orderedBy={`${orderBy?.firstName} ${orderBy?.lastName}`}
+              orderedDate={orderedDate}
+            />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 }

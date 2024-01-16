@@ -278,6 +278,7 @@ function Table({ labSearch, reload, setReload }) {
         />
       </BasicModal>
 
+
       <BasicModal
         title="Awaiting Approval"
         setOpenModal={setAwaitingApproval}
@@ -307,7 +308,7 @@ function Table({ labSearch, reload, setReload }) {
         showSubmitButton={true}
         size="5xl"
       >
-        <FinalResult selectedRowData={selectedRowData} />
+        <FinalResult selectedRowData={selectedRowData} setReload={setReload} />
       </BasicModal>
     </>
   );

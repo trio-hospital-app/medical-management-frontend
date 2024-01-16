@@ -131,6 +131,16 @@ class labService {
     return response;
   }
 
+  public async updateLab(id: string, data) {
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: `/lab/${id}`,
+      data,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async deleteLab(id: string) {
     const options: AxiosRequestConfig = {
       method: "DELETE",

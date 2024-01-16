@@ -80,6 +80,18 @@ export const useUpdateAwaitAprovalLab = () => {
   );
 };
 
+export const useUpdateLab = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data }) =>
+      LabService.updateLab(id, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Lab");
+      },
+    }
+  );
+};
+
 export const useUpdateLabCenter = () => {
   return useMutation(
     ({ id, data }: { id: string; data: { center: string } }) =>
