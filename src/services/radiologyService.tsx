@@ -84,6 +84,58 @@ class radiologyService {
     return response;
   }
 
+  public async getRadiologyObservations() {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: "/radiology-tests",
+    };
+    const response = await request(options);
+    return response;
+  }
+  public async getRadiologyObservation(id) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/radiology-test/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async editRadiologyObservation({
+    id,
+    data,
+  }: {
+    id: string;
+    data:  { test: string, cost:number, centerId:string };
+  }) {
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: `/radiology-test/${id}`,
+      data,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async deleteRadiologyObservation(id: string) {
+    const options: AxiosRequestConfig = {
+      method: "DELETE",
+      url: `/radiology-test/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async createRadiologyObservation(body:  { test: string, cost:number, centerId:string }) {
+    const options: AxiosRequestConfig = {
+      method: "POST",
+      url: `/radiology-test`,
+      data: body,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async searchRadiologyPatient(param: string | number) {
     const options: AxiosRequestConfig = {
       method: "GET",

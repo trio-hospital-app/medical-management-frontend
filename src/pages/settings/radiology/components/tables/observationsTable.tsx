@@ -1,80 +1,223 @@
-import { Dropdown } from "flowbite-react";
 import DataTable from "react-data-table-component";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaSearch } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { FaEdit, FaSearch } from "react-icons/fa";
 import { Button } from "../../../../../components/ui/button";
+import {
+  useGetRadiologyObservation,
+  useDeleteRadiologyObservation,
+  useAddRadiologyObservation,
+  useUpdateRadiologyObservation,
+  useGetRadiologyCenters
+} from "../../../../../hooks/reactQuery/useRadiology";
+import { toast } from "react-toastify";
+import { MdDelete } from "react-icons/md";
+import Loader from "../../../../../components/ui/loader";
+import { useState } from "react";
+import BasicModal from "../../../../../components/ui/modals/basicModal";
+import DeleteWarningModal from "../../../../../components/ui/modals/deletWarningModal";
+import NewObservation from "../newObservation";
 
 function ObservationsTable() {
-  interface Observation {
-    id: number;
-    name: string;
-    modality: string;
+  const [showCreate, setShowCreate] = useState(false);
+  const [id, setId] = useState("");
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+
+  const [createFormData, setCreateFormData] = useState({
+    test: "",
+    cost: 0,
+    centerId: "",
+  });
+  const { data: departments, isLoading: LoadingCenter } = useGetRadiologyCenters();
+  const { data: pageData, isLoading: LoadingLabTests, refetch } = useGetRadiologyObservation();
+  const {
+    mutate: editMutate,
+    isLoading: editLoading,
+    data: editData,
+  } = useUpdateRadiologyObservation();
+
+  const {
+    data: deleteData,
+    isLoading: LoadingDelete,
+    mutate: deleteMutate,
+  } = useDeleteRadiologyObservation();
+  const {
+    mutate: createMutate,
+    isLoading: createLoading,
+    data: createData,
+  } = useAddRadiologyObservation();
+
+  if (deleteData?.status) {
+    toast.success("Observation Deleted");
+    deleteMutate(null)
+    refetch()
   }
 
-  const observationsData: Observation[] = [
-    { id: 1, name: "Tes", modality: "CT Unit" },
-    { id: 2, name: "Ultrasound Scan Unit", modality: "Test" },
-    { id: 3, name: "CT Unit", modality: "Sample" },
-    { id: 4, name: "ECG Unit", modality: "Sample" },
-    { id: 5, name: "Breast CT scan", modality: "X-ray Unit" },
-    { id: 6, name: "CT Scan", modality: "X-ray Unit" },
-    { id: 7, name: "Magnetic Resonance Imaging MRI", modality: "X-ray Unit" },
-    { id: 8, name: "EEG", modality: "X-ray Unit" },
-    { id: 9, name: "2-D Echo", modality: "X-ray Unit" },
-    { id: 10, name: "ECG", modality: "X-ray Unit" },
-  ];
+  if (createData?.status) {
+    toast.success("Observation Added successfully");
+    createMutate(null)
+    refetch()
+  }
+
+  if (editData?.status) {
+    toast.success("Observation Updated successfully");
+    editMutate(null)
+    refetch()
+  }
+
+  if (
+    LoadingLabTests ||
+    createLoading ||
+    LoadingDelete ||
+    editLoading || 
+    LoadingCenter
+  ) {
+    return <Loader />;
+  }
+  const createImagingTests = async () => {
+    console.log(createFormData);
+    try {
+      await createMutate(createFormData);
+      setShowCreate(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const editImaging = async () => {
+    const data = {
+      id,
+      data: createFormData,
+    };
+    try {
+      await editMutate(data);
+      setShowEdit(false);
+      setId('')
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const deletePanel = async () => {
+    try {
+      await deleteMutate(id);
+      setShowDelete(false);
+      setId('')
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const handleDelete = (id) => {
+    setId(id);
+    setShowDelete(true);
+  };
+  const handleEdit = (id, content) => {
+    console.log(content, id);
+    setId(id);
+    setShowEdit(true);
+    setCreateFormData(content);
+  };
+
+  const handleClick = () => {
+    setCreateFormData({
+      test: "",
+      cost: 0,
+      centerId: "",
+    })
+    setId('')
+    setShowCreate(true);
+  };
 
   const columns = [
     {
       name: "Name",
-      selector: (row: Observation) => row.name,
+      selector: (row) => <div className="capitalize font-bold">{row.test}</div>,
       sortable: true,
       width: "200px",
     },
     {
       name: "Department",
-      selector: (row: Observation) => row.modality,
+      selector: (row) => <div className="capitalize">{row.centerId.center}</div>,
       sortable: true,
     },
     {
-      cell: () => (
+      name: "Cost",
+      selector: (row) => <div className="font-bold">NGN {row.cost}</div>,
+      sortable: true,
+    },
+    {
+      cell: (row) => (
         <div className=" w-full flex justify-end items-center">
-          <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
-            <Dropdown
-              arrowIcon={false}
-              inline
-              label={<BsThreeDotsVertical style={{ color: "black" }} />}
-            >
-              <Dropdown.Item
-                onClick={() => {
-                  // setShowLabModal(true);
-                }}
-              >
-                Edit
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  // setShowImagingModal(true);
-                }}
-              >
-                Delete
-              </Dropdown.Item>
-            </Dropdown>
-          </div>
+        <div className="w-full flex items-center justify-end gap-5">
+          <FaEdit
+            className="text-ha-primary1 text-lg cursor-pointer"
+            onClick={() => handleEdit(row?.id, row)}
+          />
+          <MdDelete
+            className="text-red-500 text-lg cursor-pointer"
+            onClick={() => handleDelete(row?.id)}
+          />
         </div>
+      </div>
       ),
       sortable: false,
     },
   ];
 
-  const navigate = useNavigate();
-  const handleRowClick = (observationId: number) => {
-    navigate(`/observations/${observationId}`);
-  };
 
   return (
     <div className="w-full">
+       {showCreate && (
+        <BasicModal
+          title="New Radiology Observation"
+          setOpenModal={setShowCreate}
+          cancelTitle="Cancel"
+          openModal={showCreate}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {
+            createImagingTests();
+          }}
+        >
+          <NewObservation
+            createFormData={createFormData}
+            departments={departments}
+            setCreateFormData={setCreateFormData}
+          />
+        </BasicModal>
+      )}
+      {showEdit && (
+        <BasicModal
+        title="Edit Lab Test"
+        setOpenModal={setShowEdit} // Corrected prop here
+        cancelTitle="Cancel"
+        openModal={showEdit} // Corrected prop here
+        showCancelButton={true}
+        submitTitle="Submit"
+        showSubmitButton={true}
+        submitHandler={() => {
+          editImaging();
+        }}
+        >
+          {/* <EditObservation
+            createFormData={createFormData}
+            departments={departments}
+            setCreateFormData={setCreateFormData}
+          /> */}
+           <NewObservation
+            createFormData={createFormData}
+            departments={departments}
+            setCreateFormData={setCreateFormData}
+          />
+        </BasicModal>
+      )}
+      {showDelete && (
+        <DeleteWarningModal
+          setOpenModal={setShowDelete}
+          openModal={showDelete}
+          showCancelButton
+          confirmTitle="Delete"
+          confirmHandler={deletePanel}
+        />
+      )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
         <div className="relative w-[300px]">
           <input
@@ -86,12 +229,11 @@ function ObservationsTable() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white">New Observation</Button>
+        <Button onClick={handleClick} className="bg-ha-primary1 text-white">New Observation</Button>
       </div>
       <DataTable
         columns={columns}
-        data={observationsData}
-        onRowClicked={(row) => handleRowClick(row.id)}
+        data={pageData?.data || []}
       />
     </div>
   );

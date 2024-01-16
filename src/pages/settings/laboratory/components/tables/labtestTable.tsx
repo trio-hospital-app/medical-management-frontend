@@ -18,7 +18,7 @@ import {
 import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import DeleteWarningModal from "../../../../../components/ui/modals/deletWarningModal";
-import EditLabTests from "../editLabTests";
+
 
 function LabTestsTable() {
   const [showCreate, setShowCreate] = useState(false);
@@ -112,6 +112,7 @@ function LabTestsTable() {
     try {
       await deleteMutate(id);
       setShowDelete(false);
+      setId('')
     } catch (error) {
       console.log(error.message);
     }
@@ -150,9 +151,14 @@ function LabTestsTable() {
     },
     {
       name: "Description",
-      selector: (row) => row?.specimenId?.description,
+      selector: (row) => <div className="flex flex-wrap">{row?.specimenId?.description}</div>,
       sortable: true,
-      width: "350px",
+      width: "250px",
+    },
+    {
+      name: "Cost",
+      selector: (row) => <div className="font-bold">NGN {row.cost}</div>,
+      sortable: true,
     },
     {
       cell: (row) => (
@@ -174,6 +180,12 @@ function LabTestsTable() {
   ];
 
   const handleClick = () => {
+    setCreateFormData({
+      panel: "",
+      cost: 0,
+      specimenId: "",
+      centerId: "",
+    })
     setId('')
     setShowCreate(true);
   };
@@ -204,17 +216,18 @@ function LabTestsTable() {
       {showEdit && (
         <BasicModal
           title="Edit Lab Test"
-          setOpenModal={setShowCreate}
+          setOpenModal={setShowEdit}
           cancelTitle="Cancel"
-          openModal={showCreate}
+          openModal={showEdit}
           showCancelButton={true}
           submitTitle="Submit"
           showSubmitButton={true}
           submitHandler={() => {
             editLabTest();
           }}
+
         >
-          <EditLabTests
+          <NewLabTests
             createFormData={createFormData}
             setCreateFormData={setCreateFormData}
             specimens={specimens}

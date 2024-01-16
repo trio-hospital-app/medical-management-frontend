@@ -1,5 +1,5 @@
 import { useQuery, useMutation, QueryClient } from "react-query";
-import radiologyService, {NewRadiologyData } from "../../services/radiologyService";
+import radiologyService, { NewRadiologyData } from "../../services/radiologyService";
 
 const queryClient = new QueryClient();
 
@@ -7,17 +7,13 @@ const queryClient = new QueryClient();
 //   return useQuery("Lab", radiologyService.getLab);
 // };
 
-export const useGetRadiologyCenters = () => {
-  return useQuery("RadiologyCenters", radiologyService.getRadiologyCenters);
-};
+
 
 export const useGetRadiologyById = (id: string) => {
   return useQuery(["Radiology", id], () => radiologyService.getRadiologyById(id));
 };
 
-export const useGetRadiologyCenterById = (id: string) => {
-  return useQuery(["RadiologyCenter", id], () => radiologyService.getRadiologyCenter(id));
-};
+
 
 export const useGetPatientRadiology = (id: string) => {
   return useQuery(["RadiologyPatient", id], () => radiologyService.getPatientRadiology(id));
@@ -44,24 +40,13 @@ export const useAddRadiology = () => {
   });
 };
 
-export const useAddRadiologyCenter = () => {
-  return useMutation(
-    (data: { center: string }) => radiologyService.createRadiologyCenter(data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("RadiologyCenters");
-      },
-    }
-  );
-};
-
 export const useUpdateRadiology = () => {
   return useMutation(
     ({ id, data }: { id: string; data: { text: string } }) =>
       radiologyService.updateRadiology(id, data),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("Lab");
+        queryClient.invalidateQueries("radioloogy");
       },
     }
   );
@@ -79,7 +64,37 @@ export const useupdateCapture = () => {
   );
 };
 
-export const useRadiologyCenter = () => {
+
+
+export const useDeleteradiology = () => {
+  return useMutation((id: string) => radiologyService.deleteRadiology(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("Lab");
+    },
+  });
+};
+
+//centers
+export const useGetRadiologyCenters = () => {
+  return useQuery("RadiologyCenters", radiologyService.getRadiologyCenters);
+};
+
+export const useAddRadiologyCenter = () => {
+  return useMutation(
+    (data: { center: string }) => radiologyService.createRadiologyCenter(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("RadiologyCenters");
+      },
+    }
+  );
+};
+
+export const useGetRadiologyCenterById = (id: string) => {
+  return useQuery(["RadiologyCenter", id], () => radiologyService.getRadiologyCenter(id));
+};
+
+export const useUpdateRadiologyCenter = () => {
   return useMutation(
     ({ id, data }: { id: string; data: { center: string } }) =>
       radiologyService.editRadiologyCenter({ id, data }),
@@ -91,13 +106,6 @@ export const useRadiologyCenter = () => {
   );
 };
 
-export const useDeleteradiology = () => {
-  return useMutation((id: string) => radiologyService.deleteRadiology(id), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("Lab");
-    },
-  });
-};
 
 export const useDeleteRadiologyCenter = () => {
   return useMutation((id: string) => radiologyService.deleteRadiologyCenter(id), {
@@ -105,4 +113,41 @@ export const useDeleteRadiologyCenter = () => {
       queryClient.invalidateQueries("RadiologyCenters");
     },
   });
+};
+
+
+//observations
+export const useGetRadiologyObservation = () => {
+  return useQuery("Observations", radiologyService.getRadiologyObservations);
+};
+
+export const useDeleteRadiologyObservation = () => {
+  return useMutation((id: string) => radiologyService.deleteRadiologyObservation(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("Observations");
+    },
+  });
+};
+
+export const useAddRadiologyObservation = () => {
+  return useMutation(
+    (data: { test: string, cost:number, centerId:string }) => radiologyService.createRadiologyObservation(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Observations");
+      },
+    }
+  );
+};
+
+export const useUpdateRadiologyObservation = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data: { test: string, cost:number, centerId:string } }) =>
+      radiologyService.editRadiologyObservation({ id, data }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Observations");
+      },
+    }
+  );
 };
