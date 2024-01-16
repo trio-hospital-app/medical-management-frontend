@@ -11,6 +11,15 @@ class financeService {
     return response;
   }
 
+  public async getUserReciepts(id) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/receipts/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async makePayment(id, data:{receipt:string; paymentType:string}) {
     const options: AxiosRequestConfig = {
       method: "PUT",

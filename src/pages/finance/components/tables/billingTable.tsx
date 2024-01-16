@@ -28,7 +28,6 @@ function BillingTable() {
     isLoading: LoadingMakePayment,
     status: makepaymentUpdate,
     mutate: makePaymentMutate,
-
   } = useMakePayment();
 
   if (LoadingMakePayment) {

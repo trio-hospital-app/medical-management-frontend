@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 html {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
@@ -185,4 +186,47 @@ footer {
   .custom-bg-black nav div {
     width: 50px !important;
   }
+}
+
+.print-receipt {
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.receipt-table-container {
+  margin-top: 20px;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.receipt-table th,
+.receipt-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.receipt-table th {
+  background-color: #f2f2f2;
+}
+
+.empty-list {
+  text-align: center;
+}
+
+.total {
+  margin-top: 20px;
+  text-align: right;
+  font-weight: bold;
 }

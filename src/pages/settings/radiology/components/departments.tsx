@@ -1,13 +1,160 @@
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../../../../components/ui/button";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import BasicModal from "../../../../components/ui/modals/basicModal";
+import {
+  useAddRadiologyCenter,
+  useGetRadiologyCenters,
+  useUpdateRadiologyCenter,
+  useDeleteRadiologyCenter,
+} from "../../../../hooks/reactQuery/useRadiology";
+import Loader from "../../../../components/ui/loader";
+import { toast } from "react-toastify";
+import DeleteWarningModal from "../../../../components/ui/modals/deletWarningModal";
 
 function Departments() {
-  const handleClick = () => {
-    // Define the behavior for the click event here
-    console.log("Button clicked!");
+  const [showCreate, setShowCreate] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  // const [departments, setDepartments] = useState([]);
+  const [text, setText] = useState("");
+  const [editText, setEditText] = useState("");
+  const [id, setId] = useState("");
+  const { data: departments, isLoading: LoadingLab, refetch } = useGetRadiologyCenters();
+  const {
+    data: deleteData,
+    isLoading: LoadingDelete,
+    mutate: deleteMutate,
+  } = useDeleteRadiologyCenter();
+  const {
+    mutate: createMutate,
+    isLoading: createLoading,
+    data: createData,
+  } = useAddRadiologyCenter();
+
+  const {
+    mutate: editMutate,
+    isLoading: editLoading,
+    data: editData,
+  } = useUpdateRadiologyCenter();
+  if (createLoading || editLoading || LoadingLab || LoadingDelete) {
+    return <Loader />;
+  }
+
+  if (createData?.status) {
+    toast.success("Department Added successfully");
+    createMutate(null)
+    refetch()
+  }
+
+  if (deleteData?.status) {
+    toast.success("Department Deleted");
+    deleteMutate(null)
+    refetch()
+  }
+
+  if (editData?.status) {
+    toast.success("Department Updated successfully");
+    editMutate(null)
+    refetch()
+  }
+
+  const handleCreate = () => {
+    setShowCreate(true);
   };
+  const handleDelete = (id) => {
+    setId(id);
+    setShowDelete(true);
+  };
+
+  const handleEdit = (id, center) => {
+    setId(id);
+    setEditText(center);
+    setShowEdit(true);
+  };
+
+  const createDepartment = async () => {
+    const data = { center: text };
+    try {
+      await createMutate(data);
+      setShowCreate(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const editDepartment = async () => {
+    const data = { id, data: { center: editText } };
+    try {
+      await editMutate(data);
+      setShowEdit(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteDepartment = async () => {
+    try {
+      await deleteMutate(id);
+      setShowDelete(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="w-full">
+      {showCreate && (
+        <BasicModal
+          title="New Lab Departments"
+          setOpenModal={setShowCreate}
+          cancelTitle="Cancel"
+          openModal={showCreate}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={createDepartment}
+        >
+          <div className="grid">
+            <label>Name Of Department e.g (X-ray Unit)</label>
+            <input type="text" onChange={(e) => setText(e.target.value)} />
+          </div>
+        </BasicModal>
+      )}
+      {showDelete && (
+        <DeleteWarningModal
+          setOpenModal={setShowDelete}
+          openModal={showDelete}
+          showCancelButton
+          confirmTitle="Delete"
+          confirmHandler={deleteDepartment}
+        />
+      )}
+      {showEdit && (
+        <BasicModal
+          title=" Edit Department"
+          setOpenModal={setShowEdit}
+          cancelTitle="Cancel"
+          openModal={showEdit}
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {
+            editDepartment();
+          }}
+        >
+          <div className="grid">
+            <label>Name Of Department e.g (X-ray Unit)</label>
+            <input
+              type="text"
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+            />
+          </div>
+        </BasicModal>
+      )}
       <div className="w-full flex items-center justify-end border-y py-2 gap-2">
         <div className="relative w-[300px]">
           <input
@@ -19,69 +166,41 @@ function Departments() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button className="bg-ha-primary1 text-white">New Department</Button>
+        <Button className="bg-ha-primary1 text-white" onClick={handleCreate}>
+          New Department
+        </Button>
       </div>
 
-      <div className="bg-white rounded-[.5rem] py-5 px-5 grid md:grid-cols-3 gap-2">
-        <div className="border px-5 py-3 h-[200px] rounded-[1rem] grid gap-3">
-          <h5 className="text-xl font-bold tracking-tight text-gray-900">
-            Noteworthy technology acquisitions 2021
-          </h5>
-
-          <p className="text-sm text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-
+      <div className="rounded-[.5rem] py-5 px-5 grid md:grid-cols-3 gap-2">
+        {departments?.data?.map((el) => (
           <div
-            className="w-full flex items-center justify-center bg-gray-500 rounded-[.5rem] text-white hover:bg-gray-600 cursor-pointer"
-            onClick={handleClick}
+            className="border hover:bg-white border-ha-primary1 bg-ha-primary2 px-5 py-3 rounded-[1rem] grid gap-3"
+            key={el.id}
           >
-            <span> Edit Department </span>
-            <svg
-              className="-mr-1 ml-2 h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-        </div>
-        <div className="border px-5 py-3 h-[200px] rounded-[1rem] grid gap-3">
-          <h5 className="text-xl font-bold tracking-tight text-gray-900">
-            Noteworthy technology acquisitions 2021
-          </h5>
+            <h5 className="text-xl capitalize font-bold tracking-tight text-gray-900">
+              {el?.center}
+            </h5>
 
-          <p className="text-sm text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-
-          <div
-            className="w-full flex items-center justify-center bg-gray-500 rounded-[.5rem] text-white hover:bg-gray-600 cursor-pointer"
-            onClick={handleClick}
-          >
-            <span> Edit Department </span>
-            <svg
-              className="-mr-1 ml-2 h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
+            <div className="w-full flex items-center justify-end gap-5">
+              <FaEdit
+                className="text-ha-primary1 text-lg cursor-pointer"
+                onClick={() => handleEdit(el?.id, el?.center)}
               />
-            </svg>
+              <MdDelete
+                className="text-red-500 text-lg cursor-pointer"
+                onClick={() => handleDelete(el?.id)}
+              />
+            </div>
           </div>
-        </div>
+        ))}
       </div>
+
+      {departments?.data?.length === 0 && (
+        <div className="flex items-center flex-col justify-center w-full h-[400px]">
+          <img src="/empty-list.svg" alt="empty" className="w-[50%] h-[60%]" />
+          <h3>No Department have been added yet </h3>
+        </div>
+      )}
     </div>
   );
 }
