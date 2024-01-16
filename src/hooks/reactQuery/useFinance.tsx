@@ -7,6 +7,10 @@ export const useUserFinance = (id: string) => {
   return useQuery(["Finance", id], () => FinanceService.getUserFinance(id));
 };
 
+export const useUserReciepts = (id: string) => {
+  return useQuery(["Finance", id], () => FinanceService.getUserReciepts(id));
+};
+
 export const useMakePayment = () => {
   return useMutation(
     (params: { id: string; data: { receipt: string; paymentType: string } }) =>
