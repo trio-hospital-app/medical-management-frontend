@@ -1,34 +1,38 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
-import TextareaAutosize from "react-textarea-autosize";
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "../../../../components/ui/accordion";
+import QuilEditor from "../QuilEditor";
 
-function CaptureImaging({
-  selectedRowData, setCaptureComment, captureComment
-}) {
-
+function AwaitingImagingReport({setQuillData, selectedRowData }) {
   const { patientId, testId, orderBy, comment } = selectedRowData;
 
-
-   //function for date and time format
-   function formatDateTime(inputDate) {
+  //function for date and time format
+  function formatDateTime(inputDate) {
     const originalDate = new Date(inputDate);
+
     // Create an options object with the desired date and time format
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
       month: "numeric",
       year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: false,
     };
     return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
   }
+  // date and time usage
+  const orderedDate = formatDateTime(selectedRowData.createdAt);
 
-    // date and time usage
-    const orderedDate = formatDateTime(selectedRowData?.createdAt);
-
+  // here is where i work on the quill data
+  const updateQuillData = (data: any) => {
+    setQuillData(data);
+  };
 
   return (
     <>
@@ -61,7 +65,7 @@ function CaptureImaging({
             <AccordionTrigger>
               <h1 className="text-ha-primary1"> Previous Comments</h1>
             </AccordionTrigger>
-            {comment && comment.length > 0 ? (
+            {comment && comment?.length > 0 ? (
               comment?.map((c, index) => (
                 <AccordionContent key={index}>
                   <div className="bg-gray-300 py-3 rounded-[1rem]">
@@ -79,14 +83,14 @@ function CaptureImaging({
                           Date:
                         </span>
                         <span className="font-bold">
-                          {formatDateTime(new Date(c.time))}
+                          {formatDateTime(new Date(c?.time))}
                         </span>
                       </div>
                     </div>
                     <hr className="mx-5 " />
                     <div className="px-10 py-2">
                       <span className="font-bold text-justify">
-                        {c.text.charAt(0).toUpperCase() +
+                        {c?.text.charAt(0).toUpperCase() +
                           c.text.slice(1).toLowerCase()}
                       </span>
                     </div>
@@ -103,18 +107,13 @@ function CaptureImaging({
       </div>
 
       <div className="px-4">
-        <span className="font-bold">Add Comment</span>
-        <TextareaAutosize
-          minRows={3}
-          placeholder="Write a comment"
-          onChange={(e) => setCaptureComment(e.target.value)}
-          className={`w-[100%] p-5 text-justify rounded-[1rem] outline-none border border-black  mt-2 bg-ha-primary2 `}
-          value={captureComment}
-          maxRows={5}
-        />
+        <label htmlFor="quill" className="text-ha-primary1 font-bold text-2xl my-5">
+          Add Report
+        </label>
+        <QuilEditor updateQuillData={updateQuillData}/>
       </div>
     </>
   );
 }
 
-export default CaptureImaging;
+export default AwaitingImagingReport;

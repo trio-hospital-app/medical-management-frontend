@@ -1,214 +1,230 @@
-import { Dropdown } from "flowbite-react";
-import { useState } from "react";
+import { Tooltip } from "flowbite-react";
+import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import { Button } from "../../../components/ui/button";
 import CaptureImaging from "./modal/CaptureImaging";
-import ReportImaging from "./modal/ReportImaging";
-import { BsThreeDotsVertical } from "react-icons/bs";
-interface Patient {
-  id: number;
-  firstName: string;
-  lastName: string;
-  patientId: string | number;
-  orderDate: string;
-  imagingId: string | number;
-  serviceCenter: string | number;
-  patientName: string;
-  observation: string;
-  status: string;
-  orderBy?: string;
-}
+import { useQuery } from "react-query";
+import radiologyService from "../../../services/radiologyService";
+import { MdOutlineCancel } from "react-icons/md";
+import Loader from "../../../components/ui/loader";
+import CancelRadiologyOrder from "./modal/CancelRadiologyOrder";
+import { useupdateCapture } from "../../../hooks/reactQuery/useRadiology";
+import AwaitingImagingReport from "./modal/AwaitingImagingReport";
 
-function PatientTable() {
+function PatientTable({ reload, setReload, radiologySearch }) {
   const [captureModal, setCaptureModal] = useState(false);
   const [reportModal, setReportModal] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
+  const [captureComment, setCaptureComment] = useState("");
+  const [selectedRowData, setSelectedRowData] = useState([]);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageData, setPageData] = useState(null);
+  const [quillData, setQuillData] = useState("");
 
-  const handleCaptureImaging = () => {
-    console.log("capturing imaging");
-    setCaptureModal(false);
+  console.log(quillData);
+
+  const { mutate: mutateCapture, status: captureStatus } = useupdateCapture();
+
+  const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
+    ["radiologys", page],
+    () => radiologyService.getRadiology(page)
+  );
+
+  useEffect(() => {
+    setPageData(RadiologyData);
+  }, [RadiologyData]);
+
+  const fetchData = async (newpage) => {
+    try {
+      const data = await radiologyService.getRadiology(newpage);
+      setPageData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
+
+  if (reload) {
+    fetchData(page);
+    setReload(false);
+  }
+
+  //function for date and time format
+  function formatDateTime(inputDate) {
+    const originalDate = new Date(inputDate);
+    // Create an options object with the desired date and time format
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: false,
+    };
+    return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
+  }
+
+  const openDeleteRow = (row) => {
+    setSelectedRowData(row);
+    setDeleteDialogOpen(true);
+    console.log("delete row", row);
   };
 
-  const handleRowDelete = (row: Patient) => {
-    console.log(row);
+  const handlePageChange = async (page) => {
+    setPage(page);
   };
-  const handleRowPrint = (row: Patient) => {
-    console.log(row);
-  };
-  const handleRowSend = (row: Patient) => {
-    console.log(row);
+
+  const handleCaptureImaging = async () => {
+    try {
+      const comment = {
+        text: captureComment,
+      };
+      await mutateCapture({ id: selectedId, data: comment });
+      setCaptureModal(false);
+      setReload(true);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   const columns: any = [
     {
       name: "Patient Name",
-      cell: (row: Patient) => (
-        <div className="text-left capitalize">{row.patientName}</div>
+      cell: (row) => (
+        <div className="text-left capitalize">
+          {row.patientId.firstName} {row.patientId.lastName}
+        </div>
       ),
-      selector: "patientName",
+      selector: (row) => row.patientId.firstName,
       sortable: true,
       width: "full",
     },
+
     {
       name: "Order Date",
-      cell: (row: Patient) => <div className="text-left">{row.orderDate}</div>,
-      selector: "orderDate",
+      cell: (row) => (
+        <div className="text-left">
+          {formatDateTime(new Date(row.createdAt))}
+        </div>
+      ),
+      selector: (row) => row.createdAt,
       sortable: true,
       width: "full",
     },
 
     {
       name: "Ordered By",
-      cell: (row: Patient) => <div className="text-left">{row.orderBy}</div>,
-      selector: "orderBy",
+      selector: (row) => (
+        <div className="text-left capitalize">
+          {" "}
+          {row.orderBy.firstName} {row.orderBy.lastName}
+        </div>
+      ),
       sortable: true,
-      width: "11rem",
+      // width: "full",
     },
     {
-      name: "Service Center",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.serviceCenter}</div>
+      name: "Radiology Test",
+      cell: (row) => (
+        <div className="text-left capitalize">{row?.testId.test}</div>
       ),
-      selector: "serviceCenter",
+      selector: (row) => row.testId.test,
       sortable: true,
-      width: "11rem",
+      // width: "full",
     },
     {
-      name: "Observation",
-      cell: (row: Patient) => (
-        <div className="text-left">{row.observation}</div>
+      name: "Radiology Type",
+      cell: (row) => (
+        <div className="text-left capitalize">{row?.centerId.center}</div>
       ),
-      selector: "observation",
+      selector: (row) => row.testId.test,
       sortable: true,
-      width: "15rem",
+      // width: "full",
     },
 
     {
       name: "Status",
-      cell: (row: Patient) => (
-        <div className="w-full">
-          <Button
-            className={` text-white w-full ${
-              row.status === "Report"
-                ? "bg-purple-400 hover:bg-purple-500"
-                : "bg-green-700 hover:bg-green-900"
-            }`}
-            onClick={() =>
-              row.status === "Report"
-                ? setReportModal(true)
-                : row.status === "Capture"
-                  ? setCaptureModal(true)
-                  : null
-            }
-          >
-            {row.status}
-          </Button>
-        </div>
+      cell: (row) => (
+        <Button
+          className={` text-white w-[9.5rem] capitalize ${
+            row.status === "awaiting result"
+              ? "bg-purple-400 hover:bg-purple-500"
+              : row.status === "capture"
+                ? "bg-red-400 hover:bg-red-500"
+                : row.status === "capture"
+                  ? "bg-green-400 hover:bg-green-500"
+                  : row.status === ""
+          }`}
+          onClick={() => {
+            if (!row.paid) return;
+            setSelectedRowData(row);
+            setSelectedId(row.id);
+            row.status === "awaiting result"
+              ? setReportModal(true)
+              : row.status === "capture"
+                ? setCaptureModal(true)
+                : row.status === "null";
+          }}
+          disabled={!row.paid}
+        >
+          {row.status
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")}
+        </Button>
       ),
-      selector: "status",
+      selector: (row) => row.status,
       sortable: true,
-      width: "full",
+      width: "15rem",
     },
     {
-      cell: (row: Patient) => (
-        <div className=" w-full flex justify-end items-center">
-          <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
-            <Dropdown
-              size="lg"
-              arrowIcon={false}
-              inline
-              label={<BsThreeDotsVertical style={{ color: "black" }} />}
-            >
-              <Dropdown.Item onClick={() => handleRowPrint(row)}>
-                Print Report
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleRowSend(row)}>
-                Send Report
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleRowDelete(row)}>
-                Cancel Report
-              </Dropdown.Item>
-            </Dropdown>
-          </div>
-        </div>
-      ),
+      cell: (row) => {
+        if (row.status === "capture") {
+          return (
+            <Tooltip content="Cancel order">
+              <MdOutlineCancel
+                onClick={() => openDeleteRow(row)}
+                className="font-extrabold text-xl text-red-400"
+              />
+            </Tooltip>
+          );
+        } else {
+          return null;
+        }
+      },
       sortable: false,
-    },
-  ];
-
-  const data: Patient[] = [
-    {
-      id: 1,
-      firstName: "Sophie",
-      lastName: "Harris",
-      patientId: "P011abcde123",
-      orderDate: "2021-09-22",
-      imagingId: "Lxyz987654",
-      serviceCenter: "Radiology B",
-      patientName: "Sophie Harris",
-      observation: "MRI Scan for Headache Evaluation and many other things",
-      status: "Capture",
-      orderBy: "Dr. Christopher Johnson",
-    },
-    {
-      id: 2,
-      firstName: "Mason",
-      lastName: "Martin",
-      patientId: "P012qwerty456",
-      orderDate: "2023-11-17 13:02",
-      imagingId: "Lpqr123456",
-      serviceCenter: "CT Scan Center",
-      patientName: "Mason Martin",
-      observation: "CT Scan for Abdominal Pain",
-      status: "Report",
-      orderBy: "Dr. Elizabeth White",
-    },
-    {
-      id: 3,
-      firstName: "Ava",
-      lastName: "Cooper",
-      patientId: "P013zxcvb789",
-      orderDate: "2021-09-26",
-      imagingId: "Lmno987654",
-      serviceCenter: "Ultrasound Department",
-      patientName: "Ava Cooper",
-      observation: "Ultrasound for Pregnancy",
-      status: "Capture",
-      orderBy: "Dr. Benjamin Davis",
-    },
-    {
-      id: 4,
-      firstName: "Elijah",
-      lastName: "Diaz",
-      patientId: "P014lkdid9009",
-      orderDate: "2021-09-28",
-      imagingId: "Lstu123456",
-      serviceCenter: "Cardiology Clinic",
-      patientName: "Elijah Diaz",
-      observation: "Cardiac Stress Test",
-      status: "Report",
-      orderBy: "Dr. Madison Smith",
-    },
-    {
-      id: 5,
-      firstName: "Oliver",
-      lastName: "Baker",
-      patientId: "P015poiuy111",
-      orderDate: "2021-09-30",
-      imagingId: "Lqwer123456",
-      serviceCenter: "Endoscopy Unit",
-      patientName: "Oliver Baker",
-      observation: "Lower GI Endoscopy",
-      status: "Capture",
-      orderBy: "Dr. William Johnson",
+      width: "3rem",
     },
   ];
 
   return (
     <>
+      {radiologyLoading && <Loader />}
+
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
-        <DataTable columns={columns} data={data} />
+        <DataTable
+          columns={columns}
+          data={
+            radiologySearch?.data && radiologySearch?.data.length > 0
+              ? radiologySearch?.data
+              : pageData?.data?.radiology
+          }
+          pagination
+          onChangePage={handlePageChange}
+        />
       </div>
+
+      <CancelRadiologyOrder
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        deleteDialogOpen={deleteDialogOpen}
+        selectedRowData={selectedRowData}
+        setReload={setReload}
+      />
 
       {/* // Capture Imaging modal */}
       <BasicModal
@@ -223,12 +239,16 @@ function PatientTable() {
         submitHandler={handleCaptureImaging}
         size="5xl"
       >
-        <CaptureImaging />
+        <CaptureImaging
+          selectedRowData={selectedRowData}
+          setCaptureComment={setCaptureComment}
+          captureComment={captureComment}
+        />
       </BasicModal>
 
       {/* // report imaging modal */}
       <BasicModal
-        title="Report Imaging"
+        title="Awaiting Imaging Report"
         setOpenModal={setReportModal}
         cancelTitle="Cancel"
         openModal={reportModal}
@@ -237,7 +257,10 @@ function PatientTable() {
         showSubmitButton={true}
         size="5xl"
       >
-        <ReportImaging />
+        <AwaitingImagingReport
+          selectedRowData={selectedRowData}
+          setQuillData={setQuillData}
+        />
       </BasicModal>
     </>
   );

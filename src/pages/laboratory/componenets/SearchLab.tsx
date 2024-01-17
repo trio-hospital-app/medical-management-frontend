@@ -64,7 +64,7 @@ const SearchLab = ({ setLabSearch, setReload }) => {
       panelArr: selectLabPanel,
       patientId: patientId,
       text: formComment,
-      // schemeId: selectScheme,
+      schemeId: selectScheme,
     };
     await mutate(LabData);
     setNewLabOrderModal(false);

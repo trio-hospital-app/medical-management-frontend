@@ -22,7 +22,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
   const [selected, setSelected] = useState(initialValue);
 
   const handleSelectChange = (
-    selectedItems: { label: string; value: string }[],
+    selectedItems: { label: string; value: string }[]
   ) => {
     setSelected(selectedItems);
     if (onSelectChange) {
@@ -46,6 +46,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
     <div className="mt-2">
       {isMultiSelect ? (
         <MultiSelect
+          className="capitalize"
           options={transformedOptions}
           value={selected}
           onChange={handleSelectChange}
@@ -54,6 +55,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
         />
       ) : (
         <select
+          className="capitalize"
           value={selected[0]?.value}
           onChange={(e) =>
             handleSelectChange([
