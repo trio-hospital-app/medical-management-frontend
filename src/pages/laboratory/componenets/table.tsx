@@ -123,7 +123,7 @@ function Table({ labSearch, reload, setReload }) {
     {
       name: "Name",
       cell: (row) => (
-        <div className="text-left">
+        <div className="text-left capitalize">
           {row.patientId.firstName} {row.patientId.lastName}
         </div>
       ),
@@ -146,13 +146,17 @@ function Table({ labSearch, reload, setReload }) {
 
     {
       name: "Lab Department",
-      selector: (row) => <div className="text-left">{row.centerId.center}</div>,
+      selector: (row) => (
+        <div className="text-left capitalize">{row.centerId.center}</div>
+      ),
       sortable: true,
       // width: "full",
     },
     {
       name: "Lab Test",
-      cell: (row) => <div className="text-left">{row.panelId.panel}</div>,
+      cell: (row) => (
+        <div className="text-left capitalize">{row.panelId.panel}</div>
+      ),
       selector: (row) => row.panelId.panel,
       sortable: true,
       // width: "full",
@@ -172,7 +176,10 @@ function Table({ labSearch, reload, setReload }) {
                 }}
               ></p>
             </div>
-            <span> {row.panelId.specimenId.specimen}</span>
+            <span className="capitalize">
+              {" "}
+              {row.panelId.specimenId.specimen}
+            </span>
           </div>
         </div>
       ),
@@ -183,7 +190,7 @@ function Table({ labSearch, reload, setReload }) {
       name: "Status",
       cell: (row) => (
         <Button
-          className={` text-white w-[9.5rem] ${
+          className={` text-white w-[9.5rem] capitalize ${
             row.status === "receive specimen"
               ? "bg-yellow-500 hover:bg-yellow-600"
               : row.status === "awaiting approval"
@@ -235,6 +242,7 @@ function Table({ labSearch, reload, setReload }) {
       width: "3rem",
     },
   ];
+
   // here is the role is being selected
   return (
     <>

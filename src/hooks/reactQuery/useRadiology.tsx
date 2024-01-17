@@ -1,22 +1,20 @@
 import { useQuery, useMutation, QueryClient } from "react-query";
-import radiologyService, { NewRadiologyData } from "../../services/radiologyService";
+import radiologyService, {
+  NewRadiologyData,
+} from "../../services/radiologyService";
 
 const queryClient = new QueryClient();
 
-// export const useGetLab = () => {
-//   return useQuery("Lab", radiologyService.getLab);
-// };
-
-
-
 export const useGetRadiologyById = (id: string) => {
-  return useQuery(["Radiology", id], () => radiologyService.getRadiologyById(id));
+  return useQuery(["Radiology", id], () =>
+    radiologyService.getRadiologyById(id)
+  );
 };
 
-
-
 export const useGetPatientRadiology = (id: string) => {
-  return useQuery(["RadiologyPatient", id], () => radiologyService.getPatientRadiology(id));
+  return useQuery(["RadiologyPatient", id], () =>
+    radiologyService.getPatientRadiology(id)
+  );
 };
 
 export const useSearchRadiologyPatient = (
@@ -33,11 +31,14 @@ export const useSearchRadiologyPatient = (
 };
 
 export const useAddRadiology = () => {
-  return useMutation((data: NewRadiologyData) => radiologyService.addRadiology(data), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("Lab");
-    },
-  });
+  return useMutation(
+    (data: NewRadiologyData) => radiologyService.addRadiology(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Radioloogy");
+      },
+    }
+  );
 };
 
 export const useUpdateRadiology = () => {
@@ -46,7 +47,7 @@ export const useUpdateRadiology = () => {
       radiologyService.updateRadiology(id, data),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("radioloogy");
+        queryClient.invalidateQueries("Radioloogy");
       },
     }
   );
@@ -58,18 +59,16 @@ export const useupdateCapture = () => {
       radiologyService.updateCapture(id, data),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("Lab");
+        queryClient.invalidateQueries("Radioloogy");
       },
     }
   );
 };
 
-
-
-export const useDeleteradiology = () => {
+export const useDeleteRadiology = () => {
   return useMutation((id: string) => radiologyService.deleteRadiology(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries("Lab");
+      queryClient.invalidateQueries("Radioloogy");
     },
   });
 };
@@ -91,7 +90,9 @@ export const useAddRadiologyCenter = () => {
 };
 
 export const useGetRadiologyCenterById = (id: string) => {
-  return useQuery(["RadiologyCenter", id], () => radiologyService.getRadiologyCenter(id));
+  return useQuery(["RadiologyCenter", id], () =>
+    radiologyService.getRadiologyCenter(id)
+  );
 };
 
 export const useUpdateRadiologyCenter = () => {
@@ -106,15 +107,16 @@ export const useUpdateRadiologyCenter = () => {
   );
 };
 
-
 export const useDeleteRadiologyCenter = () => {
-  return useMutation((id: string) => radiologyService.deleteRadiologyCenter(id), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("RadiologyCenters");
-    },
-  });
+  return useMutation(
+    (id: string) => radiologyService.deleteRadiologyCenter(id),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("RadiologyCenters");
+      },
+    }
+  );
 };
-
 
 //observations
 export const useGetRadiologyObservation = () => {
@@ -122,16 +124,20 @@ export const useGetRadiologyObservation = () => {
 };
 
 export const useDeleteRadiologyObservation = () => {
-  return useMutation((id: string) => radiologyService.deleteRadiologyObservation(id), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("Observations");
-    },
-  });
+  return useMutation(
+    (id: string) => radiologyService.deleteRadiologyObservation(id),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Observations");
+      },
+    }
+  );
 };
 
 export const useAddRadiologyObservation = () => {
   return useMutation(
-    (data: { test: string, cost:number, centerId:string }) => radiologyService.createRadiologyObservation(data),
+    (data: { test: string; cost: number; centerId: string }) =>
+      radiologyService.createRadiologyObservation(data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("Observations");
@@ -142,8 +148,13 @@ export const useAddRadiologyObservation = () => {
 
 export const useUpdateRadiologyObservation = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: { test: string, cost:number, centerId:string } }) =>
-      radiologyService.editRadiologyObservation({ id, data }),
+    ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: { test: string; cost: number; centerId: string };
+    }) => radiologyService.editRadiologyObservation({ id, data }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("Observations");

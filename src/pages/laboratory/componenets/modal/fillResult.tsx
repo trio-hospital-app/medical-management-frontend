@@ -49,7 +49,7 @@ function FillSpecimen({ selectedRowData, setFillResult }) {
           testName={panelId?.panel || "Not Found"}
           testNameBackgroundColor={`${panelId?.specimenId.color}`}
           patientEmail={`${patientId?.address.email} `}
-          imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
+          imgSrc={patientId?.address?.image}
           gender={`${patientId?.gender}`}
           phoneNumber={`${patientId?.phone}`}
           religion={`${patientId?.address?.religion}`}

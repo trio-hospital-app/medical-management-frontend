@@ -137,7 +137,7 @@ function FinalResult({ selectedRowData, setReload }) {
               patientName={`${patientId?.salutation} ${patientId?.firstName} ${patientId?.middleName} ${patientId?.lastName}`}
               patientID={`${patientId?.patientId}`}
               patientEmail={`${patientId?.address.email} `}
-              imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
+              imgSrc={patientId?.address?.image}
               gender={`${patientId?.gender}`}
               phoneNumber={`${patientId?.phone}`}
               religion={`${patientId?.address?.religion}`}
