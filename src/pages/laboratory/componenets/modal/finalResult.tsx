@@ -57,7 +57,7 @@ function FinalResult({ selectedRowData, setReload }) {
 
   return (
     <>
-      {/* accordion */}
+     
       <div className="px-4 border py-4 shadow">
         <div
           className={`px-4 py-4 font-bold flex justify-between items-center rounded-[.3rem]`}

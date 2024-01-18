@@ -9,7 +9,6 @@ import {
 import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
 
 function FillSpecimen({ selectedRowData, setFillResult }) {
-  const [dynamicFormRows, setDynamicFormRows] = useState([]);
 
   const { patientId, panelId, orderBy, comment } = selectedRowData;
 
@@ -34,11 +33,9 @@ function FillSpecimen({ selectedRowData, setFillResult }) {
   const orderedDate = formatDateTime(selectedRowData.createdAt);
 
   const handleRowDataChange = (rowData: any) => {
-    setDynamicFormRows(rowData);
+    setFillResult(rowData);
   };
 
-  // here is where am passing the data to the parent component
-  setFillResult(dynamicFormRows);
 
   return (
     <>
