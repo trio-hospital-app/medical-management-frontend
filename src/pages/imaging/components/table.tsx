@@ -9,23 +9,28 @@ import radiologyService from "../../../services/radiologyService";
 import { MdOutlineCancel } from "react-icons/md";
 import Loader from "../../../components/ui/loader";
 import CancelRadiologyOrder from "./modal/CancelRadiologyOrder";
-import { useupdateCapture } from "../../../hooks/reactQuery/useRadiology";
+import {
+  useUpdateCapture,
+  useUpdateRadiologyResult,
+} from "../../../hooks/reactQuery/useRadiology";
 import AwaitingImagingReport from "./modal/AwaitingImagingReport";
+import ReportImaging from "./modal/ReportImaging";
 
 function PatientTable({ reload, setReload, radiologySearch }) {
   const [captureModal, setCaptureModal] = useState(false);
   const [reportModal, setReportModal] = useState(false);
+  const [resultModal, setResultModal] = useState(false);
   const [selectedId, setSelectedId] = useState("");
   const [captureComment, setCaptureComment] = useState("");
   const [selectedRowData, setSelectedRowData] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
-  const [quillData, setQuillData] = useState("");
+  const [resultData, setResultData] = useState([]);
 
-  console.log(quillData);
-
-  const { mutate: mutateCapture, status: captureStatus } = useupdateCapture();
+  const { mutate: mutateCapture, status: captureStatus } = useUpdateCapture();
+  const { mutate: mutateImagingResult, status: imagingStatus } =
+    useUpdateRadiologyResult();
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
     ["radiologys", page],
@@ -92,6 +97,18 @@ function PatientTable({ reload, setReload, radiologySearch }) {
     }
   };
 
+  const handleFillImagingApi = async () => {
+    try {
+      const ImagingResult = resultData;
+      await mutateImagingResult({ id: selectedId, data: ImagingResult });
+      setReportModal(false);
+      setReload(true);
+    } catch (error) {
+      // Handle the error here
+      console.error("An error occurred:", error);
+    }
+  };
+
   const columns: any = [
     {
       name: "Patient Name",
@@ -138,7 +155,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
       // width: "full",
     },
     {
-      name: "Radiology Type",
+      name: "Radiology Unit",
       cell: (row) => (
         <div className="text-left capitalize">{row?.centerId.center}</div>
       ),
@@ -156,7 +173,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
               ? "bg-purple-400 hover:bg-purple-500"
               : row.status === "capture"
                 ? "bg-red-400 hover:bg-red-500"
-                : row.status === "capture"
+                : row.status === "report"
                   ? "bg-green-400 hover:bg-green-500"
                   : row.status === ""
           }`}
@@ -168,7 +185,9 @@ function PatientTable({ reload, setReload, radiologySearch }) {
               ? setReportModal(true)
               : row.status === "capture"
                 ? setCaptureModal(true)
-                : row.status === "null";
+                : row.status === "report"
+                  ? setResultModal(true)
+                  : row.status === "null";
           }}
           disabled={!row.paid}
         >
@@ -253,13 +272,29 @@ function PatientTable({ reload, setReload, radiologySearch }) {
         cancelTitle="Cancel"
         openModal={reportModal}
         showCancelButton={true}
-        submitTitle="Save"
+        submitTitle="Submit"
         showSubmitButton={true}
+        submitHandler={handleFillImagingApi}
         size="5xl"
       >
         <AwaitingImagingReport
           selectedRowData={selectedRowData}
-          setQuillData={setQuillData}
+          setResultData={setResultData}
+        />
+      </BasicModal>
+      <BasicModal
+        title="Imaging Report"
+        setOpenModal={setResultModal}
+        cancelTitle="Cancel"
+        openModal={resultModal}
+        showCancelButton={true}
+        submitTitle="Print"
+        showSubmitButton={true}
+        size="5xl"
+      >
+        <ReportImaging
+          selectedRowData={selectedRowData}
+          setReload={setReload}
         />
       </BasicModal>
     </>

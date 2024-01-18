@@ -43,7 +43,7 @@ export const useAddRadiology = () => {
 
 export const useUpdateRadiology = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: { text: string } }) =>
+    ({ id, data }: { id: string; data }) =>
       radiologyService.updateRadiology(id, data),
     {
       onSuccess: () => {
@@ -53,10 +53,22 @@ export const useUpdateRadiology = () => {
   );
 };
 
-export const useupdateCapture = () => {
+export const useUpdateCapture = () => {
   return useMutation(
     ({ id, data }: { id: string; data }) =>
       radiologyService.updateCapture(id, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("Radioloogy");
+      },
+    }
+  );
+};
+
+export const useUpdateRadiologyResult = () => {
+  return useMutation(
+    ({ id, data }: { id: string; data }) =>
+      radiologyService.updateRadiologyResult(id, data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("Radioloogy");

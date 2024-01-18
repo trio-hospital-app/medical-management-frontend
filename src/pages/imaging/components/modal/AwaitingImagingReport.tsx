@@ -5,9 +5,9 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "../../../../components/ui/accordion";
-import QuilEditor from "../QuilEditor";
+import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
 
-function AwaitingImagingReport({setQuillData, selectedRowData }) {
+function AwaitingImagingReport({ setResultData, selectedRowData }) {
   const { patientId, testId, orderBy, comment } = selectedRowData;
 
   //function for date and time format
@@ -29,9 +29,9 @@ function AwaitingImagingReport({setQuillData, selectedRowData }) {
   // date and time usage
   const orderedDate = formatDateTime(selectedRowData.createdAt);
 
-  // here is where i work on the quill data
-  const updateQuillData = (data: any) => {
-    setQuillData(data);
+
+  const handleRowDataChange = (rowData: any) => {
+    setResultData(rowData);
   };
 
   return (
@@ -107,10 +107,15 @@ function AwaitingImagingReport({setQuillData, selectedRowData }) {
       </div>
 
       <div className="px-4">
-        <label htmlFor="quill" className="text-ha-primary1 font-bold text-2xl my-5">
+        <label
+          htmlFor="quill"
+          className="text-ha-primary1 font-bold text-2xl my-5"
+        >
           Add Report
         </label>
-        <QuilEditor updateQuillData={updateQuillData}/>
+        <div>
+          <DynamicFormTable onRowDataChange={handleRowDataChange} />
+        </div>
       </div>
     </>
   );
