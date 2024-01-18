@@ -62,7 +62,7 @@ function ReportImaging({ selectedRowData, setReload }) {
           className={`px-4 py-4 font-bold flex justify-start gap-5 border w-fit mb-5 items-center rounded-[.3rem]`}
         >
           <h1 className="font-bold">Edit Result</h1>
-          <Tooltip content="Edit Lab Result">
+          <Tooltip content="Edit Radiology Result">
             <BsPencilFill onClick={() => setIsEditMode(!isEditMode)}  />
           </Tooltip>
         </div>

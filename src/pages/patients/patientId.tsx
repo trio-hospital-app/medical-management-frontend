@@ -16,7 +16,7 @@ function PatientId() {
   return (
     <div className="Patients">
       <PatientInfoHeader patientData={data.data} />
-      <PatientTabsCard id={id} />
+      <PatientTabsCard id={id}  patientData={data.data}/>
     </div>
   );
 }

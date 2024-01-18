@@ -21,7 +21,7 @@ function BillingTable() {
   const [PaymentType, setPaymentType] = useState('')
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const { data: userData } = useGetUserByToken();
-  const { data: userFinance, isLoading: LoadinguserFinance } =
+  const { data: userFinance, isLoading: LoadinguserFinance, refetch } =
     useUserFinance(id);
 
   const {
@@ -30,7 +30,7 @@ function BillingTable() {
     mutate: makePaymentMutate,
   } = useMakePayment();
 
-  if (LoadingMakePayment) {
+  if (LoadingMakePayment || LoadinguserFinance) {
     return <Loader />;
   }
 
@@ -51,11 +51,17 @@ function BillingTable() {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.panel;
     }
+    if (row.itemType === "radiology") {
+      return row?.radiologyId?.testId?.test;
+    }
   };
 
   const source = (row) => {
     if (row.itemType === "labs") {
       return "Laboratory";
+    }
+    if (row.itemType === "radiology") {
+      return "Radiology";
     }
   };
   const columns = [
@@ -222,6 +228,7 @@ function BillingTable() {
           await makePaymentMutate({ id: row.id, data: { receipt: receiptId, paymentType: PaymentType } });
         })
       );
+      await refetch()
     } catch (error) {
       console.log("Error making payments:", error);
       // Optional: Handle errors here
@@ -254,7 +261,7 @@ function BillingTable() {
       <DataTable
         title=""
         columns={columns}
-        data={userFinance?.data?.finances}
+        data={userFinance?.data?.finances && userFinance?.data?.finances}
         selectableRows
         onSelectedRowsChange={handleChange}
         persistTableHead

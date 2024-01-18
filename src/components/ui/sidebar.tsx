@@ -56,9 +56,6 @@ function SideBar() {
                   <Dropdown.Item as={Link} to="/settings/finance">
                     Finance
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/forms">
-                    Forms
-                  </Dropdown.Item>
                 </Dropdown>
               </span>
             </Sidebar.Item>

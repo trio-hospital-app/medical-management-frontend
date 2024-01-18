@@ -33,6 +33,8 @@ const SearchLab = ({ setLabSearch, setReload }) => {
 
  if (addLabStatus === "success") {
     toast.success("Lab order created successfully");
+    mutate(null)
+    refetch()
   }
 
 
@@ -45,7 +47,6 @@ const SearchLab = ({ setLabSearch, setReload }) => {
   const handleKeyDown = async (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      await refetch();
     }
   };
 

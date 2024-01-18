@@ -72,7 +72,7 @@ const SearchImaging = ({ setRadiologySearch, setReload }) => {
       {NewRadiologyLoading && <Loader />}
       <div className="Patients">
         <FilterHeader
-          title="Imaging Workbench"
+          title="Radiology Workbench"
           buttonTitle="New Imaging Order"
           resetFilter={resetHandler}
           search={() => searchHandler(event)}

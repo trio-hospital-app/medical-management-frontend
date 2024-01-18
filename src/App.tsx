@@ -12,8 +12,6 @@ import Nursing from "./pages/nursing";
 import NotFound from "./pages/NotFound";
 import AppLayout from "./layouts/AppLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import Forms from "./pages/settings/forms";
-import FormBuilder from "./pages/settings/forms/builder";
 import NewPatient from "./pages/patients/newPatient";
 import Users from "./pages/settings/users";
 import LaboratoryManagement from "./pages/settings/laboratory";
@@ -235,34 +233,6 @@ function App() {
                 exit="exit"
               >
                 <Users />
-              </motion.div>
-            }
-          />
-          <Route
-            path="/settings/forms"
-            element={
-              <motion.div
-                key={location.pathname}
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <Forms />
-              </motion.div>
-            }
-          />
-          <Route
-            path="/settings/forms/:id"
-            element={
-              <motion.div
-                key={location.pathname}
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-              >
-                <FormBuilder />
               </motion.div>
             }
           />

@@ -1,6 +1,5 @@
 import DataTable from "react-data-table-component";
 import ReactDOMServer from 'react-dom/server';
-
 import {
   useUserReciepts
 } from "../../../../hooks/reactQuery/useFinance";
@@ -10,13 +9,13 @@ import Loader from "../../../../components/ui/loader";
 import { IoMdPrint } from "react-icons/io";
 import { FiSend } from "react-icons/fi";
 import PrintReceipt from "../PrintReceipt";
-import { useState } from "react";
 
 function PaymentTable() {
   const { id } = useParams();
-  const [printReceiptData, setPrintReceiptData] = useState(null);
-  const { data: userFinance, isLoading: LoadinguserFinance } =
+  const { data: usersFinance, isLoading: LoadinguserFinance } =
   useUserReciepts(id);
+
+  console.log(usersFinance)
 
   if (LoadinguserFinance) {
     return <Loader />;
@@ -26,11 +25,17 @@ function PaymentTable() {
     if (row.itemType === "labs") {
       return "Laboratory";
     }
+    if (row.itemType === "radiology") {
+      return "Radiology";
+    }
   };
   
   const department = (row) => {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.panel;
+    }
+    if (row.itemType === "radiology") {
+      return row?.radiologyId?.testId?.test;
     }
   };
 
@@ -41,7 +46,7 @@ function PaymentTable() {
   };
   const sum = (total)=> { return total.reduce((a, b) => a + b, 0);}
 
-  console.log(userFinance)
+  console.log(usersFinance)
 
   const columns = [
     {
@@ -132,7 +137,7 @@ function PaymentTable() {
     <DataTable
       title=""
       columns={columns}
-      data={userFinance?.data?.finances}
+      data={usersFinance?.data?.finances && usersFinance?.data?.finances}
       expandableRows
       expandableRowsComponent={ExpandedComponent}
     />
