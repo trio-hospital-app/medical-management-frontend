@@ -29,6 +29,7 @@ const CancelLabOrder = ({
 
   if (deleteStatus === "success") {
     toast.success("Lab order deleted successfully");
+    mutate(null)
   }
   const handleDelete = async () => {
     await mutate(selectedRowData?.id);

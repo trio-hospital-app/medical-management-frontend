@@ -8,6 +8,7 @@ import {
 } from "../../../../components/ui/accordion";
 
 function ReceiveSpecimen({ selectedRowData, setReceiveComment, receiveComment }) {
+  
   const { patientId, panelId, orderBy, comment } = selectedRowData;
 
   //function for date and time format

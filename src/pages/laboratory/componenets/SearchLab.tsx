@@ -34,7 +34,7 @@ const SearchLab = ({ setLabSearch, setReload }) => {
  if (addLabStatus === "success") {
     toast.success("Lab order created successfully");
     mutate(null)
-    refetch()
+    // refetch()
   }
 
 
@@ -69,7 +69,7 @@ const SearchLab = ({ setLabSearch, setReload }) => {
     };
     await mutate(LabData);
     setNewLabOrderModal(false);
-    setReload(true);
+    setReload(true)
   };
 
   return (

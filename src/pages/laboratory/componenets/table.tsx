@@ -28,6 +28,10 @@ function Table({ labSearch, reload, setReload }) {
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const { data: labData, isLoading: labLoading } = useQuery(
+    ["labs", page],
+    () => labService.getLab(page)
+  );
 
   const { mutate: mutateReceive, status: receiveStatus } =
     useUpdateReceiveLab();
@@ -37,15 +41,15 @@ function Table({ labSearch, reload, setReload }) {
 
   if (ResultStatus === "success") {
     toast.success("Lab order approved successfully");
+    mutateAwaiting(null)
+    // refetch()
   }
   if (receiveStatus === "success") {
     toast.success("Lab order received successfully");
+    mutateReceive(null)
   }
 
-  const { data: labData, isLoading: labLoading } = useQuery(
-    ["labs", page],
-    () => labService.getLab(page)
-  );
+
 
   useEffect(() => {
     setPageData(labData);
