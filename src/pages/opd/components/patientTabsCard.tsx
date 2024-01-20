@@ -37,7 +37,7 @@ function PatientTabsCard({ id, patientData }) {
         </div>
         <div className="px-5">
           <TabsContent value="doctor">
-            <DoctorsTable />
+            <DoctorsTable id={id}/>
           </TabsContent>
           <TabsContent value="laboratory">
             <LabTable id={id} patientData={patientData}/>

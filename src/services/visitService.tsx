@@ -22,6 +22,15 @@ class VisitService {
     return response;
   }
 
+  public async getConsultationofPatient(id) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/consults/user/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
 
   public async editConsultation({
     id,

@@ -20,6 +20,12 @@ export const useGetConsultationById = (id: string) => {
     );
 };
 
+export const useGetConsultationofPatient = (id: string) => {
+    return useQuery(createQueryKey("consultationOfPatient", id), () =>
+        VisitService.getConsultationofPatient(id)
+    );
+};
+
 export const useGetVisitDept = () => {
     return useQuery("visitDept", VisitService.getVisitDept);
 };

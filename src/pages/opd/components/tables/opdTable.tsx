@@ -5,53 +5,57 @@ import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { useState } from "react";
 import TakeNursingVitals from "../takeNursingVitals";
+import { useGetConsultations } from "../../../../hooks/reactQuery/useVisit";
+import Loader from "../../../../components/ui/loader";
+import { formatDate } from "../../../../hooks/formattedDate";
 
-function OpdTable() {
+function OpdTable({consults}) {
+   
+  const navigate = useNavigate();
   const [showVitalsModal, setShowVitalsModal] = useState(false);
+  const {
+    data: consultationData,
+    isLoading: loadingConsults,
+} = useGetConsultations();
+  
 
-  interface OPD {
-    id: number;
-    date: string;
-    encounterId: number;
-    clinic: string;
-    patientId: string;
-    visitType: string;
-    status: string;
-  }
+if(loadingConsults) {
+  return <Loader/>
+}
 
   const columns = [
     {
       name: "Date",
-      selector: (row: OPD) => row.date,
+      selector: (row) => formatDate(row?.createdAt),
       sortable: true,
       // width: "200px",
     },
     {
-      name: "Encounter ID",
-      selector: (row: OPD) => row.encounterId,
+      name: "Visit ID",
+      selector: (row) => row?.id,
       sortable: true,
       // width: "200px",
     },
     {
-      name: "Clinic",
-      selector: (row: OPD) => row.clinic,
+      name: "Doctor",
+      selector: (row) => <div>{row?.doctorId?.firstName} {row?.doctorId?.lastName}</div>,
       sortable: true,
     },
     {
       name: "Patient ID",
-      selector: (row: OPD) => row.patientId,
+      selector: (row) => <div>{row?.patientId?.firstName} {row?.patientId?.lastName}</div>,
       sortable: true,
       // width: "200px",
     },
     {
       name: "Visit Type",
-      selector: (row: OPD) => row.visitType,
+      selector: (row) => row?.visitType[0]?.name,
       sortable: true,
       // width: "200px",
     },
     {
       name: "Status",
-      selector: (row: OPD) => row.status,
+      selector: (row) => row?.status,
       sortable: true,
       // width: "200px",
     },
@@ -79,67 +83,16 @@ function OpdTable() {
     },
   ];
 
-  const data: OPD[] = [
-    {
-      id: 1,
-      date: "03/15/2023",
-      encounterId: 123,
-      clinic: "General Clinic",
-      patientId: "54321",
-      visitType: "Walk In",
-      status: "seen",
-    },
-    {
-      id: 2,
-      date: "03/15/2023",
-      encounterId: 123,
-      clinic: "General Clinic",
-      patientId: "54321",
-      visitType: "Walk In",
-      status: "Not seen",
-    },
-    {
-      id: 3,
-      date: "03/15/2023",
-      encounterId: 123,
-      clinic: "General Clinic",
-      patientId: "54321",
-      visitType: "Appointment",
-      status: "Seen",
-    },
-    {
-      id: 4,
-      date: "03/15/2023",
-      encounterId: 123,
-      clinic: "General Clinic",
-      patientId: "54321",
-      visitType: "Appointment",
-      status: "Not Seen",
-    },
-    {
-      id: 5,
-      date: "03/15/2023",
-      encounterId: 123,
-      clinic: "General Clinic",
-      patientId: "54321",
-      visitType: "Appontment",
-      status: "Seen",
-    },
-    // Add more data objects as needed
-  ];
-
-  const navigate = useNavigate();
-
-  const handleRowClick = (patientId: number) => {
-    navigate(`/patients/${patientId}`);
+  const handleRowClick = (patientId, cid) => {
+    navigate(`/visits/${patientId}/${cid}`);
   };
 
   return (
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
         columns={columns}
-        data={data}
-        onRowClicked={(row) => handleRowClick(row.id)}
+        data={consultationData?.data?.consultations}
+        onRowClicked={(row) => handleRowClick(row.patientId.id, row.id)}
       />
 
       {/* Nursing Vitals modal */}
