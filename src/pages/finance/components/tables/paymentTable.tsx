@@ -43,6 +43,10 @@ function PaymentTable() {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.cost;
     }
+    
+    if (row.itemType === "radiology") {
+      return row?.amount;
+    }
   };
   const sum = (total)=> { return total.reduce((a, b) => a + b, 0);}
 

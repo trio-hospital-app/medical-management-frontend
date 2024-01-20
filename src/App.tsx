@@ -22,6 +22,8 @@ import ForgotPassword from "./layouts/ForgotPassword";
 import Finance from "./pages/finance";
 import FinanceId from "./pages/finance/financeId";
 import FinanceManagement from "./pages/settings/finance";
+import VisitManagement from "./pages/settings/visit";
+import ConsultationId from "./pages/opd/consultationId";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -111,7 +113,7 @@ function App() {
             }
           />
           <Route
-            path="/opd"
+            path="/visits"
             element={
               <motion.div
                 key={location.pathname}
@@ -121,6 +123,20 @@ function App() {
                 exit="exit"
               >
                 <OPD />
+              </motion.div>
+            }
+          />
+            <Route
+            path="/visits/:pid/:cid"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <ConsultationId />
               </motion.div>
             }
           />
@@ -261,6 +277,20 @@ function App() {
                 exit="exit"
               >
                 <RadiologyManagement />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/settings/visit"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <VisitManagement />
               </motion.div>
             }
           />

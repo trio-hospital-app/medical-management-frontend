@@ -7,17 +7,29 @@ function PrintReceipt({ receiptData }) {
     if (row.itemType === "labs") {
       return "Laboratory";
     }
+    if (row.itemType === "radiology") {
+      return "Radiology";
+    }
   };
+
+  console.log(receiptData, "receiptData")
 
   const department = (row) => {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.panel;
+    }
+    if (row.itemType === "radiology") {
+      return row?.radiologyId?.testId?.test;
     }
   };
 
   const cost = (row) => {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.cost;
+    }
+    
+    if (row.itemType === "radiology") {
+      return row?.radiologyId?.testId?.amount;
     }
   };
 

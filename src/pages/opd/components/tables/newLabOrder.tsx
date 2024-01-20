@@ -12,50 +12,21 @@ const NewLabOrder = ({
   setSelectedScheme,
   setselectLabPanel,
   setFormComment,
-  setPatientId,
   formComment,
   selectLabPanel,
   selectScheme,
+  patientData
 }) => {
-  const [search, setSearch] = useState("");
-  const {
-    data: patientData,
-    isLoading: loadingSearch,
-    refetch,
-    isError: errorSearch,
-  } = useSearchPatient(search);
   const { data: clinicPanelData } = useGetClinicPanel();
 
 
 
+console.log(patientData)
+   // lab drop down data
+   const schemes = patientData?.schemeId || [];
+   const clinicPanels = clinicPanelData?.data || [];
+ 
 
-
-  // function to set the search patien text
-  const handleChange = (event: any) => {
-    setSearch(event.target.value);
-  };
-
-  //function to search patient
-  const handleKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      await refetch();
-    }
-  };
-
-  // if patient is found render it true/ false
-  const foundRecord = patientData?.status;
-
-  //patient info to render
-  const patient = patientData?.data[0];
-
-  // lab drop down data
-  const schemes = patient?.schemeId || [];
-  const clinicPanels = clinicPanelData?.data || [];
-
-  setPatientId(patient?.id);
 
   const handleSchemeChange = (selectedItems: any) => {
     setSelectedScheme(selectedItems);
@@ -67,39 +38,7 @@ const NewLabOrder = ({
 
   return (
     <div>
-      {loadingSearch && <Loader />}
       <>
-        <SearchComponent
-          Label=" Search Patient"
-          value={search}
-          placeholder="Search by Patient Name, ID, Email, Phone Number"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
-        {foundRecord && patient && (
-          <div>
-            <CustomPatientCard
-              key={patient.id}
-              patientName={`${patient?.salutation} ${patient?.firstName} ${patient?.middleName} ${patient?.lastName}`}
-              patientID={patient?.patientId}
-              patientEmail={patient.address.email}
-              imgSrc={patient?.address?.image}
-              gender={patient?.gender}
-              phoneNumber={patient?.phone}
-              religion={patient?.address.religion}
-              nationality={patient?.address.country}
-              maritalStatus={patient?.address.maritalStatus}
-              age={patient?.address.dob}
-              layout={2}
-            />
-          </div>
-        )}
-
-        {errorSearch && (
-          <div className="flex justify-center items-center">
-            <p className="text-red-600 font-bold mt-10">No Patient Found</p>
-          </div>
-        )}
 
         <div className="flex flex-col justify-center px-4">
           <div className="flex flex-col md:flex-row items-center justify-between pt-5">

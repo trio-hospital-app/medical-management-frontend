@@ -1,77 +1,122 @@
-import { useState } from "react";
+import { BiSearchAlt } from "react-icons/bi";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
+import { useState } from "react";
+import { useSearchPatient } from "../../../hooks/reactQuery/usePatients";
+import Loader from "../../../components/ui/loader";
 import BasicModal from "../../../components/ui/modals/basicModal";
-import OrderDoctor from "./orderDoctor";
+import NewConsultation from "./newConsultation";
+import { useGetUserByToken } from "../../../hooks/reactQuery/useUser";
+import { useNewConsultation } from "../../../hooks/reactQuery/useVisit";
+import { toast } from "react-toastify";
 
-function Patients() {
-  const [showDoctorModal, setShowDoctorModal] = useState(false);
+function Patients({ setConsults }) {
+  const [search, setSearch] = useState("");
+  const { isLoading, data, refetch } = useSearchPatient(search);
+  const [showCreate, setShowCreate] = useState(false)
+  const [patientId, setPatientId] = useState("");
+  const [scheme, setScheme] = useState("");
+  const [dept, setDept] = useState("");
+  const { data: userData } = useGetUserByToken();
+  console.log(userData, 'userData')
+  const {
+    data: consultationData,
+    isLoading: loadingConsults,
+    mutate:createMutate
+} = useNewConsultation();
+
+  setConsults(data);
+
+console.log(consultationData, 'consultationData')
+
+if(consultationData && consultationData?.status) {
+  toast.success('Successfully Created Consultation')
+  createMutate(null)
+}
+  
+  if (isLoading || loadingConsults) {
+    return <Loader />;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (event: any) => {
+    setSearch(event.target.value);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleKeyDown = async (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      await refetch();
+    }
+  };
+
+  const resetHandler = () => {
+    setSearch("");
+  };
+
+  const searchHandler = async () => {
+    await refetch();
+  };
+
+  const createConsultation = async() => {
+    try {
+      const data = {
+        doctorId: userData?.data?.id,
+        visit: dept,
+        patientId:patientId,
+        schemeId:scheme
+      }
+      await createMutate(data)
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <div className="Patients">
-      <FilterHeader
-        title="All Doctor's Visit"
-        buttonTitle="New Doctor's Visit"
-        resetFilter={() => "hello"}
-        search={() => "i am a function"}
-        handleCreate={() => {
-          setShowDoctorModal(true);
+      {showCreate &&    <BasicModal
+        title="Patient Information"
+        setOpenModal={setShowCreate}
+        openModal={showCreate}
+        cancelTitle="Cancel"
+        submitTitle="Create"
+        showCancelButton={true}
+        showSubmitButton={true}
+        size="3xl"
+        submitHandler={() => {
+         createConsultation()
         }}
       >
-        <form className="grid md:grid-cols-4 flex-wrap gap-2">
-          <div className="">
-            <div className=" block">
-              <label htmlFor="patientid">Patient ID</label>
+        <NewConsultation setPatientId={setPatientId} setScheme={setScheme} setDept={setDept}/>
+      </BasicModal>}
+      <FilterHeader
+        title="All Doctor's Visits"
+        buttonTitle="Create New Visit"
+        resetFilter={resetHandler}
+        search={searchHandler}
+        handleCreate={() => {
+          setShowCreate(true)
+        }}
+      >
+        <form className="grid">
+          <div className="flex w-full border rounded-lg items-center px-5">
+            <div>
+              <BiSearchAlt />
             </div>
-            <input id="patientid" className="w-full" required />
-          </div>
-          <div className="">
-            <div className="block">
-              <label htmlFor="dob">Date</label>
-            </div>
-            <input type="date" id="dob" name="dob" className="w-full" />
-          </div>
-          <div className="">
-            <div className=" block">
-              <label htmlFor="gender">Status</label>
-            </div>
-            <select name="gender" id="gender" className="w-full">
-              <option value="seen">Seen</option>
-              <option value="not-seen">Not Seen</option>
-            </select>
-          </div>
-          <div className="">
-            <div className=" block">
-              <label htmlFor="gender">Type of Visit</label>
-            </div>
-            <select name="gender" id="gender" className="w-full">
-              <option value="walk-in">Walk In</option>
-              <option value="appointment">Appointment</option>
-            </select>
-          </div>
-          <div className="">
-            <div className=" block">
-              <label htmlFor="gender">Clinic</label>
-            </div>
-            <select name="gender" id="gender" className="w-full">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
+            <input
+              type="text"
+              name="search"
+              value={search}
+              placeholder="Search for patients"
+              className="border-none border outline-none w-[100%] inputLess"
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+            />
           </div>
         </form>
       </FilterHeader>
-
-      {/* Doctor encounter modal */}
-      <BasicModal
-        title="See A Doctor"
-        setOpenModal={setShowDoctorModal}
-        cancelTitle="Cancel Order"
-        openModal={showDoctorModal}
-        showCancelButton={true}
-        submitTitle="Submit Order"
-        showSubmitButton={true}
-      >
-        <OrderDoctor />
-      </BasicModal>
     </div>
   );
 }
