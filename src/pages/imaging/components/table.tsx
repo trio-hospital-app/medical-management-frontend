@@ -15,6 +15,7 @@ import {
 } from "../../../hooks/reactQuery/useRadiology";
 import AwaitingImagingReport from "./modal/AwaitingImagingReport";
 import ReportImaging from "./modal/ReportImaging";
+import { toast } from "react-toastify";
 
 function PatientTable({ reload, setReload, radiologySearch }) {
   const [captureModal, setCaptureModal] = useState(false);
@@ -36,6 +37,16 @@ function PatientTable({ reload, setReload, radiologySearch }) {
     ["radiologys", page],
     () => radiologyService.getRadiology(page)
   );
+
+  if (captureStatus === "success") {
+    toast.success("Imaging captured successfully");
+    mutateCapture(null);
+  }
+
+  if (imagingStatus === "success") {
+    toast.success("Imaging result submitted successfully");
+    mutateImagingResult(null);
+  }
 
   useEffect(() => {
     setPageData(RadiologyData);

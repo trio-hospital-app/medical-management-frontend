@@ -10,11 +10,10 @@ import Loader from "../../../../components/ui/loader";
 import { IoMdPrint } from "react-icons/io";
 import { FiSend } from "react-icons/fi";
 import PrintReceipt from "../PrintReceipt";
-import { useState } from "react";
 
 function PaymentTable() {
   const { id } = useParams();
-  const [printReceiptData, setPrintReceiptData] = useState(null);
+  // const [printReceiptData, setPrintReceiptData] = useState(null);
   const { data: userFinance, isLoading: LoadinguserFinance } =
   useUserReciepts(id);
 

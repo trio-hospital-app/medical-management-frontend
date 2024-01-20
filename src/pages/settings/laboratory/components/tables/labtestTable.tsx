@@ -145,7 +145,7 @@ function LabTestsTable() {
           {row?.specimenId?.type}
         </div>
       ),
-      selector: (row) => row?.specimenId?.type,
+      selector: (row) => row?.specimenId?.type || "",
       sortable: true,
       width: "250px",
     },

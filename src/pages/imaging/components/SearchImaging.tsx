@@ -8,6 +8,7 @@ import {
   useSearchRadiologyPatient,
 } from "../../../hooks/reactQuery/useRadiology";
 import Loader from "../../../components/ui/loader";
+import { toast } from "react-toastify";
 
 const SearchImaging = ({ setRadiologySearch, setReload }) => {
   const [search, setSearch] = useState("");
@@ -31,6 +32,11 @@ const SearchImaging = ({ setRadiologySearch, setReload }) => {
     status: addLabStatus,
     isLoading: NewRadiologyLoading,
   } = useAddRadiology();
+
+  if (addLabStatus === "success") {
+    toast.success("Radiology order created successfully");
+    mutate(null);
+  }
 
   const handleChange = (event: any) => {
     setSearch(event.target.value);

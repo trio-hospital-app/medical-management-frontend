@@ -6,23 +6,22 @@ import {
 import Loader from "../../../../components/ui/loader";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../../../../hooks/formattedDate";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { MdDelete } from "react-icons/md";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { toast } from "react-toastify";
-import generateCode from '../../../../lib/generateId'
+import generateCode from "../../../../lib/generateId";
 import { useGetUserByToken } from "../../../../hooks/reactQuery/useUser";
 
 function BillingTable() {
   const { id } = useParams();
   const [selectedRows, setSelectedRows] = useState([]);
   const [total, setTotal] = useState();
-  const [PaymentType, setPaymentType] = useState('')
+  const [PaymentType, setPaymentType] = useState("");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const { data: userData } = useGetUserByToken();
-  const { data: userFinance, isLoading: LoadinguserFinance } =
-    useUserFinance(id);
+  const { data: userFinance } = useUserFinance(id);
 
   const {
     isLoading: LoadingMakePayment,
@@ -34,12 +33,11 @@ function BillingTable() {
     return <Loader />;
   }
 
-    if (makepaymentUpdate === 'success') {
-      toast.success("Payment made successfully");
-      // Reset the success status
-      makePaymentMutate(null);
-    }
-
+  if (makepaymentUpdate === "success") {
+    toast.success("Payment made successfully");
+    // Reset the success status
+    makePaymentMutate(null);
+  }
 
   // if (makepaymentUpdate && makepaymentUpdate.status) {
   //   // Optional: Handle success after all payments are made
@@ -67,7 +65,7 @@ function BillingTable() {
     {
       name: "Bill Source",
       selector: (row) => {
-        return <div>{source(row)}</div>
+        return <div>{source(row)}</div>;
       },
       sortable: true,
     },
@@ -75,8 +73,7 @@ function BillingTable() {
     {
       name: "Description",
       selector: (row) => {
-        return <div className="capitalize">{department(row)}</div>
-
+        return <div className="capitalize">{department(row)}</div>;
       },
       sortable: true,
     },
@@ -136,7 +133,6 @@ function BillingTable() {
     setPaymentType(event.target.value);
   };
 
-
   const SelectedRowsDisplay = ({ selectedRows, onDeleteRow }) => {
     return (
       <>
@@ -172,7 +168,6 @@ function BillingTable() {
               ))}
             </div>
 
-
             <div className="flex flex-col">
               <label className="font-bold">Select Payment Option</label>
               <select value={PaymentType} onChange={handlePaymentTypeChange}>
@@ -207,19 +202,22 @@ function BillingTable() {
   };
 
   const makePayment = async () => {
-    const receiptId = generateCode(userData?.data?.id)
+    const receiptId = generateCode(userData?.data?.id);
     if (selectedRows?.length === 0) {
       // Optional: Handle success after all payments are made
       toast.error("No Bill selected");
     }
-    if(!PaymentType){
-      toast.error('Select a payment type')
-      return
+    if (!PaymentType) {
+      toast.error("Select a payment type");
+      return;
     }
     try {
       await Promise.all(
         selectedRows?.map(async (row) => {
-          await makePaymentMutate({ id: row.id, data: { receipt: receiptId, paymentType: PaymentType } });
+          await makePaymentMutate({
+            id: row.id,
+            data: { receipt: receiptId, paymentType: PaymentType },
+          });
         })
       );
     } catch (error) {

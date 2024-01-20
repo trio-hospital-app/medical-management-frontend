@@ -1,5 +1,4 @@
 import CustomLabHeader from "../../../../components/ui/customPatientCard/customPatientCard";
-import { useState } from "react";
 import {
   Accordion,
   AccordionItem,

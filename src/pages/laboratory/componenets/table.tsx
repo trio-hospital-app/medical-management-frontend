@@ -16,6 +16,7 @@ import ReceiveSpecimen from "./modal/receiveSpecimen";
 import labService from "../../../services/labService";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
+import { m } from "framer-motion";
 
 function Table({ labSearch, reload, setReload }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
@@ -37,9 +38,11 @@ function Table({ labSearch, reload, setReload }) {
 
   if (ResultStatus === "success") {
     toast.success("Lab order approved successfully");
+    mutateAwaiting(null);
   }
   if (receiveStatus === "success") {
     toast.success("Lab order received successfully");
+  mutateReceive(null);
   }
 
   const { data: labData, isLoading: labLoading } = useQuery(
