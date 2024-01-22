@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import { IoArrowBackOutline } from "react-icons/io5";
 import { useWriteNotes } from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
@@ -7,7 +8,7 @@ import { toast } from "react-toastify";
 
 function NewNote({ refetch, cid, initialData, recommendation, onClose }) {
     const [formData, setFormData] = useState({
-        notes: initialData? initialData : [{ question: '', answer: '' }],
+        notes: initialData ? initialData : [{ question: '', answer: '' }],
         recommendation: recommendation,
     });
 
@@ -78,7 +79,9 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose }) {
             <form className="grid" onSubmit={handleSubmit}>
 
                 <div className="grid">
-                    <label className="font-bold text-lg text-ha-primary1">Doctor's Notes:</label>
+                    <div className="flex items-center justify-start w-full gap-3"> <IoArrowBackOutline onClick />
+                        <label className="font-bold text-lg text-ha-primary1">Doctor's Notes:</label></div>
+
                     {formData.notes.map((note, index) => (
                         <div key={index} className="flex items-center w-full gap-3 bg-blue-50 p-5 rounded-lg my-2">
                             <div className="grid gap-2 w-full">

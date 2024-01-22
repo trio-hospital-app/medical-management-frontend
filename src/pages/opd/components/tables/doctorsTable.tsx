@@ -17,30 +17,38 @@ import NewNote from "./newNote";
 interface ShowCreateNoteMap {
   [key: string]: boolean;
   editNoteData?: any;
-  id?:string,
-  recommendation?: any; 
+  id?: string;
+  recommendation?: any;
 }
 
 
-function DoctorsTable({ id,  }) {
+function DoctorsTable({ id, }) {
   const [showCreateNoteMap, setShowCreateNoteMap] = useState<ShowCreateNoteMap>({});
 
-  const handleEditClick = (data, type) => {
-    if (type === 'create') {
-      setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: null, id:data.id,  recommendation: '' } as ShowCreateNoteMap));
-    }
-
-    if (type === 'edit') {
-      setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: data.notes, id:data.id, recommendation: data.recommendation } as ShowCreateNoteMap));
-    }
-  };
 
   const handleDelete = (data) => {
-    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true,  id:data.id, }));
+    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, id: data.id, }));
   };
 
-  const handleCloseNote = (rowId) => {
-    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [rowId]: false, id: rowId }));
+  const handleCloseNote = (data) => {
+    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: false, id: data.id, }));
+  };
+
+  const [rowId, setId] = useState('')
+
+  const handleEditClick = (data, type, id) => {
+    handleCloseNote(id)
+    setId(id)
+    if (rowId === id) {
+      if (type === 'create') {
+        setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: null, id: data.id, recommendation: '' } as ShowCreateNoteMap));
+      }
+
+      if (type === 'edit') {
+        setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: data.notes, id: data.id, recommendation: data.recommendation } as ShowCreateNoteMap));
+      }
+    }
+
   };
 
 
@@ -96,14 +104,26 @@ function DoctorsTable({ id,  }) {
   const ExpandedComponent = ({ data }) => (
     <div className="flex items-center justify-center">
 
-      {data?.notes?.length > 0 && !showCreateNoteMap[data.id] && <div
+      {!showCreateNoteMap[data.id] && data?.notes?.length === 0 && (
+        <div className="flex items-center flex-col justify-center w-full h-[300px]">
+          <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
+          <h3 className="font-bold">No Notes found </h3>
+          <button
+            className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-500"
+            onClick={() => handleEditClick(data, 'create', data.id)}
+          >
+            Create New Note
+          </button>
+        </div>
+      )}
 
+      {data?.notes?.length > 0 && !showCreateNoteMap[data.id] && <div
         className="w-[1100px]  h-[auto] border-2 border-blue-400 my-3"
       >
         <div className="w-full h-full">
           <div>
             <div className="w-full h-full flex items-center justify-end gap-3 py-2 my-2 text-white bg-blue-50  px-10">
-              <button className="text-white flex items-center hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2" onClick={() => handleEditClick(data, "edit")}>
+              <button className="text-white flex items-center hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2" onClick={() => handleEditClick(data, "edit", data.id)}>
                 <AiOutlineEdit /> <span>Edit</span>
               </button>
               <button className="text-white flex items-center justify-center gap-2 p-2 hover:bg-gray-500 rounded bg-red-500" onClick={() => handleDelete(data)}>
@@ -123,30 +143,18 @@ function DoctorsTable({ id,  }) {
       </div>}
 
 
-      {showCreateNoteMap[data.id] && data.id == showCreateNoteMap?.id && (
-  <NewNote
-    refetch={refetch}
-    cid={data?.id}
-    initialData={showCreateNoteMap?.editNoteData ? showCreateNoteMap?.editNoteData : null}
-    recommendation={showCreateNoteMap.recommendation}
-    onClose={() => handleCloseNote(data.id)}
-  />
-)}
-
-
-
-       {!showCreateNoteMap[data.id] && data?.notes?.length === 0 && (
-        <div className="flex items-center flex-col justify-center w-full h-[300px]">
-          <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
-          <h3 className="font-bold">No Notes found </h3>
-          <button
-            className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-500"
-            onClick={() => handleEditClick(data, 'create')}
-          >
-            Create New Note
-          </button>
-        </div>
+      {showCreateNoteMap[data.id]  && (
+        <NewNote
+          refetch={refetch}
+          cid={data?.id}
+          initialData={showCreateNoteMap?.editNoteData ? showCreateNoteMap?.editNoteData : null}
+          recommendation={showCreateNoteMap.recommendation}
+          onClose={() => handleCloseNote(data)}
+        />
       )}
+
+
+
     </div>
   );
 
