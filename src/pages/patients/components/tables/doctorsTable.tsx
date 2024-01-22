@@ -1,140 +1,130 @@
 import DataTable from "react-data-table-component";
-import { useNavigate } from "react-router-dom";
+import { useGetConsultationofPatient } from "../../../../hooks/reactQuery/useVisit";
+import Loader from "../../../../components/ui/loader";
+import { formatDate } from "../../../../hooks/formattedDate";
+// import { Swiper, SwiperSlide } from 'swiper/react';
+import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai';
 
-function DoctorsTable() {
-  interface Patient {
-    id: number;
-    firstName: string;
-    lastName: string;
-    patientId: string;
-    gender: string;
-    dateOfBirth: string;
-    phoneNumber: string;
-    lastAppointmentDate: string;
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// import { Pagination, Navigation } from 'swiper/modules';
+import { useState } from "react";
+import NewNote from "./newNote";
+
+function DoctorsTable({ id }) {
+  const [showCreateNote, setShowCreateNote] = useState(false);
+  const [editNoteData, setEditNoteData] = useState(null);
+
+  const handleEditClick = (data) => {
+    setEditNoteData(data); // Set the initial data for editing
+    setShowCreateNote(true);
+  };
+  const handleDelete = (data) => {
+    setEditNoteData(data); 
+    setShowCreateNote(true);
+  };
+
+
+  const {
+    data: consultationData,
+    isLoading: loadingConsults,
+    refetch
+  } = useGetConsultationofPatient(id);
+
+  if (loadingConsults) {
+    return <Loader />
   }
-  const data = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "12345",
-      gender: "Male",
-      dateOfBirth: "01/01/1990",
-      phoneNumber: "555-1234",
-      lastAppointmentDate: "02/15/2022",
-    },
-    {
-      id: 2,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "12345",
-      gender: "Male",
-      dateOfBirth: "01/01/1990",
-      phoneNumber: "555-1234",
-      lastAppointmentDate: "02/15/2022",
-    },
-    {
-      id: 3,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "12345",
-      gender: "Male",
-      dateOfBirth: "01/01/1990",
-      phoneNumber: "555-1234",
-      lastAppointmentDate: "02/15/2022",
-    },
-    {
-      id: 4,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "12345",
-      gender: "Male",
-      dateOfBirth: "01/01/1990",
-      phoneNumber: "555-1234",
-      lastAppointmentDate: "02/15/2022",
-    },
-    {
-      id: 5,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "12345",
-      gender: "Male",
-      dateOfBirth: "01/01/1990",
-      phoneNumber: "555-1234",
-      lastAppointmentDate: "02/15/2022",
-    },
-    {
-      id: 6,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "12345",
-      gender: "Male",
-      dateOfBirth: "01/01/1990",
-      phoneNumber: "555-1234",
-      lastAppointmentDate: "02/15/2022",
-    },
-    {
-      id: 7,
-      firstName: "John",
-      lastName: "Doe",
-      patientId: "12345",
-      gender: "Male",
-      dateOfBirth: "01/01/1990",
-      phoneNumber: "555-1234",
-      lastAppointmentDate: "02/15/2022",
-    },
-    // Add more data objects as needed
-  ];
 
   const columns = [
     {
-      name: "Patient Name",
-      selector: (row: Patient) => `${row.firstName} ${row.lastName}`,
+      name: "Date",
+      selector: (row) => formatDate(row?.createdAt),
       sortable: true,
-      with: "200px",
+      // width: "200px",
+    },
+    {
+      name: "Visit ID",
+      selector: (row) => row?.id,
+      sortable: true,
+      // width: "200px",
+    },
+    {
+      name: "Doctor",
+      selector: (row) => <div>{row?.doctorId?.firstName} {row?.doctorId?.lastName}</div>,
+      sortable: true,
     },
     {
       name: "Patient ID",
-      selector: (row: Patient) => row.patientId,
+      selector: (row) => <div>{row?.patientId?.firstName} {row?.patientId?.lastName}</div>,
       sortable: true,
-      with: "200px",
+      // width: "200px",
     },
     {
-      name: "Gender",
-      selector: (row: Patient) => row.gender,
+      name: "Visit Type",
+      selector: (row) => row?.visitType[0]?.name,
       sortable: true,
+      // width: "200px",
     },
     {
-      name: "Date of Birth",
-      selector: (row: Patient) => row.dateOfBirth,
+      name: "Status",
+      selector: (row) => row?.status,
       sortable: true,
-      with: "200px",
-    },
-    {
-      name: "Phone Number",
-      selector: (row: Patient) => row.phoneNumber,
-      sortable: true,
-      with: "200px",
-    },
-    {
-      name: "Date of Last Appointment",
-      selector: (row: Patient) => row.lastAppointmentDate,
-      sortable: true,
-      with: "500px",
-    },
+      // width: "200px",
+    }
   ];
 
-  const navigate = useNavigate();
-  const handleRowClick = (patientId: number) => {
-    navigate(`/patients/${patientId}`);
-  };
+
+  const ExpandedComponent = ({ data }) => (
+    <div className="flex items-center justify-center">
+
+      {data?.notes?.length > 0 && !showCreateNote && <div
+
+        className="w-[1100px]  h-[auto] border-2 border-blue-400 my-3"
+      >
+        <div className="w-full h-full">
+          <div>
+            <div className="w-full h-full flex items-center justify-end gap-3 py-2 my-2 text-white bg-blue-50  px-10">
+              <button className="text-white flex items-center hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2" onClick={() => handleEditClick(data)}>
+                <AiOutlineEdit /> <span>Edit</span>
+              </button>
+              <button className="text-white flex items-center justify-center gap-2 p-2 hover:bg-gray-500 rounded bg-red-500" onClick={() => handleDelete(data)}>
+                <AiOutlineDelete /><span>Delete</span>
+              </button>
+            </div>
+            <h2 className="text-2xl font-bold p-10">{data?.recommendation}</h2>
+            {data?.notes?.map((el) => (<div className="grid gap-1 mb-10 px-10">
+              <span className="font-bold text-lg capitalize">{el.question}</span>
+              <p className="font-normal text-gray-500">
+                {el.answer}
+              </p>
+            </div>))}
+
+          </div>
+        </div>
+      </div>}
+
+
+      {showCreateNote && <NewNote refetch={refetch}  cid={data?.id}
+          initialData={editNoteData}
+          onClose={() => setShowCreateNote(false)} />} {!showCreateNote && data?.notes?.length == 0 && <div className="flex items-center flex-col justify-center w-full h-[300px]">
+        <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
+        <h3 className="font-bold">No Notes found </h3>
+        <button className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-500" onClick={() => setShowCreateNote(true)}>Create New Note</button>
+      </div>}
+    </div>
+  );
+
+
 
   return (
-    <div>
+    <div className="w-full">
       <DataTable
         columns={columns}
-        data={data}
-        onRowClicked={(row) => handleRowClick(row.id)}
+        data={consultationData?.data?.consultations}
+        expandableRows
+        expandableRowsComponent={ExpandedComponent}
       />
     </div>
   );

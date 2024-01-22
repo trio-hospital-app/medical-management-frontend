@@ -1,5 +1,5 @@
 import { useQuery, useMutation, QueryClient } from "react-query";
-import VisitService from "../../services/visitService";
+import VisitService, {FormData} from "../../services/visitService";
 const queryClient = new QueryClient();
 
 
@@ -43,7 +43,17 @@ export const useEditConsultation = () => {
         }
     );
 };
-
+export const useWriteNotes = () => {
+    return useMutation(
+        ({ id, data }: { id: string, data: FormData }) =>
+            VisitService.writeVisitNotes({id, data}),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries("consultations");
+            },
+        }
+    );
+};
 export const useDeleteConsultation = () => {
     return useMutation((id: string) => VisitService.deleteConsultation(id), {
         onSuccess: () => {

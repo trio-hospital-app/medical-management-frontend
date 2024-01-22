@@ -5,7 +5,6 @@ import {
   TabsContent,
 } from "../../../components/ui/tabs";
 import BillingTable from "./tables/billingTable";
-import PatientInvoiceTable from "./tables/patientInvoiceTable";
 import PaymentTable from "./tables/paymentTable";
 
 function FinanceTabsCard() {
@@ -19,19 +18,13 @@ function FinanceTabsCard() {
           <TabsList>
             <TabsTrigger value="Payments">Payments</TabsTrigger>
           </TabsList>
-          <TabsList>
-            <TabsTrigger value="Invoices">Invoices</TabsTrigger>
-          </TabsList>
         </div>
         <div className="px-5">
           <TabsContent value="Billing">
             <BillingTable />
           </TabsContent>
-          <TabsContent value="Payments">
+          <TabsContent value="Reciepts">
             <PaymentTable />
-          </TabsContent>
-          <TabsContent value="Invoices">
-            <PatientInvoiceTable />
           </TabsContent>
         </div>
       </Tabs>

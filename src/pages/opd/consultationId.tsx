@@ -17,7 +17,7 @@ function ConsultationId() {
   return (
     <div className="Patients">
       <PatientInfoHeader patientData={data.data} />
-      <PatientTabsCard id={pid}  patientData={data.data}/>
+      <PatientTabsCard id={pid} patientData={data.data}/>
     </div>
   );
 }

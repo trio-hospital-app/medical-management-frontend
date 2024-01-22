@@ -28,6 +28,9 @@ function PaymentTable() {
     if (row.itemType === "radiology") {
       return "Radiology";
     }
+        if (row.itemType === "consultations") {
+      return "Doctor's Visit";
+    }
   };
   
   const department = (row) => {
@@ -36,6 +39,9 @@ function PaymentTable() {
     }
     if (row.itemType === "radiology") {
       return row?.radiologyId?.testId?.test;
+    }
+        if (row.itemType === "consultations") {
+      return row?.consultationId?.visitType[0]?.name;
     }
   };
 

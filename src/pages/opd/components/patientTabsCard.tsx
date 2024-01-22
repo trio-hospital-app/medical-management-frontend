@@ -43,7 +43,7 @@ function PatientTabsCard({ id, patientData }) {
             <LabTable id={id} patientData={patientData}/>
           </TabsContent>
           <TabsContent value="radiology">
-            <RadiologyTable  id={id} patientData={patientData}/>
+            <RadiologyTable  id={id} patientData={patientData} />
           </TabsContent>
           <TabsContent value="pharmacy">
             <PharmacyTable />

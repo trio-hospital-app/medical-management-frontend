@@ -1,7 +1,15 @@
 import { AxiosRequestConfig } from "axios";
 import { request } from "../lib/api";
 
+interface Note {
+  question: string;
+  answer: string;
+}
 
+export interface FormData {
+  notes: Note[];
+  recommendation: string;
+}
 class VisitService {
 
   //consultations
@@ -26,6 +34,16 @@ class VisitService {
     const options: AxiosRequestConfig = {
       method: "GET",
       url: `/consults/user/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async writeVisitNotes({ id, data }: { id: string, data: FormData }) {
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: `/consult/complete/${id}`,
+      data
     };
     const response = await request(options);
     return response;
