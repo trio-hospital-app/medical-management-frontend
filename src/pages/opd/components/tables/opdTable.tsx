@@ -91,7 +91,7 @@ if(loadingConsults) {
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
         columns={columns}
-        data={consultationData?.data?.consultations}
+        data={consults?.data ? consults?.data : consultationData?.data?.consultations || []}
         onRowClicked={(row) => handleRowClick(row.patientId.id, row.id)}
       />
 

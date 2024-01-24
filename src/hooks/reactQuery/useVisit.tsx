@@ -20,6 +20,19 @@ export const useGetConsultationById = (id: string) => {
     );
 };
 
+export const useSearchVisit = (
+    param: string | number,
+    isEnabled: boolean = false,
+  ) => {
+    return useQuery(
+      ["searchPatient", param],
+      () => VisitService.searchVisit(param),
+      {
+        enabled: isEnabled,
+      },
+    );
+  };
+
 export const useGetConsultationofPatient = (id: string) => {
     return useQuery(createQueryKey("consultationOfPatient", id), () =>
         VisitService.getConsultationofPatient(id)

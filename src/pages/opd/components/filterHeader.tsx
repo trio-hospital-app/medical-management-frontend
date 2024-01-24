@@ -1,17 +1,16 @@
 import { BiSearchAlt } from "react-icons/bi";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import { useState } from "react";
-import { useSearchPatient } from "../../../hooks/reactQuery/usePatients";
 import Loader from "../../../components/ui/loader";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import NewConsultation from "./newConsultation";
 import { useGetUserByToken } from "../../../hooks/reactQuery/useUser";
-import { useNewConsultation } from "../../../hooks/reactQuery/useVisit";
+import { useNewConsultation, useSearchVisit } from "../../../hooks/reactQuery/useVisit";
 import { toast } from "react-toastify";
 
 function Patients({ setConsults }) {
   const [search, setSearch] = useState("");
-  const { isLoading, data, refetch } = useSearchPatient(search);
+  const { isLoading, data, refetch } = useSearchVisit(search);
   const [showCreate, setShowCreate] = useState(false)
   const [patientId, setPatientId] = useState("");
   const [scheme, setScheme] = useState("");

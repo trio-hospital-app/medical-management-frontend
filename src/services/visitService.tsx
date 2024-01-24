@@ -122,6 +122,16 @@ class VisitService {
     return response;
   }
 
+  public async searchVisit(param: string | number) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/search/consult?search=${param}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+
   public async createVisitDept(body: { name: string, cost:number }) {
     const options: AxiosRequestConfig = {
       method: "POST",
