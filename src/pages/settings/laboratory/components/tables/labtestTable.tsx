@@ -138,7 +138,6 @@ function LabTestsTable() {
           className="p-2 w-full flex items-center justify-center rounded-lg"
           style={{
             backgroundColor: row?.specimenId?.color,
-            // color: isLightColor(row.backgroundColor) ? "black" : "white",
             color: "white",
           }}
         >
@@ -151,13 +150,13 @@ function LabTestsTable() {
     },
     {
       name: "Description",
-      selector: (row) => <div className="flex flex-wrap">{row?.specimenId?.description}</div>,
+      selector: (row) => row?.specimenId?.description,
       sortable: true,
       width: "250px",
     },
     {
       name: "Cost",
-      selector: (row) => <div className="font-bold">NGN {row.cost}</div>,
+      selector: (row) => `NGN ${row.cost}`,
       sortable: true,
     },
     {
@@ -178,7 +177,7 @@ function LabTestsTable() {
       sortable: false,
     },
   ];
-
+  
   const handleClick = () => {
     setCreateFormData({
       panel: "",

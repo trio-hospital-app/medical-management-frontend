@@ -18,8 +18,9 @@ interface ShowCreateNoteMap {
   [key: string]: boolean | undefined;
   editNoteData?: any;
   recommendation?: any;
-  id?: string;
+  id?: string | any; 
 }
+
 
 
 function DoctorsTable({ id, }) {

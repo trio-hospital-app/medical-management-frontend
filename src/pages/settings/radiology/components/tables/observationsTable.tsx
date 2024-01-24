@@ -128,34 +128,34 @@ function ObservationsTable() {
   const columns = [
     {
       name: "Name",
-      selector: (row) => <div className="capitalize font-bold">{row.test}</div>,
+      selector: (row) => row.test, // Assuming 'test' is a primitive type
       sortable: true,
       width: "200px",
     },
     {
       name: "Department",
-      selector: (row) => <div className="capitalize">{row.centerId.center}</div>,
+      selector: (row) => row.centerId.center, // Assuming 'center' is a primitive type
       sortable: true,
     },
     {
       name: "Cost",
-      selector: (row) => <div className="font-bold">NGN {row.cost}</div>,
+      selector: (row) => `NGN ${row.cost}`, // Assuming 'cost' is a primitive type
       sortable: true,
     },
     {
       cell: (row) => (
-        <div className=" w-full flex justify-end items-center">
-        <div className="w-full flex items-center justify-end gap-5">
-          <FaEdit
-            className="text-ha-primary1 text-lg cursor-pointer"
-            onClick={() => handleEdit(row?.id, row)}
-          />
-          <MdDelete
-            className="text-red-500 text-lg cursor-pointer"
-            onClick={() => handleDelete(row?.id)}
-          />
+        <div className="w-full flex justify-end items-center">
+          <div className="w-full flex items-center justify-end gap-5">
+            <FaEdit
+              className="text-ha-primary1 text-lg cursor-pointer"
+              onClick={() => handleEdit(row?.id, row)}
+            />
+            <MdDelete
+              className="text-red-500 text-lg cursor-pointer"
+              onClick={() => handleDelete(row?.id)}
+            />
+          </div>
         </div>
-      </div>
       ),
       sortable: false,
     },

@@ -17,7 +17,7 @@ function Patients({ setConsults }) {
   const [dept, setDept] = useState("");
   const [doctorId, setDoctorId] = useState('')
   const { data: userData } = useGetUserByToken();
-  console.log(userData, 'userData')
+  console.log(doctorId, 'userData')
   const {
     data: consultationData,
     isLoading: loadingConsults,
