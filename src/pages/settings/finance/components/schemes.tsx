@@ -140,7 +140,7 @@ function Schemes() {
               <label>Discount</label>
               <input
                 type="number"
-                onChange={(e) => setDiscount(e.target.value)}
+                onChange={(e) => setDiscount(parseInt(e.target.value))}
               />
             </div>
           </div>
@@ -192,7 +192,7 @@ function Schemes() {
               <input
                 type="number"
                 value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
+                onChange={(e) => setDiscount(parseInt(e.target.value))}
               />
             </div>
           </div>

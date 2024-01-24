@@ -16,6 +16,7 @@ function Patients({ setConsults }) {
   const [patientId, setPatientId] = useState("");
   const [scheme, setScheme] = useState("");
   const [dept, setDept] = useState("");
+  const [doctorId, setDoctorId] = useState('')
   const { data: userData } = useGetUserByToken();
   console.log(userData, 'userData')
   const {
@@ -77,7 +78,7 @@ if(consultationData && consultationData?.status) {
   return (
     <div className="Patients">
       {showCreate &&    <BasicModal
-        title="Patient Information"
+        title="Order New Visit"
         setOpenModal={setShowCreate}
         openModal={showCreate}
         cancelTitle="Cancel"
@@ -89,7 +90,7 @@ if(consultationData && consultationData?.status) {
          createConsultation()
         }}
       >
-        <NewConsultation setPatientId={setPatientId} setScheme={setScheme} setDept={setDept}/>
+        <NewConsultation setDoctorId={setDoctorId} setPatientId={setPatientId} setScheme={setScheme} setDept={setDept}/>
       </BasicModal>}
       <FilterHeader
         title="All Doctor's Visits"

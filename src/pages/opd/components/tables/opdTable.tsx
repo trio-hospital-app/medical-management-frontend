@@ -55,7 +55,7 @@ if(loadingConsults) {
     },
     {
       name: "Status",
-      selector: (row) => row?.status,
+      selector: (row) => <div className={row?.status === "seen" ? "capitalize bg-green-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold" : "capitalize bg-yellow-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold"}>{row?.status}</div>,
       sortable: true,
       // width: "200px",
     },

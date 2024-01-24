@@ -4,12 +4,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { useEffect, useState } from "react";
-import OrderLab from "../orderLab";
-import OrderRadiology from "../orderRadiology";
 import OrderDoctor from "../orderDoctor";
 import { formatDate } from "../../../../hooks/formattedDate";
 import PatientService from "../../../../services/patientService";
 import Loader from "../../../../components/ui/loader";
+import NewLabOrder from "./newLabOrder";
+import { useAddLab } from "../../../../hooks/reactQuery/useLabs";
+import { toast } from "react-toastify";
+import { useAddRadiology } from "../../../../hooks/reactQuery/useRadiology";
+import NewImagingOrder from "./NewImagingOrder";
+import { useNewConsultation } from "../../../../hooks/reactQuery/useVisit";
+import { useGetUserByToken } from "../../../../hooks/reactQuery/useUser";
 
 function PatientTable({ patientData }) {
   interface PageData {
@@ -19,13 +24,52 @@ function PatientTable({ patientData }) {
     };
   }
   const navigate = useNavigate();
+  const [formComment, setFormComment] = useState("");
+  const [selectLabPanel, setselectLabPanel] = useState([]);
+  const [selectScheme, setSelectedScheme] = useState([]);
   const [pageData, setPageData] = useState<PageData>(null);
   const [showLabModal, setShowLabModal] = useState(false);
-  const [showImagingModal, setShowImagingModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [newRadiologyModal, setNewRadiologyModal] = useState(false);
   const [page, setPage] = useState(1);
+  const [modalPatientData, setModalPatientData] = useState(null)
+  const [diagnosisComment, setDiagnosisComment] = useState("");
+  const [selectRadiologyTest, setSelectRadiologyTest] = useState([]);
+  const [doctorId, setDoctorId] = useState('')
+  const [scheme, setScheme] = useState("");
+  const [dept, setDept] = useState("");
 
+  const {
+    mutate: mutateLab,
+    status: addLabStatus,
+    isLoading: NewLabLoading,
+  } = useAddLab();
+
+  const {
+    data: consultationData,
+    isLoading: loadingConsults,
+    mutate: createMutate
+  } = useNewConsultation();
+  const { data: userData } = useGetUserByToken();
+  if (consultationData && consultationData?.status) {
+    toast.success('Successfully Created Consultation')
+    createMutate(null)
+  }
+  const {
+    mutate: mutateRAdiology,
+    status: addRadiologyStatus,
+    isLoading: NewRadiologyLoading,
+  } = useAddRadiology();
+
+  if (addLabStatus === "success") {
+    toast.success("Lab order created successfully");
+    mutateLab(null)
+  }
+  if (addRadiologyStatus === "success") {
+    toast.success("Radiology order created successfully");
+    mutateRAdiology(null)
+  }
   const fetchData = async (newpage) => {
     try {
       const data = await PatientService.getPatients(newpage);
@@ -41,13 +85,50 @@ function PatientTable({ patientData }) {
     fetchData(page);
   }, [page]);
 
-  if (isLoading) {
+  if (isLoading || NewLabLoading || NewRadiologyLoading || loadingConsults) {
     return <Loader />;
   }
-  
+
   const handlePageChange = async (page) => {
     setPage(page);
   };
+
+  const handleCreateNewLabOrder = async () => {
+    const LabData: any = {
+      panelArr: selectLabPanel,
+      patientId: modalPatientData?.id,
+      text: formComment,
+      schemeId: selectScheme,
+    };
+    await mutateLab(LabData);
+    setShowLabModal(false);
+  };
+
+  const handleCreateNewRadiologyOrder = async () => {
+    const RadiologyData: any = {
+      testArr: selectRadiologyTest,
+      patientId: modalPatientData?.id,
+      text: formComment,
+      diagnosis: diagnosisComment,
+      schemeId: selectScheme,
+    };
+    await mutateRAdiology(RadiologyData);
+    setNewRadiologyModal(false);
+  };
+
+  const createConsultation = async () => {
+    try {
+      const data = {
+        doctorId: userData?.data?.id,
+        visit: dept,
+        patientId: modalPatientData?.id,
+        schemeId: scheme
+      }
+      await createMutate(data)
+    } catch (error) {
+
+    }
+  }
 
   interface Patient {
     lastAppointment: number;
@@ -99,7 +180,7 @@ function PatientTable({ patientData }) {
       width: "200px",
     },
     {
-      cell: () => (
+      cell: (row) => (
         <div className=" w-full flex justify-end items-center">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown
@@ -110,13 +191,15 @@ function PatientTable({ patientData }) {
               <Dropdown.Item
                 onClick={() => {
                   setShowLabModal(true);
+                  setModalPatientData(row)
                 }}
               >
                 Order Laboratory
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => {
-                  setShowImagingModal(true);
+                  setNewRadiologyModal(true);
+                  setModalPatientData(row)
                 }}
               >
                 Order Radiology
@@ -124,6 +207,7 @@ function PatientTable({ patientData }) {
               <Dropdown.Item
                 onClick={() => {
                   setShowDoctorModal(true);
+                  setModalPatientData(row)
                 }}
               >
                 See a Doctor
@@ -153,28 +237,50 @@ function PatientTable({ patientData }) {
       />
       {/* lab modal */}
       <BasicModal
+        size='3xl'
         title="Order Laboratory Tests"
         setOpenModal={setShowLabModal}
         cancelTitle="Cancel Order"
         openModal={showLabModal}
         showCancelButton={true}
         submitTitle="Submit Order"
+        submitHandler={handleCreateNewLabOrder}
         showSubmitButton={true}
       >
-        <OrderLab />
+        <NewLabOrder
+          setSelectedScheme={setSelectedScheme}
+          setselectLabPanel={setselectLabPanel}
+          setFormComment={setFormComment}
+          selectLabPanel={selectLabPanel}
+          selectScheme={selectScheme}
+          formComment={formComment}
+          patientData={modalPatientData}
+        />
       </BasicModal>
 
       {/* Imaging modal */}
       <BasicModal
-        title="Order Radiology Tests"
-        setOpenModal={setShowImagingModal}
-        cancelTitle="Cancel Order"
-        openModal={showImagingModal}
+        title="New Imaging Order"
+        setOpenModal={setNewRadiologyModal}
+        openModal={newRadiologyModal}
+        cancelTitle="Cancel"
+        submitTitle="Save"
         showCancelButton={true}
-        submitTitle="Submit Order"
         showSubmitButton={true}
+        size="3xl"
+        submitHandler={handleCreateNewRadiologyOrder}
       >
-        <OrderRadiology />
+        <NewImagingOrder
+          setSelectedScheme={setSelectedScheme}
+          setSelectRadiologyTest={setSelectRadiologyTest}
+          setFormComment={setFormComment}
+          patientData={modalPatientData}
+          formComment={formComment}
+          selectRadiologyTest={selectRadiologyTest}
+          selectScheme={selectScheme}
+          setDiagnosisComment={setDiagnosisComment}
+          diagnosisComment={diagnosisComment}
+        />
       </BasicModal>
 
       {/* Doctor encounter modal */}
@@ -186,8 +292,12 @@ function PatientTable({ patientData }) {
         showCancelButton={true}
         submitTitle="Submit Order"
         showSubmitButton={true}
+        size="3xl"
+        submitHandler={() => {
+          createConsultation()
+        }}
       >
-        <OrderDoctor />
+        <OrderDoctor setDoctorId={setDoctorId} setScheme={setScheme} setDept={setDept} patientData={modalPatientData} />
       </BasicModal>
     </div>
   );

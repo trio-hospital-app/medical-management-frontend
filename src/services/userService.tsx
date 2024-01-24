@@ -39,6 +39,15 @@ class UserService {
     return response;
   }
 
+  public async getDoctors() {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: "/doctors",
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async getUsersByToken() {
     const options: AxiosRequestConfig = {
       method: "GET",

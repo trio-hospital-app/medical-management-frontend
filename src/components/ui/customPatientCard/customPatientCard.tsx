@@ -15,6 +15,7 @@ interface TakeSpecimenProps {
   imgSrc?: string;
   orderedBy?: string;
   orderedDate?: string;
+  showOrdered?: boolean;
   testNameBackgroundColor?: string;
   layout?: number;
 }
@@ -33,6 +34,7 @@ function customPatientCard({
   patientEmail,
   imgSrc,
   orderedBy,
+  showOrdered,
   orderedDate,
   testName,
   testNameBackgroundColor,
@@ -158,7 +160,7 @@ function customPatientCard({
               </div>
             </div>
           </div>
-          <div className="px-10 py-1 shadow flex items-start justify-start gap-5 flex-col md:flex-row">
+          {showOrdered && <div className="px-10 py-1 shadow flex items-start justify-start gap-5 flex-col md:flex-row">
             <div className="flex items-start justify-center flex-col">
               <span className="text-sm font-semibold text-gray-500">
                 Orderd By:
@@ -171,7 +173,7 @@ function customPatientCard({
               </span>
               <span className="font-semibold">{orderedDate}</span>
             </div>
-          </div>
+          </div>}
         </div>
       ) : (
         <div className="Patients">

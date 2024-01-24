@@ -6,19 +6,19 @@ import {
 import Loader from "../../../../components/ui/loader";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../../../../hooks/formattedDate";
-import { useEffect, useState } from "react";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { MdDelete } from "react-icons/md";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { toast } from "react-toastify";
 import generateCode from '../../../../lib/generateId'
 import { useGetUserByToken } from "../../../../hooks/reactQuery/useUser";
+import { useState } from "react";
 
 function BillingTable() {
   const { id } = useParams();
   const [selectedRows, setSelectedRows] = useState([]);
-  const [total, setTotal] = useState();
-  const [PaymentType, setPaymentType] = useState('')
+  const [total, setTotal] = useState(0);
+  const [PaymentType, setPaymentType] = useState('');
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const { data: userData } = useGetUserByToken();
   const { data: userFinance, isLoading: LoadinguserFinance, refetch } =

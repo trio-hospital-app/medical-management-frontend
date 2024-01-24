@@ -3,7 +3,7 @@ import { useGetConsultationofPatient } from "../../../../hooks/reactQuery/useVis
 import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
 // import { Swiper, SwiperSlide } from 'swiper/react';
-import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -15,10 +15,10 @@ import NewNote from "./newNote";
 
 
 interface ShowCreateNoteMap {
-  [key: string]: boolean;
+  [key: string]: boolean | undefined;
   editNoteData?: any;
-  id?: string;
   recommendation?: any;
+  id?: string;
 }
 
 

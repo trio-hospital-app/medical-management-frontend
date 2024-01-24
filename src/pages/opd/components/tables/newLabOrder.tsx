@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import CustomPatientCard from "../../../../components/ui/customPatientCard/customPatientCard";
+
 import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect";
 import TextareaAutosize from "react-textarea-autosize";
-import SearchComponent from "../../../../components/ui/SearchComponent";
-import { useSearchPatient } from "../../../../hooks/reactQuery/usePatients";
 import { useGetClinicPanel } from "../../../../hooks/reactQuery/useClinicPanels";
-import Loader from "../../../../components/ui/loader";
 
 const NewLabOrder = ({
   setSelectedScheme,
@@ -39,7 +35,6 @@ console.log(patientData)
   return (
     <div>
       <>
-
         <div className="flex flex-col justify-center px-4">
           <div className="flex flex-col md:flex-row items-center justify-between pt-5">
             <div className="mb-2 w-[48%]">

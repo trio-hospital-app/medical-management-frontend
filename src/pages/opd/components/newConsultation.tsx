@@ -4,9 +4,10 @@ import Loader from "../../../components/ui/loader";
 import SearchComponent from "../../../components/ui/SearchComponent";
 import CustomPatientCard from "../../../components/ui/customPatientCard/customPatientCard";
 import { useGetVisitDept } from "../../../hooks/reactQuery/useVisit";
+import { useGetDoctors } from "../../../hooks/reactQuery/useUser";
 
 
-function NewConsultation({ setPatientId, setScheme, setDept }) {
+function NewConsultation({ setDoctorId, setPatientId, setScheme, setDept }) {
     const {
         data: visitData,
         isLoading: loadingVisit,
@@ -22,7 +23,12 @@ function NewConsultation({ setPatientId, setScheme, setDept }) {
     } = useSearchPatient(search);
 
 
-    console.log(visitData, 'visitData')
+    const {
+        data: doctorData,
+        isLoading: loadingdoctor,
+    } = useGetDoctors();
+
+    console.log(doctorData, 'doctorData')
 
 
     // function to set the search patien text
@@ -51,10 +57,12 @@ function NewConsultation({ setPatientId, setScheme, setDept }) {
     //  const clinicPanels = clinicPanelData?.data || [];
 
     setPatientId(patient?.id);
+
     return (
         <div>
             {loadingSearch && <Loader />}
             {loadingVisit && <Loader />}
+            {loadingdoctor && <Loader />}
             <>
                 <SearchComponent
                     Label=" Search Patient"
@@ -96,6 +104,15 @@ function NewConsultation({ setPatientId, setScheme, setDept }) {
                         <select onChange={(e) => setScheme(e.target.value)}>
                             <option>select Schemes</option>
                             {schemes?.length > 0 && schemes?.map((scheme) => (<option value={scheme?.id}>{scheme?.name}</option>))}
+                        </select>
+                    </div>
+                    <div className="grid">
+                        <label className="text-sm font-semibold text-ha-primary1">
+                            Doctor
+                        </label>
+                        <select onChange={(e) => setDoctorId(e.target.value)}>
+                            <option>select Doctor</option>
+                            {doctorData?.data?.length > 0 && doctorData?.data?.map((scheme) => (<option value={scheme?.id}>{scheme?.name}</option>))}
                         </select>
                     </div>
                     <div className="grid">

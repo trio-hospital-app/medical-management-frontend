@@ -1,73 +1,88 @@
-import { useState } from "react";
-import CustomLabHeader from "../../../components/ui/customPatientCard/customPatientCard";
-import { MultiSelect } from "react-multi-select-component";
+import Loader from "../../../components/ui/loader";
+import CustomPatientCard from "../../../components/ui/customPatientCard/customPatientCard";
+import { useGetVisitDept } from "../../../hooks/reactQuery/useVisit";
+import { useGetDoctors } from "../../../hooks/reactQuery/useUser";
 
-const options = [
-  { label: "Grapes 🍇", value: "grapes" },
-  { label: "Mango 🥭", value: "mango" },
-  { label: "Strawberry 🍓", value: "strawberry", disabled: true },
-];
-function OrderDoctor() {
-  const [selected, setSelected] = useState([]);
-  return (
-    <div>
-      <div>
-        <CustomLabHeader
-          patientName="Mr. christopher Abraham"
-          patientID="12345667778"
-          testName="Full Blood Count"
-          labID="12345667778"
-          imgSrc="https://cdn-icons-png.flaticon.com/512/666/666201.png"
-          gender="Male"
-          phoneNumber="12345667778"
-          religion="Christian"
-          nationality="Nigeria"
-          maritalStatus="Single"
-          age="32 years"
-          orderedBy="Dr. Alexander Ifeanyichukwu"
-          orderedDate="23-04-2023 (9:10 am UTC)"
-          testNameBackgroundColor="bg-green-700"
-        />
-      </div>
-      <form className="p-10 grid gap-2">
-        <div className="">
-          <div className=" block">
-            <label htmlFor="patientid">Clinic</label>
-          </div>
-          <MultiSelect
-            options={options}
-            value={selected}
-            onChange={setSelected}
-            labelledBy="Lab Test"
-          />
-        </div>
 
-        <div className="">
-          <div className=" block">
-            <label htmlFor="patientid">Type of Visit</label>
-          </div>
-          <MultiSelect
-            options={options}
-            value={selected}
-            onChange={setSelected}
-            labelledBy="Lab Test"
-          />
-        </div>
+function NewConsultation({ setDoctorId, setScheme, setDept, patientData }) {
+    const {
+        data: visitData,
+        isLoading: loadingVisit,
+    } = useGetVisitDept();
 
-        <div className="">
-          <div className=" block">
-            <label htmlFor="patientid">Health Scheme</label>
-          </div>
-          <MultiSelect
-            options={options}
-            value={selected}
-            onChange={setSelected}
-            labelledBy="Lab Test"
-          />
+
+
+    const {
+        data: doctorData,
+        isLoading: loadingdoctor,
+    } = useGetDoctors();
+
+    console.log(doctorData, 'doctorData')
+
+    //patient info to render
+    const patient = patientData
+
+    // lab drop down data
+    const schemes = patient?.schemeId || [];
+    //  const clinicPanels = clinicPanelData?.data || [];
+
+
+    return (
+        <div>
+            {loadingVisit && <Loader />}
+            {loadingdoctor && <Loader />}
+            <>
+                    <div>
+                        <CustomPatientCard
+                            key={patient.id}
+                            patientName={`${patient?.salutation} ${patient?.firstName} ${patient?.middleName} ${patient?.lastName}`}
+                            patientID={patient?.patientId}
+                            patientEmail={patient.address.email}
+                            imgSrc={patient?.address?.image}
+                            gender={patient?.gender}
+                            phoneNumber={patient?.phone}
+                            religion={patient?.address.religion}
+                            nationality={patient?.address.country}
+                            maritalStatus={patient?.address.maritalStatus}
+                            age={patient?.address.dob}
+                            layout={2}
+                        />
+                    </div>
+
+                <div className="grid px-4 gap-4">
+                    <div className="grid">
+                        <label className="text-sm font-semibold text-ha-primary1">
+                            Scheme
+                        </label>
+                        <select onChange={(e) => setScheme(e.target.value)}>
+                            <option>select Schemes</option>
+                            {schemes?.length > 0 && schemes?.map((scheme) => (<option value={scheme?.id}>{scheme?.name}</option>))}
+                        </select>
+                    </div>
+                    <div className="grid">
+                        <label className="text-sm font-semibold text-ha-primary1">
+                            Doctor
+                        </label>
+                        <select onChange={(e) => setDoctorId(e.target.value)}>
+                            <option>select Doctor</option>
+                            {doctorData?.data?.length > 0 && doctorData?.data?.map((scheme) => (<option value={scheme?.id}>{scheme?.name}</option>))}
+                        </select>
+                    </div>
+                    <div className="grid">
+                        <label className="text-sm font-semibold text-ha-primary1">
+                            Department
+                        </label>
+                        <select onChange={(e) => setDept(e.target.value)}>
+                            <option>select Department</option>
+                            {visitData?.data?.length > 0 && visitData?.data?.map((visit) => (<option value={visit?.id}>{visit?.name}</option>))}
+                        </select>
+                    </div>
+
+
+                </div>
+            </>
         </div>
-      </form>
-    </div>
-  );
+    );
 }
 
-export default OrderDoctor;
+export default NewConsultation

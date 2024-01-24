@@ -11,6 +11,9 @@ const queryClient = new QueryClient();
 export const useGetUsers = () => {
   return useQuery("users", UserService.getUsers);
 };
+export const useGetDoctors = () => {
+  return useQuery("doctors", UserService.getDoctors);
+};
 
 export const useGetUserByToken = () => {
   return useQuery(["token"], () => UserService.getUsersByToken());

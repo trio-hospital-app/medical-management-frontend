@@ -4,12 +4,12 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { useEffect, useState } from "react";
-import OrderLab from "../orderLab";
 import OrderRadiology from "../orderRadiology";
 import OrderDoctor from "../orderDoctor";
 import { formatDate } from "../../../../hooks/formattedDate";
 import PatientService from "../../../../services/patientService";
 import Loader from "../../../../components/ui/loader";
+import NewLabOrder from "./newLabOrder";
 
 function PatientTable({ patientData }) {
   interface PageData {
@@ -19,12 +19,16 @@ function PatientTable({ patientData }) {
     };
   }
   const navigate = useNavigate();
+  const [formComment, setFormComment] = useState("");
+  const [selectLabPanel, setselectLabPanel] = useState([]);
+  const [selectScheme, setSelectedScheme] = useState([]);
   const [pageData, setPageData] = useState<PageData>(null);
   const [showLabModal, setShowLabModal] = useState(false);
   const [showImagingModal, setShowImagingModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [modalPatientData, setModalPatientData] = useState(null)
 
   const fetchData = async (newpage) => {
     try {
@@ -99,7 +103,7 @@ function PatientTable({ patientData }) {
       width: "200px",
     },
     {
-      cell: () => (
+      cell: (data) => (
         <div className=" w-full flex justify-end items-center">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown
@@ -117,6 +121,7 @@ function PatientTable({ patientData }) {
               <Dropdown.Item
                 onClick={() => {
                   setShowImagingModal(true);
+                  setModalPatientData(data)
                 }}
               >
                 Order Radiology
@@ -161,7 +166,15 @@ function PatientTable({ patientData }) {
         submitTitle="Submit Order"
         showSubmitButton={true}
       >
-        <OrderLab />
+        <NewLabOrder
+          setSelectedScheme={setSelectedScheme}
+          setselectLabPanel={setselectLabPanel}
+          setFormComment={setFormComment}
+          selectLabPanel={selectLabPanel}
+          selectScheme={selectScheme}
+          formComment={formComment}
+          patientData={modalPatientData}
+        />
       </BasicModal>
 
       {/* Imaging modal */}

@@ -28,7 +28,6 @@ const SearchImaging = ({ setRadiologySearch, setReload }) => {
 
   const {
     mutate,
-    status: addLabStatus,
     isLoading: NewRadiologyLoading,
   } = useAddRadiology();
 

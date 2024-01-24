@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 function NavBar() {
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+  const [, , removeCookie] = useCookies(["accessToken"]);
   const navigate = useNavigate();
 
   const { data } = useGetUserByToken();

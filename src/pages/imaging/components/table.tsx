@@ -28,8 +28,8 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const [pageData, setPageData] = useState(null);
   const [resultData, setResultData] = useState([]);
 
-  const { mutate: mutateCapture, status: captureStatus } = useUpdateCapture();
-  const { mutate: mutateImagingResult, status: imagingStatus } =
+  const { mutate: mutateCapture  } = useUpdateCapture();
+  const { mutate: mutateImagingResult } =
     useUpdateRadiologyResult();
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
