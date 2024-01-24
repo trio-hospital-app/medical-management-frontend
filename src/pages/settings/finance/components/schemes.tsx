@@ -113,7 +113,7 @@ function Schemes() {
     <div className="w-full">
       {showCreate && (
         <BasicModal
-          title="New Specimen Container"
+          title="New Scheme"
           setOpenModal={setShowCreate}
           cancelTitle="Cancel"
           openModal={showCreate}
@@ -210,7 +210,7 @@ function Schemes() {
           </div>
         </div>
         <Button className="bg-ha-primary1 text-white" onClick={handleCreate}>
-          New Specimen Container
+          New Scheme
         </Button>
       </div>
 
