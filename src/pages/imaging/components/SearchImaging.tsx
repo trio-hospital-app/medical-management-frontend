@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import NewImagingOrder from "../components//modal/NewImagingOrder";
@@ -8,10 +8,11 @@ import {
   useSearchRadiologyPatient,
 } from "../../../hooks/reactQuery/useRadiology";
 import Loader from "../../../components/ui/loader";
+import { toast } from "react-toastify";
 
 const SearchImaging = ({ setRadiologySearch, setReload }) => {
   const [search, setSearch] = useState("");
-  const [selectScheme, setSelectedScheme] = useState('');
+  const [selectScheme, setSelectedScheme] = useState("");
   const [selectRadiologyTest, setSelectRadiologyTest] = useState([]);
   const [formComment, setFormComment] = useState("");
   const [diagnosisComment, setDiagnosisComment] = useState("");
@@ -26,10 +27,13 @@ const SearchImaging = ({ setRadiologySearch, setReload }) => {
 
   setRadiologySearch(patientData);
 
-  const {
-    mutate,
-    isLoading: NewRadiologyLoading,
-  } = useAddRadiology();
+  const { mutate, isLoading: NewRadiologyLoading, status } = useAddRadiology();
+
+  useEffect(() => {
+    if (status === "success") {
+      toast.success("Radiology order created successfully");
+    }
+  }, [status]);
 
   const handleChange = (event: any) => {
     setSearch(event.target.value);

@@ -10,6 +10,7 @@ import { Button } from "../../../../components/ui/button";
 import { toast } from "react-toastify";
 import Loader from "../../../../components/ui/loader";
 import { useDeleteRadiology } from "../../../../hooks/reactQuery/useRadiology";
+import { useEffect } from "react";
 
 const CancelRadiologyOrder = ({
   setDeleteDialogOpen,
@@ -23,13 +24,12 @@ const CancelRadiologyOrder = ({
     isLoading: deleteLoading,
   } = useDeleteRadiology();
 
-  if (deleteLoading) {
-    return <Loader />;
-  }
+  useEffect(() => {
+    if (deleteStatus === "success") {
+      toast.success("Radiology Order Deleted Successfully");
+    }
+  }, [deleteStatus]);
 
-  if (deleteStatus === "success") {
-    toast.success("Radiology order deleted successfully");
-  }
   const handleDelete = async () => {
     await mutate(selectedRowData?.id);
     setDeleteDialogOpen(false);
@@ -38,6 +38,7 @@ const CancelRadiologyOrder = ({
 
   return (
     <div>
+      {deleteLoading && <Loader />}
       <Dialog
         open={deleteDialogOpen}
         onOpenChange={(open) => setDeleteDialogOpen(open)}

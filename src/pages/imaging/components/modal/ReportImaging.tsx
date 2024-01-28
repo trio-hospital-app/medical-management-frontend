@@ -54,18 +54,20 @@ function ReportImaging({ selectedRowData, setReload }) {
       </tr>
     ));
   };
+  const testName = data?.data?.testId?.test;
 
   return (
     <>
       <div className="px-4 border py-4 shadow">
-        <div
-          className={`px-4 py-4 font-bold flex justify-start gap-5 border w-fit mb-5 items-center rounded-[.3rem]`}
-        >
-          <h1 className="font-bold">Edit Result</h1>
-          <Tooltip content="Edit Radiology Result">
-            <BsPencilFill onClick={() => setIsEditMode(!isEditMode)}  />
+        <div className="px-4 py-4 font-bold flex bg-slate-300 justify-between items-center rounded-[.3rem]">
+          <h1 className="capitalize font-extrabold text-2xl">
+            <h1 className="font-bold">{testName}</h1>
+          </h1>
+          <Tooltip content="Edit Imaging Result" placement="left">
+            <BsPencilFill onClick={() => setIsEditMode(!isEditMode)} />
           </Tooltip>
         </div>
+
         <div>
           <table
             className="w-full border rounded-[.3rem] text-left"
@@ -74,26 +76,38 @@ function ReportImaging({ selectedRowData, setReload }) {
             <tbody>
               <tr className="text-ha-primary1">
                 <th
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  className="pl-4 capitalize"
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   Observation
                 </th>
                 <th
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  className="pl-4 capitalize"
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   Unit
                 </th>
                 <th
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  className="pl-4 capitalize"
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   Value
                 </th>
                 <th
-                  className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  className="pl-4 capitalize"
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   References Range
                 </th>

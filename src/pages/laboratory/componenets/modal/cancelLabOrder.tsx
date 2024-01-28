@@ -10,12 +10,13 @@ import { Button } from "../../../../components/ui/button";
 import { useDeleteLab } from "../../../../hooks/reactQuery/useLabs";
 import { toast } from "react-toastify";
 import Loader from "../../../../components/ui/loader";
+import { useEffect } from "react";
 
 const CancelLabOrder = ({
   setDeleteDialogOpen,
   deleteDialogOpen,
   selectedRowData,
-  setReload
+  setReload,
 }) => {
   const {
     mutate,
@@ -23,22 +24,21 @@ const CancelLabOrder = ({
     isLoading: deleteLoading,
   } = useDeleteLab();
 
-  if (deleteLoading) {
-    return <Loader />;
-  }
+  useEffect(() => {
+    if (deleteStatus === "success") {
+      toast.success("Lab Order Deleted Successfully");
+    }
+  }, [deleteStatus]);
 
-  if (deleteStatus === "success") {
-    toast.success("Lab order deleted successfully");
-    mutate(null)
-  }
   const handleDelete = async () => {
     await mutate(selectedRowData?.id);
     setDeleteDialogOpen(false);
-    setReload(true)
+    setReload(true);
   };
 
   return (
     <div>
+      {deleteLoading && <Loader />}
       <Dialog
         open={deleteDialogOpen}
         onOpenChange={(open) => setDeleteDialogOpen(open)}

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import NewLabOrder from "./modal/newLabOrder";
@@ -31,12 +31,11 @@ const SearchLab = ({ setLabSearch, setReload }) => {
     isLoading: NewLabLoading,
   } = useAddLab();
 
- if (addLabStatus === "success") {
-    toast.success("Lab order created successfully");
-    mutate(null)
-    // refetch()
-  }
-
+  useEffect(() => {
+    if (addLabStatus === "success") {
+      toast.success("Lab order created successfully");
+    }
+  }, [addLabStatus]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
@@ -69,7 +68,7 @@ const SearchLab = ({ setLabSearch, setReload }) => {
     };
     await mutate(LabData);
     setNewLabOrderModal(false);
-    setReload(true)
+    setReload(true);
   };
 
   return (
