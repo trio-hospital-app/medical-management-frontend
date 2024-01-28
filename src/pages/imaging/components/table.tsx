@@ -16,7 +16,6 @@ import {
 import AwaitingImagingReport from "./modal/AwaitingImagingReport";
 import ReportImaging from "./modal/ReportImaging";
 import { toast } from "react-toastify";
-import { m } from "framer-motion";
 
 function PatientTable({ reload, setReload, radiologySearch }) {
   const [captureModal, setCaptureModal] = useState(false);
