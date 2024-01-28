@@ -15,6 +15,8 @@ import {
 } from "../../../hooks/reactQuery/useRadiology";
 import AwaitingImagingReport from "./modal/AwaitingImagingReport";
 import ReportImaging from "./modal/ReportImaging";
+import { toast } from "react-toastify";
+import { m } from "framer-motion";
 
 function PatientTable({ reload, setReload, radiologySearch }) {
   const [captureModal, setCaptureModal] = useState(false);
@@ -28,14 +30,23 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const [pageData, setPageData] = useState(null);
   const [resultData, setResultData] = useState([]);
 
-  const { mutate: mutateCapture } = useUpdateCapture();
-  const { mutate: mutateImagingResult } = useUpdateRadiologyResult();
+  const { mutate: mutateCapture, status: captureStatus } = useUpdateCapture();
+  const { mutate: mutateImagingResult, status: statusResult } =
+    useUpdateRadiologyResult();
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
     ["radiologys", page],
     () => radiologyService.getRadiology(page)
   );
-
+  if (statusResult === "success") {
+    toast.success("Imaging Report Submitted Successfully");
+    mutateImagingResult(null);
+  }
+  if (captureStatus === "success") {
+    toast.success("Imaging Captured Successfully");
+    mutateCapture(null);
+  } 
+  
   useEffect(() => {
     setPageData(RadiologyData);
   }, [RadiologyData]);
@@ -168,7 +179,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
       cell: (row) => (
         <>
           {!row.paid ? (
-            <Tooltip content="Please Make Payment">
+            <Tooltip content="Please Make Payment" placement="top">
               <Button
                 className={` text-white w-[9.5rem] capitalize ${
                   row.status === "awaiting result"
@@ -237,7 +248,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
     },
     {
       cell: (row) => {
-        if (row.status === "capture") {
+        if (!row.paid) {
           return (
             <Tooltip content="Cancel order">
               <MdOutlineCancel

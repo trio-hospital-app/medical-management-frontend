@@ -3,6 +3,7 @@ import { Button } from "../button";
 import { useUpdateLab } from "../../../hooks/reactQuery/useLabs";
 import Loader from "../loader";
 import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 
 interface Row {
   observation: string | number;
@@ -41,7 +42,9 @@ const EditFormTable: React.FC<EditFormTableProps> = ({
   } = useUpdateLab();
 
   if (status === "success") {
+    toast.success("Lab Result Updated Successfully");
     setIsEditMode(false);
+    mutateUpdateResult(null);
   }
 
   // Handle form submission

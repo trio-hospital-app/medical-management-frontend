@@ -1,8 +1,9 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { useQueryClient } from "react-query";
 import Loader from "../../../../components/ui/loader";
-import { Button } from "flowbite-react";
 import { useUpdateRadiology } from "../../../../hooks/reactQuery/useRadiology";
+import { Button } from "../../../../components/ui/button";
+import { toast } from "react-toastify";
 
 interface Row {
   observation: string | number;
@@ -39,10 +40,13 @@ const EditResult: React.FC<EditFormTableProps> = ({
     isLoading: radiologyLoading,
     status,
   } = useUpdateRadiology();
-
-  if (status === "success") {
-    setIsEditMode(false);
-  }
+  
+  useEffect(() => {
+    if (status === "success") {
+      toast.success("Radiology Result Updated Successfully");
+      setIsEditMode(false);
+    }
+  }, [status]);
 
   // Handle form submission
   const handleUpdateRadiologyResult = async (event: React.FormEvent) => {

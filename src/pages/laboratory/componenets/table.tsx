@@ -263,7 +263,7 @@ function Table({ labSearch, reload, setReload }) {
     },
     {
       cell: (row) => {
-        if (row.status === "receive specimen") {
+        if (!row.paid) {
           return (
             <Tooltip content="Cancel order">
               <MdOutlineCancel

@@ -57,7 +57,6 @@ function FinalResult({ selectedRowData, setReload }) {
 
   return (
     <>
-     
       <div className="px-4 border py-4 shadow">
         <div
           className={`px-4 py-4 font-bold flex justify-between items-center rounded-[.3rem]`}
@@ -68,7 +67,7 @@ function FinalResult({ selectedRowData, setReload }) {
           <h1 className="capitalize font-extrabold text-2xl">
             {panelId?.panel}
           </h1>
-          <Tooltip content="Edit Lab Result">
+          <Tooltip content="Edit Lab Result" placement="left">
             <BsPencilFill onClick={() => setIsEditMode(!isEditMode)} />
           </Tooltip>
         </div>
@@ -81,25 +80,37 @@ function FinalResult({ selectedRowData, setReload }) {
               <tr className="text-ha-primary1">
                 <th
                   className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   Observation
                 </th>
                 <th
                   className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   Unit
                 </th>
                 <th
                   className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   Value
                 </th>
                 <th
                   className="pl-4"
-                  style={{ borderBottom: "1px solid black" }}
+                  style={{
+                    borderBottom: "1px solid black",
+                    textDecoration: "capitalize",
+                  }}
                 >
                   References Range
                 </th>
