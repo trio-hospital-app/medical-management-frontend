@@ -28,9 +28,8 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const [pageData, setPageData] = useState(null);
   const [resultData, setResultData] = useState([]);
 
-  const { mutate: mutateCapture  } = useUpdateCapture();
-  const { mutate: mutateImagingResult } =
-    useUpdateRadiologyResult();
+  const { mutate: mutateCapture } = useUpdateCapture();
+  const { mutate: mutateImagingResult } = useUpdateRadiologyResult();
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
     ["radiologys", page],
@@ -167,35 +166,70 @@ function PatientTable({ reload, setReload, radiologySearch }) {
     {
       name: "Status",
       cell: (row) => (
-        <Button
-          className={` text-white w-[9.5rem] capitalize ${
-            row.status === "awaiting result"
-              ? "bg-purple-400 hover:bg-purple-500"
-              : row.status === "capture"
-                ? "bg-red-400 hover:bg-red-500"
-                : row.status === "report"
-                  ? "bg-green-400 hover:bg-green-500"
-                  : row.status === ""
-          }`}
-          onClick={() => {
-            if (!row.paid) return;
-            setSelectedRowData(row);
-            setSelectedId(row.id);
-            row.status === "awaiting result"
-              ? setReportModal(true)
-              : row.status === "capture"
-                ? setCaptureModal(true)
-                : row.status === "report"
-                  ? setResultModal(true)
-                  : row.status === "null";
-          }}
-          disabled={!row.paid}
-        >
-          {row.status
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ")}
-        </Button>
+        <>
+          {!row.paid ? (
+            <Tooltip content="Please Make Payment">
+              <Button
+                className={` text-white w-[9.5rem] capitalize ${
+                  row.status === "awaiting result"
+                    ? "bg-purple-400 hover:bg-purple-500"
+                    : row.status === "capture"
+                      ? "bg-red-400 hover:bg-red-500"
+                      : row.status === "report"
+                        ? "bg-green-400 hover:bg-green-500"
+                        : row.status === ""
+                }`}
+                onClick={() => {
+                  if (!row.paid) {
+                    setSelectedRowData(row);
+                    setSelectedId(row.id);
+                    row.status === "awaiting result"
+                      ? setReportModal(true)
+                      : row.status === "capture"
+                        ? setCaptureModal(true)
+                        : row.status === "report"
+                          ? setResultModal(true)
+                          : row.status === "null";
+                  }
+                }}
+                disabled={!row.paid}
+              >
+                {row.status
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </Button>
+            </Tooltip>
+          ) : (
+            <Button
+              className={` text-white w-[9.5rem] capitalize ${
+                row.status === "awaiting result"
+                  ? "bg-purple-400 hover:bg-purple-500"
+                  : row.status === "capture"
+                    ? "bg-red-400 hover:bg-red-500"
+                    : row.status === "report"
+                      ? "bg-green-400 hover:bg-green-500"
+                      : row.status === ""
+              }`}
+              onClick={() => {
+                setSelectedRowData(row);
+                setSelectedId(row.id);
+                row.status === "awaiting result"
+                  ? setReportModal(true)
+                  : row.status === "capture"
+                    ? setCaptureModal(true)
+                    : row.status === "report"
+                      ? setResultModal(true)
+                      : row.status === "null";
+              }}
+            >
+              {row.status
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
+            </Button>
+          )}
+        </>
       ),
       selector: (row) => row.status,
       sortable: true,

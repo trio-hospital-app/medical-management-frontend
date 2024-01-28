@@ -41,15 +41,13 @@ function Table({ labSearch, reload, setReload }) {
 
   if (ResultStatus === "success") {
     toast.success("Lab order approved successfully");
-    mutateAwaiting(null)
+    mutateAwaiting(null);
     // refetch()
   }
   if (receiveStatus === "success") {
     toast.success("Lab order received successfully");
-    mutateReceive(null)
+    mutateReceive(null);
   }
-
-
 
   useEffect(() => {
     setPageData(labData);
@@ -193,35 +191,71 @@ function Table({ labSearch, reload, setReload }) {
     {
       name: "Status",
       cell: (row) => (
-        <Button
-          className={` text-white w-[9.5rem] capitalize ${
-            row.status === "receive specimen"
-              ? "bg-yellow-500 hover:bg-yellow-600"
-              : row.status === "awaiting approval"
-                ? "bg-blue-500 hover:bg-blue-600"
-                : row.status === "final result"
-                  ? "bg-green-500 hover:bg-green-600"
-                  : row.status === ""
-          }`}
-          onClick={() => {
-            if (!row.paid) return;
-            setSelectedRowData(row);
-            setSelectedId(row.id);
-            row.status === "receive specimen"
-              ? setReceiveSpecimen(true)
-              : row.status === "awaiting approval"
-                ? setAwaitingApproval(true)
-                : row.status === "final result"
-                  ? setFinalResult(true)
-                  : row.status === "null";
-          }}
-          disabled={!row.paid}
-        >
-          {row.status
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ")}
-        </Button>
+        <>
+          {!row.paid ? (
+            <Tooltip content="Please Make Payment">
+              <Button
+                className={`text-white w-[9.5rem] capitalize ${
+                  row.status === "receive specimen"
+                    ? "bg-yellow-500 hover:bg-yellow-600"
+                    : row.status === "awaiting approval"
+                      ? "bg-blue-500 hover:bg-blue-600"
+                      : row.status === "final result"
+                        ? "bg-green-500 hover:bg-green-600"
+                        : row.status === ""
+                }`}
+                onClick={() => {
+                  if (!row.paid) {
+                    setSelectedRowData(row);
+                    setSelectedId(row.id);
+                    row.status === "receive specimen"
+                      ? setReceiveSpecimen(true)
+                      : row.status === "awaiting approval"
+                        ? setAwaitingApproval(true)
+                        : row.status === "final result"
+                          ? setFinalResult(true)
+                          : row.status === "null";
+                  }
+                }}
+                disabled={!row.paid}
+              >
+                {row.status
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </Button>
+            </Tooltip>
+          ) : (
+            <Button
+              className={`text-white w-[9.5rem] capitalize ${
+                row.status === "receive specimen"
+                  ? "bg-yellow-500 hover:bg-yellow-600"
+                  : row.status === "awaiting approval"
+                    ? "bg-blue-500 hover:bg-blue-600"
+                    : row.status === "final result"
+                      ? "bg-green-500 hover:bg-green-600"
+                      : row.status === ""
+              }`}
+              onClick={() => {
+                setSelectedRowData(row);
+                setSelectedId(row.id);
+                row.status === "receive specimen"
+                  ? setReceiveSpecimen(true)
+                  : row.status === "awaiting approval"
+                    ? setAwaitingApproval(true)
+                    : row.status === "final result"
+                      ? setFinalResult(true)
+                      : row.status === "null";
+              }}
+              disabled={!row.paid}
+            >
+              {row.status
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
+            </Button>
+          )}
+        </>
       ),
       selector: (row) => row.status,
       sortable: true,
