@@ -1,5 +1,5 @@
 import DataTable from "react-data-table-component";
-import { useGetConsultationofPatient } from "../../../../hooks/reactQuery/useVisit";
+import { useGetConsultationofPatient, useNewConsultation } from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
 // import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,20 +12,41 @@ import 'swiper/css/navigation';
 // import { Pagination, Navigation } from 'swiper/modules';
 import { useState } from "react";
 import NewNote from "./newNote";
+import BasicModal from "../../../../components/ui/modals/basicModal";
+import { Button } from "flowbite-react";
+import { toast } from "react-toastify";
+import NewConsultation from "./newConsultation";
 
 
 interface ShowCreateNoteMap {
   [key: string]: boolean | undefined;
   editNoteData?: any;
   recommendation?: any;
-  id?: string | any; 
+  id?: string | any;
 }
 
 
 
-function DoctorsTable({ id, }) {
+function DoctorsTable({ id, patientData }) {
   const [showCreateNoteMap, setShowCreateNoteMap] = useState<ShowCreateNoteMap>({});
+  const [showCreate, setShowCreate] = useState(false)
+  const [scheme, setScheme] = useState('');
+  const [dept, setDept] = useState("");
+  const [doctorId, setDoctorId] = useState('')
+  const {
+    data: createconsultationData,
+    isLoading: loadingconsultationData,
+    mutate: createMutate
+  } = useNewConsultation();
 
+  if (createconsultationData && createconsultationData?.status) {
+    toast.success('Successfully Created Consultation')
+    createMutate(null)
+  }
+
+  if (loadingconsultationData) {
+    return <Loader />;
+  }
 
   const handleDelete = (data) => {
     setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, id: data.id, }));
@@ -63,16 +84,26 @@ function DoctorsTable({ id, }) {
   if (loadingConsults) {
     return <Loader />
   }
+
+  const createConsultation = async () => {
+    try {
+      const data = {
+        doctorId: doctorId,
+        visit: dept,
+        patientId: id,
+        schemeId: scheme
+      }
+      await createMutate(data)
+    } catch (error) {
+
+    }
+  }
+
+
   const columns = [
     {
       name: "Date",
       selector: (row) => formatDate(row?.createdAt),
-      sortable: true,
-      // width: "200px",
-    },
-    {
-      name: "Visit ID",
-      selector: (row) => row?.id,
       sortable: true,
       // width: "200px",
     },
@@ -102,9 +133,10 @@ function DoctorsTable({ id, }) {
   ];
 
 
+
+
   const ExpandedComponent = ({ data }) => (
     <div className="flex items-center justify-center">
-
       {!showCreateNoteMap[data.id] && data?.notes?.length === 0 && (
         <div className="flex items-center flex-col justify-center w-full h-[300px]">
           <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
@@ -144,7 +176,7 @@ function DoctorsTable({ id, }) {
       </div>}
 
 
-      {showCreateNoteMap[data.id]  && (
+      {showCreateNoteMap[data.id] && (
         <NewNote
           refetch={refetch}
           cid={data?.id}
@@ -163,6 +195,27 @@ function DoctorsTable({ id, }) {
 
   return (
     <div className="w-full">
+
+      {showCreate && <BasicModal
+        title="Order New Visit"
+        setOpenModal={setShowCreate}
+        openModal={showCreate}
+        cancelTitle="Cancel"
+        submitTitle="Create"
+        showCancelButton={true}
+        showSubmitButton={true}
+        size="3xl"
+        submitHandler={() => {
+          createConsultation()
+        }}
+      >
+        <NewConsultation setDoctorId={setDoctorId} patient={patientData} setScheme={setScheme} setDept={setDept} />
+      </BasicModal>}
+      <div className="flex justify-end items-center ">
+        <Button className="bg-ha-primary1 text-white" onClick={() => setShowCreate(true)}>
+          Order New Consultation
+        </Button>
+      </div>
       <DataTable
         columns={columns}
         data={consultationData?.data?.consultations}

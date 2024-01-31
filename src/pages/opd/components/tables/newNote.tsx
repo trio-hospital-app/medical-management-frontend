@@ -3,12 +3,13 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { useWriteNotes } from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
-import { IoArrowBackOutline } from "react-icons/io5";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
 
 
-function NewNote({ refetch, cid, initialData, recommendation, onClose }) {
+function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHistory }) {
     const [formData, setFormData] = useState({
-        notes: initialData? initialData : [{ question: '', answer: '' }],
+        notes: initialData ? initialData : [{ question: '', answer: '' }],
         recommendation: recommendation,
     });
 
@@ -75,16 +76,24 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose }) {
 
     };
 
-    const handleBack =()=> {
-        onClose()
-    }
+    // const handleBack = () => {
+    //     onClose()
+    // }
     return (
-        <div className="shadow m-2 p-3 rounded w-full">
+        <div className=" m-2 p-3 rounded w-full">
             <form className="grid" onSubmit={handleSubmit}>
 
-                <div className="grid">
-                <div className="flex items-center justify-start w-full gap-3 cursor-pointer" onClick={handleBack}> <IoArrowBackOutline className='text-ha-primary1' />
-                        <label className="font-bold text-lg text-ha-primary1">Doctor's Notes:</label></div>
+                <div className="grid gap-3">
+                    <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center justify-start w-full gap-3 cursor-pointer">
+                            {/* <IoArrowBackOutline className='text-ha-primary1' /> */}
+                            <label className="font-bold text-lg text-ha-primary1">Doctor's Notes:</label></div>
+                        <div className="flex  w-full items-center justify-end gap-3">
+
+                            <div className="w-[40%] text-white rounded p-2 bg-ha-primary1 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <FaEye className='text-white text-2xl' /> View All Consultations</div>
+                            <div className="w-[40%] text-white rounded p-2 bg-green-600 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <IoCheckmarkDoneCircle className='text-white text-2xl' /> Mark as Completed</div>
+                        </div>
+                    </div>
                     {formData.notes.map((note, index) => (
                         <div key={index} className="flex items-center w-full gap-3 bg-blue-50 p-5 rounded-lg my-2">
                             <div className="grid gap-2 w-full">
@@ -118,7 +127,7 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose }) {
 
                 </div>
                 <div className="grid my-5">
-                    <label className="text-lg font-bold">Recommendations:</label>
+                    <label className="text-lg font-bold">Additional Comments:</label>
                     <textarea
                         required
                         className="border rounded p-1"

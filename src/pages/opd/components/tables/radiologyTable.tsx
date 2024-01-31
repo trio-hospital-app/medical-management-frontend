@@ -48,12 +48,12 @@ function RadiologyTable({ id, patientData }) {
       sortable: true,
       with: "200px",
     },
-    {
-      name: "Radiology ID",
-      selector: (row) => row.id,
-      sortable: true,
-      with: "200px",
-    },
+    // {
+    //   name: "Radiology ID",
+    //   selector: (row) => row.id,
+    //   sortable: true,
+    //   with: "200px",
+    // },
     {
       name: "Service Center",
       selector: (row) => row.centerId.center,

@@ -11,7 +11,7 @@ import LabTable from "./tables/labTable";
 import NursingTable from "./tables/nursingTable";
 import RadiologyTable from "./tables/radiologyTable";
 
-function PatientTabsCard({ id, patientData }) {
+function PatientTabsCard({ id, patientData, cid }) {
   return (
     <div className="bg-white rounded-[.5rem] py-5 w-full h-full">
       <Tabs defaultValue="doctor">
@@ -37,7 +37,7 @@ function PatientTabsCard({ id, patientData }) {
         </div>
         <div className="px-5">
           <TabsContent value="doctor">
-            <DoctorsTable id={id}/>
+            <DoctorsTable id={id} patientData={patientData} cid={cid}/>
           </TabsContent>
           <TabsContent value="laboratory">
             <LabTable id={id} patientData={patientData}/>

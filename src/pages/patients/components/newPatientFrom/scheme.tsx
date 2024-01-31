@@ -88,18 +88,17 @@ function Scheme({ patient, setPatient, setPresentTab }) {
       await addmutate(patient);
     }
   };
+
   const mappedOptions = schemes?.data
     ? schemes.data.map((scheme) => ({
-        label: scheme.name,
-        value: scheme.id,
-      }))
+      label: scheme.name,
+      value: scheme.id,
+    }))
     : [];
 
   const handleChange = (selectedOptions) => {
     setSelected(selectedOptions);
-    const selectedData = selectedOptions.map((data) => {
-      return { scheme: data.value };
-    });
+    const selectedData = selectedOptions.map((data) => data.value);
     // Attach schemeData to the patient.address object
     setPatient((prevPatient) => ({
       ...prevPatient,

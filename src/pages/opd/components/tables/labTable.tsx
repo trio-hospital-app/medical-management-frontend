@@ -49,12 +49,12 @@ function LabTable({ id, patientData }) {
       sortable: true,
       with: "200px",
     },
-    {
-      name: "Lab ID",
-      selector: (row) => row.id,
-      sortable: true,
-      with: "200px",
-    },
+    // {
+    //   name: "Lab ID",
+    //   selector: (row) => row.id,
+    //   sortable: true,
+    //   with: "200px",
+    // },
     {
       name: "Service Center",
       selector: (row) => row.centerId.center,

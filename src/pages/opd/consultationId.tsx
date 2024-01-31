@@ -5,7 +5,7 @@ import PatientTabsCard from "./components/patientTabsCard";
 import { useParams } from "react-router-dom";
 
 function ConsultationId() {
-  const { pid } = useParams();
+  const { pid, cid } = useParams();
   console.log(pid, 'pid')
 
   const { isLoading, data } = useGetPatientById(pid);
@@ -17,7 +17,7 @@ function ConsultationId() {
   return (
     <div className="Patients">
       <PatientInfoHeader patientData={data.data} />
-      <PatientTabsCard id={pid} patientData={data.data}/>
+      <PatientTabsCard id={pid} cid={cid} patientData={data.data}/>
     </div>
   );
 }

@@ -23,8 +23,8 @@ function PatientInfoHeader({ patientData }) {
             <Dropdown.Item onClick={() => setshowDetails(true)}>
               View Patient Details
             </Dropdown.Item>
-            <Dropdown.Item>Book Appointment</Dropdown.Item>
-            <Dropdown.Item>Make Deposit</Dropdown.Item>
+            {/* <Dropdown.Item>Book Appointment</Dropdown.Item>
+            <Dropdown.Item>Make Deposit</Dropdown.Item> */}
             <Dropdown.Item
               onClick={() =>
                 navigate("/patients/new?edit", { state: patientData })
@@ -32,7 +32,7 @@ function PatientInfoHeader({ patientData }) {
             >
               Edit
             </Dropdown.Item>
-            <Dropdown.Item>Change Image</Dropdown.Item>
+            {/* <Dropdown.Item>Change Image</Dropdown.Item> */}
             <Dropdown.Item>Delete</Dropdown.Item>
           </Dropdown>
         </div>
@@ -106,17 +106,16 @@ function PatientInfoHeader({ patientData }) {
             <span className="text-ha-primary1 underline">
               {" "}
               <Dropdown inline arrowIcon={false} label={"View Schemes"}>
-                <Dropdown.Item>NHIS</Dropdown.Item>
-                <Dropdown.Item>Avocado</Dropdown.Item>
+                {patientData.schemeId.map((el)=>(<Dropdown.Item>{el.name}</Dropdown.Item>))}
               </Dropdown>
             </span>
           </div>
-          <div className="flex items-start justify-center flex-col">
+          {/* <div className="flex items-start justify-center flex-col">
             <span className="text-sm font-semibold text-gray-500">
               Date of Next Appointment:
             </span>
             <span className="font-semibold">23-04-1990, 9am</span> (Cardiology)
-          </div>
+          </div> */}
         </div>
       </div>
 

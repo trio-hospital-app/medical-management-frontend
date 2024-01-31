@@ -165,11 +165,11 @@ function PatientTable({ patientData }) {
       name: "Gender",
       selector: (row: Patient) => row.gender,
     },
-    {
-      name: "Date of Birth",
-      selector: (row: Patient) => formatDate(row.address?.dob),
-      sortable: true,
-    },
+    // {
+    //   name: "Date of Birth",
+    //   selector: (row: Patient) => formatDate(row.address?.dob),
+    //   sortable: true,
+    // },
     {
       name: "Phone",
       selector: (row: Patient) => row.phone,
