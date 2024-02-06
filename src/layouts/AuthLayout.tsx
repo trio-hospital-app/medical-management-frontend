@@ -3,10 +3,12 @@ import { useState } from "react";
 import { useLogin } from "../hooks/reactQuery/useUser";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/ui/loader";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 
 function AuthLayout() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordInput, setPasswordInput] = useState(true);
   const navigate = useNavigate();
   const { mutate, isLoading, data } = useLogin();
 
@@ -51,25 +53,38 @@ function AuthLayout() {
                 Your Password
               </label>
             </div>
-            <input
-              id="password"
-              type="password"
-              className="w-[300px]"
-              required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
+            <div className="flex items-center justify-center w-[300px] bg-[#e7f0fe] rounded-md">
+              <input
+                id="password"
+                type={passwordInput ? "password" : "text"}
+                className="w-[280px] rounded-right-none"
+                required
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              {passwordInput ? (
+                <FaRegEye
+                  className="w-[30px] cursor-pointer"
+                  onClick={() => setPasswordInput(!passwordInput)}
+                />
+              ) : (
+                <FaRegEyeSlash
+                  className="w-[30px] cursor-pointer"
+                  onClick={() => setPasswordInput(!passwordInput)}
+                />
+              )}
+            </div>
           </div>
           <div className="flex justify-between">
             <Link
               to="/forgot"
               className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
             >
-              Lost Password?
+              Forgot Password?
             </Link>
           </div>
           <div className="w-[300px] flex" onClick={handleLogin}>
-            <Button className="w-full">Log in to your account</Button>
+            <Button className="w-full">Login</Button>
           </div>
         </div>
       </div>
