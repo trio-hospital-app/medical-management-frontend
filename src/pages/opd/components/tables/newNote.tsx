@@ -7,7 +7,7 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 
 
-function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHistory }) {
+function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHistory, pid, }) {
     const [formData, setFormData] = useState({
         notes: initialData ? initialData : [{ question: '', answer: '' }],
         recommendation: recommendation,
@@ -97,13 +97,14 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHi
                     {formData.notes.map((note, index) => (
                         <div key={index} className="flex items-center w-full gap-3 bg-blue-50 p-5 rounded-lg my-2">
                             <div className="grid gap-2 w-full">
-                                <input
+                                {/* <input
                                     type="text"
                                     required
                                     placeholder="Question"
                                     value={note.question}
                                     onChange={(e) => handleInputChange(index, 'question', e.target.value)}
-                                />
+                                /> */}
+                                <label className="text-lg font-bold">Diagnosis:</label>
                                 <textarea
                                     className="border rounded p-1"
                                     required
@@ -114,20 +115,20 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHi
                                 />
                             </div>
 
-                            <button type="button" onClick={() => handleRemoveNote(index)} className="text-white flex items-center justify-center gap-2 p-3 hover:bg-gray-500 rounded bg-red-500">
+                            {/* <button type="button" onClick={() => handleRemoveNote(index)} className="text-white flex items-center justify-center gap-2 p-3 hover:bg-gray-500 rounded bg-red-500">
                                 <AiOutlineDelete className='font-bold' /> <span>Remove</span>
-                            </button>
+                            </button> */}
                         </div>
                     ))}
-                    <div className="flex items-center justify-start">
+                    {/* <div className="flex items-center justify-start">
                         <button type="button" onClick={handleAddNote} className="underline my-2 p-2 rounded text-lg text-ha-primary1 w-[auto]">
                             Add New Row
                         </button>
-                    </div>
+                    </div> */}
 
                 </div>
                 <div className="grid my-5">
-                    <label className="text-lg font-bold">Additional Comments:</label>
+                    <label className="text-lg font-bold">Plan:</label>
                     <textarea
                         required
                         className="border rounded p-1"

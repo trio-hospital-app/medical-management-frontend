@@ -10,57 +10,68 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 // import { Pagination, Navigation } from 'swiper/modules';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewNote from "./newNote";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 
-interface ShowCreateNoteMap {
-  [key: string]: boolean | undefined;
-  editNoteData?: any;
-  recommendation?: any;
-  id?: string | any;
-}
+// interface ShowCreateNoteMap {
+//   [key: string]: boolean | undefined;
+//   editNoteData?: any;
+//   recommendation?: any;
+//   id?: string | any;
+// }
 
 
 
-function DoctorsTable({ id, cid, patientData }) {
-  const [showCreateNoteMap, setShowCreateNoteMap] = useState<ShowCreateNoteMap>({});
-  const [showHistory, setShowHistory] = useState(false)
-
-console.log(patientData)
-  const handleDelete = (data) => {
-    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, id: data.id, }));
-  };
-
-  const handleCloseNote = (data) => {
-    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: false, id: data.id, }));
-  };
-
-  const [rowId, setId] = useState('')
-
-  const handleEditClick = (data, type, id) => {
-    handleCloseNote(id)
-    setId(id)
-    if (rowId === id) {
-      if (type === 'create') {
-        setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: null, id: data.id, recommendation: '' } as ShowCreateNoteMap));
-      }
-
-      if (type === 'edit') {
-        setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: data.notes, id: data.id, recommendation: data.recommendation } as ShowCreateNoteMap));
-      }
-    }
-
-  };
-
-
-
+function DoctorsTable({ id, cid }) {
   const {
     data: consultationData,
     isLoading: loadingConsults,
     refetch
   } = useGetConsultationofPatient(id);
+  // const [showCreateNoteMap, setShowCreateNoteMap] = useState<ShowCreateNoteMap>({});
+  const [showHistory, setShowHistory] = useState(false)
+  const [formData, setFormData] = useState(null)
+
+
+  useEffect(() => {
+    if (consultationData) {
+      setFormData(consultationData?.data?.consultations[0])
+    }
+  }, [consultationData])
+
+  // console.log(patientData)
+  // const handleDelete = (data) => {
+  //   setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, id: data.id, }));
+  // };
+
+  // const handleCloseNote = (data) => {
+  //   setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: false, id: data.id, }));
+  // };
+
+  // const [rowId, setId] = useState('')
+
+  // const handleEditClick = (data, type, id) => {
+  //   handleCloseNote(id)
+  //   setId(id)
+  //   if (rowId === id) {
+  //     if (type === 'create') {
+  //       setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: null, id: data.id, recommendation: '' } as ShowCreateNoteMap));
+  //     }
+
+  //     if (type === 'edit') {
+  //       setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: data.notes, id: data.id, recommendation: data.recommendation } as ShowCreateNoteMap));
+  //     }
+  //   }
+
+  // };
+
+
+
+
+
+  console.log(consultationData, 'consultationDatas')
 
   if (loadingConsults) {
     return <Loader />
@@ -102,36 +113,40 @@ console.log(patientData)
       // width: "200px",
     }
   ];
+  const handleRowClick = (bodyData) => {
+    setFormData(bodyData)
+    setShowHistory(false)
+  };
 
 
   const ExpandedComponent = ({ data }) => (
     <div className="flex items-center justify-center">
 
-      {!showCreateNoteMap[data.id] && data?.notes?.length === 0 && (
+      {data?.notes?.length === 0 && (
         <div className="flex items-center flex-col justify-center w-full h-[300px]">
           <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
           <h3 className="font-bold">No Notes found </h3>
           <button
             className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-500"
-            onClick={() => handleEditClick(data, 'create', data.id)}
+            onClick={() => handleRowClick(data)}
           >
             Create New Note
           </button>
         </div>
       )}
 
-      {data?.notes?.length > 0 && !showCreateNoteMap[data.id] && <div
+      {data?.notes?.length > 0 && <div
         className="w-[1100px]  h-[auto] border-2 border-blue-400 my-3"
       >
         <div className="w-full h-full">
           <div>
             <div className="w-full h-full flex items-center justify-end gap-3 py-2 my-2 text-white bg-blue-50  px-10">
-              <button className="text-white flex items-center hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2" onClick={() => handleEditClick(data, "edit", data.id)}>
+              <button className="text-white flex items-center w-[10%] hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2" onClick={() => handleRowClick(data)}>
                 <AiOutlineEdit /> <span>Edit</span>
               </button>
-              <button className="text-white flex items-center justify-center gap-2 p-2 hover:bg-gray-500 rounded bg-red-500" onClick={() => handleDelete(data)}>
+              {/* <button className="text-white flex items-center justify-center gap-2 p-2 hover:bg-gray-500 rounded bg-red-500" onClick={() => handleDelete(data)}>
                 <AiOutlineDelete /><span>Delete</span>
-              </button>
+              </button> */}
             </div>
             <h2 className="text-2xl font-bold p-10">{data?.recommendation}</h2>
             {data?.notes?.map((el) => (<div className="grid gap-1 mb-10 px-10" key={el?.question}>
@@ -146,7 +161,7 @@ console.log(patientData)
       </div>}
 
 
-      {showCreateNoteMap[data.id] && (
+      {/* {showCreateNoteMap[data.id] && (
         <NewNote
           refetch={refetch}
           cid={data?.id}
@@ -155,7 +170,7 @@ console.log(patientData)
           onClose={() => handleCloseNote(data)}
           setShowHistory
         />
-      )}
+      )} */}
 
 
 
@@ -166,23 +181,27 @@ console.log(patientData)
 
   return (
     <div className="w-full">
-      {showHistory ?
+      {showHistory && consultationData?.data?.consultations.length > 0 &&
         <div><div className="flex items-center justify-start w-full gap-3 cursor-pointer" onClick={() => setShowHistory(false)}> <IoArrowBackOutline className='text-ha-primary1' />
           <label className="font-bold text-lg text-ha-primary1">Doctor's Notes:</label></div><DataTable
             columns={columns}
             data={consultationData?.data?.consultations}
             expandableRows
             expandableRowsComponent={ExpandedComponent}
-          /></div> : 
-          <NewNote
+          /></div>}
+      {!showHistory && consultationData?.data?.consultations.length > 0 &&
+        <NewNote
           refetch={refetch}
-          cid={cid}
-          initialData={showCreateNoteMap?.editNoteData ? showCreateNoteMap?.editNoteData : null}
-          recommendation={showCreateNoteMap.recommendation}
+          // initialData={consultationData?.data?.consultations[0]?.notes ? consultationData?.data?.consultations[0]?.notes : null}
+          // recommendation={consultationData?.data?.consultations[0]?.recommendation}
+          initialData={formData?.notes}
+          recommendation={formData?.recommendation}
           onClose={() => setShowHistory(false)}
+          pid={id}
+          cid={cid}
           setShowHistory={setShowHistory}
         />}
-        {}
+
     </div>
   );
 }
