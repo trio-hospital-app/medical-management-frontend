@@ -30,20 +30,26 @@ if(loadingConsults) {
       sortable: true,
       // width: "200px",
     },
-    {
-      name: "Visit ID",
-      selector: (row) => row?.id,
-      sortable: true,
-      // width: "200px",
-    },
+    // {
+    //   name: "Visit ID",
+    //   selector: (row) => row?.id,
+    //   sortable: true,
+    //   // width: "200px",
+    // },
     {
       name: "Doctor",
       selector: (row) => <div>{row?.doctorId?.firstName} {row?.doctorId?.lastName}</div>,
       sortable: true,
     },
     {
-      name: "Patient ID",
+      name: "Patient",
       selector: (row) => <div>{row?.patientId?.firstName} {row?.patientId?.lastName}</div>,
+      sortable: true,
+      // width: "200px",
+    },
+    {
+      name: "Patient ID",
+      selector: (row) => <div>{row?.patientId?.patientId}</div>,
       sortable: true,
       // width: "200px",
     },
@@ -60,8 +66,10 @@ if(loadingConsults) {
       // width: "200px",
     },
     {
+      name: "Actions",
       cell: () => (
-        <div className=" w-full flex justify-end items-center ">
+     
+        <div className=" w-full flex justify-start items-center ">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown
               arrowIcon={false}
