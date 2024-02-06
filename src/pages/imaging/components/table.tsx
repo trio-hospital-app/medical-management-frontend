@@ -44,8 +44,8 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   if (captureStatus === "success") {
     toast.success("Imaging Captured Successfully");
     mutateCapture(null);
-  } 
-  
+  }
+
   useEffect(() => {
     setPageData(RadiologyData);
   }, [RadiologyData]);
@@ -116,6 +116,24 @@ function PatientTable({ reload, setReload, radiologySearch }) {
       // Handle the error here
       console.error("An error occurred:", error);
     }
+  };
+
+  const customStyles = {
+    headCells: {
+      style: {
+        backgroundColor: "#ffff",
+        text: "bold",
+        fontWeight: "bold",
+        fontSize: "14px",
+      },
+    },
+    rows: {
+      style: {
+        minHeight: "56px",
+        textTransform: "capitalize",
+        cursor: "default",
+      },
+    },
   };
 
   const columns: any = [
@@ -271,6 +289,23 @@ function PatientTable({ reload, setReload, radiologySearch }) {
 
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
+          customStyles={{
+            headCells: {
+              style: {
+                backgroundColor: customStyles.headCells.style.backgroundColor,
+                text: customStyles.headCells.style.text,
+                fontWeight: customStyles.headCells.style.fontWeight,
+                fontSize: customStyles.headCells.style.fontSize,
+              },
+            },
+            rows: {
+              style: {
+                minHeight: customStyles.rows.style.minHeight,
+                textTransform: "none", // Update the textTransform property to have the correct type
+                cursor: customStyles.rows.style.cursor,
+              },
+            },
+          }}
           columns={columns}
           data={
             radiologySearch?.data && radiologySearch?.data.length > 0

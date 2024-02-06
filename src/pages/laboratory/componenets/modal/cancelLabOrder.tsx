@@ -75,11 +75,7 @@ const CancelLabOrder = ({
               Lab Test:{"     "}
             </label>
             <span
-              className={`md:text-xl font-bold text-bold px-3 rounded-[1rem] py-1 text-center my-1 capitalize`}
-              style={{
-                backgroundColor:
-                  selectedRowData.panelId?.specimenId.color || "white",
-              }}
+              className={`md:text-xl font-bold text-ha-primary1 text-bold px-3 rounded-[1rem] py-1 text-center my-1 capitalize`}
             >
               {selectedRowData.panelId?.panel || "Not Found"}
             </span>

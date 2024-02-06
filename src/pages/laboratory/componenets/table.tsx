@@ -121,6 +121,24 @@ function Table({ labSearch, reload, setReload }) {
     }
   };
 
+  const customStyles = {
+    headCells: {
+      style: {
+        backgroundColor: "#ffff",
+        text: "bold",
+        fontWeight: "bold",
+        fontSize: "14px",
+      },
+    },
+    rows: {
+      style: {
+        minHeight: "56px",
+        textTransform: "capitalize",
+        cursor: "default",
+      },
+    },
+  };
+
   const columns: any = [
     {
       name: "Name",
@@ -268,7 +286,7 @@ function Table({ labSearch, reload, setReload }) {
             <Tooltip content="Cancel order">
               <MdOutlineCancel
                 onClick={() => openDeleteRow(row)}
-                className="font-extrabold text-xl text-red-400"
+                className="font-extrabold text-xl text-red-400 cursor-pointer"
               />
             </Tooltip>
           );
@@ -287,6 +305,23 @@ function Table({ labSearch, reload, setReload }) {
       {labLoading && <Loader />}
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
+          customStyles={{
+            headCells: {
+              style: {
+                backgroundColor: customStyles.headCells.style.backgroundColor,
+                text: customStyles.headCells.style.text,
+                fontWeight: customStyles.headCells.style.fontWeight,
+                fontSize: customStyles.headCells.style.fontSize,
+              },
+            },
+            rows: {
+              style: {
+                minHeight: customStyles.rows.style.minHeight,
+                textTransform: "none", // Update the textTransform property to have the correct type
+                cursor: customStyles.rows.style.cursor,
+              },
+            },
+          }}
           columns={columns}
           data={
             labSearch?.data && labSearch?.data.length > 0
