@@ -152,13 +152,13 @@ function PatientTable({ patientData }) {
   const columns = [
     {
       name: "Patient Name",
-      selector: (row: Patient) => `${row.firstName} ${row.lastName}`,
+      selector: (row: Patient) => (<div className="capitalize text-gray-500 font-bold">{row?.firstName} {row?.lastName}</div>),
       sortable: true,
-      width: "300px",
+      width: "350px",
     },
     {
       name: "Patient ID",
-      selector: (row: Patient) => row.patientId,
+      selector: (row: Patient) => (<div className="text-ha-primary1 font-bold">{row?.patientId}</div>),
       sortable: true,
     },
     {
@@ -182,8 +182,9 @@ function PatientTable({ patientData }) {
       width: "200px",
     },
     {
+      name: "Actions",
       cell: (row) => (
-        <div className=" w-full flex justify-end items-center">
+        <div className=" w-full flex justify-start items-center">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown
               arrowIcon={false}
@@ -212,7 +213,15 @@ function PatientTable({ patientData }) {
                   setModalPatientData(row)
                 }}
               >
-                See a Doctor
+                Consultation
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setShowDoctorModal(true);
+                  setModalPatientData(row)
+                }}
+              >
+                Take Vitals
               </Dropdown.Item>
             </Dropdown>
           </div>
@@ -231,11 +240,12 @@ function PatientTable({ patientData }) {
       <DataTable
         columns={columns}
         data={
-          patientData?.data ? patientData.data : pageData?.data?.patients || []
+          // patientData?.data ? patientData.data : pageData?.data?.patients || []
+          patientData?.data 
         }
         onRowClicked={(row) => handleRowClick(row.id)}
-        pagination
-        onChangePage={handlePageChange}
+        // pagination
+        // onChangePage={handlePageChange}
       />
       {/* lab modal */}
       <BasicModal

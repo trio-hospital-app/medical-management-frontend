@@ -23,7 +23,7 @@ function SideBar() {
               <span className="hidden lg:flex">Patients</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/visits" icon={FaUserDoctor}>
-              <span className="hidden lg:flex">See Doctor</span>
+              <span className="hidden lg:flex">Consultation</span>
             </Sidebar.Item>
             <Sidebar.Item as={Link} to="/laboratory" icon={MdBloodtype}>
               <span className="hidden lg:flex">Laboratory</span>
@@ -57,7 +57,7 @@ function SideBar() {
                     Finance
                   </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/settings/visit">
-                    Doctor's Visit
+                    Consultation
                   </Dropdown.Item>
                 </Dropdown>
               </span>
