@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/button";
-import UserTable from "./components/pharmacyTable";
+import PharmacyTable from "./components/pharmacyTable";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import Loader from "../../../components/ui/loader";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import { useAddPharmacy } from "../../../hooks/reactQuery/usePharmacy";
 
 function Pharmacy() {
   const [showAddMedication, setShowAddMedication] = useState(false);
+  const [reload, setReload] = useState(false);
   const [formData, setFormData] = useState<PharmacyFormData>({
     name: "",
     manufacturer: "",
@@ -30,10 +31,12 @@ function Pharmacy() {
 
   const { mutate, isLoading, status } = useAddPharmacy();
 
-  if (status === "success") {
-    toast.success("Medication Added Successfully");
-    mutate(null);
-  }
+  useEffect(() => {
+    if (status === "success") {
+      toast.success("Medication Added Successfully");
+      setReload(true);
+    }
+  }, [status]);
 
   const handleSubmit = async () => {
     const formattedData = {
@@ -48,7 +51,6 @@ function Pharmacy() {
         : formData.form,
     };
 
-    console.log("this is the form data", formattedData);
     await mutate(formattedData);
     setShowAddMedication(false);
   };
@@ -79,7 +81,7 @@ function Pharmacy() {
         </Button>
       </div>
       <div className="px-5 py-2 flex items-center mt-5 bg-white rounded-lg">
-        <UserTable />
+        <PharmacyTable reload={reload} setReload={setReload} />
       </div>
     </div>
   );

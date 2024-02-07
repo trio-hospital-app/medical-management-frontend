@@ -9,6 +9,7 @@ export interface NewPharmacyData {
   price: number;
   unit: string;
   form: string;
+  
 }
 
 class pharmacyService {
