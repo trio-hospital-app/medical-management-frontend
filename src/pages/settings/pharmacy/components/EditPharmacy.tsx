@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import { options } from "./medication-forms";
 
