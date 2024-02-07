@@ -92,8 +92,8 @@ if(consultationData && consultationData?.status) {
         <NewConsultation setDoctorId={setDoctorId} setPatientId={setPatientId} setScheme={setScheme} setDept={setDept}/>
       </BasicModal>}
       <FilterHeader
-        title="All Doctor's Visits"
-        buttonTitle="Create New Visit"
+        title="All Consultations"
+        buttonTitle="New Consultation"
         resetFilter={resetHandler}
         search={searchHandler}
         handleCreate={() => {
