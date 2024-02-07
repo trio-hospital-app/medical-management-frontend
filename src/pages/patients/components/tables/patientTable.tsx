@@ -27,7 +27,7 @@ function PatientTable({ patientData }) {
   const [formComment, setFormComment] = useState("");
   const [selectLabPanel, setselectLabPanel] = useState([]);
   const [selectScheme, setSelectedScheme] = useState([]);
-  const [pageData, setPageData] = useState<PageData>(null);
+  const [ setPageData] = useState<PageData>(null);
   const [showLabModal, setShowLabModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -91,9 +91,9 @@ function PatientTable({ patientData }) {
     return <Loader />;
   }
 
-  const handlePageChange = async (page) => {
-    setPage(page);
-  };
+  // const handlePageChange = async (page) => {
+  //   setPage(page);
+  // };
 
   const handleCreateNewLabOrder = async () => {
     const LabData: any = {
@@ -238,12 +238,13 @@ function PatientTable({ patientData }) {
   return (
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
-        columns={columns}
+         columns={columns as any}
         data={
           // patientData?.data ? patientData.data : pageData?.data?.patients || []
           patientData?.data 
         }
-        onRowClicked={(row) => handleRowClick(row.id)}
+       onRowClicked={(row: { id: any }) => handleRowClick((row as { id: any }).id)}
+
         // pagination
         // onChangePage={handlePageChange}
       />
