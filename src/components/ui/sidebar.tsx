@@ -1,7 +1,7 @@
 import { Dropdown, Sidebar } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { MdBloodtype } from "react-icons/md";
-import { FaUserNurse } from "react-icons/fa";
+// import { FaUserNurse } from "react-icons/fa";
 import { GiMedicines } from "react-icons/gi";
 import { GiSkeleton } from "react-icons/gi";
 import { FaUserDoctor } from "react-icons/fa6";
@@ -34,9 +34,9 @@ function SideBar() {
             <Sidebar.Item as={Link} to="/pharmacy" icon={GiMedicines}>
               <span className="hidden lg:flex">Pharmacy</span>
             </Sidebar.Item>
-            <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
+            {/* <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
               <span className="hidden lg:flex">Nursing</span>
-            </Sidebar.Item>
+            </Sidebar.Item> */}
             <Sidebar.Item as={Link} to="/finance" icon={GiReceiveMoney}>
               <span className="hidden lg:flex">Finance</span>
             </Sidebar.Item>
