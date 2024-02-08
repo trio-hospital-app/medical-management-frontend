@@ -34,9 +34,9 @@ function SideBar() {
             <Sidebar.Item as={Link} to="/pharmacy" icon={GiMedicines}>
               <span className="hidden lg:flex">Pharmacy</span>
             </Sidebar.Item>
-            <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
+            {/* <Sidebar.Item as={Link} to="/nursing" icon={FaUserNurse}>
               <span className="hidden lg:flex">Nursing</span>
-            </Sidebar.Item>
+            </Sidebar.Item> */}
             <Sidebar.Item as={Link} to="/finance" icon={GiReceiveMoney}>
               <span className="hidden lg:flex">Finance</span>
             </Sidebar.Item>

@@ -181,7 +181,7 @@ function pharmacyTable({reload, setReload}) {
      {isLoading && <Loader />}
      {loadingPharmacy && <Loader />}
     <div className="w-full">
-      <div className="border-b py-2 flex items-center justify-end">
+      {/* <div className="border-b py-2 flex items-center justify-end">
         <div className="relative w-[300px]">
           <input
             type="text"
@@ -192,7 +192,7 @@ function pharmacyTable({reload, setReload}) {
             <FaSearch className="text-gray-500 " />
           </div>
         </div>
-      </div>
+      </div> */}
       {/* @ts-expect-error: Just ignore the next line */}
       <DataTable columns={columns} data={Pharmacy?.data} customStyles={customStyles} />
     </div>
