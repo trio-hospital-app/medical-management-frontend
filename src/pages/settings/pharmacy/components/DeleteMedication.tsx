@@ -7,12 +7,12 @@ import {
   DialogDescription,
 } from "../../../../components/ui/dialog";
 import { Button } from "../../../../components/ui/button";
-import { useDeleteLab } from "../../../../hooks/reactQuery/useLabs";
 import { toast } from "react-toastify";
 import Loader from "../../../../components/ui/loader";
 import { useEffect } from "react";
+import { useDeletePharmacy } from "../../../../hooks/reactQuery/usePharmacy";
 
-const CancelLabOrder = ({
+const DeleteMedication = ({
   setDeleteDialogOpen,
   deleteDialogOpen,
   selectedRowData,
@@ -22,11 +22,12 @@ const CancelLabOrder = ({
     mutate,
     status: deleteStatus,
     isLoading: deleteLoading,
-  } = useDeleteLab();
+  } = useDeletePharmacy();
+
 
   useEffect(() => {
     if (deleteStatus === "success") {
-      toast.success("Lab Order Deleted Successfully");
+      toast.success("Medication Deleted Successfully");
     }
   }, [deleteStatus]);
 
@@ -45,39 +46,81 @@ const CancelLabOrder = ({
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-red-500">Cancel Lab Order</DialogTitle>
+            <DialogTitle className="text-red-500">
+              Delete Medication
+            </DialogTitle>
           </DialogHeader>
           <DialogDescription className="font-semibold">
-            Are you sure you want to cancel this lab order? This action cannot
+            Are you sure you want to Delete this Medication? This action cannot
             be undone.
           </DialogDescription>
           <DialogDescription className="font-semibold"></DialogDescription>
-          <span className="md:text-xl font-bold text-bold capitalize">
-            {selectedRowData?.patientId?.firstName}{" "}
-            {selectedRowData?.patientId?.lastName}
-          </span>
           <div>
             <label
-              htmlFor="labID"
+              htmlFor="name"
               className="text-sm font-semibold text-gray-500"
             >
-              Paitent ID:
+              Name:
             </label>
-            <span id="labID" className="text-ha-primary1 pl-1">
-              {selectedRowData?.patientId?.patientId}
+            <span id="name" className="text-ha-primary1 pl-1">
+              {selectedRowData?.name}
             </span>
           </div>
           <div>
             <label
-              htmlFor="labID"
+              htmlFor="medicationName"
               className="text-sm font-semibold text-gray-500"
             >
-              Lab Test:{"     "}
+              Unit:{"     "}
             </label>
-            <span
-              className={`md:text-xl font-bold text-ha-primary1 text-bold px-3 rounded-[1rem] py-1 text-center my-1 capitalize`}
+            <span id="name" className="text-ha-primary1 pl-1">
+              {selectedRowData?.unit}
+            </span>
+          </div>
+          <div>
+            <label
+              htmlFor="medicationName"
+              className="text-sm font-semibold text-gray-500"
             >
-              {selectedRowData.panelId?.panel || "Not Found"}
+              Form:{"     "}
+            </label>
+            <span id="name" className="text-ha-primary1 pl-1">
+              {selectedRowData?.form}
+            </span>
+          </div>
+          <div>
+            <label
+              htmlFor="medicationName"
+              className="text-sm font-semibold text-gray-500"
+            >
+              Manufacturer:{"     "}
+            </label>
+            <span id="labID" className="text-ha-primary1 pl-1">
+              {selectedRowData?.manufacturer}
+            </span>
+          </div>
+
+          <div>
+            <label
+              htmlFor="medicationName"
+              className="text-sm font-semibold text-gray-500"
+            >
+              Price:{"     "}
+            </label>
+            <span id="labID" className="text-ha-primary1 pl-1">
+              {"₦" + selectedRowData?.price}
+            </span>
+          </div>
+
+          <div>
+            <label
+              htmlFor="medicationName"
+              className="text-sm font-semibold text-gray-500"
+            >
+              Quantity:{"     "}
+            </label>
+            <span id="labID" className="text-ha-primary1 pl-1">
+              {selectedRowData?.quantity}
             </span>
           </div>
 
@@ -101,4 +144,4 @@ const CancelLabOrder = ({
   );
 };
 
-export default CancelLabOrder;
+export default DeleteMedication;

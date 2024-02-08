@@ -59,6 +59,9 @@ function SideBar() {
                   <Dropdown.Item as={Link} to="/settings/visit">
                     Consultation
                   </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="settings/pharmacy">
+                    Pharmacy
+                  </Dropdown.Item>
                 </Dropdown>
               </span>
             </Sidebar.Item>

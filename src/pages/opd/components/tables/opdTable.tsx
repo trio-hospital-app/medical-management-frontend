@@ -9,19 +9,32 @@ import { useGetConsultations } from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
 
-function OpdTable({consults}) {
-   
+function OpdTable({ consults }) {
   const navigate = useNavigate();
   const [showVitalsModal, setShowVitalsModal] = useState(false);
-  const {
-    data: consultationData,
-    isLoading: loadingConsults,
-} = useGetConsultations();
-  
+  const { data: consultationData, isLoading: loadingConsults } =
+    useGetConsultations();
 
-if(loadingConsults) {
-  return <Loader/>
-}
+  if (loadingConsults) {
+    return <Loader />;
+  }
+  const customStyles = {
+    headCells: {
+      style: {
+        backgroundColor: "#ffff",
+        text: "bold",
+        fontWeight: "bold",
+        fontSize: "14px",
+      },
+    },
+    rows: {
+      style: {
+        minHeight: "56px",
+        textTransform: "capitalize",
+        cursor: "pointer",
+      },
+    },
+  };
 
   const columns = [
     {
@@ -38,12 +51,20 @@ if(loadingConsults) {
     // },
     {
       name: "Doctor",
-      selector: (row) => <div>{row?.doctorId?.firstName} {row?.doctorId?.lastName}</div>,
+      selector: (row) => (
+        <div>
+          {row?.doctorId?.firstName} {row?.doctorId?.lastName}
+        </div>
+      ),
       sortable: true,
     },
     {
-      name: "Patient",
-      selector: (row) => <div>{row?.patientId?.firstName} {row?.patientId?.lastName}</div>,
+      name: "Patient ID",
+      selector: (row) => (
+        <div>
+          {row?.patientId?.firstName} {row?.patientId?.lastName}
+        </div>
+      ),
       sortable: true,
       // width: "200px",
     },
@@ -61,7 +82,17 @@ if(loadingConsults) {
     },
     {
       name: "Status",
-      selector: (row) => <div className={row?.status === "seen" ? "capitalize bg-green-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold" : "capitalize bg-yellow-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold"}>{row?.status}</div>,
+      selector: (row) => (
+        <div
+          className={
+            row?.status === "seen"
+              ? "capitalize bg-green-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold"
+              : "capitalize bg-yellow-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold"
+          }
+        >
+          {row?.status}
+        </div>
+      ),
       sortable: true,
       // width: "200px",
     },
@@ -98,8 +129,29 @@ if(loadingConsults) {
   return (
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
+        customStyles={{
+          headCells: {
+            style: {
+              backgroundColor: customStyles.headCells.style.backgroundColor,
+              text: customStyles.headCells.style.text,
+              fontWeight: customStyles.headCells.style.fontWeight,
+              fontSize: customStyles.headCells.style.fontSize,
+            },
+          },
+          rows: {
+            style: {
+              minHeight: customStyles.rows.style.minHeight,
+              textTransform: "none", // Update the textTransform property to have the correct type
+              cursor: customStyles.rows.style.cursor,
+            },
+          },
+        }}
         columns={columns}
-        data={consults?.data ? consults?.data : consultationData?.data?.consultations || []}
+        data={
+          consults?.data
+            ? consults?.data
+            : consultationData?.data?.consultations || []
+        }
         onRowClicked={(row) => handleRowClick(row.patientId.id, row.id)}
       />
 

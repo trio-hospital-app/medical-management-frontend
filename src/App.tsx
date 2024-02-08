@@ -24,6 +24,7 @@ import FinanceId from "./pages/finance/financeId";
 import FinanceManagement from "./pages/settings/finance";
 import VisitManagement from "./pages/settings/visit";
 import ConsultationId from "./pages/opd/consultationId";
+import PharmacyManagement from "./pages/settings/pharmacy";
 
 const pageVariants = {
   initial: { opacity: 0.5, translateY: -10 },
@@ -263,6 +264,20 @@ function App() {
                 exit="exit"
               >
                 <LaboratoryManagement />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/settings/pharmacy"
+            element={
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <PharmacyManagement />
               </motion.div>
             }
           />

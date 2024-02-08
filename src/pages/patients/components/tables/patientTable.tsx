@@ -229,12 +229,13 @@ function PatientTable({ patientData }) {
   return (
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
-        columns={columns}
+         columns={columns as any}
         data={
           // patientData?.data ? patientData.data : pageData?.data?.patients || []
           patientData?.data 
         }
-        onRowClicked={(row) => handleRowClick(row.id)}
+       onRowClicked={(row: { id: any }) => handleRowClick((row as { id: any }).id)}
+
         // pagination
         // onChangePage={handlePageChange}
       />
