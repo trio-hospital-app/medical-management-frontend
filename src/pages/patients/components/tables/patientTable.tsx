@@ -3,10 +3,10 @@ import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import OrderDoctor from "../orderDoctor";
 import { formatDate } from "../../../../hooks/formattedDate";
-import PatientService from "../../../../services/patientService";
+// import PatientService from "../../../../services/patientService";
 import Loader from "../../../../components/ui/loader";
 import NewLabOrder from "./newLabOrder";
 import { useAddLab } from "../../../../hooks/reactQuery/useLabs";
@@ -17,22 +17,17 @@ import { useNewConsultation } from "../../../../hooks/reactQuery/useVisit";
 import { useGetUserByToken } from "../../../../hooks/reactQuery/useUser";
 
 function PatientTable({ patientData }) {
-  interface PageData {
-    data: {
-      totalItems: number;
-      patients: Patient[];
-    };
-  }
+
   const navigate = useNavigate();
   const [formComment, setFormComment] = useState("");
   const [selectLabPanel, setselectLabPanel] = useState([]);
   const [selectScheme, setSelectedScheme] = useState([]);
-  const [pageData, setPageData] = useState<PageData>(null);
+  // const [pageData, setPageData] = useState<PageData>(null);
   const [showLabModal, setShowLabModal] = useState(false);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [newRadiologyModal, setNewRadiologyModal] = useState(false);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [modalPatientData, setModalPatientData] = useState(null)
   const [diagnosisComment, setDiagnosisComment] = useState("");
   const [selectRadiologyTest, setSelectRadiologyTest] = useState([]);
@@ -72,28 +67,28 @@ function PatientTable({ patientData }) {
     toast.success("Radiology order created successfully");
     mutateRAdiology(null)
   }
-  const fetchData = async (newpage) => {
-    try {
-      const data = await PatientService.getPatients(newpage);
-      setPageData(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-    }
-  };
+  // const fetchData = async (newpage) => {
+  //   try {
+  //     const data = await PatientService.getPatients(newpage);
+  //     setPageData(data);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchData(page);
-  }, [page]);
+  // useEffect(() => {
+  //   fetchData(page);
+  // }, [page]);
 
-  if (isLoading || NewLabLoading || NewRadiologyLoading || loadingConsults) {
+  if ( NewLabLoading || NewRadiologyLoading || loadingConsults) {
     return <Loader />;
   }
 
-  const handlePageChange = async (page) => {
-    setPage(page);
-  };
+  // const handlePageChange = async (page) => {
+  //   setPage(page);
+  // };
 
   const handleCreateNewLabOrder = async () => {
     const LabData: any = {
@@ -152,24 +147,19 @@ function PatientTable({ patientData }) {
   const columns = [
     {
       name: "Patient Name",
-      selector: (row: Patient) => (<div className="capitalize text-gray-500 font-bold">{row?.firstName} {row?.lastName}</div>),
+      selector: (row: Patient) => `${row?.firstName} ${row?.lastName}`,
       sortable: true,
       width: "350px",
     },
     {
       name: "Patient ID",
-      selector: (row: Patient) => (<div className="text-ha-primary1 font-bold">{row?.patientId}</div>),
+      selector: (row: Patient) => row?.patientId,
       sortable: true,
     },
     {
       name: "Gender",
       selector: (row: Patient) => row.gender,
     },
-    // {
-    //   name: "Date of Birth",
-    //   selector: (row: Patient) => formatDate(row.address?.dob),
-    //   sortable: true,
-    // },
     {
       name: "Phone",
       selector: (row: Patient) => row.phone,
@@ -230,6 +220,7 @@ function PatientTable({ patientData }) {
       sortable: false,
     },
   ];
+  
 
   const handleRowClick = (id: string) => {
     navigate(`/patients/${id}`);

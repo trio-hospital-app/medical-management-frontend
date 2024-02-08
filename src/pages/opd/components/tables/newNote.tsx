@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
+// import { AiOutlineDelete } from "react-icons/ai";
 import { useWriteNotes } from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
+// import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 
 
-function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHistory, pid, }) {
+function NewNote({ showConsultations, refetch, cid, onClose, setShowHistory,  }) {
     const [formData, setFormData] = useState({
-        notes: initialData ? initialData : [{ question: '', answer: '' }],
-        recommendation: recommendation,
+        notes:  [{ question: 'null', answer: '' }],
+        recommendation: '',
     });
 
     const {
@@ -41,21 +41,21 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHi
             notes: updatedNotes
         });
     };
-    const handleAddNote = () => {
-        setFormData({
-            ...formData,
-            notes: [...formData.notes, { question: '', answer: '' }]
-        });
-    };
+    // const handleAddNote = () => {
+    //     setFormData({
+    //         ...formData,
+    //         notes: [...formData.notes, { question: '', answer: '' }]
+    //     });
+    // };
 
-    const handleRemoveNote = (index) => {
-        const updatedNotes = formData.notes.filter((_, i) => i !== index);
+    // const handleRemoveNote = (index) => {
+    //     const updatedNotes = formData.notes.filter((_, i) => i !== index);
 
-        setFormData({
-            ...formData,
-            notes: updatedNotes
-        });
-    };
+    //     setFormData({
+    //         ...formData,
+    //         notes: updatedNotes
+    //     });
+    // };
 
     const handleRecommendationChange = (value) => {
         setFormData({
@@ -90,8 +90,8 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHi
                             <label className="font-bold text-lg text-ha-primary1">Doctor's Notes:</label></div>
                         <div className="flex  w-full items-center justify-end gap-3">
 
-                            <div className="w-[40%] text-white rounded p-2 bg-ha-primary1 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <FaEye className='text-white text-2xl' /> View All Consultations</div>
-                            <div className="w-[40%] text-white rounded p-2 bg-green-600 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <IoCheckmarkDoneCircle className='text-white text-2xl' /> Mark as Completed</div>
+                            {showConsultations && <div className="w-[40%] text-white rounded p-2 bg-ha-primary1 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <FaEye className='text-white text-2xl' /> View All Consultations</div>}
+                            {/* <div className="w-[40%] text-white rounded p-2 bg-green-600 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <IoCheckmarkDoneCircle className='text-white text-2xl' /> Mark as Completed</div> */}
                         </div>
                     </div>
                     {formData.notes.map((note, index) => (
