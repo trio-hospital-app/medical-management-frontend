@@ -6,9 +6,9 @@ import {
 } from "../../../components/ui/tabs";
 import PharmacyTable from "./tables/pharmacyTable";
 import DoctorsTable from "./tables/doctorsTable";
-import FinanceTable from "./tables/financeTable";
+// import FinanceTable from "./tables/financeTable";
 import LabTable from "./tables/labTable";
-import NursingTable from "./tables/nursingTable";
+// import NursingTable from "./tables/nursingTable";
 import RadiologyTable from "./tables/radiologyTable";
 
 function PatientTabsCard({ id, patientData, cid }) {
@@ -17,7 +17,7 @@ function PatientTabsCard({ id, patientData, cid }) {
       <Tabs defaultValue="doctor">
         <div className="border-b">
           <TabsList>
-            <TabsTrigger value="doctor">Doctor</TabsTrigger>
+            <TabsTrigger value="doctor">Consultation</TabsTrigger>
           </TabsList>
           <TabsList>
             <TabsTrigger value="laboratory">Laboratory</TabsTrigger>
@@ -28,16 +28,16 @@ function PatientTabsCard({ id, patientData, cid }) {
           <TabsList>
             <TabsTrigger value="pharmacy">Pharmacy</TabsTrigger>
           </TabsList>
-          <TabsList>
+          {/* <TabsList>
             <TabsTrigger value="nursing">Nursing</TabsTrigger>
-          </TabsList>
-          <TabsList>
+          </TabsList> */}
+          {/* <TabsList>
             <TabsTrigger value="finance">Finance</TabsTrigger>
-          </TabsList>
+          </TabsList> */}
         </div>
         <div className="px-5">
           <TabsContent value="doctor">
-            <DoctorsTable id={id} patientData={patientData} cid={cid}/>
+            <DoctorsTable id={id} cid={cid}/>
           </TabsContent>
           <TabsContent value="laboratory">
             <LabTable id={id} patientData={patientData}/>
@@ -48,12 +48,12 @@ function PatientTabsCard({ id, patientData, cid }) {
           <TabsContent value="pharmacy">
             <PharmacyTable />
           </TabsContent>
-          <TabsContent value="nursing">
+          {/* <TabsContent value="nursing">
             <NursingTable />
-          </TabsContent>
-          <TabsContent value="finance">
+          </TabsContent> */}
+          {/* <TabsContent value="finance">
             <FinanceTable />
-          </TabsContent>
+          </TabsContent> */}
         </div>
       </Tabs>
     </div>

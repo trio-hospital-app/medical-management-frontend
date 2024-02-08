@@ -1,27 +1,27 @@
 import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
-import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
-import Loader from "../../../../components/ui/loader";
+// import { useGetPatients } from "../../../../hooks/reactQuery/usePatients";
+// import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
-import PatientService from "../../../../services/patientService";
-import { QueryClient } from "react-query";
+// import PatientService from "../../../../services/patientService";
+// import { QueryClient } from "react-query";
 
 function PatientTable({ patientData }) {
-  const queryClient = new QueryClient();
+  // const queryClient = new QueryClient();
   const navigate = useNavigate();
-  const { data, isLoading, refetch } = useGetPatients(1);
+  // const { data, isLoading, refetch } = useGetPatients(1);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
 
-  const handlePageChange = async (page) => {
-    console.log(page);
-    await refetch(page);
-    await queryClient.prefetchQuery(["patients", page], () =>
-      PatientService.getPatients(page),
-    );
-  };
+  // const handlePageChange = async (page) => {
+  //   console.log(page);
+  //   await refetch(page);
+  //   await queryClient.prefetchQuery(["patients", page], () =>
+  //     PatientService.getPatients(page),
+  //   );
+  // };
 
   interface Patient {
     lastAppointment: number;
@@ -45,7 +45,7 @@ function PatientTable({ patientData }) {
       name: "Patient Name",
       selector: (row: Patient) => `${row.firstName} ${row.lastName}`,
       sortable: true,
-      width: "300px",
+      width: "350px",
     },
     {
       name: "Patient ID",
@@ -56,11 +56,11 @@ function PatientTable({ patientData }) {
       name: "Gender",
       selector: (row: Patient) => row.gender,
     },
-    {
-      name: "Date of Birth",
-      selector: (row: Patient) => formatDate(row.address?.dob),
-      sortable: true,
-    },
+    // {
+    //   name: "Date of Birth",
+    //   selector: (row: Patient) => formatDate(row.address?.dob),
+    //   sortable: true,
+    // },
     {
       name: "Phone Number",
       selector: (row: Patient) => row.phone,
@@ -81,12 +81,15 @@ function PatientTable({ patientData }) {
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
         columns={columns}
-        data={patientData?.data ? patientData?.data : data?.data.patients}
+        data={
+          // patientData?.data ? patientData?.data : data?.data.patients
+          patientData?.data 
+        }
         onRowClicked={(row) => handleRowClick(row.id)}
-        pagination
-        paginationServer
-        paginationTotalRows={data?.data.totalItems}
-        onChangePage={handlePageChange}
+        // pagination
+        // paginationServer
+        // paginationTotalRows={data?.data.totalItems}
+        // onChangePage={handlePageChange}
       />
     </div>
   );

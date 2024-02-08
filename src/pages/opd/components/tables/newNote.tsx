@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
+// import { AiOutlineDelete } from "react-icons/ai";
 import { useWriteNotes } from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
+// import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 
 
-function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHistory }) {
+function NewNote({ showConsultations, refetch, cid, onClose, setShowHistory,  }) {
     const [formData, setFormData] = useState({
-        notes: initialData ? initialData : [{ question: '', answer: '' }],
-        recommendation: recommendation,
+        notes:  [{ question: 'null', answer: '' }],
+        recommendation: '',
     });
 
     const {
@@ -41,21 +41,21 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHi
             notes: updatedNotes
         });
     };
-    const handleAddNote = () => {
-        setFormData({
-            ...formData,
-            notes: [...formData.notes, { question: '', answer: '' }]
-        });
-    };
+    // const handleAddNote = () => {
+    //     setFormData({
+    //         ...formData,
+    //         notes: [...formData.notes, { question: '', answer: '' }]
+    //     });
+    // };
 
-    const handleRemoveNote = (index) => {
-        const updatedNotes = formData.notes.filter((_, i) => i !== index);
+    // const handleRemoveNote = (index) => {
+    //     const updatedNotes = formData.notes.filter((_, i) => i !== index);
 
-        setFormData({
-            ...formData,
-            notes: updatedNotes
-        });
-    };
+    //     setFormData({
+    //         ...formData,
+    //         notes: updatedNotes
+    //     });
+    // };
 
     const handleRecommendationChange = (value) => {
         setFormData({
@@ -90,20 +90,21 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHi
                             <label className="font-bold text-lg text-ha-primary1">Doctor's Notes:</label></div>
                         <div className="flex  w-full items-center justify-end gap-3">
 
-                            <div className="w-[40%] text-white rounded p-2 bg-ha-primary1 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <FaEye className='text-white text-2xl' /> View All Consultations</div>
-                            <div className="w-[40%] text-white rounded p-2 bg-green-600 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <IoCheckmarkDoneCircle className='text-white text-2xl' /> Mark as Completed</div>
+                            {showConsultations && <div className="w-[40%] text-white rounded p-2 bg-ha-primary1 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <FaEye className='text-white text-2xl' /> View All Consultations</div>}
+                            {/* <div className="w-[40%] text-white rounded p-2 bg-green-600 flex items-center justify-center gap-3 cursor-pointer hover:bg-blue-600" onClick={() => setShowHistory(true)}> <IoCheckmarkDoneCircle className='text-white text-2xl' /> Mark as Completed</div> */}
                         </div>
                     </div>
                     {formData.notes.map((note, index) => (
                         <div key={index} className="flex items-center w-full gap-3 bg-blue-50 p-5 rounded-lg my-2">
                             <div className="grid gap-2 w-full">
-                                <input
+                                {/* <input
                                     type="text"
                                     required
                                     placeholder="Question"
                                     value={note.question}
                                     onChange={(e) => handleInputChange(index, 'question', e.target.value)}
-                                />
+                                /> */}
+                                <label className="text-lg font-bold">Diagnosis:</label>
                                 <textarea
                                     className="border rounded p-1"
                                     required
@@ -114,20 +115,20 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose, setShowHi
                                 />
                             </div>
 
-                            <button type="button" onClick={() => handleRemoveNote(index)} className="text-white flex items-center justify-center gap-2 p-3 hover:bg-gray-500 rounded bg-red-500">
+                            {/* <button type="button" onClick={() => handleRemoveNote(index)} className="text-white flex items-center justify-center gap-2 p-3 hover:bg-gray-500 rounded bg-red-500">
                                 <AiOutlineDelete className='font-bold' /> <span>Remove</span>
-                            </button>
+                            </button> */}
                         </div>
                     ))}
-                    <div className="flex items-center justify-start">
+                    {/* <div className="flex items-center justify-start">
                         <button type="button" onClick={handleAddNote} className="underline my-2 p-2 rounded text-lg text-ha-primary1 w-[auto]">
                             Add New Row
                         </button>
-                    </div>
+                    </div> */}
 
                 </div>
                 <div className="grid my-5">
-                    <label className="text-lg font-bold">Additional Comments:</label>
+                    <label className="text-lg font-bold">Plan:</label>
                     <textarea
                         required
                         className="border rounded p-1"
