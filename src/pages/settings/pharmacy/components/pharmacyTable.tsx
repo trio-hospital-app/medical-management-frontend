@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import DataTable from "react-data-table-component";
 import Loader from "../../../../components/ui/loader";
 import { toast } from "react-toastify";

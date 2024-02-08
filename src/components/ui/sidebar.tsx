@@ -1,7 +1,7 @@
 import { Dropdown, Sidebar } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { MdBloodtype } from "react-icons/md";
-import { FaUserNurse } from "react-icons/fa";
+// import { FaUserNurse } from "react-icons/fa";
 import { GiMedicines } from "react-icons/gi";
 import { GiSkeleton } from "react-icons/gi";
 import { FaUserDoctor } from "react-icons/fa6";
