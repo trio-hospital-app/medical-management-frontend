@@ -1,7 +1,50 @@
+import { Button } from "flowbite-react";
 import DataTable from "react-data-table-component";
-import { useNavigate } from "react-router-dom";
+import NewTreatment from './newTreatment'
+import { toast } from "react-toastify";
+import { useAddTreatment, useGetPharmacy, useGetTreatments } from '../../../../hooks/reactQuery/usePharmacy';
+import Loader from "../../../../components/ui/loader";
+import BasicModal from "../../../../components/ui/modals/basicModal";
+import { useState } from "react";
 
-function PharmacyTable() {
+function PharmacyTable({ id, cid, patientData }) {
+  const { data: medicationOptions, refetch:pharmRefetch, isLoading: loadingPharmacy } = useGetPharmacy();
+  const { data: patientPharmarcy, refetch:patientRefetch, isLoading: loadingTreatments } = useGetTreatments();
+  const {
+    mutate,
+    status: addTreatmentStatus,
+    isLoading: addTreatmentLoading,
+  } = useAddTreatment();
+console.log(patientData, id, patientPharmarcy, pharmRefetch )
+  const [showTreatmentModal, setShowTreatmentModal] = useState(false)
+  const [formData, setFormData] = useState({
+    consultationId: cid,
+    text: '',
+    medication: [
+      { medicationId: '', quantity: '', duration: '' }
+    ],
+    outOfStockDrugs: [
+      { drug: '', quantity: '', duration: '' }
+    ]
+  });
+
+
+  if (loadingPharmacy || loadingTreatments || addTreatmentLoading) {
+    return <Loader />;
+  }
+
+
+  if (addTreatmentStatus === "success") {
+    toast.success("Pharmacy order created successfully");
+    patientRefetch()
+    mutate(null)
+  }
+  const handleSubmit = async() => {
+    console.log(formData);
+    await mutate(formData)
+    setShowTreatmentModal(false)
+  };
+
   interface Patient {
     id: number;
     firstName: string;
@@ -124,17 +167,34 @@ function PharmacyTable() {
     },
   ];
 
-  const navigate = useNavigate();
-  const handleRowClick = (patientId: number) => {
-    navigate(`/patients/${patientId}`);
-  };
 
   return (
     <div>
+      <BasicModal
+        title="New Pharmacy Order"
+        setOpenModal={setShowTreatmentModal}
+        openModal={showTreatmentModal}
+        cancelTitle="Cancel"
+        submitTitle="Save"
+        showCancelButton={true}
+        showSubmitButton={true}
+        size="4xl"
+        submitHandler={() => handleSubmit()}
+      >
+        <NewTreatment
+          medicationOptions={medicationOptions}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      </BasicModal>
+      <div className="flex justify-end items-center ">
+        <Button className="bg-ha-primary1 text-white" onClick={() => setShowTreatmentModal(true)}>
+          Order Pharmacy for Patient
+        </Button>
+      </div>
       <DataTable
         columns={columns}
         data={data}
-        onRowClicked={(row) => handleRowClick(row.id)}
       />
     </div>
   );
