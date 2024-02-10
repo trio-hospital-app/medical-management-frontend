@@ -94,18 +94,18 @@ function PharmacyTable({ treatments }) {
     },
     {
       name: "Patient ID",
-      selector: (row) => <div>{row?.patientId?.patientId}</div>,
+      selector: (row) => `${row?.patientId?.patientId}`,
       sortable: true,
     },
     {
       name: "Total Cost",
-      selector: (row) => <div> NGN {row?.amount}</div>,
+      selector: (row) =>` NGN ${row?.amount}`,
       sortable: true,
     },
 
     {
       name: "Paid",
-      selector: (row) => (
+      cell: (row) => (
         <button
           onClick={() => handleConfirmation(row)}
           className={
@@ -118,17 +118,16 @@ function PharmacyTable({ treatments }) {
         </button>
       ),
       sortable: true,
-      width: '100px'
     },
     {
       name: "Status",
-      selector: (row) => (
+      cell: (row) => (
         <button
           onClick={() => handleConfirmation(row)}
           className={
             row?.dispensed
-              ? "capitalize bg-green-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold"
-              : "capitalize bg-yellow-500 p-3 w-[80px] flex items-center justify-center rounded-full text-white font-bold"
+              ? "capitalize bg-green-500 p-3 w-[100px] flex items-center justify-center rounded-full text-white font-bold"
+              : "capitalize bg-yellow-500 p-3 w-[100px] flex items-center justify-center rounded-full text-white font-bold"
           }
         >
           {row?.dispensed ? 'Dispensed' : "Pending"}
@@ -138,7 +137,7 @@ function PharmacyTable({ treatments }) {
     },
     {
       name: "Actions",
-      selector: (row) => (
+      cell: (row) => (
         <div className="w-full flex items-center justify-end">
           {!row.paid && <MdDeleteForever onClick={() => handleDelete(row)} className='text-red-500 text-xl' />}
         </div>
