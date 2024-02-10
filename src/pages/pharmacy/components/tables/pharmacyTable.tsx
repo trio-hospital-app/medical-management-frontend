@@ -77,18 +77,18 @@ function PharmacyTable({ treatments }) {
     {
       name: "Administered By",
       selector: (row) => (
-        <div>
-          {row?.administeredBy?.firstName} {row?.administeredBy?.lastName}
-        </div>
+
+          `${row?.administeredBy?.firstName} ${row?.administeredBy?.lastName}`
+ 
       ),
       sortable: true,
     },
     {
       name: "Patient",
       selector: (row) => (
-        <div>
-          {row?.patientId?.firstName} {row?.patientId?.lastName}
-        </div>
+
+          `${row?.patientId?.firstName} ${row?.patientId?.lastName}`
+
       ),
       sortable: true,
     },
