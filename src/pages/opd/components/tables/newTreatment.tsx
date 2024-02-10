@@ -77,7 +77,7 @@ function NewTreatment({ formData, setFormData, medicationOptions }: { formData: 
                 <textarea id="text" name="text" value={formData.text} rows={3} onChange={(e) => handleInputChange(e, null, 'text')} className="mt-1 p-2 block w-full rounded-md border border-gray-300" />
             </div>
             <div className="mb-4 grid gap-3 w-full">
-                <label className="block font-bold text-lg text-gray-700">Out of Stock Drugs</label>
+                <label className="block font-bold text-lg text-gray-700">Unavailable Drugs</label>
                 {formData.outOfStockDrugs.map((drug, index) => (
                     <div key={index} className="flex items-center justify-between bg-ha-primary2 h-[80px] rounded-lg px-4">
                         <input type="text" name="drug" value={drug.drug} onChange={(e) => handleInputChange(e, index, 'outOfStockDrugs')} placeholder="Drug" className="p-2 rounded-md border-gray-300" />

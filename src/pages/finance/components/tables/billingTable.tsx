@@ -47,6 +47,14 @@ function BillingTable() {
   //   setShowPaymentModal(false);
   // }
 
+  const medications = (drugs)=> {
+    const drugNames = drugs.map((el) => {
+      return el?.medicationId?.name
+    })
+    console.log(drugs, drugNames, 'drugNames')
+    return drugNames.join(', ')
+  }
+
   const department = (row) => {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.panel;
@@ -56,6 +64,9 @@ function BillingTable() {
     }
     if (row.itemType === "consultations") {
       return row?.consultationId?.visitType[0]?.name;
+    }
+    if (row.itemType === "administered-drugs") {
+      return medications(row?.administerId?.medication);
     }
   };
 
@@ -67,7 +78,10 @@ function BillingTable() {
       return "Radiology";
     }
     if (row.itemType === "consultations") {
-      return "Doctor's Visit";
+      return "Consultation";
+    }
+    if (row.itemType === "administered-drugs") {
+      return "Pharmacy";
     }
   };
   const columns = [
@@ -87,7 +101,7 @@ function BillingTable() {
     {
       name: "Description",
       selector: (row) => {
-        return <div className="capitalize">{department(row)}</div>
+        return <div className="capitalize flex flex-wrap">{department(row)}</div>
 
       },
       sortable: true,
@@ -188,7 +202,7 @@ function BillingTable() {
             <div className="flex flex-col">
               <label className="font-bold">Select Payment Option</label>
               <select value={PaymentType} onChange={handlePaymentTypeChange}>
-                <option value=""></option>
+                <option value="">Select</option>
                 <option value="cash">Cash</option>
                 <option value="pos">POS</option>
                 <option value="transfer">Transfer</option>

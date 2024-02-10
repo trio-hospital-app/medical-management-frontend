@@ -33,16 +33,20 @@ function CustomDropdown({ options, value, onChange, placeholder }) {
                         className="p-2 border-b border-gray-300 w-full mb-2 sticky top-0 bg-white z-10"
                     />
                     <div >
-                        <div className="py-2 px-2 hover:bg-gray-100 cursor-pointer grid grid-cols-3 bg-ha-primary2">
-                            <span className="">Name</span>
-                            <span className="">Quantity</span>
-                            <span>Manufacturer</span>
+                        <div className="py-2 px-2 hover:bg-gray-100 cursor-pointer grid grid-cols-5 bg-ha-primary2">
+                            <span className="w-full flex items-center justify-start">Name</span>
+                            <span className="w-full flex items-center justify-start">Manufacturer</span>
+                            <span className="w-full flex items-center justify-start">Quantity</span>
+                            <span className="w-full flex items-center justify-start">form</span>
+                            <span className="w-full flex items-center justify-start">unit</span>
                         </div>
-                        {filteredOptions.map((option, index) => (
-                            <div key={index} className="py-2 px-2 hover:bg-gray-100 cursor-pointer grid grid-cols-3" onClick={() => handleSelectOption(option)}>
-                                <span className="">{option.name}</span>
-                                <span className="">{option.quantity}</span>
-                                <span> {option.manufacturer}</span>
+                        {filteredOptions.map((el, index) => (
+                            <div key={index} className="py-2 px-2 hover:bg-gray-100 cursor-pointer grid grid-cols-5" onClick={() => handleSelectOption(el)}>
+                                <span className="w-full flex items-center justify-start">{el?.name}</span>
+                                <span className="w-full flex items-center justify-start">{el?.manufacturer}</span>
+                                <span className="w-full flex items-center justify-start">{el?.quantity}</span>
+                                <span className="w-full flex items-center justify-start">{el?.form}</span>
+                                <span className="w-full flex items-center justify-start">{el?.unit}</span>
                             </div>
                         ))}
                     </div>

@@ -1,38 +1,54 @@
 import DataTable from "react-data-table-component";
 import Loader from "../../../../components/ui/loader";
 import { formatDate, formatDate1 } from "../../../../hooks/formattedDate";
-import { useConfirmTreatment, useGetTreatments } from "../../../../hooks/reactQuery/usePharmacy";
+import { useConfirmTreatment, useGetTreatments, useDeleteTreatment } from "../../../../hooks/reactQuery/usePharmacy";
 import { toast } from "react-toastify";
+import { MdDeleteForever } from "react-icons/md";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../../../components/ui/accordion";
+import { useState } from "react";
+import DeleteWarningModal from "../../../../components/ui/modals/deletWarningModal";
 
 function PharmacyTable({ treatments }) {
   console.log(treatments)
+  const [showDelete, setShowDelete] = useState(false);
+  const [rowData, setRowData] = useState(null)
   const { data: patientPharmarcy, refetch: patientRefetch, isLoading: loadingTreatments } = useGetTreatments();
   const {
     mutate,
     status: confirmTreatmentStatus,
     isLoading: confirmTreatmentLoading,
   } = useConfirmTreatment()
+  const {
+    mutate: deleteMutate,
+    status: deleteTreatmentStatus,
+    isLoading: deleteTreatmentLoading,
+  } = useDeleteTreatment()
 
   if (loadingTreatments) {
     return <Loader />;
   }
 
-  if (loadingTreatments || confirmTreatmentLoading) {
+  if (loadingTreatments || confirmTreatmentLoading || deleteTreatmentLoading) {
     return <Loader />;
   }
 
 
   if (confirmTreatmentStatus === "success") {
-    toast.success("Radiology order created successfully");
+    toast.success("Pharmarcy order Dispensed successfully");
     patientRefetch()
     mutate(null)
   }
+  if (deleteTreatmentStatus === "success") {
+    toast.success("Pharmarcy order deleted");
+    patientRefetch()
+    deleteMutate(null)
+  }
 
   const handleConfirmation = async (rowData) => {
-    if(rowData?.paid){
+    console.log(rowData, 'rowData')
+    if (rowData?.paid) {
       const data = {
-        id: rowData?._id,
+        id: rowData?.id,
         data: {
           dispensed: true
         }
@@ -43,13 +59,20 @@ function PharmacyTable({ treatments }) {
     }
 
   }
-
+  const handleDelete = (rowData) => {
+    setShowDelete(true)
+    setRowData(rowData)
+  }
+  const handleDeleteRecord = async () => {
+    await deleteMutate(rowData.id)
+    setShowDelete(false)
+  }
   const columns = [
     {
       name: "Date",
       selector: (row) => formatDate(row?.createdAt),
       sortable: true,
-      // width: "200px",
+      width: "100px",
     },
     {
       name: "Administered By",
@@ -68,7 +91,6 @@ function PharmacyTable({ treatments }) {
         </div>
       ),
       sortable: true,
-      // width: "200px",
     },
     {
       name: "Patient ID",
@@ -79,6 +101,24 @@ function PharmacyTable({ treatments }) {
       name: "Total Cost",
       selector: (row) => <div> NGN {row?.amount}</div>,
       sortable: true,
+    },
+
+    {
+      name: "Paid",
+      selector: (row) => (
+        <button
+          onClick={() => handleConfirmation(row)}
+          className={
+            row?.paid
+              ? "capitalize text-green-500 p-3 w-[80px] flex items-center justify-center rounded-full  font-bold"
+              : "capitalize text-red-500 p-3 w-[80px] flex items-center justify-center rounded-full font-bold"
+          }
+        >
+          {row?.paid ? 'Paid' : "Not Paid"}
+        </button>
+      ),
+      sortable: true,
+      width: '100px'
     },
     {
       name: "Status",
@@ -95,7 +135,17 @@ function PharmacyTable({ treatments }) {
         </button>
       ),
       sortable: true,
-    }
+    },
+    {
+      name: "Actions",
+      selector: (row) => (
+        <div className="w-full flex items-center justify-end">
+          {!row.paid && <MdDeleteForever onClick={() => handleDelete(row)} className='text-red-500 text-xl' />}
+        </div>
+
+      ),
+      width: '80px'
+    },
   ];
 
   const ExpandedComponent = ({ data }) => (
@@ -107,7 +157,7 @@ function PharmacyTable({ treatments }) {
           <span className="w-full flex items-center justify-start">Quantity</span>
           <span className="w-full flex items-center justify-start">form</span>
           <span className="w-full flex items-center justify-start">unit</span>
-          
+
           <span className="w-full flex items-center justify-start">Duration</span>
         </div></div>
       <div className="m-5 p-5 shadow text-black rounded-md">
@@ -156,6 +206,15 @@ function PharmacyTable({ treatments }) {
 
   return (
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
+          {showDelete && (
+        <DeleteWarningModal
+          setOpenModal={setShowDelete}
+          openModal={showDelete}
+          showCancelButton
+          confirmTitle="Delete"
+          confirmHandler={handleDeleteRecord}
+        />
+      )}
       <DataTable
         columns={columns}
         data={
