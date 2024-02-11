@@ -36,7 +36,7 @@ const NewRadiologyOrder = ({
 
   //function to search patient
   const handleKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -114,7 +114,7 @@ const NewRadiologyOrder = ({
                 labelledBy="Scheme"
                 onSelectChange={handleSchemeChange}
                 value={(Array?.isArray(selectScheme) ? selectScheme : []).map(
-                  (item) => item.id
+                  (item) => item.id,
                 )}
                 isMultiSelect={false}
                 placeholder="Scheme"

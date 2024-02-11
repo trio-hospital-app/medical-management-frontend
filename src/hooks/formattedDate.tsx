@@ -10,13 +10,14 @@ export function formatDate(dateString) {
   return formattedDate;
 }
 
-
 export function formatDate1(dateString) {
   // Parse the input date string
   const parsedDate = DateTime.fromJSDate(new Date(dateString));
 
   // Format the date in a user-friendly way
-  const formattedDate = parsedDate.toFormat("cccc, LLLL dd, yyyy 'at' hh:mm:ss");
+  const formattedDate = parsedDate.toFormat(
+    "cccc, LLLL dd, yyyy 'at' hh:mm:ss",
+  );
 
   return formattedDate;
 }

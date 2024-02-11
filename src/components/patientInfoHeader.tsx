@@ -106,7 +106,9 @@ function PatientInfoHeader({ patientData }) {
             <span className="text-ha-primary1 underline">
               {" "}
               <Dropdown inline arrowIcon={false} label={"View Schemes"}>
-                {patientData.schemeId.map((el)=>(<Dropdown.Item>{el.name}</Dropdown.Item>))}
+                {patientData.schemeId.map((el) => (
+                  <Dropdown.Item>{el.name}</Dropdown.Item>
+                ))}
               </Dropdown>
             </span>
           </div>

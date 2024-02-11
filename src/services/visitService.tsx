@@ -11,7 +11,6 @@ export interface FormData {
   recommendation: string;
 }
 class VisitService {
-
   //consultations
   public async getConsultations() {
     const options: AxiosRequestConfig = {
@@ -39,23 +38,27 @@ class VisitService {
     return response;
   }
 
-  public async writeVisitNotes({ id, data }: { id: string, data: FormData }) {
+  public async writeVisitNotes({ id, data }: { id: string; data: FormData }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: `/consult/complete/${id}`,
-      data
+      data,
     };
     const response = await request(options);
     return response;
   }
-
 
   public async editConsultation({
     id,
     data,
   }: {
     id: string;
-    data: { doctorId: string, visit:string, patientId:string, schemeId:string };
+    data: {
+      doctorId: string;
+      visit: string;
+      patientId: string;
+      schemeId: string;
+    };
   }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
@@ -75,7 +78,12 @@ class VisitService {
     return response;
   }
 
-  public async newConsultation(body: { doctorId: string, visit:string, patientId:string, schemeId:string }) {
+  public async newConsultation(body: {
+    doctorId: string;
+    visit: string;
+    patientId: string;
+    schemeId: string;
+  }) {
     const options: AxiosRequestConfig = {
       method: "POST",
       url: `/consult`,
@@ -85,8 +93,7 @@ class VisitService {
     return response;
   }
 
-
-//departments
+  //departments
   public async getVisitDept() {
     const options: AxiosRequestConfig = {
       method: "GET",
@@ -96,13 +103,12 @@ class VisitService {
     return response;
   }
 
-
   public async editVisitDept({
     id,
     data,
   }: {
     id: string;
-    data: { name: string, cost:number };
+    data: { name: string; cost: number };
   }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
@@ -131,8 +137,7 @@ class VisitService {
     return response;
   }
 
-
-  public async createVisitDept(body: { name: string, cost:number }) {
+  public async createVisitDept(body: { name: string; cost: number }) {
     const options: AxiosRequestConfig = {
       method: "POST",
       url: `/visit`,

@@ -8,14 +8,14 @@ import {
 } from "../../../../components/ui/accordion";
 
 function CaptureImaging({
-  selectedRowData, setCaptureComment, captureComment
+  selectedRowData,
+  setCaptureComment,
+  captureComment,
 }) {
-
   const { patientId, testId, orderBy, comment } = selectedRowData;
 
-
-   //function for date and time format
-   function formatDateTime(inputDate) {
+  //function for date and time format
+  function formatDateTime(inputDate) {
     const originalDate = new Date(inputDate);
     // Create an options object with the desired date and time format
     const options: Intl.DateTimeFormatOptions = {
@@ -26,9 +26,8 @@ function CaptureImaging({
     return new Intl.DateTimeFormat("en-GB", options).format(originalDate);
   }
 
-    // date and time usage
-    const orderedDate = formatDateTime(selectedRowData?.createdAt);
-
+  // date and time usage
+  const orderedDate = formatDateTime(selectedRowData?.createdAt);
 
   return (
     <>

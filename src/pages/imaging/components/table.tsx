@@ -35,7 +35,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
     ["radiologys", page],
-    () => radiologyService.getRadiology(page)
+    () => radiologyService.getRadiology(page),
   );
   if (statusResult === "success") {
     toast.success("Imaging Report Submitted Successfully");

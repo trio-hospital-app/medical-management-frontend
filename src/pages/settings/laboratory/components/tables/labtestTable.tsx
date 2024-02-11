@@ -19,7 +19,6 @@ import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import DeleteWarningModal from "../../../../../components/ui/modals/deletWarningModal";
 
-
 function LabTestsTable() {
   const [showCreate, setShowCreate] = useState(false);
   const [id, setId] = useState("");
@@ -27,7 +26,11 @@ function LabTestsTable() {
   const [showDelete, setShowDelete] = useState(false);
   const { data: specimens, isLoading: LoadingLab } = useSpecimens();
   const { data: departments, isLoading: LoadingLabCenter } = useGetLabCenters();
-  const { data: pageData, isLoading: LoadingLabTests, refetch } = useGetLabTests();
+  const {
+    data: pageData,
+    isLoading: LoadingLabTests,
+    refetch,
+  } = useGetLabTests();
   const {
     mutate: editMutate,
     isLoading: editLoading,
@@ -65,20 +68,20 @@ function LabTestsTable() {
 
   if (deleteData?.status) {
     toast.success("Lab Test Deleted");
-    deleteMutate(null)
-    refetch()
+    deleteMutate(null);
+    refetch();
   }
 
   if (createData?.status) {
     toast.success("Lab Test Added successfully");
-    createMutate(null)
-    refetch()
+    createMutate(null);
+    refetch();
   }
 
   if (editData?.status) {
     toast.success("Lab Test Updated successfully");
-    editMutate(null)
-    refetch()
+    editMutate(null);
+    refetch();
   }
 
   const createLabTests = async () => {
@@ -112,7 +115,7 @@ function LabTestsTable() {
     try {
       await deleteMutate(id);
       setShowDelete(false);
-      setId('')
+      setId("");
     } catch (error) {
       console.log(error.message);
     }
@@ -177,15 +180,15 @@ function LabTestsTable() {
       sortable: false,
     },
   ];
-  
+
   const handleClick = () => {
     setCreateFormData({
       panel: "",
       cost: 0,
       specimenId: "",
       centerId: "",
-    })
-    setId('')
+    });
+    setId("");
     setShowCreate(true);
   };
 
@@ -224,7 +227,6 @@ function LabTestsTable() {
           submitHandler={() => {
             editLabTest();
           }}
-
         >
           <NewLabTests
             createFormData={createFormData}

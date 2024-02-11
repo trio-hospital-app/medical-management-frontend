@@ -8,17 +8,23 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import { Tooltip } from "flowbite-react";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import EditPharmacy from "./EditPharmacy";
-import { useGetPharmacy, useUpdatePharmacy } from "../../../../hooks/reactQuery/usePharmacy";
+import {
+  useGetPharmacy,
+  useUpdatePharmacy,
+} from "../../../../hooks/reactQuery/usePharmacy";
 import DeleteMedication from "./DeleteMedication";
 
-function pharmacyTable({reload, setReload}) {
-
+function pharmacyTable({ reload, setReload }) {
   const [showEditMedication, setShowEditMedication] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState([]);
   const [selectedRowId, setSelectedRowId] = useState("");
-  const { data: Pharmacy, refetch, isLoading: loadingPharmacy } = useGetPharmacy();
-  const { mutate: editMedication, status, isLoading  } = useUpdatePharmacy();
+  const {
+    data: Pharmacy,
+    refetch,
+    isLoading: loadingPharmacy,
+  } = useGetPharmacy();
+  const { mutate: editMedication, status, isLoading } = useUpdatePharmacy();
 
   useEffect(() => {
     if (status === "success") {
@@ -26,8 +32,6 @@ function pharmacyTable({reload, setReload}) {
       setReload(true);
     }
   }, [status]);
-
-
 
   const [formData, setFormData] = useState<PharmacyFormData>({
     name: "",
@@ -38,7 +42,7 @@ function pharmacyTable({reload, setReload}) {
     unit: "",
     form: [], // Initialize as an array
   });
-  
+
   interface PharmacyFormData {
     name: string;
     manufacturer: string;
@@ -49,14 +53,13 @@ function pharmacyTable({reload, setReload}) {
     form: any;
   }
 
-
-    if (reload){
-      refetch()
-    }
+  if (reload) {
+    refetch();
+  }
 
   const openEdit = (row) => {
     setSelectedRowId(row.id);
-    const priceWithoutCommas = row.price.replace(/,/g, ''); 
+    const priceWithoutCommas = row.price.replace(/,/g, "");
     const priceNumber = parseFloat(priceWithoutCommas);
     setFormData({
       name: row.name,
@@ -69,15 +72,13 @@ function pharmacyTable({reload, setReload}) {
     });
     setShowEditMedication(true);
   };
-  
-  
 
   const openDelete = (row) => {
-    setDeleteDialogOpen(true)
-    setSelectedRowData(row)
-  }
+    setDeleteDialogOpen(true);
+    setSelectedRowData(row);
+  };
 
-  const handleEditSubmit = async  () => {
+  const handleEditSubmit = async () => {
     const formattedData = {
       name: formData.name,
       manufacturer: formData.manufacturer,
@@ -92,14 +93,13 @@ function pharmacyTable({reload, setReload}) {
     const id = selectedRowId;
 
     const Updatedata = {
-          id: id, 
-          data: formattedData,
-        };
+      id: id,
+      data: formattedData,
+    };
 
-    await editMedication( Updatedata);
+    await editMedication(Updatedata);
     setShowEditMedication(false);
   };
-
 
   const customStyles = {
     headCells: {
@@ -155,22 +155,28 @@ function pharmacyTable({reload, setReload}) {
       name: "Medication Form",
       selector: "form",
       sortable: true,
-    }, 
+    },
     {
       name: "Actions",
       cell: (row) => (
         <div className="w-full flex justify-around items-center">
           <Tooltip content="Edit Medication">
-          <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1" onClick={() => openEdit(row)}>
-           <FaPen style={{ color: "black" }} />
-          </div>
+            <div
+              className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1"
+              onClick={() => openEdit(row)}
+            >
+              <FaPen style={{ color: "black" }} />
+            </div>
           </Tooltip>
           <Tooltip content="Delete Medication">
-          <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1" onClick={() => openDelete(row)}>
-           <RiDeleteBin2Fill style={{ color: "red" }} />
-          {/* </div> */}
-        </div>
-        </Tooltip>
+            <div
+              className="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1"
+              onClick={() => openDelete(row)}
+            >
+              <RiDeleteBin2Fill style={{ color: "red" }} />
+              {/* </div> */}
+            </div>
+          </Tooltip>
         </div>
       ),
     },
@@ -178,10 +184,10 @@ function pharmacyTable({reload, setReload}) {
 
   return (
     <>
-     {isLoading && <Loader />}
-     {loadingPharmacy && <Loader />}
-    <div className="w-full">
-      {/* <div className="border-b py-2 flex items-center justify-end">
+      {isLoading && <Loader />}
+      {loadingPharmacy && <Loader />}
+      <div className="w-full">
+        {/* <div className="border-b py-2 flex items-center justify-end">
         <div className="relative w-[300px]">
           <input
             type="text"
@@ -193,17 +199,21 @@ function pharmacyTable({reload, setReload}) {
           </div>
         </div>
       </div> */}
-      {/* @ts-expect-error: Just ignore the next line */}
-      <DataTable columns={columns} data={Pharmacy?.data} customStyles={customStyles} />
-    </div>
+        {/* @ts-expect-error: Just ignore the next line */}
+        <DataTable
+          columns={columns}
+          data={Pharmacy?.data}
+          customStyles={customStyles}
+        />
+      </div>
 
-    <DeleteMedication
+      <DeleteMedication
         setDeleteDialogOpen={setDeleteDialogOpen}
         deleteDialogOpen={deleteDialogOpen}
         selectedRowData={selectedRowData}
         setReload={setReload}
       />
-    <BasicModal
+      <BasicModal
         title="Edit Medication"
         setOpenModal={setShowEditMedication}
         cancelTitle="Cancel"

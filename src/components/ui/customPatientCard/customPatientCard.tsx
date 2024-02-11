@@ -78,7 +78,7 @@ function customPatientCard({
                   <span
                     className={`md:text-xl font-bold text-bold px-3 rounded-[1rem] py-1 text-center my-1 capitalize`}
                     style={{
-                      backgroundColor: testNameBackgroundColor || "white"
+                      backgroundColor: testNameBackgroundColor || "white",
                     }}
                   >
                     {testName}
@@ -160,20 +160,22 @@ function customPatientCard({
               </div>
             </div>
           </div>
-          {showOrdered && <div className="px-10 py-1 shadow flex items-start justify-start gap-5 flex-col md:flex-row">
-            <div className="flex items-start justify-center flex-col">
-              <span className="text-sm font-semibold text-gray-500">
-                Orderd By:
-              </span>
-              <span className="font-semibold capitalize">{orderedBy}</span>
+          {showOrdered && (
+            <div className="px-10 py-1 shadow flex items-start justify-start gap-5 flex-col md:flex-row">
+              <div className="flex items-start justify-center flex-col">
+                <span className="text-sm font-semibold text-gray-500">
+                  Orderd By:
+                </span>
+                <span className="font-semibold capitalize">{orderedBy}</span>
+              </div>
+              <div className="flex items-start justify-center flex-col">
+                <span className="text-sm font-semibold text-gray-500">
+                  Orderd Date:
+                </span>
+                <span className="font-semibold">{orderedDate}</span>
+              </div>
             </div>
-            <div className="flex items-start justify-center flex-col">
-              <span className="text-sm font-semibold text-gray-500">
-                Orderd Date:
-              </span>
-              <span className="font-semibold">{orderedDate}</span>
-            </div>
-          </div>}
+          )}
         </div>
       ) : (
         <div className="Patients">

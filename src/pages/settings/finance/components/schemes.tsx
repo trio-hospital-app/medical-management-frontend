@@ -45,20 +45,20 @@ function Schemes() {
 
   if (createData?.status) {
     toast.success("Scheme Added successfully");
-    createMutate(null)
-    refetch()
+    createMutate(null);
+    refetch();
   }
 
   if (deleteData?.status) {
     toast.success("Scheme Deleted");
-    deleteMutate(null)
-    refetch()
+    deleteMutate(null);
+    refetch();
   }
 
   if (editData?.status) {
     toast.success("Scheme Updated successfully");
-    editMutate(null)
-    refetch()
+    editMutate(null);
+    refetch();
   }
 
   const handleCreate = () => {

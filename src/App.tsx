@@ -127,7 +127,7 @@ function App() {
               </motion.div>
             }
           />
-            <Route
+          <Route
             path="/visits/:pid/:cid"
             element={
               <motion.div

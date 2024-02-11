@@ -91,9 +91,9 @@ function Scheme({ patient, setPatient, setPresentTab }) {
 
   const mappedOptions = schemes?.data
     ? schemes.data.map((scheme) => ({
-      label: scheme.name,
-      value: scheme.id,
-    }))
+        label: scheme.name,
+        value: scheme.id,
+      }))
     : [];
 
   const handleChange = (selectedOptions) => {

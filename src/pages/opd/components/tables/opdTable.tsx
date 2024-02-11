@@ -99,7 +99,6 @@ function OpdTable({ consults }) {
     {
       name: "Actions",
       cell: () => (
-     
         <div className=" w-full flex justify-start items-center ">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown

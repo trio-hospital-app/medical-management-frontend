@@ -5,9 +5,12 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "../../../../components/ui/accordion";
-import NewImagingOrder from './newRadiology'
+import NewImagingOrder from "./newRadiology";
 import Loader from "../../../../components/ui/loader";
-import { useAddRadiology, useGetPatientRadiology } from "../../../../hooks/reactQuery/useRadiology";
+import {
+  useAddRadiology,
+  useGetPatientRadiology,
+} from "../../../../hooks/reactQuery/useRadiology";
 import { formatDate, formatDate1 } from "../../../../hooks/formattedDate";
 import { IoMdPrint } from "react-icons/io";
 import { FiSend } from "react-icons/fi";
@@ -16,10 +19,14 @@ import { useState } from "react";
 import { Button } from "flowbite-react";
 import { toast } from "react-toastify";
 
-function RadiologyTable({ id, patientData}) {
-  const { isLoading, data: patientRadiology, refetch } =   useGetPatientRadiology(id);
+function RadiologyTable({ id, patientData }) {
+  const {
+    isLoading,
+    data: patientRadiology,
+    refetch,
+  } = useGetPatientRadiology(id);
   const [newRadiologyModal, setNewRadiologyModal] = useState(false);
-  const [selectScheme, setSelectedScheme] = useState('');
+  const [selectScheme, setSelectedScheme] = useState("");
   const [selectRadiologyTest, setSelectRadiologyTest] = useState([]);
   const [formComment, setFormComment] = useState("");
   const [diagnosisComment, setDiagnosisComment] = useState("");
@@ -35,12 +42,12 @@ function RadiologyTable({ id, patientData}) {
 
   if (addLabStatus === "success") {
     toast.success("Radiology order created successfully");
-    refetch()
-    mutate(null)
+    refetch();
+    mutate(null);
   }
 
-  console.log(patientRadiology)
- 
+  console.log(patientRadiology);
+
   const columns = [
     {
       name: "Order Date",
@@ -78,55 +85,83 @@ function RadiologyTable({ id, patientData}) {
     },
   ];
 
-
   const ExpandedComponent = ({ data }) => (
     <div className="relative">
       <div className="m-5 p-5 bg-black">
         <div className="w-full h-full grid grid-cols-4 bg-black text-white">
-          <span className="w-full flex items-center justify-start">Observation</span>
+          <span className="w-full flex items-center justify-start">
+            Observation
+          </span>
           <span className="w-full flex items-center justify-start">Range</span>
           <span className="w-full flex items-center justify-start">Unit</span>
           <span className="w-full flex items-center justify-start">Value</span>
-        </div></div>
-      <div className="m-5 p-5 shadow text-black rounded-md">
-        {data?.result.length > 0 ? data?.result?.map((el) => (
-          <div className="w-full h-full grid grid-cols-4 p-2 border">
-            <span className="w-full flex items-center justify-start">{el?.observation}</span>
-            <span className="w-full flex items-center justify-start">{el?.range}</span>
-            <span className="w-full flex items-center justify-start">{el?.unit}</span>
-            <span className="w-full flex items-center justify-start">{el?.value}</span>
-          </div>
-        )):  <div className="flex items-center flex-col justify-center w-full h-[100px]">
-        <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
-        <h3>Result yet to be filled </h3>
-      </div>}
-      </div>
-      {data?.comment && <div className="m-5">
-        <div className="flex items-center justify-end w-[50%]">
-          <Accordion type="single" collapsible className="w-full p-5 bg-ha-primary2 rounded-lg">
-            <AccordionItem value="item-1">
-              <AccordionTrigger> Result Comments</AccordionTrigger>
-              {data?.comment.map((el) => (
-                el?.text && (
-                  <AccordionContent key={el?.id}>
-                    <div  className=" rounded w-full grid bg-white mb-2 p-2">
-                    <div className="flex items-center justify-between ">
-                      <span className="w-full flex items-center justify-start capitalize">
-                        <span className="font-bold">By:</span> {el?.by?.firstName} {el?.by?.lastName}
-                      </span>
-                      <span className="w-full flex items-center justify-end font-bold">{formatDate1(el?.time)}</span>
-                    </div>
-                    <div className="flex items-center justify-start mt-2 capitalize font-bold">{el?.text}</div>
-                    </div>
-                  
-                  </AccordionContent>
-                )
-              ))}
-
-            </AccordionItem>
-          </Accordion>
         </div>
-      </div>}
+      </div>
+      <div className="m-5 p-5 shadow text-black rounded-md">
+        {data?.result.length > 0 ? (
+          data?.result?.map((el) => (
+            <div className="w-full h-full grid grid-cols-4 p-2 border">
+              <span className="w-full flex items-center justify-start">
+                {el?.observation}
+              </span>
+              <span className="w-full flex items-center justify-start">
+                {el?.range}
+              </span>
+              <span className="w-full flex items-center justify-start">
+                {el?.unit}
+              </span>
+              <span className="w-full flex items-center justify-start">
+                {el?.value}
+              </span>
+            </div>
+          ))
+        ) : (
+          <div className="flex items-center flex-col justify-center w-full h-[100px]">
+            <img
+              src="/empty-list.svg"
+              alt="empty"
+              className="w-[20%] h-[70%]"
+            />
+            <h3>Result yet to be filled </h3>
+          </div>
+        )}
+      </div>
+      {data?.comment && (
+        <div className="m-5">
+          <div className="flex items-center justify-end w-[50%]">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full p-5 bg-ha-primary2 rounded-lg"
+            >
+              <AccordionItem value="item-1">
+                <AccordionTrigger> Result Comments</AccordionTrigger>
+                {data?.comment.map(
+                  (el) =>
+                    el?.text && (
+                      <AccordionContent key={el?.id}>
+                        <div className=" rounded w-full grid bg-white mb-2 p-2">
+                          <div className="flex items-center justify-between ">
+                            <span className="w-full flex items-center justify-start capitalize">
+                              <span className="font-bold">By:</span>{" "}
+                              {el?.by?.firstName} {el?.by?.lastName}
+                            </span>
+                            <span className="w-full flex items-center justify-end font-bold">
+                              {formatDate1(el?.time)}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-start mt-2 capitalize font-bold">
+                            {el?.text}
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    ),
+                )}
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -144,7 +179,7 @@ function RadiologyTable({ id, patientData}) {
 
   return (
     <div>
-       <BasicModal
+      <BasicModal
         title="New Imaging Order"
         setOpenModal={setNewRadiologyModal}
         openModal={newRadiologyModal}
@@ -168,7 +203,10 @@ function RadiologyTable({ id, patientData}) {
         />
       </BasicModal>
       <div className="flex justify-end items-center ">
-        <Button className="bg-ha-primary1 text-white" onClick={()=> setNewRadiologyModal(true)}>
+        <Button
+          className="bg-ha-primary1 text-white"
+          onClick={() => setNewRadiologyModal(true)}
+        >
           Order Radiology for Patient
         </Button>
       </div>

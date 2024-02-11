@@ -20,7 +20,7 @@ export const useAddPharmacy = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Pharmacy");
       },
-    }
+    },
   );
 };
 
@@ -32,7 +32,7 @@ export const useUpdatePharmacy = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Pharmacy");
       },
-    }
+    },
   );
 };
 
@@ -44,14 +44,21 @@ export const useDeletePharmacy = () => {
   });
 };
 
-
 //pharmacy Order
 export const useGetTreatments = () => {
   return useQuery("Treatment", pharmacyService.getTreatments);
 };
 
 export const useGetTreatmentById = (id: string) => {
-  return useQuery(["Treatment", id], () => pharmacyService.getTreatmentById(id));
+  return useQuery(["Treatment", id], () =>
+    pharmacyService.getTreatmentById(id),
+  );
+};
+
+export const useGetUserTreatmentB = (id: string) => {
+  return useQuery(["userTreatment", id], () =>
+    pharmacyService.getUserTreatment(id),
+  );
 };
 
 export const useAddTreatment = () => {
@@ -61,7 +68,7 @@ export const useAddTreatment = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Treatment");
       },
-    }
+    },
   );
 };
 
@@ -73,7 +80,7 @@ export const useUpdateTreatment = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Treatment");
       },
-    }
+    },
   );
 };
 
@@ -85,11 +92,9 @@ export const useConfirmTreatment = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Treatment");
       },
-    }
+    },
   );
 };
-
-
 
 export const useDeleteTreatment = () => {
   return useMutation((id: string) => pharmacyService.deleteTreatment(id), {

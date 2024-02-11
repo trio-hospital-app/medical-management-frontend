@@ -47,20 +47,20 @@ function Specimen() {
 
   if (createData?.status) {
     toast.success("Specimen Container Added successfully");
-     createMutate(null)
-    refetch()
+    createMutate(null);
+    refetch();
   }
 
   if (deleteData?.status) {
     toast.success("Specimen Container Deleted");
-    deleteMutate(null)
-    refetch()
+    deleteMutate(null);
+    refetch();
   }
 
   if (editData?.status) {
     toast.success("Specimen Container Updated successfully");
-    editMutate(null)
-    refetch()
+    editMutate(null);
+    refetch();
   }
 
   const handleCreate = () => {

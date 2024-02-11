@@ -11,18 +11,14 @@ const NewLabOrder = ({
   formComment,
   selectLabPanel,
   selectScheme,
-  patientData
+  patientData,
 }) => {
   const { data: clinicPanelData } = useGetClinicPanel();
 
-
-
-console.log(patientData)
-   // lab drop down data
-   const schemes = patientData?.schemeId || [];
-   const clinicPanels = clinicPanelData?.data || [];
- 
-
+  console.log(patientData);
+  // lab drop down data
+  const schemes = patientData?.schemeId || [];
+  const clinicPanels = clinicPanelData?.data || [];
 
   const handleSchemeChange = (selectedItems: any) => {
     setSelectedScheme(selectedItems);
@@ -49,7 +45,7 @@ console.log(patientData)
                 labelledBy="Scheme"
                 onSelectChange={handleSchemeChange}
                 value={(Array?.isArray(selectScheme) ? selectScheme : []).map(
-                  (item) => item.id
+                  (item) => item.id,
                 )}
                 isMultiSelect={false}
                 placeholder="Scheme"

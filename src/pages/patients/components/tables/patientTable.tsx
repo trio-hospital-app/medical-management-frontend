@@ -17,7 +17,6 @@ import { useNewConsultation } from "../../../../hooks/reactQuery/useVisit";
 import { useGetUserByToken } from "../../../../hooks/reactQuery/useUser";
 
 function PatientTable({ patientData }) {
-
   const navigate = useNavigate();
   const [formComment, setFormComment] = useState("");
   const [selectLabPanel, setselectLabPanel] = useState([]);
@@ -28,14 +27,14 @@ function PatientTable({ patientData }) {
   // const [isLoading, setIsLoading] = useState(true);
   const [newRadiologyModal, setNewRadiologyModal] = useState(false);
   // const [page, setPage] = useState(1);
-  const [modalPatientData, setModalPatientData] = useState(null)
+  const [modalPatientData, setModalPatientData] = useState(null);
   const [diagnosisComment, setDiagnosisComment] = useState("");
   const [selectRadiologyTest, setSelectRadiologyTest] = useState([]);
-  const [doctorId, setDoctorId] = useState('')
+  const [doctorId, setDoctorId] = useState("");
   const [scheme, setScheme] = useState("");
   const [dept, setDept] = useState("");
 
-  console.log(doctorId)
+  console.log(doctorId);
 
   const {
     mutate: mutateLab,
@@ -46,12 +45,12 @@ function PatientTable({ patientData }) {
   const {
     data: consultationData,
     isLoading: loadingConsults,
-    mutate: createMutate
+    mutate: createMutate,
   } = useNewConsultation();
   const { data: userData } = useGetUserByToken();
   if (consultationData && consultationData?.status) {
-    toast.success('Successfully Created Consultation')
-    createMutate(null)
+    toast.success("Successfully Created Consultation");
+    createMutate(null);
   }
   const {
     mutate: mutateRAdiology,
@@ -61,11 +60,11 @@ function PatientTable({ patientData }) {
 
   if (addLabStatus === "success") {
     toast.success("Lab order created successfully");
-    mutateLab(null)
+    mutateLab(null);
   }
   if (addRadiologyStatus === "success") {
     toast.success("Radiology order created successfully");
-    mutateRAdiology(null)
+    mutateRAdiology(null);
   }
   // const fetchData = async (newpage) => {
   //   try {
@@ -82,7 +81,7 @@ function PatientTable({ patientData }) {
   //   fetchData(page);
   // }, [page]);
 
-  if ( NewLabLoading || NewRadiologyLoading || loadingConsults) {
+  if (NewLabLoading || NewRadiologyLoading || loadingConsults) {
     return <Loader />;
   }
 
@@ -119,13 +118,11 @@ function PatientTable({ patientData }) {
         doctorId: userData?.data?.id,
         visit: dept,
         patientId: modalPatientData?.id,
-        schemeId: scheme
-      }
-      await createMutate(data)
-    } catch (error) {
-
-    }
-  }
+        schemeId: scheme,
+      };
+      await createMutate(data);
+    } catch (error) {}
+  };
 
   interface Patient {
     lastAppointment: number;
@@ -184,7 +181,7 @@ function PatientTable({ patientData }) {
               <Dropdown.Item
                 onClick={() => {
                   setShowLabModal(true);
-                  setModalPatientData(row)
+                  setModalPatientData(row);
                 }}
               >
                 Order Laboratory
@@ -192,7 +189,7 @@ function PatientTable({ patientData }) {
               <Dropdown.Item
                 onClick={() => {
                   setNewRadiologyModal(true);
-                  setModalPatientData(row)
+                  setModalPatientData(row);
                 }}
               >
                 Order Radiology
@@ -200,7 +197,7 @@ function PatientTable({ patientData }) {
               <Dropdown.Item
                 onClick={() => {
                   setShowDoctorModal(true);
-                  setModalPatientData(row)
+                  setModalPatientData(row);
                 }}
               >
                 Consultation
@@ -208,7 +205,7 @@ function PatientTable({ patientData }) {
               <Dropdown.Item
                 onClick={() => {
                   setShowDoctorModal(true);
-                  setModalPatientData(row)
+                  setModalPatientData(row);
                 }}
               >
                 Take Vitals
@@ -220,7 +217,6 @@ function PatientTable({ patientData }) {
       sortable: false,
     },
   ];
-  
 
   const handleRowClick = (id: string) => {
     navigate(`/patients/${id}`);
@@ -229,19 +225,21 @@ function PatientTable({ patientData }) {
   return (
     <div className="rounded-[.5rem] px-10 py-4 bg-white shadow">
       <DataTable
-         columns={columns as any}
+        columns={columns as any}
         data={
           // patientData?.data ? patientData.data : pageData?.data?.patients || []
-          patientData?.data 
+          patientData?.data
         }
-       onRowClicked={(row: { id: any }) => handleRowClick((row as { id: any }).id)}
+        onRowClicked={(row: { id: any }) =>
+          handleRowClick((row as { id: any }).id)
+        }
 
         // pagination
         // onChangePage={handlePageChange}
       />
       {/* lab modal */}
       <BasicModal
-        size='3xl'
+        size="3xl"
         title="Order Laboratory Tests"
         setOpenModal={setShowLabModal}
         cancelTitle="Cancel Order"
@@ -298,10 +296,15 @@ function PatientTable({ patientData }) {
         showSubmitButton={true}
         size="3xl"
         submitHandler={() => {
-          createConsultation()
+          createConsultation();
         }}
       >
-        <OrderDoctor setDoctorId={setDoctorId} setScheme={setScheme} setDept={setDept} patientData={modalPatientData} />
+        <OrderDoctor
+          setDoctorId={setDoctorId}
+          setScheme={setScheme}
+          setDept={setDept}
+          patientData={modalPatientData}
+        />
       </BasicModal>
     </div>
   );

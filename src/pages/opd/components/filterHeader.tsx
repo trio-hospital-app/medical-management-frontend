@@ -5,34 +5,37 @@ import Loader from "../../../components/ui/loader";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import NewConsultation from "./newConsultation";
 import { useGetUserByToken } from "../../../hooks/reactQuery/useUser";
-import { useNewConsultation, useSearchVisit } from "../../../hooks/reactQuery/useVisit";
+import {
+  useNewConsultation,
+  useSearchVisit,
+} from "../../../hooks/reactQuery/useVisit";
 import { toast } from "react-toastify";
 
 function Patients({ setConsults }) {
   const [search, setSearch] = useState("");
   const { isLoading, data, refetch } = useSearchVisit(search);
-  const [showCreate, setShowCreate] = useState(false)
+  const [showCreate, setShowCreate] = useState(false);
   const [patientId, setPatientId] = useState("");
   const [scheme, setScheme] = useState("");
   const [dept, setDept] = useState("");
-  const [doctorId, setDoctorId] = useState('')
+  const [doctorId, setDoctorId] = useState("");
   const { data: userData } = useGetUserByToken();
-  console.log(doctorId, 'userData')
+  console.log(doctorId, "userData");
   const {
     data: consultationData,
     isLoading: loadingConsults,
-    mutate:createMutate
-} = useNewConsultation();
+    mutate: createMutate,
+  } = useNewConsultation();
 
   setConsults(data);
 
-console.log(consultationData, 'consultationData')
+  console.log(consultationData, "consultationData");
 
-if(consultationData && consultationData?.status) {
-  toast.success('Successfully Created Consultation')
-  createMutate(null)
-}
-  
+  if (consultationData && consultationData?.status) {
+    toast.success("Successfully Created Consultation");
+    createMutate(null);
+  }
+
   if (isLoading || loadingConsults) {
     return <Loader />;
   }
@@ -60,44 +63,49 @@ if(consultationData && consultationData?.status) {
     await refetch();
   };
 
-  const createConsultation = async() => {
+  const createConsultation = async () => {
     try {
       const data = {
         doctorId: userData?.data?.id,
         visit: dept,
-        patientId:patientId,
-        schemeId:scheme
-      }
-      await createMutate(data)
-    } catch (error) {
-      
-    }
-  }
+        patientId: patientId,
+        schemeId: scheme,
+      };
+      await createMutate(data);
+    } catch (error) {}
+  };
 
   return (
     <div className="Patients">
-      {showCreate &&    <BasicModal
-        title="Order New Visit"
-        setOpenModal={setShowCreate}
-        openModal={showCreate}
-        cancelTitle="Cancel"
-        submitTitle="Create"
-        showCancelButton={true}
-        showSubmitButton={true}
-        size="3xl"
-        submitHandler={() => {
-         createConsultation()
-        }}
-      >
-        <NewConsultation setDoctorId={setDoctorId} setPatientId={setPatientId} setScheme={setScheme} setDept={setDept}/>
-      </BasicModal>}
+      {showCreate && (
+        <BasicModal
+          title="Order New Visit"
+          setOpenModal={setShowCreate}
+          openModal={showCreate}
+          cancelTitle="Cancel"
+          submitTitle="Create"
+          showCancelButton={true}
+          showSubmitButton={true}
+          size="3xl"
+          submitHandler={() => {
+            createConsultation();
+          }}
+        >
+          <NewConsultation
+            setDoctorId={setDoctorId}
+            setPatientId={setPatientId}
+            setScheme={setScheme}
+            setDept={setDept}
+          />
+        </BasicModal>
+      )}
       <FilterHeader
         title="All Consultations"
         buttonTitle="New Consultation"
         resetFilter={resetHandler}
         search={searchHandler}
         handleCreate={() => {
-          setShowCreate(true)
+          setShowCreate(true);
         }}
       >
         <form className="grid">

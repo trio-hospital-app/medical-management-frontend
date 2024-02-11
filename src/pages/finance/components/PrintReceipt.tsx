@@ -1,6 +1,5 @@
 import { formatDate } from "../../../hooks/formattedDate";
-import '../../../global.css'
-
+import "../../../global.css";
 
 function PrintReceipt({ receiptData }) {
   const source = (row) => {
@@ -12,7 +11,7 @@ function PrintReceipt({ receiptData }) {
     }
   };
 
-  console.log(receiptData, "receiptData")
+  console.log(receiptData, "receiptData");
 
   const department = (row) => {
     if (row.itemType === "labs") {
@@ -27,7 +26,7 @@ function PrintReceipt({ receiptData }) {
     if (row.itemType === "labs") {
       return row?.labId?.panelId?.cost;
     }
-    
+
     if (row.itemType === "radiology") {
       return row?.radiologyId?.testId?.amount;
     }

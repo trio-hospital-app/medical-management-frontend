@@ -14,8 +14,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-          <App />
-          <ToastContainer />
+        <App />
+        <ToastContainer />
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>

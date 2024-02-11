@@ -19,6 +19,6 @@ export const useMakePayment = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Finance");
       },
-    }
+    },
   );
 };
