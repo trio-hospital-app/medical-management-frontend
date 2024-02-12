@@ -12,7 +12,9 @@ export const useGetLabCenters = () => {
 };
 
 export const useGetLabById = (id: string) => {
-  return useQuery(["Lab", id], () => LabService.getLabById(id));
+  return useQuery(["Lab", id], () => LabService.getLabById(id),{
+    cacheTime: 0,
+  });
 };
 
 export const useGetLabCenterById = (id: string) => {

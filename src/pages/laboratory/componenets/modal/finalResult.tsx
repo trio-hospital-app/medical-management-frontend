@@ -12,7 +12,7 @@ import { Tooltip } from "flowbite-react";
 import { useState } from "react";
 import EditFormTable from "../../../../components/ui/dynamicFormTable/EditFormTable";
 
-function FinalResult({ selectedRowData, setReload }) {
+function FinalResult({ selectedRowData, setReload, rePrint, setReprint }) {
   const { patientId, panelId, orderBy } = selectedRowData;
   const [isEditMode, setIsEditMode] = useState(false);
   const id = selectedRowData?.id;
@@ -130,6 +130,8 @@ function FinalResult({ selectedRowData, setReload }) {
           selectedId={id}
           setReload={setReload}
           setIsEditMode={setIsEditMode}
+          rePrint={rePrint}
+          setReprint={setReprint}
         />
       )}
 
