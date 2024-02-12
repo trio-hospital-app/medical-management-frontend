@@ -6,6 +6,11 @@ interface Note {
   answer: string;
 }
 
+export interface vitals {
+  name: string;
+  value: string;
+}
+
 export interface FormData {
   notes: Note[];
   recommendation: string;
@@ -63,6 +68,22 @@ class VisitService {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: `/consult/${id}`,
+      data,
+    };
+    const response = await request(options);
+    return response;
+  }
+
+  public async AddVitals({
+    id,
+    data,
+  }: {
+    id: string;
+    data: vitals[]
+  }) {
+    const options: AxiosRequestConfig = {
+      method: "PUT",
+      url: `/consult/vitals/${id}`,
       data,
     };
     const response = await request(options);

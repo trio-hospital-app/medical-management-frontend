@@ -11,9 +11,32 @@ import { formatDate } from "../../../../hooks/formattedDate";
 
 function OpdTable({ consults }) {
   const navigate = useNavigate();
+  const [consultation, setConsultation] = useState('')
   const [showVitalsModal, setShowVitalsModal] = useState(false);
   const { data: consultationData, isLoading: loadingConsults } =
     useGetConsultations();
+
+    const [formData, setFormData] = useState({
+      timeTaken: '',
+      weight: '',
+      height: '',
+      bmi: '',
+      systolicBP: '',
+      diastolicBP: '',
+      temperature: '',
+      respiratoryRate: '',
+      heartRate: '',
+      urineOutput: '',
+      bloodSugarF: '',
+      bloodSugarR: '',
+      spo2: '',
+      avpu: '',
+      trauma: '',
+      mobility: '',
+      oxygenSupplementation: '',
+      fluidIntake: '',
+      fluidOutput: '',
+    });
 
   if (loadingConsults) {
     return <Loader />;
@@ -35,6 +58,11 @@ function OpdTable({ consults }) {
       },
     },
   };
+
+  const handleVitals = (row) => {
+    setConsultation(row)
+    setShowVitalsModal(true)
+  }
 
   const columns = [
     {
@@ -98,7 +126,7 @@ function OpdTable({ consults }) {
     },
     {
       name: "Actions",
-      cell: () => (
+      cell: (row) => (
         <div className=" w-full flex justify-start items-center ">
           <div className=" w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-ha-secondary1">
             <Dropdown
@@ -108,7 +136,7 @@ function OpdTable({ consults }) {
             >
               <Dropdown.Item
                 onClick={() => {
-                  setShowVitalsModal(true);
+                  handleVitals(row)
                 }}
               >
                 Take Nursing Vitals
@@ -156,7 +184,7 @@ function OpdTable({ consults }) {
 
       {/* Nursing Vitals modal */}
       <BasicModal
-        title="Take Nursing Vitals"
+        title="Take Vitals"
         setOpenModal={setShowVitalsModal}
         cancelTitle="Cancel"
         openModal={showVitalsModal}
@@ -165,7 +193,7 @@ function OpdTable({ consults }) {
         showSubmitButton={true}
         size="4xl"
       >
-        <TakeNursingVitals />
+        <TakeNursingVitals consultation={consultation} setFormData={setFormData} formData={formData}/>
       </BasicModal>
     </div>
   );
