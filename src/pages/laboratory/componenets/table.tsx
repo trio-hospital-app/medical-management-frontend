@@ -33,7 +33,7 @@ function Table({ labSearch, reload, setReload }) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const { data: labData, isLoading: labLoading } = useQuery(
     ["labs", page],
-    () => labService.getLab(page)
+    () => labService.getLab(page),
   );
 
   const { mutate: mutateReceive, status: receiveStatus } =

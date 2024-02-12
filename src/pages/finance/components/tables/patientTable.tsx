@@ -83,7 +83,7 @@ function PatientTable({ patientData }) {
         columns={columns}
         data={
           // patientData?.data ? patientData?.data : data?.data.patients
-          patientData?.data 
+          patientData?.data
         }
         onRowClicked={(row) => handleRowClick(row.id)}
         // pagination

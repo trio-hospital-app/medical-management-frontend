@@ -40,7 +40,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
     isLoading: radiologyLoading,
     status,
   } = useUpdateRadiology();
-  
+
   useEffect(() => {
     if (status === "success") {
       toast.success("Radiology Result Updated Successfully");
@@ -54,7 +54,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
 
     // Validate if all required fields are filled
     const isFormValid = rows.every(
-      (row) => row.observation && row.unit && row.value
+      (row) => row.observation && row.unit && row.value,
     );
 
     if (!isFormValid) {
@@ -76,7 +76,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
             queryClient.invalidateQueries(["Radiology", selectedId]);
             setReload(true);
           },
-        }
+        },
       );
     } catch (error) {
       console.error("An error occurred:", error);
@@ -85,7 +85,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
-    rowIndex: number
+    rowIndex: number,
   ) => {
     const { name, value } = event.target;
     const updatedRows = [...rows];

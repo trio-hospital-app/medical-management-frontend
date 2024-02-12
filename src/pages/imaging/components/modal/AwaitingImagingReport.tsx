@@ -29,7 +29,6 @@ function AwaitingImagingReport({ setResultData, selectedRowData }) {
   // date and time usage
   const orderedDate = formatDateTime(selectedRowData.createdAt);
 
-
   const handleRowDataChange = (rowData: any) => {
     setResultData(rowData);
   };

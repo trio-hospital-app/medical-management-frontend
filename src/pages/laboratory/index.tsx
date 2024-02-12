@@ -8,7 +8,7 @@ function Laboratory() {
   return (
     <div className="Patients">
       <SearchLab setLabSearch={setLabSearch} setReload={setReload} />
-      <Table labSearch={labSearch} reload={reload} setReload={setReload}  />
+      <Table labSearch={labSearch} reload={reload} setReload={setReload} />
     </div>
   );
 }

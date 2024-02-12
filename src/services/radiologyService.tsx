@@ -106,7 +106,7 @@ class radiologyService {
     data,
   }: {
     id: string;
-    data:  { test: string, cost:number, centerId:string };
+    data: { test: string; cost: number; centerId: string };
   }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
@@ -126,7 +126,11 @@ class radiologyService {
     return response;
   }
 
-  public async createRadiologyObservation(body:  { test: string, cost:number, centerId:string }) {
+  public async createRadiologyObservation(body: {
+    test: string;
+    cost: number;
+    centerId: string;
+  }) {
     const options: AxiosRequestConfig = {
       method: "POST",
       url: `/radiology-test`,

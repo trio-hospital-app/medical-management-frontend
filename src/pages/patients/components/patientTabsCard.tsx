@@ -37,16 +37,16 @@ function PatientTabsCard({ id, patientData }) {
         </div>
         <div className="px-5">
           <TabsContent value="doctor">
-            <DoctorsTable id={id} patientData={patientData}/>
+            <DoctorsTable id={id} patientData={patientData} />
           </TabsContent>
           <TabsContent value="laboratory">
-            <LabTable id={id} patientData={patientData}/>
+            <LabTable id={id} patientData={patientData} />
           </TabsContent>
           <TabsContent value="radiology">
-            <RadiologyTable  id={id} patientData={patientData}/>
+            <RadiologyTable id={id} patientData={patientData} />
           </TabsContent>
           <TabsContent value="pharmacy">
-            <PharmacyTable />
+            <PharmacyTable id={id} />
           </TabsContent>
           <TabsContent value="nursing">
             <NursingTable />

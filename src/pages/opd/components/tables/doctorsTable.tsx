@@ -3,34 +3,32 @@ import { useGetConsultationofPatient } from "../../../../hooks/reactQuery/useVis
 import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
 // import { Swiper, SwiperSlide } from 'swiper/react';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit } from "react-icons/ai";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 // import { Pagination, Navigation } from 'swiper/modules';
 import { useState } from "react";
 import NewNote from "./newNote";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-
-
 function DoctorsTable({ id, cid }) {
   const navigate = useNavigate();
   const {
     data: consultationData,
     isLoading: loadingConsults,
-    refetch
+    refetch,
   } = useGetConsultationofPatient(id);
-  const [showHistory, setShowHistory] = useState(false)
+  const [showHistory, setShowHistory] = useState(false);
   // const [formData, setFormData] = useState()
 
-  console.log(consultationData, 'consultationData')
+  console.log(consultationData, "consultationData");
 
   if (loadingConsults) {
-    return <Loader />
+    return <Loader />;
   }
   const columns = [
     {
@@ -47,12 +45,20 @@ function DoctorsTable({ id, cid }) {
     // },
     {
       name: "Doctor",
-      selector: (row) => <div>{row?.doctorId?.firstName} {row?.doctorId?.lastName}</div>,
+      selector: (row) => (
+        <div>
+          {row?.doctorId?.firstName} {row?.doctorId?.lastName}
+        </div>
+      ),
       sortable: true,
     },
     {
       name: "Patient ID",
-      selector: (row) => <div>{row?.patientId?.firstName} {row?.patientId?.lastName}</div>,
+      selector: (row) => (
+        <div>
+          {row?.patientId?.firstName} {row?.patientId?.lastName}
+        </div>
+      ),
       sortable: true,
       // width: "200px",
     },
@@ -67,19 +73,17 @@ function DoctorsTable({ id, cid }) {
       selector: (row) => row?.status,
       sortable: true,
       // width: "200px",
-    }
+    },
   ];
   const handleRowClick = (bodyData) => {
-    console.log(bodyData)
+    console.log(bodyData);
     // setFormData(bodyData)
     navigate(`/visits/${id}/${cid}`);
-    setShowHistory(false)
+    setShowHistory(false);
   };
-
 
   const ExpandedComponent = ({ data }) => (
     <div className="flex items-center justify-center">
-
       {/* {data?.notes?.length === 0 && (
         <div className="flex items-center flex-col justify-center w-full h-[300px]">
           <img src="/empty-list.svg" alt="empty" className="w-[20%] h-[70%]" />
@@ -93,48 +97,54 @@ function DoctorsTable({ id, cid }) {
         </div>
       )} */}
 
-      {data?.notes?.length > 0 && data?.status === 'seen' ?
-        <div
-          className="w-[1100px]  h-[auto] border-2 border-blue-400 my-3"
-        >
+      {data?.notes?.length > 0 && data?.status === "seen" ? (
+        <div className="w-[1100px]  h-[auto] border-2 border-blue-400 my-3">
           <div className="w-full h-full">
             <div>
               <div className="w-full h-full flex items-center justify-end gap-3 py-2 my-2 text-white bg-blue-50  px-10">
-                <button className="text-white flex items-center w-[10%] hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2" onClick={() => handleRowClick(data)}>
+                <button
+                  className="text-white flex items-center w-[10%] hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2"
+                  onClick={() => handleRowClick(data)}
+                >
                   <AiOutlineEdit /> <span>Edit</span>
                 </button>
               </div>
-              <h2 className="text-2xl font-bold p-10">{data?.recommendation}</h2>
-              {data?.notes?.map((el) => (<div className="grid gap-1 mb-10 px-10" key={el}>
-                <span className="font-bold text-lg capitalize">Diagnosis</span>
-                <p className="font-normal text-gray-500">
-                  {el.answer}
-                </p>
-              </div>))}
-
+              <h2 className="text-2xl font-bold p-10">
+                {data?.recommendation}
+              </h2>
+              {data?.notes?.map((el) => (
+                <div className="grid gap-1 mb-10 px-10" key={el}>
+                  <span className="font-bold text-lg capitalize">
+                    Diagnosis
+                  </span>
+                  <p className="font-normal text-gray-500">{el.answer}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div> :
+        </div>
+      ) : (
         <NewNote
           showConsultations={false}
           refetch={refetch}
           onClose={() => setShowHistory(false)}
           cid={cid}
           setShowHistory={setShowHistory}
-        />}
-
-
+        />
+      )}
     </div>
   );
 
-
-
   return (
     <div className="w-full">
-      {showHistory || consultationData?.data?.consultations[0]?.status === 'seen' ?
+      {showHistory ||
+      consultationData?.data?.consultations[0]?.status === "seen" ? (
         <div>
-          <div className=" underline cursor-pointer flex items-center justify-start w-full gap-1" onClick={() => setShowHistory(false)}>
-            <IoArrowBackOutline className='text-ha-primary1' />
+          <div
+            className=" underline cursor-pointer flex items-center justify-start w-full gap-1"
+            onClick={() => setShowHistory(false)}
+          >
+            <IoArrowBackOutline className="text-ha-primary1" />
             <span className=" text-lg text-ha-primary1">Back</span>
           </div>
           <DataTable
@@ -142,16 +152,17 @@ function DoctorsTable({ id, cid }) {
             data={consultationData?.data?.consultations}
             expandableRows
             expandableRowsComponent={ExpandedComponent}
-          /></div> :
-
+          />
+        </div>
+      ) : (
         <NewNote
           refetch={refetch}
           showConsultations={true}
           onClose={() => setShowHistory(false)}
           cid={cid}
           setShowHistory={setShowHistory}
-        />}
-
+        />
+      )}
     </div>
   );
 }

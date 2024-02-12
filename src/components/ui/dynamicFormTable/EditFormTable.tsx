@@ -53,7 +53,7 @@ const EditFormTable: React.FC<EditFormTableProps> = ({
 
     // Validate if all required fields are filled
     const isFormValid = rows.every(
-      (row) => row.observation && row.unit && row.value
+      (row) => row.observation && row.unit && row.value,
     );
 
     if (!isFormValid) {
@@ -75,7 +75,7 @@ const EditFormTable: React.FC<EditFormTableProps> = ({
             queryClient.invalidateQueries(["Lab", selectedId]);
             setReload(true);
           },
-        }
+        },
       );
     } catch (error) {
       console.error("An error occurred:", error);
@@ -84,7 +84,7 @@ const EditFormTable: React.FC<EditFormTableProps> = ({
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
-    rowIndex: number
+    rowIndex: number,
   ) => {
     const { name, value } = event.target;
     const updatedRows = [...rows];

@@ -18,7 +18,7 @@ function EditPharmacy({ setFormData, formData }) {
       formArray.map((form) => ({
         label: form.charAt(0).toUpperCase() + form.slice(1).toLowerCase(),
         value: form.toLowerCase(),
-      }))
+      })),
     );
   }, [formData.form]);
 

@@ -26,10 +26,6 @@ const NewLabOrder = ({
   } = useSearchPatient(search);
   const { data: clinicPanelData } = useGetClinicPanel();
 
-
-
-
-
   // function to set the search patien text
   const handleChange = (event: any) => {
     setSearch(event.target.value);
@@ -37,7 +33,7 @@ const NewLabOrder = ({
 
   //function to search patient
   const handleKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -115,7 +111,7 @@ const NewLabOrder = ({
                 labelledBy="Scheme"
                 onSelectChange={handleSchemeChange}
                 value={(Array?.isArray(selectScheme) ? selectScheme : []).map(
-                  (item) => item.id
+                  (item) => item.id,
                 )}
                 isMultiSelect={false}
                 placeholder="Scheme"

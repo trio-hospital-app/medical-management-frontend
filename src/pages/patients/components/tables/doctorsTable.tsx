@@ -1,14 +1,17 @@
 import DataTable from "react-data-table-component";
-import { useGetConsultationofPatient, useNewConsultation } from "../../../../hooks/reactQuery/useVisit";
+import {
+  useGetConsultationofPatient,
+  useNewConsultation,
+} from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
 // import { Swiper, SwiperSlide } from 'swiper/react';
-import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 // import { Pagination, Navigation } from 'swiper/modules';
 import { useState } from "react";
 import NewNote from "./newNote";
@@ -17,7 +20,6 @@ import { Button } from "flowbite-react";
 import { toast } from "react-toastify";
 import NewConsultation from "./newConsultation";
 
-
 interface ShowCreateNoteMap {
   [key: string]: boolean | undefined;
   editNoteData?: any;
@@ -25,23 +27,23 @@ interface ShowCreateNoteMap {
   id?: string | any;
 }
 
-
-
 function DoctorsTable({ id, patientData }) {
-  const [showCreateNoteMap, setShowCreateNoteMap] = useState<ShowCreateNoteMap>({});
-  const [showCreate, setShowCreate] = useState(false)
-  const [scheme, setScheme] = useState('');
+  const [showCreateNoteMap, setShowCreateNoteMap] = useState<ShowCreateNoteMap>(
+    {},
+  );
+  const [showCreate, setShowCreate] = useState(false);
+  const [scheme, setScheme] = useState("");
   const [dept, setDept] = useState("");
-  const [doctorId, setDoctorId] = useState('')
+  const [doctorId, setDoctorId] = useState("");
   const {
     data: createconsultationData,
     isLoading: loadingconsultationData,
-    mutate: createMutate
+    mutate: createMutate,
   } = useNewConsultation();
 
   if (createconsultationData && createconsultationData?.status) {
-    toast.success('Successfully Created Consultation')
-    createMutate(null)
+    toast.success("Successfully Created Consultation");
+    createMutate(null);
   }
 
   if (loadingconsultationData) {
@@ -49,40 +51,63 @@ function DoctorsTable({ id, patientData }) {
   }
 
   const handleDelete = (data) => {
-    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, id: data.id, }));
+    setShowCreateNoteMap((prevMap) => ({
+      ...prevMap,
+      [data.id]: true,
+      id: data.id,
+    }));
   };
 
   const handleCloseNote = (data) => {
-    setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: false, id: data.id, }));
+    setShowCreateNoteMap((prevMap) => ({
+      ...prevMap,
+      [data.id]: false,
+      id: data.id,
+    }));
   };
 
-  const [rowId, setId] = useState('')
+  const [rowId, setId] = useState("");
 
   const handleEditClick = (data, type, id) => {
-    handleCloseNote(id)
-    setId(id)
+    handleCloseNote(id);
+    setId(id);
     if (rowId === id) {
-      if (type === 'create') {
-        setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: null, id: data.id, recommendation: '' } as ShowCreateNoteMap));
+      if (type === "create") {
+        setShowCreateNoteMap(
+          (prevMap) =>
+            ({
+              ...prevMap,
+              [data.id]: true,
+              editNoteData: null,
+              id: data.id,
+              recommendation: "",
+            }) as ShowCreateNoteMap,
+        );
       }
 
-      if (type === 'edit') {
-        setShowCreateNoteMap((prevMap) => ({ ...prevMap, [data.id]: true, editNoteData: data.notes, id: data.id, recommendation: data.recommendation } as ShowCreateNoteMap));
+      if (type === "edit") {
+        setShowCreateNoteMap(
+          (prevMap) =>
+            ({
+              ...prevMap,
+              [data.id]: true,
+              editNoteData: data.notes,
+              id: data.id,
+              recommendation: data.recommendation,
+            }) as ShowCreateNoteMap,
+        );
       }
     }
-
   };
-
-
 
   const {
     data: consultationData,
     isLoading: loadingConsults,
-    refetch
+    refetch,
   } = useGetConsultationofPatient(id);
 
   if (loadingConsults) {
-    return <Loader />
+    return <Loader />;
   }
 
   const createConsultation = async () => {
@@ -91,14 +116,11 @@ function DoctorsTable({ id, patientData }) {
         doctorId: doctorId,
         visit: dept,
         patientId: id,
-        schemeId: scheme
-      }
-      await createMutate(data)
-    } catch (error) {
-
-    }
-  }
-
+        schemeId: scheme,
+      };
+      await createMutate(data);
+    } catch (error) {}
+  };
 
   const columns = [
     {
@@ -109,12 +131,20 @@ function DoctorsTable({ id, patientData }) {
     },
     {
       name: "Doctor",
-      selector: (row) => <div>{row?.doctorId?.firstName} {row?.doctorId?.lastName}</div>,
+      selector: (row) => (
+        <div>
+          {row?.doctorId?.firstName} {row?.doctorId?.lastName}
+        </div>
+      ),
       sortable: true,
     },
     {
       name: "Patient ID",
-      selector: (row) => <div>{row?.patientId?.firstName} {row?.patientId?.lastName}</div>,
+      selector: (row) => (
+        <div>
+          {row?.patientId?.firstName} {row?.patientId?.lastName}
+        </div>
+      ),
       sortable: true,
       // width: "200px",
     },
@@ -129,11 +159,8 @@ function DoctorsTable({ id, patientData }) {
       selector: (row) => row?.status,
       sortable: true,
       // width: "200px",
-    }
+    },
   ];
-
-
-
 
   const ExpandedComponent = ({ data }) => (
     <div className="flex items-center justify-center">
@@ -143,76 +170,93 @@ function DoctorsTable({ id, patientData }) {
           <h3 className="font-bold">No Notes found </h3>
           <button
             className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-500"
-            onClick={() => handleEditClick(data, 'create', data.id)}
+            onClick={() => handleEditClick(data, "create", data.id)}
           >
             Create New Note
           </button>
         </div>
       )}
 
-      {data?.notes?.length > 0 && !showCreateNoteMap[data.id] && <div
-        className="w-[1100px]  h-[auto] border-2 border-blue-400 my-3"
-      >
-        <div className="w-full h-full">
-          <div>
-            <div className="w-full h-full flex items-center justify-end gap-3 py-2 my-2 text-white bg-blue-50  px-10">
-              <button className="text-white flex items-center hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2" onClick={() => handleEditClick(data, "edit", data.id)}>
-                <AiOutlineEdit /> <span>Edit</span>
-              </button>
-              <button className="text-white flex items-center justify-center gap-2 p-2 hover:bg-gray-500 rounded bg-red-500" onClick={() => handleDelete(data)}>
-                <AiOutlineDelete /><span>Delete</span>
-              </button>
+      {data?.notes?.length > 0 && !showCreateNoteMap[data.id] && (
+        <div className="w-[1100px]  h-[auto] border-2 border-blue-400 my-3">
+          <div className="w-full h-full">
+            <div>
+              <div className="w-full h-full flex items-center justify-end gap-3 py-2 my-2 text-white bg-blue-50  px-10">
+                <button
+                  className="text-white flex items-center hover:bg-gray-500 p-2 rounded justify-center bg-blue-500 gap-2"
+                  onClick={() => handleEditClick(data, "edit", data.id)}
+                >
+                  <AiOutlineEdit /> <span>Edit</span>
+                </button>
+                <button
+                  className="text-white flex items-center justify-center gap-2 p-2 hover:bg-gray-500 rounded bg-red-500"
+                  onClick={() => handleDelete(data)}
+                >
+                  <AiOutlineDelete />
+                  <span>Delete</span>
+                </button>
+              </div>
+              <h2 className="text-2xl font-bold p-10">
+                {data?.recommendation}
+              </h2>
+              {data?.notes?.map((el) => (
+                <div className="grid gap-1 mb-10 px-10" key={el?.question}>
+                  <span className="font-bold text-lg capitalize">
+                    {el.question}
+                  </span>
+                  <p className="font-normal text-gray-500">{el.answer}</p>
+                </div>
+              ))}
             </div>
-            <h2 className="text-2xl font-bold p-10">{data?.recommendation}</h2>
-            {data?.notes?.map((el) => (<div className="grid gap-1 mb-10 px-10" key={el?.question}>
-              <span className="font-bold text-lg capitalize">{el.question}</span>
-              <p className="font-normal text-gray-500">
-                {el.answer}
-              </p>
-            </div>))}
-
           </div>
         </div>
-      </div>}
-
+      )}
 
       {showCreateNoteMap[data.id] && (
         <NewNote
           refetch={refetch}
           cid={data?.id}
-          initialData={showCreateNoteMap?.editNoteData ? showCreateNoteMap?.editNoteData : null}
+          initialData={
+            showCreateNoteMap?.editNoteData
+              ? showCreateNoteMap?.editNoteData
+              : null
+          }
           recommendation={showCreateNoteMap.recommendation}
           onClose={() => handleCloseNote(data)}
         />
       )}
-
-
-
     </div>
   );
 
-
-
   return (
     <div className="w-full">
-
-      {showCreate && <BasicModal
-        title="Order New Visit"
-        setOpenModal={setShowCreate}
-        openModal={showCreate}
-        cancelTitle="Cancel"
-        submitTitle="Create"
-        showCancelButton={true}
-        showSubmitButton={true}
-        size="3xl"
-        submitHandler={() => {
-          createConsultation()
-        }}
-      >
-        <NewConsultation setDoctorId={setDoctorId} patient={patientData} setScheme={setScheme} setDept={setDept} />
-      </BasicModal>}
+      {showCreate && (
+        <BasicModal
+          title="Order New Visit"
+          setOpenModal={setShowCreate}
+          openModal={showCreate}
+          cancelTitle="Cancel"
+          submitTitle="Create"
+          showCancelButton={true}
+          showSubmitButton={true}
+          size="3xl"
+          submitHandler={() => {
+            createConsultation();
+          }}
+        >
+          <NewConsultation
+            setDoctorId={setDoctorId}
+            patient={patientData}
+            setScheme={setScheme}
+            setDept={setDept}
+          />
+        </BasicModal>
+      )}
       <div className="flex justify-end items-center ">
-        <Button className="bg-ha-primary1 text-white" onClick={() => setShowCreate(true)}>
+        <Button
+          className="bg-ha-primary1 text-white"
+          onClick={() => setShowCreate(true)}
+        >
           Order New Consultation
         </Button>
       </div>

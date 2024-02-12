@@ -8,7 +8,6 @@ import {
 import DynamicFormTable from "../../../../components/ui/dynamicFormTable/DynamicFormTable";
 
 function FillSpecimen({ selectedRowData, setFillResult }) {
-
   const { patientId, panelId, orderBy, comment } = selectedRowData;
 
   //function for date and time format
@@ -34,7 +33,6 @@ function FillSpecimen({ selectedRowData, setFillResult }) {
   const handleRowDataChange = (rowData: any) => {
     setFillResult(rowData);
   };
-
 
   return (
     <>

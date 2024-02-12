@@ -6,7 +6,7 @@ import {
   useDeleteRadiologyObservation,
   useAddRadiologyObservation,
   useUpdateRadiologyObservation,
-  useGetRadiologyCenters
+  useGetRadiologyCenters,
 } from "../../../../../hooks/reactQuery/useRadiology";
 import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
@@ -27,8 +27,13 @@ function ObservationsTable() {
     cost: 0,
     centerId: "",
   });
-  const { data: departments, isLoading: LoadingCenter } = useGetRadiologyCenters();
-  const { data: pageData, isLoading: LoadingLabTests, refetch } = useGetRadiologyObservation();
+  const { data: departments, isLoading: LoadingCenter } =
+    useGetRadiologyCenters();
+  const {
+    data: pageData,
+    isLoading: LoadingLabTests,
+    refetch,
+  } = useGetRadiologyObservation();
   const {
     mutate: editMutate,
     isLoading: editLoading,
@@ -48,27 +53,27 @@ function ObservationsTable() {
 
   if (deleteData?.status) {
     toast.success("Observation Deleted");
-    deleteMutate(null)
-    refetch()
+    deleteMutate(null);
+    refetch();
   }
 
   if (createData?.status) {
     toast.success("Observation Added successfully");
-    createMutate(null)
-    refetch()
+    createMutate(null);
+    refetch();
   }
 
   if (editData?.status) {
     toast.success("Observation Updated successfully");
-    editMutate(null)
-    refetch()
+    editMutate(null);
+    refetch();
   }
 
   if (
     LoadingLabTests ||
     createLoading ||
     LoadingDelete ||
-    editLoading || 
+    editLoading ||
     LoadingCenter
   ) {
     return <Loader />;
@@ -90,7 +95,7 @@ function ObservationsTable() {
     try {
       await editMutate(data);
       setShowEdit(false);
-      setId('')
+      setId("");
     } catch (error) {
       console.log(error.message);
     }
@@ -99,7 +104,7 @@ function ObservationsTable() {
     try {
       await deleteMutate(id);
       setShowDelete(false);
-      setId('')
+      setId("");
     } catch (error) {
       console.log(error.message);
     }
@@ -120,8 +125,8 @@ function ObservationsTable() {
       test: "",
       cost: 0,
       centerId: "",
-    })
-    setId('')
+    });
+    setId("");
     setShowCreate(true);
   };
 
@@ -161,10 +166,9 @@ function ObservationsTable() {
     },
   ];
 
-
   return (
     <div className="w-full">
-       {showCreate && (
+      {showCreate && (
         <BasicModal
           title="New Radiology Observation"
           setOpenModal={setShowCreate}
@@ -186,23 +190,23 @@ function ObservationsTable() {
       )}
       {showEdit && (
         <BasicModal
-        title="Edit Lab Test"
-        setOpenModal={setShowEdit} // Corrected prop here
-        cancelTitle="Cancel"
-        openModal={showEdit} // Corrected prop here
-        showCancelButton={true}
-        submitTitle="Submit"
-        showSubmitButton={true}
-        submitHandler={() => {
-          editImaging();
-        }}
+          title="Edit Lab Test"
+          setOpenModal={setShowEdit} // Corrected prop here
+          cancelTitle="Cancel"
+          openModal={showEdit} // Corrected prop here
+          showCancelButton={true}
+          submitTitle="Submit"
+          showSubmitButton={true}
+          submitHandler={() => {
+            editImaging();
+          }}
         >
           {/* <EditObservation
             createFormData={createFormData}
             departments={departments}
             setCreateFormData={setCreateFormData}
           /> */}
-           <NewObservation
+          <NewObservation
             createFormData={createFormData}
             departments={departments}
             setCreateFormData={setCreateFormData}
@@ -229,12 +233,11 @@ function ObservationsTable() {
             <FaSearch className="text-gray-500" />
           </div>
         </div>
-        <Button onClick={handleClick} className="bg-ha-primary1 text-white">New Observation</Button>
+        <Button onClick={handleClick} className="bg-ha-primary1 text-white">
+          New Observation
+        </Button>
       </div>
-      <DataTable
-        columns={columns}
-        data={pageData?.data || []}
-      />
+      <DataTable columns={columns} data={pageData?.data || []} />
     </div>
   );
 }

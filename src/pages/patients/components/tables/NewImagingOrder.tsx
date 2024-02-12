@@ -1,4 +1,3 @@
-
 import CustomMultiSelect from "../../../../components/ui/inputSelect/inputSelect";
 import TextareaAutosize from "react-textarea-autosize";
 import { useGetRadiologyObservation } from "../../../../hooks/reactQuery/useRadiology";
@@ -13,13 +12,9 @@ const NewRadiologyOrder = ({
   selectScheme,
   setDiagnosisComment,
   diagnosisComment,
-  patientData
+  patientData,
 }) => {
-
-
   const { data: radiologyTestData } = useGetRadiologyObservation();
-
- 
 
   // drop down data
   const schemes = patientData?.schemeId || [];
@@ -36,7 +31,7 @@ const NewRadiologyOrder = ({
   return (
     <div>
       <>
-      <CustomLabHeader
+        <CustomLabHeader
           patientName={`${patientData?.firstName} ${patientData?.lastName}`}
           patientID={patientData?.patientId}
           patientEmail={patientData?.address?.email}
@@ -63,7 +58,7 @@ const NewRadiologyOrder = ({
                 labelledBy="Scheme"
                 onSelectChange={handleSchemeChange}
                 value={(Array?.isArray(selectScheme) ? selectScheme : []).map(
-                  (item) => item.id
+                  (item) => item.id,
                 )}
                 isMultiSelect={false}
                 placeholder="Scheme"

@@ -3,7 +3,10 @@ import FilterHeader from "../../../components/ui/filterheaders/filterHeader";
 import { useState } from "react";
 import Loader from "../../../components/ui/loader";
 // import { useGetUserByToken } from "../../../hooks/reactQuery/useUser";
-import { useAddTreatment, useGetTreatments } from "../../../hooks/reactQuery/usePharmacy";
+import {
+  useAddTreatment,
+  useGetTreatments,
+} from "../../../hooks/reactQuery/usePharmacy";
 import { toast } from "react-toastify";
 
 function Patients({ setreatments }) {
@@ -13,18 +16,18 @@ function Patients({ setreatments }) {
   const {
     data: consultationData,
     isLoading: loadingConsults,
-    mutate:createMutate
-} = useAddTreatment();
+    mutate: createMutate,
+  } = useAddTreatment();
 
-setreatments(data);
+  setreatments(data);
 
-console.log(consultationData, 'consultationData')
+  console.log(consultationData, "consultationData");
 
-if(consultationData && consultationData?.status) {
-  toast.success('Successfully Created Consultation')
-  createMutate(null)
-}
-  
+  if (consultationData && consultationData?.status) {
+    toast.success("Successfully Created Consultation");
+    createMutate(null);
+  }
+
   if (isLoading || loadingConsults) {
     return <Loader />;
   }

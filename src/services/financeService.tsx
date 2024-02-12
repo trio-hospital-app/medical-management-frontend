@@ -20,11 +20,11 @@ class financeService {
     return response;
   }
 
-  public async makePayment(id, data:{receipt:string; paymentType:string}) {
+  public async makePayment(id, data: { receipt: string; paymentType: string }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: `/pay/${id}`,
-      data
+      data,
     };
     const response = await request(options);
     return response;

@@ -22,7 +22,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
   const [selected, setSelected] = useState(initialValue);
 
   const handleSelectChange = (
-    selectedItems: { label: string; value: string }[]
+    selectedItems: { label: string; value: string }[],
   ) => {
     setSelected(selectedItems);
     if (onSelectChange) {

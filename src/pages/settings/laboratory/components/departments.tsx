@@ -22,7 +22,11 @@ function Departments() {
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
   const [id, setId] = useState("");
-  const { data: departments, isLoading: LoadingLab, refetch } = useGetLabCenters();
+  const {
+    data: departments,
+    isLoading: LoadingLab,
+    refetch,
+  } = useGetLabCenters();
   const {
     data: deleteData,
     isLoading: LoadingDelete,
@@ -45,20 +49,20 @@ function Departments() {
 
   if (createData?.status) {
     toast.success("Department Added successfully");
-    createMutate(null)
-    refetch()
+    createMutate(null);
+    refetch();
   }
 
   if (deleteData?.status) {
     toast.success("Department Deleted");
-    deleteMutate(null)
-    refetch()
+    deleteMutate(null);
+    refetch();
   }
 
   if (editData?.status) {
     toast.success("Department Updated successfully");
-    editMutate(null)
-    refetch()
+    editMutate(null);
+    refetch();
   }
 
   const handleCreate = () => {

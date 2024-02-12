@@ -20,10 +20,14 @@ function Departments() {
   const [showDelete, setShowDelete] = useState(false);
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
-  const [editCost, setEditCost] = useState('');
+  const [editCost, setEditCost] = useState("");
   const [cost, setCost] = useState("");
   const [id, setId] = useState("");
-  const { data: departments, isLoading: LoadingLab, refetch } = useGetVisitDept();
+  const {
+    data: departments,
+    isLoading: LoadingLab,
+    refetch,
+  } = useGetVisitDept();
   const {
     data: deleteData,
     isLoading: LoadingDelete,
@@ -46,20 +50,20 @@ function Departments() {
 
   if (createData?.status) {
     toast.success("Department Added successfully");
-    createMutate(null)
-    refetch()
+    createMutate(null);
+    refetch();
   }
 
   if (deleteData?.status) {
     toast.success("Department Deleted");
-    deleteMutate(null)
-    refetch()
+    deleteMutate(null);
+    refetch();
   }
 
   if (editData?.status) {
     toast.success("Department Updated successfully");
-    editMutate(null)
-    refetch()
+    editMutate(null);
+    refetch();
   }
 
   const handleCreate = () => {
@@ -73,7 +77,7 @@ function Departments() {
   const handleEdit = (id, center, cost) => {
     setId(id);
     setEditText(center);
-    setEditCost(cost)
+    setEditCost(cost);
     setShowEdit(true);
   };
 
@@ -88,7 +92,7 @@ function Departments() {
   };
 
   const editDepartment = async () => {
-    const data = { id, data: { name: editText, cost:parseFloat(editCost) }};
+    const data = { id, data: { name: editText, cost: parseFloat(editCost) } };
     try {
       await editMutate(data);
       setShowEdit(false);
@@ -161,7 +165,11 @@ function Departments() {
           </div>
           <div className="grid">
             <label>Cost</label>
-            <input type="number"  value={editCost} onChange={(e) => setEditCost(e.target.value)} />
+            <input
+              type="number"
+              value={editCost}
+              onChange={(e) => setEditCost(e.target.value)}
+            />
           </div>
         </BasicModal>
       )}

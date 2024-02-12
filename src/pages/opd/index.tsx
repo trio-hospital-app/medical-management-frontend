@@ -6,8 +6,8 @@ function OPD() {
   const [consults, setConsults] = useState([]);
   return (
     <div className="Patients">
-      <FilterHeader setConsults={setConsults}/>
-      <OpdTable consults={consults}/>
+      <FilterHeader setConsults={setConsults} />
+      <OpdTable consults={consults} />
     </div>
   );
 }

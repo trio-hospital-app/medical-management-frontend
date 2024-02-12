@@ -7,26 +7,26 @@ const queryClient = new QueryClient();
 
 export const useGetRadiologyById = (id: string) => {
   return useQuery(["Radiology", id], () =>
-    radiologyService.getRadiologyById(id)
+    radiologyService.getRadiologyById(id),
   );
 };
 
 export const useGetPatientRadiology = (id: string) => {
   return useQuery(["RadiologyPatient", id], () =>
-    radiologyService.getPatientRadiology(id)
+    radiologyService.getPatientRadiology(id),
   );
 };
 
 export const useSearchRadiologyPatient = (
   param: string | number,
-  isEnabled: boolean = false
+  isEnabled: boolean = false,
 ) => {
   return useQuery(
     ["searchRadiologyPatient", param],
     () => radiologyService.searchRadiologyPatient(param),
     {
       enabled: isEnabled,
-    }
+    },
   );
 };
 
@@ -37,7 +37,7 @@ export const useAddRadiology = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Radioloogy");
       },
-    }
+    },
   );
 };
 
@@ -49,7 +49,7 @@ export const useUpdateRadiology = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Radioloogy");
       },
-    }
+    },
   );
 };
 
@@ -61,7 +61,7 @@ export const useUpdateCapture = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Radioloogy");
       },
-    }
+    },
   );
 };
 
@@ -73,7 +73,7 @@ export const useUpdateRadiologyResult = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Radioloogy");
       },
-    }
+    },
   );
 };
 
@@ -97,13 +97,13 @@ export const useAddRadiologyCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("RadiologyCenters");
       },
-    }
+    },
   );
 };
 
 export const useGetRadiologyCenterById = (id: string) => {
   return useQuery(["RadiologyCenter", id], () =>
-    radiologyService.getRadiologyCenter(id)
+    radiologyService.getRadiologyCenter(id),
   );
 };
 
@@ -115,7 +115,7 @@ export const useUpdateRadiologyCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("RadiologyCenters");
       },
-    }
+    },
   );
 };
 
@@ -126,7 +126,7 @@ export const useDeleteRadiologyCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("RadiologyCenters");
       },
-    }
+    },
   );
 };
 
@@ -142,7 +142,7 @@ export const useDeleteRadiologyObservation = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Observations");
       },
-    }
+    },
   );
 };
 
@@ -154,7 +154,7 @@ export const useAddRadiologyObservation = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Observations");
       },
-    }
+    },
   );
 };
 
@@ -171,6 +171,6 @@ export const useUpdateRadiologyObservation = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Observations");
       },
-    }
+    },
   );
 };

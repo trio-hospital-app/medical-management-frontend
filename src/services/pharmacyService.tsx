@@ -9,7 +9,6 @@ export interface NewPharmacyData {
   price: number;
   unit: string;
   form: string;
-  
 }
 
 interface Medication {
@@ -28,7 +27,7 @@ export interface TreatmentData {
   consultationId: string;
   text: string;
   medication: Medication[];
-  outOfStockDrugs: OutOfStockDrug[];
+  unavailable: OutOfStockDrug[];
 }
 
 class pharmacyService {
@@ -107,6 +106,15 @@ class pharmacyService {
     return response;
   }
 
+  public async getUserTreatment(id: string) {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+      url: `/treatment/user/${id}`,
+    };
+    const response = await request(options);
+    return response;
+  }
+
   public async updateTreatment(id: string, data: TreatmentData) {
     const options: AxiosRequestConfig = {
       method: "PUT",
@@ -117,7 +125,7 @@ class pharmacyService {
     return response;
   }
 
-  public async confirmTreatment(id: any, data: { dispensed: any}) {
+  public async confirmTreatment(id: any, data: { dispensed: any }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: `/treatment/${id}`,

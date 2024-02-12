@@ -24,7 +24,6 @@ const DeleteMedication = ({
     isLoading: deleteLoading,
   } = useDeletePharmacy();
 
-
   useEffect(() => {
     if (deleteStatus === "success") {
       toast.success("Medication Deleted Successfully");

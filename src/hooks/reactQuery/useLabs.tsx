@@ -25,14 +25,14 @@ export const useGetPatientLab = (id: string) => {
 
 export const useSearchLabPatient = (
   param: string | number,
-  isEnabled: boolean = false
+  isEnabled: boolean = false,
 ) => {
   return useQuery(
     ["searchLabPatient", param],
     () => LabService.searchLabPatient(param),
     {
       enabled: isEnabled,
-    }
+    },
   );
 };
 
@@ -51,7 +51,7 @@ export const useAddLabCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("LabCenters");
       },
-    }
+    },
   );
 };
 
@@ -64,7 +64,7 @@ export const useUpdateReceiveLab = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Lab");
       },
-    }
+    },
   );
 };
 
@@ -76,19 +76,18 @@ export const useUpdateAwaitAprovalLab = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("Lab");
       },
-    }
+    },
   );
 };
 
 export const useUpdateLab = () => {
   return useMutation(
-    ({ id, data }: { id: string; data }) =>
-      LabService.updateLab(id, data),
+    ({ id, data }: { id: string; data }) => LabService.updateLab(id, data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("Lab");
       },
-    }
+    },
   );
 };
 
@@ -100,7 +99,7 @@ export const useUpdateLabCenter = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("LabCenters");
       },
-    }
+    },
   );
 };
 
@@ -137,7 +136,7 @@ export const useAddSpecimen = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("specimens");
       },
-    }
+    },
   );
 };
 
@@ -149,7 +148,7 @@ export const useUpdateSpecimen = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("specimens");
       },
-    }
+    },
   );
 };
 
@@ -189,7 +188,7 @@ export const useUpdateLabTest = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("labTests");
       },
-    }
+    },
   );
 };
 
