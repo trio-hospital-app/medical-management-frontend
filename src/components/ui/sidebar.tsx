@@ -48,26 +48,26 @@ const isLinkActive = (path) => {
             <Sidebar.Item as={Link} className={isLinkActive('finance') && 'bg-indigo-500'} to="/finance" icon={GiReceiveMoney}>
               <span className="hidden lg:flex">Finance</span>
             </Sidebar.Item>
-            <Sidebar.Item icon={IoMdSettings} className={isLinkActive('settings') && 'bg-indigo-500'} >
+            <Sidebar.Item icon={IoMdSettings} >
               <span className="hidden lg:flex">
                 {" "}
                 <Dropdown arrowIcon={true} inline label="Settings">
-                  <Dropdown.Item as={Link} to="/settings/users">
+                  <Dropdown.Item as={Link} className={isLinkActive('settings/users') && 'bg-indigo-500'} to="/settings/users">
                     User Management
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/laboratory">
+                  <Dropdown.Item as={Link} className={isLinkActive('settings/laboratory') && 'bg-indigo-500'} to="/settings/laboratory">
                     Laboratory
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/radiology">
+                  <Dropdown.Item as={Link} className={isLinkActive('settings/radiology') && 'bg-indigo-500'} to="/settings/radiology">
                     Radiology
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/finance">
+                  <Dropdown.Item as={Link} className={isLinkActive('settings/finance') && 'bg-indigo-500'} to="/settings/finance">
                     Finance
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/settings/visit">
+                  <Dropdown.Item as={Link} className={isLinkActive('settings/visit') && 'bg-indigo-500'} to="/settings/visit">
                     Consultation
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="settings/pharmacy">
+                  <Dropdown.Item as={Link} className={isLinkActive('settings/pharmacy') && 'bg-indigo-500'} to="settings/pharmacy">
                     Pharmacy
                   </Dropdown.Item>
                 </Dropdown>
