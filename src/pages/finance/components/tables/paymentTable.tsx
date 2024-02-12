@@ -13,7 +13,7 @@ function PaymentTable() {
   const { data: usersFinance, isLoading: LoadinguserFinance } =
     useUserReciepts(id);
 
-  console.log(usersFinance);
+  console.log(usersFinance, "usersFinance");
 
   if (LoadinguserFinance) {
     return <Loader />;
@@ -70,12 +70,11 @@ function PaymentTable() {
     return total.reduce((a, b) => a + b, 0);
   };
 
-  console.log(usersFinance);
 
   const columns = [
     {
       name: "Transaction Date",
-      selector: (row) => formatDate(row?.receipt),
+      selector: (row) => formatDate(row?.timeOfPayment),
       sortable: true,
     },
     {
@@ -185,9 +184,8 @@ function PaymentTable() {
   return (
     <div>
       <DataTable
-        title=""
         columns={columns}
-        data={usersFinance?.data?.finances && usersFinance?.data?.finances}
+        data={usersFinance?.data?.finances}
         expandableRows
         expandableRowsComponent={ExpandedComponent}
       />

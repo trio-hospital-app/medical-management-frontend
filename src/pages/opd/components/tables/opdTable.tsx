@@ -5,22 +5,22 @@ import { useNavigate } from "react-router-dom";
 import BasicModal from "../../../../components/ui/modals/basicModal";
 import { useState } from "react";
 import TakeNursingVitals from "../takeNursingVitals";
-import { useGetConsultations } from "../../../../hooks/reactQuery/useVisit";
+import { useAddVitals, useGetConsultations } from "../../../../hooks/reactQuery/useVisit";
 import Loader from "../../../../components/ui/loader";
 import { formatDate } from "../../../../hooks/formattedDate";
+import { toast } from "react-toastify";
 
 function OpdTable({ consults }) {
   const navigate = useNavigate();
-  const [consultation, setConsultation] = useState("");
+  const [consultation, setConsultation] = useState(null);
   const [showVitalsModal, setShowVitalsModal] = useState(false);
   const { data: consultationData, isLoading: loadingConsults } =
     useGetConsultations();
+  const { status: vitalsStatus, isLoading: vitalsLoading, mutate: vitalsMutate } = useAddVitals();
 
   const [formData, setFormData] = useState({
     timeTaken: "",
     weight: "",
-    height: "",
-    bmi: "",
     systolicBP: "",
     diastolicBP: "",
     temperature: "",
@@ -37,8 +37,30 @@ function OpdTable({ consults }) {
     fluidIntake: "",
     fluidOutput: "",
   });
-
-  if (loadingConsults) {
+  if (vitalsStatus === 'success') {
+    toast.success("Vitals Taken successfully");
+    vitalsMutate(null);
+    setFormData({
+      timeTaken: "",
+      weight: "",
+      systolicBP: "",
+      diastolicBP: "",
+      temperature: "",
+      respiratoryRate: "",
+      heartRate: "",
+      urineOutput: "",
+      bloodSugarF: "",
+      bloodSugarR: "",
+      spo2: "",
+      avpu: "",
+      trauma: "",
+      mobility: "",
+      oxygenSupplementation: "",
+      fluidIntake: "",
+      fluidOutput: "",
+    })
+  }
+  if (loadingConsults || vitalsLoading) {
     return <Loader />;
   }
   const customStyles = {
@@ -139,7 +161,7 @@ function OpdTable({ consults }) {
                   handleVitals(row);
                 }}
               >
-                Take Nursing Vitals
+                Take Vitals
               </Dropdown.Item>
             </Dropdown>
           </div>
@@ -151,6 +173,19 @@ function OpdTable({ consults }) {
 
   const handleRowClick = (patientId, cid) => {
     navigate(`/visits/${patientId}/${cid}`);
+  };
+
+  const handleSubmitVitals = async () => {
+    if (consultation?.paid) {
+      const vitalsData = Object.entries(formData).map(([name, value]) => ({
+        name,
+        value: value.toString(),
+      }));
+      console.log(consultation, vitalsData, 'hi')
+      await vitalsMutate({ id: consultation?.id, data: vitalsData });
+    } else {
+      toast.error('This consultation has not been paid for')
+    }
   };
 
   return (
@@ -192,6 +227,7 @@ function OpdTable({ consults }) {
         submitTitle="Submit Vitals"
         showSubmitButton={true}
         size="4xl"
+        submitHandler={() => handleSubmitVitals()}
       >
         <TakeNursingVitals
           consultation={consultation}
