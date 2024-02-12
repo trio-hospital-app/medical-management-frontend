@@ -10,7 +10,6 @@ const NursingList = () => {
   // const [search, setSearch] = useState("");
 
   const goBackHandler = () => {
-    console.log("go back");
     navigate(-1);
   };
 

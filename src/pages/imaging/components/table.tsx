@@ -86,7 +86,6 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const openDeleteRow = (row) => {
     setSelectedRowData(row);
     setDeleteDialogOpen(true);
-    console.log("delete row", row);
   };
 
   const handlePageChange = async (page) => {

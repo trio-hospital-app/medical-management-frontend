@@ -11,7 +11,6 @@ function PrintReceipt({ receiptData }) {
     }
   };
 
-  console.log(receiptData, "receiptData");
 
   const department = (row) => {
     if (row.itemType === "labs") {

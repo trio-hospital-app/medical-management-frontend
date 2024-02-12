@@ -53,7 +53,6 @@ function BillingTable() {
     const drugNames = drugs.map((el) => {
       return el?.medicationId?.name;
     });
-    console.log(drugs, drugNames, "drugNames");
     return drugNames.join(", ");
   };
 
@@ -158,7 +157,6 @@ function BillingTable() {
       0,
     );
     setTotal(total);
-    console.log(selectedRows);
   };
 
   const handlePaymentTypeChange = (event) => {

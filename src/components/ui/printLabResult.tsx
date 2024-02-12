@@ -11,8 +11,7 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
   (props, ref) => {
     const { selectedRowData, rePrint } = props;
     const MainData = selectedRowData;
-    const { panelId, id, patientId, schemeId } = MainData;
-    console.log(MainData, "MainData");
+    const { panelId, id, patientId, schemeId, centerId } = MainData;
 
     // Return null if id is undefined or null
     if (!id) {
@@ -136,40 +135,24 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
             <tr>
               <td className="font-bold border-r border-b pl-2">Age:</td>
               <td className="border-r border-b pl-2">{age}</td>
-              <td className="font-bold border-r border-b pl-2">Hosp. No:</td>
+              <td className="font-bold border-r border-b pl-2">Patient Id:</td>
               <td className="border-b pl-2">{patientId?.patientId}</td>
             </tr>
             <tr>
               <td className="font-bold border-r border-b pl-2">Scheme</td>
-              <td className="border-b pl-2">
-                {schemeId?.name || "No Scheme"}
-              </td>
+              <td className="border-b pl-2">{schemeId?.name || "No Scheme"}</td>
             </tr>
             <tr>
-              <td className="font-bold border-r border-b pl-2">Clinic:</td>
-              <td className="border-r border-b pl-2">GOPD</td>
+              <td className="font-bold border-r border-b pl-2">
+                Lab Department:
+              </td>
+              <td className="border-r border-b pl-2">{centerId.center}</td>
               <td className="font-bold border-r border-b border-t pl-2">
-                Date:
+                Specimen:
               </td>
-              <td className="border-b pl-2 border-t">2023-11-08</td>
-            </tr>
-            <tr>
-              <td className="font-bold border-r border-b pl-2">Receipt No:</td>
-              <td className="border-r border-b pl-2">txn_b4028b7e</td>
-              <td className="font-bold border-r border-b pl-2">Request No:</td>
-              <td className="border-b pl-2">2425464</td>
-            </tr>
-            <tr>
-              <td className="font-bold border-r border-b pl-2">Lab No:</td>
-              <td className="border-r border-b pl-2">WU 2840</td>
-              <td className="font-bold border-r border-b pl-2">Diagnosis:</td>
-              <td className="border-b pl-2">Routine</td>
-            </tr>
-            <tr>
-              <td className="font-bold border-r border-b pl-2">Specimen:</td>
-              <td className="border-b pl-2">Blood</td>
-              <td className="font-bold border-b"></td>
-              <td className="border-b"></td>
+              <td className="border-b pl-2 border-t">
+                {panelId?.specimenId.specimen}
+              </td>
             </tr>
           </table>
         </div>

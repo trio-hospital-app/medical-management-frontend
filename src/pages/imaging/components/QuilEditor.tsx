@@ -14,7 +14,6 @@ const QuilEditor = ({ updateQuillData }: any) => {
     }
   }, [quill]);
 
-  //   console.log(formData);
   updateQuillData(formData);
 
   return (
