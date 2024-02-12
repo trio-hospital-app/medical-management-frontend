@@ -142,9 +142,8 @@ function pharmacyTable({ reload, setReload }) {
     },
     {
       name: "Price (Naira)",
-      selector: "price",
-      sortable: true,
-      cell: (row) => `₦${row.price}`,
+      selector: (row) => `₦${row.price}`,
+      sortable: true
     },
     {
       name: "Unit",
@@ -199,7 +198,6 @@ function pharmacyTable({ reload, setReload }) {
           </div>
         </div>
       </div> */}
-        {/* @ts-expect-error: Just ignore the next line */}
         <DataTable
           columns={columns}
           data={Pharmacy?.data}
