@@ -11,32 +11,32 @@ import { formatDate } from "../../../../hooks/formattedDate";
 
 function OpdTable({ consults }) {
   const navigate = useNavigate();
-  const [consultation, setConsultation] = useState('')
+  const [consultation, setConsultation] = useState("");
   const [showVitalsModal, setShowVitalsModal] = useState(false);
   const { data: consultationData, isLoading: loadingConsults } =
     useGetConsultations();
 
-    const [formData, setFormData] = useState({
-      timeTaken: '',
-      weight: '',
-      height: '',
-      bmi: '',
-      systolicBP: '',
-      diastolicBP: '',
-      temperature: '',
-      respiratoryRate: '',
-      heartRate: '',
-      urineOutput: '',
-      bloodSugarF: '',
-      bloodSugarR: '',
-      spo2: '',
-      avpu: '',
-      trauma: '',
-      mobility: '',
-      oxygenSupplementation: '',
-      fluidIntake: '',
-      fluidOutput: '',
-    });
+  const [formData, setFormData] = useState({
+    timeTaken: "",
+    weight: "",
+    height: "",
+    bmi: "",
+    systolicBP: "",
+    diastolicBP: "",
+    temperature: "",
+    respiratoryRate: "",
+    heartRate: "",
+    urineOutput: "",
+    bloodSugarF: "",
+    bloodSugarR: "",
+    spo2: "",
+    avpu: "",
+    trauma: "",
+    mobility: "",
+    oxygenSupplementation: "",
+    fluidIntake: "",
+    fluidOutput: "",
+  });
 
   if (loadingConsults) {
     return <Loader />;
@@ -60,9 +60,9 @@ function OpdTable({ consults }) {
   };
 
   const handleVitals = (row) => {
-    setConsultation(row)
-    setShowVitalsModal(true)
-  }
+    setConsultation(row);
+    setShowVitalsModal(true);
+  };
 
   const columns = [
     {
@@ -136,7 +136,7 @@ function OpdTable({ consults }) {
             >
               <Dropdown.Item
                 onClick={() => {
-                  handleVitals(row)
+                  handleVitals(row);
                 }}
               >
                 Take Nursing Vitals
@@ -193,7 +193,11 @@ function OpdTable({ consults }) {
         showSubmitButton={true}
         size="4xl"
       >
-        <TakeNursingVitals consultation={consultation} setFormData={setFormData} formData={formData}/>
+        <TakeNursingVitals
+          consultation={consultation}
+          setFormData={setFormData}
+          formData={formData}
+        />
       </BasicModal>
     </div>
   );

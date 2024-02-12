@@ -74,13 +74,7 @@ class VisitService {
     return response;
   }
 
-  public async AddVitals({
-    id,
-    data,
-  }: {
-    id: string;
-    data: vitals[]
-  }) {
+  public async AddVitals({ id, data }: { id: string; data: vitals[] }) {
     const options: AxiosRequestConfig = {
       method: "PUT",
       url: `/consult/vitals/${id}`,

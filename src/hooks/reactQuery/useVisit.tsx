@@ -1,5 +1,5 @@
 import { useQuery, useMutation, QueryClient } from "react-query";
-import VisitService, { FormData, vitals} from "../../services/visitService";
+import VisitService, { FormData, vitals } from "../../services/visitService";
 const queryClient = new QueryClient();
 
 // Function to create a unique query key
@@ -63,10 +63,10 @@ export const useEditConsultation = () => {
   );
 };
 
-
 export const useAddVitals = () => {
   return useMutation(
-    ({ id, data }: { id: string; data: vitals[]}) => VisitService.AddVitals({id, data}),
+    ({ id, data }: { id: string; data: vitals[] }) =>
+      VisitService.AddVitals({ id, data }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("consultations");
