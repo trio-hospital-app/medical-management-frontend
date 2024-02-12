@@ -161,7 +161,7 @@ function OpdTable({ consults }) {
                   handleVitals(row);
                 }}
               >
-                Take Nursing Vitals
+                Take Vitals
               </Dropdown.Item>
             </Dropdown>
           </div>

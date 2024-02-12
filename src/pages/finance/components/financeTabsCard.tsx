@@ -16,7 +16,7 @@ function FinanceTabsCard() {
             <TabsTrigger value="Billing">Billing</TabsTrigger>
           </TabsList>
           <TabsList>
-            <TabsTrigger value="Payments">Payments</TabsTrigger>
+            <TabsTrigger value="Reciepts">Reciepts</TabsTrigger>
           </TabsList>
         </div>
         <div className="px-5">
