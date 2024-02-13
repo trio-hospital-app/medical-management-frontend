@@ -13,7 +13,6 @@ function PaymentTable() {
   const { data: usersFinance, isLoading: LoadinguserFinance } =
     useUserReciepts(id);
 
-  console.log(usersFinance, "usersFinance");
 
   if (LoadinguserFinance) {
     return <Loader />;
@@ -23,7 +22,6 @@ function PaymentTable() {
     const drugNames = drugs.map((el) => {
       return el?.medicationId?.name;
     });
-    console.log(drugs, drugNames, "drugNames");
     return drugNames.join(", ");
   };
 

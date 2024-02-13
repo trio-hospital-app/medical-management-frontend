@@ -1,0 +1,14 @@
+.watermark {
+    position: relative;
+  }
+  
+  .watermark::after {
+    content: "Original";
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    font-size: 20rem; /* Adjust font size */
+    color: rgba(0, 0, 0, 0.06); /* Adjust opacity of the watermark */
+    transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate */
+  }
+  

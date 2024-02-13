@@ -13,9 +13,12 @@ import {
 } from "../../../hooks/reactQuery/useLabs";
 import Loader from "../../../components/ui/loader";
 import ReceiveSpecimen from "./modal/receiveSpecimen";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import labService from "../../../services/labService";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
+import PrintResult from "../../../components/ui/printLabResult";
 
 function Table({ labSearch, reload, setReload }) {
   const [receiveSpecimen, setReceiveSpecimen] = useState(false);
@@ -27,10 +30,11 @@ function Table({ labSearch, reload, setReload }) {
   const [selectedId, setSelectedId] = useState("");
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
+  const [rePrint, setReprint] = useState(0);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const { data: labData, isLoading: labLoading } = useQuery(
     ["labs", page],
-    () => labService.getLab(page),
+    () => labService.getLab(page)
   );
 
   const { mutate: mutateReceive, status: receiveStatus } =
@@ -299,10 +303,24 @@ function Table({ labSearch, reload, setReload }) {
     },
   ];
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   // here is the role is being selected
   return (
     <>
       {labLoading && <Loader />}
+      {/* this is the printable componete but is not supposed to be visible  */}
+      <div className="hidden">
+        <PrintResult
+          ref={componentRef}
+          selectedRowData={selectedRowData}
+          rePrint={rePrint}
+        />
+      </div>
+
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
           customStyles={{
@@ -387,9 +405,15 @@ function Table({ labSearch, reload, setReload }) {
         showCancelButton={true}
         submitTitle="Print"
         showSubmitButton={true}
+        submitHandler={handlePrint}
         size="5xl"
       >
-        <FinalResult selectedRowData={selectedRowData} setReload={setReload} />
+        <FinalResult
+          selectedRowData={selectedRowData}
+          setReload={setReload}
+          rePrint={rePrint}
+          setReprint={setReprint}
+        />
       </BasicModal>
     </>
   );

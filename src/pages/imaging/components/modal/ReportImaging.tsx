@@ -12,7 +12,7 @@ import { Tooltip } from "flowbite-react";
 import { BsPencilFill } from "react-icons/bs";
 import EditResult from "./EditResult";
 
-function ReportImaging({ selectedRowData, setReload }) {
+function ReportImaging({ selectedRowData, setReload, rePrint, setReprint }) {
   const { patientId, orderBy } = selectedRowData;
   const [isEditMode, setIsEditMode] = useState(false);
   const id = selectedRowData?.id;
@@ -127,6 +127,8 @@ function ReportImaging({ selectedRowData, setReload }) {
           selectedId={id}
           setReload={setReload}
           setIsEditMode={setIsEditMode}
+          rePrint={rePrint}
+          setReprint={setReprint}
         />
       )}
       <Accordion

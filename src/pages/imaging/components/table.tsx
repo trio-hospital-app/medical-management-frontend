@@ -1,5 +1,5 @@
 import { Tooltip } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DataTable from "react-data-table-component";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import { Button } from "../../../components/ui/button";
@@ -16,6 +16,8 @@ import {
 import AwaitingImagingReport from "./modal/AwaitingImagingReport";
 import ReportImaging from "./modal/ReportImaging";
 import { toast } from "react-toastify";
+import { useReactToPrint } from "react-to-print";
+import PrintRadiologyResult from "../../../components/ui/printRadiologyResult";
 
 function PatientTable({ reload, setReload, radiologySearch }) {
   const [captureModal, setCaptureModal] = useState(false);
@@ -26,6 +28,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const [selectedRowData, setSelectedRowData] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [page, setPage] = useState(1);
+  const [rePrint, setReprint] = useState(0);
   const [pageData, setPageData] = useState(null);
   const [resultData, setResultData] = useState([]);
 
@@ -35,7 +38,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
     ["radiologys", page],
-    () => radiologyService.getRadiology(page),
+    () => radiologyService.getRadiology(page)
   );
   if (statusResult === "success") {
     toast.success("Imaging Report Submitted Successfully");
@@ -86,7 +89,6 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const openDeleteRow = (row) => {
     setSelectedRowData(row);
     setDeleteDialogOpen(true);
-    console.log("delete row", row);
   };
 
   const handlePageChange = async (page) => {
@@ -117,6 +119,11 @@ function PatientTable({ reload, setReload, radiologySearch }) {
       console.error("An error occurred:", error);
     }
   };
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const customStyles = {
     headCells: {
@@ -286,6 +293,13 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   return (
     <>
       {radiologyLoading && <Loader />}
+      <div className="hidden">
+        <PrintRadiologyResult
+          ref={componentRef}
+          selectedRowData={selectedRowData}
+          rePrint={rePrint}
+        />
+      </div>
 
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
@@ -369,11 +383,14 @@ function PatientTable({ reload, setReload, radiologySearch }) {
         showCancelButton={true}
         submitTitle="Print"
         showSubmitButton={true}
+        submitHandler={handlePrint}
         size="5xl"
       >
         <ReportImaging
           selectedRowData={selectedRowData}
           setReload={setReload}
+          rePrint ={rePrint}
+          setReprint={setReprint}
         />
       </BasicModal>
     </>

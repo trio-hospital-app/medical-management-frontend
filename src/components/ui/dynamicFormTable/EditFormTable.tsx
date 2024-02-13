@@ -18,6 +18,8 @@ interface EditFormTableProps {
   selectedId?: string;
   setReload?: any;
   setIsEditMode?: any;
+  rePrint?: any;
+  setReprint?: any; 
 }
 
 const EditFormTable: React.FC<EditFormTableProps> = ({
@@ -25,6 +27,8 @@ const EditFormTable: React.FC<EditFormTableProps> = ({
   selectedId,
   setReload,
   setIsEditMode,
+  rePrint,
+  setReprint,
   initialRows = [{ observation: "", unit: "", value: "", range: "" }], // Default value for initialRows
 }) => {
   const [rows, setRows] = useState<Row[]>(initialRows);
@@ -45,6 +49,8 @@ const EditFormTable: React.FC<EditFormTableProps> = ({
     toast.success("Lab Result Updated Successfully");
     setIsEditMode(false);
     mutateUpdateResult(null);
+    setReprint(rePrint + 1);
+
   }
 
   // Handle form submission
