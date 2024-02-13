@@ -1,7 +1,7 @@
 import { forwardRef, useEffect } from "react";
-import { useGetLabById } from "../../hooks/reactQuery/useLabs";
 import { Avatar } from "flowbite-react";
 import "./waterMark.css";
+import { useGetRadiologyById } from "../../hooks/reactQuery/useRadiology";
 interface PrintResultProps {
   selectedRowData: any;
   rePrint?: any;
@@ -18,7 +18,7 @@ const PrintRadiologyResult = forwardRef<HTMLDivElement, PrintResultProps>(
       return null;
     }
 
-    const { data, refetch } = useGetLabById(id);
+    const { data, refetch } = useGetRadiologyById(id);
 
     useEffect(() => {
       if (rePrint !== undefined) {
@@ -37,25 +37,6 @@ const PrintRadiologyResult = forwardRef<HTMLDivElement, PrintResultProps>(
           </tr>
         );
       }
-
-      function calculateAge(dob) {
-        const dobDate = new Date(dob);
-        const today = new Date();
-
-        let age = today.getFullYear() - dobDate.getFullYear();
-        const monthDiff = today.getMonth() - dobDate.getMonth();
-
-        if (
-          monthDiff < 0 ||
-          (monthDiff === 0 && today.getDate() < dobDate.getDate())
-        ) {
-          age--;
-        }
-
-        return age;
-      }
-      const dob = patientId?.address.dob;
-      const age = calculateAge(dob);
 
       return result.map((item) => (
         <tr key={item.id}>

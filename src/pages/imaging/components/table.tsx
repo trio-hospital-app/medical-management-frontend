@@ -38,7 +38,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
     ["radiologys", page],
-    () => radiologyService.getRadiology(page),
+    () => radiologyService.getRadiology(page)
   );
   if (statusResult === "success") {
     toast.success("Imaging Report Submitted Successfully");
@@ -124,7 +124,6 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
 
   const customStyles = {
     headCells: {
@@ -294,13 +293,13 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   return (
     <>
       {radiologyLoading && <Loader />}
-      {/* <div className="hidden">
-        <PrintRadiologyResult/>
+      <div className="hidden">
+        <PrintRadiologyResult
           ref={componentRef}
           selectedRowData={selectedRowData}
           rePrint={rePrint}
         />
-      </div> */}
+      </div>
 
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable
@@ -384,11 +383,14 @@ function PatientTable({ reload, setReload, radiologySearch }) {
         showCancelButton={true}
         submitTitle="Print"
         showSubmitButton={true}
+        submitHandler={handlePrint}
         size="5xl"
       >
         <ReportImaging
           selectedRowData={selectedRowData}
           setReload={setReload}
+          rePrint ={rePrint}
+          setReprint={setReprint}
         />
       </BasicModal>
     </>

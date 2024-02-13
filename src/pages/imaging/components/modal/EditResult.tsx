@@ -18,6 +18,8 @@ interface EditFormTableProps {
   selectedId?: string;
   setReload?: any;
   setIsEditMode?: any;
+  rePrint?: any;
+  setReprint?: any;
 }
 
 const EditResult: React.FC<EditFormTableProps> = ({
@@ -25,6 +27,8 @@ const EditResult: React.FC<EditFormTableProps> = ({
   selectedId,
   setReload,
   setIsEditMode,
+  rePrint,
+  setReprint,
   initialRows = [{ observation: "", unit: "", value: "", range: "" }], // Default value for initialRows
 }) => {
   const [rows, setRows] = useState<Row[]>(initialRows);
@@ -45,6 +49,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
     if (status === "success") {
       toast.success("Radiology Result Updated Successfully");
       setIsEditMode(false);
+      setReprint(rePrint + 1);
     }
   }, [status]);
 
@@ -54,7 +59,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
 
     // Validate if all required fields are filled
     const isFormValid = rows.every(
-      (row) => row.observation && row.unit && row.value,
+      (row) => row.observation && row.unit && row.value
     );
 
     if (!isFormValid) {
@@ -76,7 +81,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
             queryClient.invalidateQueries(["Radiology", selectedId]);
             setReload(true);
           },
-        },
+        }
       );
     } catch (error) {
       console.error("An error occurred:", error);
@@ -85,7 +90,7 @@ const EditResult: React.FC<EditFormTableProps> = ({
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
-    rowIndex: number,
+    rowIndex: number
   ) => {
     const { name, value } = event.target;
     const updatedRows = [...rows];

@@ -38,25 +38,6 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
         );
       }
 
-      function calculateAge(dob) {
-        const dobDate = new Date(dob);
-        const today = new Date();
-
-        let age = today.getFullYear() - dobDate.getFullYear();
-        const monthDiff = today.getMonth() - dobDate.getMonth();
-
-        if (
-          monthDiff < 0 ||
-          (monthDiff === 0 && today.getDate() < dobDate.getDate())
-        ) {
-          age--;
-        }
-
-        return age;
-      }
-      const dob = patientId?.address.dob;
-      const age = calculateAge(dob);
-
       return result.map((item) => (
         <tr key={item.id}>
           <td className="pl-4 border">{item.observation}</td>
