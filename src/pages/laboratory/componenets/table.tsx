@@ -303,10 +303,6 @@ function Table({ labSearch, reload, setReload }) {
     },
   ];
 
-  // const handlePrint = (row) => {
-  //   // print this componet
-  //   <PrintResult/>
-  // }
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -317,7 +313,7 @@ function Table({ labSearch, reload, setReload }) {
     <>
       {labLoading && <Loader />}
       {/* this is the printable componete but is not supposed to be visible  */}
-      <div>
+      <div className="hidden">
         <PrintResult
           ref={componentRef}
           selectedRowData={selectedRowData}

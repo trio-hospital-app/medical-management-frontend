@@ -1,5 +1,5 @@
 import { Tooltip } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DataTable from "react-data-table-component";
 import BasicModal from "../../../components/ui/modals/basicModal";
 import { Button } from "../../../components/ui/button";
@@ -16,6 +16,8 @@ import {
 import AwaitingImagingReport from "./modal/AwaitingImagingReport";
 import ReportImaging from "./modal/ReportImaging";
 import { toast } from "react-toastify";
+import { useReactToPrint } from "react-to-print";
+import PrintRadiologyResult from "../../../components/ui/printRadiologyResult";
 
 function PatientTable({ reload, setReload, radiologySearch }) {
   const [captureModal, setCaptureModal] = useState(false);
@@ -26,6 +28,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const [selectedRowData, setSelectedRowData] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [page, setPage] = useState(1);
+  const [rePrint, setReprint] = useState(0);
   const [pageData, setPageData] = useState(null);
   const [resultData, setResultData] = useState([]);
 
@@ -116,6 +119,12 @@ function PatientTable({ reload, setReload, radiologySearch }) {
       console.error("An error occurred:", error);
     }
   };
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
 
   const customStyles = {
     headCells: {
@@ -285,6 +294,13 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   return (
     <>
       {radiologyLoading && <Loader />}
+      {/* <div className="hidden">
+        <PrintRadiologyResult/>
+          ref={componentRef}
+          selectedRowData={selectedRowData}
+          rePrint={rePrint}
+        />
+      </div> */}
 
       <div className="rounded-[.5rem] px-2 py-10  bg-white shadow">
         <DataTable

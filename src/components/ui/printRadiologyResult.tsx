@@ -7,7 +7,7 @@ interface PrintResultProps {
   rePrint?: any;
 }
 
-const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
+const PrintRadiologyResult = forwardRef<HTMLDivElement, PrintResultProps>(
   (props, ref) => {
     const { selectedRowData, rePrint } = props;
     const MainData = selectedRowData;
@@ -109,7 +109,7 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
 
             <h1 className="font-bold text-xl ml-3 text-ha-primary1">MedOpt</h1>
           </div>
-          <h1 className="font-bold">Laboratory Report</h1>
+          <h1 className="font-bold">Radiology Report</h1>
           <h1>
             <span>Date: </span>
             {formattedDate}
@@ -214,4 +214,4 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
   }
 );
 
-export default PrintResult;
+export default PrintRadiologyResult;

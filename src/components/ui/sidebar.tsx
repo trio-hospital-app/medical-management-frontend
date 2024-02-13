@@ -16,7 +16,7 @@ function SideBar() {
 const location = useLocation();
 
 const isLinkActive = (path) => {
-  return location.pathname.includes(path);
+  return location.pathname.match(path);
 };
 
   return (
