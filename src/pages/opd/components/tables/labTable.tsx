@@ -30,7 +30,6 @@ function LabTable({ id, patientData }) {
     status: addLabStatus,
     isLoading: NewLabLoading,
   } = useAddLab();
-  console.log(patientLab, "patientLab");
 
   if (isLoading || NewLabLoading) {
     return <Loader />;

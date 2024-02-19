@@ -15,7 +15,6 @@ const NewLabOrder = ({
 }) => {
   const { data: clinicPanelData } = useGetClinicPanel();
 
-  console.log(patientData);
   // lab drop down data
   const schemes = patientData?.schemeId || [];
   const clinicPanels = clinicPanelData?.data || [];

@@ -80,9 +80,7 @@ function Scheme({ patient, setPatient, setPresentTab }) {
   const handleSaveRecord = async () => {
     // console.log(patients);
     const { addedBy, ...others } = patient;
-    console.log(others);
     if (location.search && patient.id) {
-      console.log(others);
       await updatemutate({ id: patient.id, data: others });
     } else {
       await addmutate(patient);
@@ -108,7 +106,6 @@ function Scheme({ patient, setPatient, setPresentTab }) {
       schemeId: selectedData,
     }));
 
-    console.log(selectedOptions, selectedData, patient);
   };
   const handleBack = (e) => {
     e.preventDefault();

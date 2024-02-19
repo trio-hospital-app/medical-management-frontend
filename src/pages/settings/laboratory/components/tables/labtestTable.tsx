@@ -85,7 +85,6 @@ function LabTestsTable() {
   }
 
   const createLabTests = async () => {
-    console.log(createFormData);
     try {
       await createMutate(createFormData);
       setShowCreate(false);

@@ -20,7 +20,6 @@ function NewConsultation({ setDoctorId, setPatientId, setScheme, setDept }) {
 
   const { data: doctorData, isLoading: loadingdoctor } = useGetDoctors();
 
-  console.log(doctorData, "doctorData");
 
   // function to set the search patien text
   const handleChange = (event: any) => {

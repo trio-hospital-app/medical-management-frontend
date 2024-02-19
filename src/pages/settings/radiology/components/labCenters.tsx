@@ -5,7 +5,6 @@ function LabCenters() {
   // Placeholder handleClick function
   const handleClick = () => {
     // Define the behavior for the click event here
-    console.log("Button clicked!");
   };
 
   return (

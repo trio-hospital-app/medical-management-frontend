@@ -14,9 +14,6 @@ const ScheduleTask = forwardRef((_props, ref) => {
   const [selectNursingService, setSelectNursingService] = useState([]);
 
   const handleSchduleSubmit = () => {
-    console.log("Schedule Task okay...");
-    console.log(formData);
-    console.log(selectNursingService);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

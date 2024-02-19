@@ -12,12 +12,19 @@ import { Tooltip } from "flowbite-react";
 import { BsPencilFill } from "react-icons/bs";
 import EditResult from "./EditResult";
 
-function ReportImaging({ selectedRowData, setReload, rePrint, setReprint }) {
+function ReportImaging({
+  selectedRowData,
+  setReload,
+  rePrint,
+  setReprint,
+  setPrintData,
+}) {
   const { patientId, orderBy } = selectedRowData;
   const [isEditMode, setIsEditMode] = useState(false);
   const id = selectedRowData?.id;
 
   const { data, isLoading } = useGetRadiologyById(id);
+  setPrintData(data?.data); // set the data to be printed
 
   const result = data?.data?.result || [];
 

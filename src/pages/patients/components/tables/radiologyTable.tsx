@@ -46,7 +46,6 @@ function RadiologyTable({ id, patientData }) {
     mutate(null);
   }
 
-  console.log(patientRadiology);
 
   const columns = [
     {

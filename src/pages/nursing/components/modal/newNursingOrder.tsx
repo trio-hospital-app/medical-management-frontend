@@ -21,7 +21,6 @@ const NewNursingOrder = () => {
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      console.log(search);
       if (search.trim() === "Abraham") {
         setFoundRecord(true);
       } else {
@@ -35,7 +34,6 @@ const NewNursingOrder = () => {
   };
 
   const handleLabCenterChange = (selectedItems: any) => {
-    console.log("Selected Lab Center:", selectedItems);
     setSelectedLabCenter(selectedItems);
   };
 

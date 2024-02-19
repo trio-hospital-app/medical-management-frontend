@@ -79,7 +79,6 @@ function ObservationsTable() {
     return <Loader />;
   }
   const createImagingTests = async () => {
-    console.log(createFormData);
     try {
       await createMutate(createFormData);
       setShowCreate(false);
@@ -114,7 +113,6 @@ function ObservationsTable() {
     setShowDelete(true);
   };
   const handleEdit = (id, content) => {
-    console.log(content, id);
     setId(id);
     setShowEdit(true);
     setCreateFormData(content);

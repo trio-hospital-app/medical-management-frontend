@@ -88,7 +88,6 @@ function NewTreatment({
                   index,
                   "medication",
                 );
-                console.log(formData);
               }}
               placeholder="Select Drug"
             />

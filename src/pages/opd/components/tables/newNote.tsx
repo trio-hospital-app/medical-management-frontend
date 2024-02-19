@@ -60,7 +60,6 @@ function NewNote({ showConsultations, refetch, cid, onClose, setShowHistory }) {
     e.preventDefault();
     try {
       // Handle form submission logic here
-      console.log(formData);
 
       await mutate({ id: cid, data: formData });
     } catch (error) {

@@ -25,7 +25,6 @@ function DoctorsTable({ id, cid }) {
   const [showHistory, setShowHistory] = useState(false);
   // const [formData, setFormData] = useState()
 
-  console.log(consultationData, "consultationData");
 
   if (loadingConsults) {
     return <Loader />;
