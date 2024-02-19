@@ -29,12 +29,14 @@ function PatientTable({ reload, setReload, radiologySearch }) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [rePrint, setReprint] = useState(0);
+  const [printData, setPrintData] = useState(null);
   const [pageData, setPageData] = useState(null);
   const [resultData, setResultData] = useState([]);
 
   const { mutate: mutateCapture, status: captureStatus } = useUpdateCapture();
   const { mutate: mutateImagingResult, status: statusResult } =
     useUpdateRadiologyResult();
+
 
   const { data: RadiologyData, isLoading: radiologyLoading } = useQuery(
     ["radiologys", page],
@@ -298,6 +300,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
           ref={componentRef}
           selectedRowData={selectedRowData}
           rePrint={rePrint}
+          printData={printData}
         />
       </div>
 
@@ -391,6 +394,7 @@ function PatientTable({ reload, setReload, radiologySearch }) {
           setReload={setReload}
           rePrint ={rePrint}
           setReprint={setReprint}
+          setPrintData={setPrintData}
         />
       </BasicModal>
     </>

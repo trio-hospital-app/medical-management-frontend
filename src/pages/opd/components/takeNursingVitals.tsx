@@ -1,5 +1,4 @@
 function TakeNursingVitals({ consultation, formData, setFormData }) {
-  console.log(consultation);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

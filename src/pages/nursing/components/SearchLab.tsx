@@ -16,7 +16,6 @@ const SearchLab = () => {
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      console.log(search);
     }
   };
 
@@ -25,7 +24,6 @@ const SearchLab = () => {
   };
 
   const searchHandler = () => {
-    console.log(search);
   };
 
   return (
@@ -61,7 +59,6 @@ const SearchLab = () => {
         showSubmitButton={true}
         size="5xl"
         submitHandler={() => {
-          console.log("save");
         }}
       >
         <NewNursingbOrder />

@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 
 function ConsultationId() {
   const { pid, cid } = useParams();
-  console.log(pid, "pid");
 
   const { isLoading, data } = useGetPatientById(pid);
 

@@ -12,13 +12,13 @@ import { Tooltip } from "flowbite-react";
 import { useState } from "react";
 import EditFormTable from "../../../../components/ui/dynamicFormTable/EditFormTable";
 
-function FinalResult({ selectedRowData, setReload, rePrint, setReprint }) {
+function FinalResult({ selectedRowData, setReload, rePrint, setReprint, setPrintData }) {
   const { patientId, panelId, orderBy } = selectedRowData;
   const [isEditMode, setIsEditMode] = useState(false);
   const id = selectedRowData?.id;
 
   const { data, isLoading } = useGetLabById(id);
-
+  setPrintData(data?.data); // set the data to be printed
   const result = data?.data?.result || [];
 
   //function for date and time format

@@ -59,7 +59,6 @@ function NewNote({ refetch, cid, initialData, recommendation, onClose }) {
     e.preventDefault();
     try {
       // Handle form submission logic here
-      console.log(formData);
 
       await mutate({ id: cid, data: formData });
     } catch (error) {

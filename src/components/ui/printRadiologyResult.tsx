@@ -5,11 +5,13 @@ import { useGetRadiologyById } from "../../hooks/reactQuery/useRadiology";
 interface PrintResultProps {
   selectedRowData: any;
   rePrint?: any;
+  printData: any;
 }
 
 const PrintRadiologyResult = forwardRef<HTMLDivElement, PrintResultProps>(
   (props, ref) => {
-    const { selectedRowData, rePrint } = props;
+    const { selectedRowData, rePrint, printData } = props;
+
     const MainData = selectedRowData;
     const { panelId, id, patientId, schemeId, centerId } = MainData;
 
@@ -120,6 +122,10 @@ const PrintRadiologyResult = forwardRef<HTMLDivElement, PrintResultProps>(
             <tr>
               <td className="font-bold border-r border-b pl-2">Scheme</td>
               <td className="border-b pl-2">{schemeId?.name || "No Scheme"}</td>
+              <td className="font-bold border-r border-b pl-2">Clinic Name</td>
+              <td className="border-b pl-2">
+                {printData?.clinicId.name || "No Clinic Name"}
+              </td>
             </tr>
             <tr>
               <td className="font-bold border-r border-b pl-2">

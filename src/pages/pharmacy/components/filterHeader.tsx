@@ -21,7 +21,6 @@ function Patients({ setreatments }) {
 
   setreatments(data);
 
-  console.log(consultationData, "consultationData");
 
   if (consultationData && consultationData?.status) {
     toast.success("Successfully Created Consultation");

@@ -28,7 +28,6 @@ function PharmacyTable({ id, cid, patientData }) {
     status: addTreatmentStatus,
     isLoading: addTreatmentLoading,
   } = useAddTreatment();
-  console.log(patientData, id, patientPharmarcy, pharmRefetch);
   const [showTreatmentModal, setShowTreatmentModal] = useState(false);
   const [formData, setFormData] = useState({
     consultationId: cid,
@@ -47,7 +46,6 @@ function PharmacyTable({ id, cid, patientData }) {
     mutate(null);
   }
   const handleSubmit = async () => {
-    console.log(formData);
     await mutate(formData);
     setShowTreatmentModal(false);
   };

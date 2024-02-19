@@ -30,6 +30,7 @@ function Table({ labSearch, reload, setReload }) {
   const [selectedId, setSelectedId] = useState("");
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState(null);
+  const [printData, setPrintData] = useState([]);
   const [rePrint, setReprint] = useState(0);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const { data: labData, isLoading: labLoading } = useQuery(
@@ -316,8 +317,9 @@ function Table({ labSearch, reload, setReload }) {
       <div className="hidden">
         <PrintResult
           ref={componentRef}
-          selectedRowData={selectedRowData}
+          printData={printData}
           rePrint={rePrint}
+          selectedRowData={selectedRowData}
         />
       </div>
 
@@ -413,6 +415,7 @@ function Table({ labSearch, reload, setReload }) {
           setReload={setReload}
           rePrint={rePrint}
           setReprint={setReprint}
+          setPrintData={setPrintData}
         />
       </BasicModal>
     </>

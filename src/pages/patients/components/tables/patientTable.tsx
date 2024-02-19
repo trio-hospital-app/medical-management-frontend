@@ -34,7 +34,6 @@ function PatientTable({ patientData }) {
   const [scheme, setScheme] = useState("");
   const [dept, setDept] = useState("");
 
-  console.log(doctorId);
 
   const {
     mutate: mutateLab,

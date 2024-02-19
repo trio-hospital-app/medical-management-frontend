@@ -16,7 +16,6 @@ function PatientTable({ patientData }) {
   // }
 
   // const handlePageChange = async (page) => {
-  //   console.log(page);
   //   await refetch(page);
   //   await queryClient.prefetchQuery(["patients", page], () =>
   //     PatientService.getPatients(page),

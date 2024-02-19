@@ -12,7 +12,6 @@ import { useState } from "react";
 import DeleteWarningModal from "../../../../components/ui/modals/deletWarningModal";
 
 function PharmacyTable({ treatments }) {
-  console.log(treatments);
   const [showDelete, setShowDelete] = useState(false);
   const [rowData, setRowData] = useState(null);
   const {
@@ -51,7 +50,6 @@ function PharmacyTable({ treatments }) {
   }
 
   const handleConfirmation = async (rowData) => {
-    console.log(rowData, "rowData");
     if (rowData?.paid) {
       const data = {
         id: rowData?.id,

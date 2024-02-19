@@ -44,7 +44,6 @@ function TaskTable() {
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      console.log(search);
     }
   };
 
@@ -64,31 +63,25 @@ function TaskTable() {
 
   // modal save button handler
   const addTaskHandler = () => {
-    console.log("add task");
     handleApiCallFromAddTask();
   };
 
   const scheduleTaskHandler = () => {
-    console.log("schdule task");
     handleApicallfromScheduleTask();
   };
 
   const openAddTaskModal = () => {
     setAddTask(true);
-    console.log("add task");
   };
 
   const handleRowDelete = (row: Patient) => {
-    console.log(row);
   };
 
   const handleRowClick = (status: string) => {
     if (status === "Done") {
       setDoneTaskmodal(true);
-      console.log("done");
     } else if (status === "Scheduled") {
       setScheduleTaskmodal(true);
-      console.log("scheduled");
     }
   };
 

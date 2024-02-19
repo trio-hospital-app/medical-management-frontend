@@ -7,7 +7,6 @@ function NewConsultation({ setDoctorId, patient, setScheme, setDept }) {
 
   const { data: doctorData, isLoading: loadingdoctor } = useGetDoctors();
 
-  console.log(doctorData, "doctorData");
 
   const schemes = patient?.schemeId || [];
   //  const clinicPanels = clinicPanelData?.data || [];
