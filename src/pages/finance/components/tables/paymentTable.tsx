@@ -1,22 +1,35 @@
 import DataTable from "react-data-table-component";
-import ReactDOMServer from "react-dom/server";
 import { useUserReciepts } from "../../../../hooks/reactQuery/useFinance";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../../../../hooks/formattedDate";
 import Loader from "../../../../components/ui/loader";
 import { IoMdPrint } from "react-icons/io";
 import { FiSend } from "react-icons/fi";
-import PrintReceipt from "../PrintReceipt";
+import { useReactToPrint } from "react-to-print";
+import { useEffect, useRef, useState } from "react";
+import PrintResult from "../../../../components/ui/printRecipt";
 
 function PaymentTable() {
   const { id } = useParams();
   const { data: usersFinance, isLoading: LoadinguserFinance } =
     useUserReciepts(id);
-
+  const [selectedRowData, setSelectedRowData] = useState([]);
 
   if (LoadinguserFinance) {
     return <Loader />;
   }
+
+  useEffect(() => {
+    if (selectedRowData && Object.keys(selectedRowData).length > 0) {
+      handlePrint();
+    }
+  }, [selectedRowData]);
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  // console.log("usersFinance?.data?.finances", usersFinance?.data?.finances);
 
   const medications = (drugs) => {
     const drugNames = drugs.map((el) => {
@@ -68,7 +81,6 @@ function PaymentTable() {
     return total.reduce((a, b) => a + b, 0);
   };
 
-
   const columns = [
     {
       name: "Transaction Date",
@@ -98,7 +110,9 @@ function PaymentTable() {
           <div className=" flex items-center gap-3">
             <IoMdPrint
               className="font-bold text-xl text-ha-primary1"
-              onClick={() => handlePrint(row)}
+              onClick={() => {
+                setSelectedRowData(row);
+              }}
             />
             <FiSend className="font-bold text-xl text-green-600" />
           </div>
@@ -107,31 +121,7 @@ function PaymentTable() {
       sortable: false,
     },
   ];
-  const handlePrint = (rowData) => {
-    const printHTML = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Print Page</title>
-    </head>
-    <body>
-      ${ReactDOMServer.renderToString(<PrintReceipt receiptData={rowData} />)}
-    </body>
-    </html>
-  `;
-    const printWindow = window.open("", "_blank", "width=600,height=600");
-    printWindow.document.open();
-    printWindow.document.write(printHTML);
-    printWindow.document.close();
 
-    // Wait for the content to load, then trigger the print dialog
-    printWindow.onload = () => {
-      printWindow.print();
-      printWindow.close();
-    };
-  };
   const ExpandedComponent = ({ data }) => (
     <div className="relative">
       <div className="m-5 p-5 bg-black">
@@ -181,9 +171,12 @@ function PaymentTable() {
   );
   return (
     <div>
+      <div className="hidden">
+        <PrintResult ref={componentRef} selectedRowData={selectedRowData} />
+      </div>
       <DataTable
         columns={columns}
-        data={usersFinance?.data?.finances}
+        data={usersFinance?.data?.finances || []}
         expandableRows
         expandableRowsComponent={ExpandedComponent}
       />
