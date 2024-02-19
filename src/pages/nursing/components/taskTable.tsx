@@ -75,6 +75,7 @@ function TaskTable() {
   };
 
   const handleRowDelete = (row: Patient) => {
+    console.log(row)
   };
 
   const handleRowClick = (status: string) => {

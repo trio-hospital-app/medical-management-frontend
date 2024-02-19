@@ -75,6 +75,7 @@ function DoctorsTable({ id, cid }) {
     },
   ];
   const handleRowClick = (bodyData) => {
+    console.log(bodyData);
     // setFormData(bodyData)
     navigate(`/visits/${id}/${cid}`);
     setShowHistory(false);

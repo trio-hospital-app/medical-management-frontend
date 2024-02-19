@@ -12,7 +12,7 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
   (props, ref) => {
     const { selectedRowData, rePrint, printData } = props;
     const MainData = selectedRowData;
-    const { panelId, id, patientId, schemeId, centerId, clinicId } = MainData;
+    const { panelId, id, patientId, schemeId, centerId} = MainData;
 
     // Return null if id is undefined or null
     if (!id) {

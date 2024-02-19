@@ -20,6 +20,7 @@ function Patients({ setConsults }) {
   const [dept, setDept] = useState("");
   const [doctorId, setDoctorId] = useState("");
   const { data: userData } = useGetUserByToken();
+  console.log(doctorId, "userData");
   const {
     data: consultationData,
     isLoading: loadingConsults,
@@ -28,6 +29,7 @@ function Patients({ setConsults }) {
 
   setConsults(data);
 
+  console.log(consultationData, "consultationData");
 
   if (consultationData && consultationData?.status) {
     toast.success("Successfully Created Consultation");
