@@ -8,6 +8,7 @@ interface PrintResultProps {
 const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
   (props, ref) => {
     const { selectedRowData } = props;
+    console.log("selectedRowData", selectedRowData);
 
     //function for date
     const today = new Date();
@@ -65,7 +66,7 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
           <div className=" text-left">
             <h4>
               <span className="font-bold">Invoice Number: </span>{" "}
-              {selectedRowData?.receipt}
+              {selectedRowData?.receipt || selectedRowData?.administerId}
             </h4>
             <h4>
               <span className="font-bold">Date: </span>

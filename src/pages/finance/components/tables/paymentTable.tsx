@@ -29,7 +29,7 @@ function PaymentTable() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-  // console.log("usersFinance?.data?.finances", usersFinance?.data?.finances);
+  console.log("usersFinance?.data?.finances", usersFinance?.data?.finances);
 
   const medications = (drugs) => {
     const drugNames = drugs.map((el) => {
@@ -78,7 +78,7 @@ function PaymentTable() {
     }
   };
   const sum = (total) => {
-    return total.reduce((a, b) => a + b, 0);
+    return total?.reduce((a, b) => a + b, 0);
   };
 
   const columns = [
