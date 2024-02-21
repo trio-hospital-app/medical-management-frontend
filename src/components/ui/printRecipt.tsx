@@ -9,9 +9,7 @@ interface PrintResultProps {
 const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
   (props, ref) => {
     const { selectedRowData, patientData } = props;
-    console.log("selectedRowData", selectedRowData);
 
-    console.log("patient ", patientData);
 
     //function for date
     const today = new Date();
