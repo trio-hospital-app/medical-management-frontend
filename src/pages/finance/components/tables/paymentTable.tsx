@@ -9,7 +9,7 @@ import { useReactToPrint } from "react-to-print";
 import { useEffect, useRef, useState } from "react";
 import PrintResult from "../../../../components/ui/printRecipt";
 
-function PaymentTable() {
+function PaymentTable({patientData}) {
   const { id } = useParams();
   const { data: usersFinance, isLoading: LoadinguserFinance } =
     useUserReciepts(id);
@@ -172,7 +172,7 @@ function PaymentTable() {
   return (
     <div>
       <div className="hidden">
-        <PrintResult ref={componentRef} selectedRowData={selectedRowData} />
+        <PrintResult ref={componentRef} selectedRowData={selectedRowData} patientData={patientData} />
       </div>
       <DataTable
         columns={columns}

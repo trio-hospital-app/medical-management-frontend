@@ -3,12 +3,15 @@ import { Avatar } from "flowbite-react";
 import "./waterMark.css";
 interface PrintResultProps {
   selectedRowData: any;
+  patientData: any;
 }
 
 const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
   (props, ref) => {
-    const { selectedRowData } = props;
+    const { selectedRowData, patientData } = props;
     console.log("selectedRowData", selectedRowData);
+
+    console.log("patient ", patientData);
 
     //function for date
     const today = new Date();
@@ -40,6 +43,14 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
       );
       return `₦${formattedIntegerPart}${decimalPart ? `.${decimalPart}` : ""}`;
     };
+
+    const medications = (drugs) => {
+      const drugNames = drugs.map((el) => {
+        return el?.medicationId?.name;
+      });
+      return drugNames.join(", ");
+    };
+
     return (
       <>
         <div ref={ref} className="px-4 border py-4 shadow watermark">
@@ -77,11 +88,11 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
             <div>
               <h4>
                 <span className="font-bold ">Bill To: </span>
-                {`${selectedRowData?.items?.[0]?.labId?.patientId?.firstName} ${selectedRowData?.items?.[0]?.labId?.patientId?.lastName}`}{" "}
+                {`${patientData?.firstName} ${patientData?.lastName}`}{" "}
               </h4>
               <h4>
                 <span className="font-bold ">Patient Id: </span>
-                {`${selectedRowData?.items?.[0]?.labId?.patientId?.patientId} `}
+                {`${patientData?.patientId} `}
               </h4>
             </div>
           </div>
@@ -105,6 +116,8 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
                   <td className="text-left py-5 border-b-2">
                     {row.labId?.panelId.panel}
                     {row.radiologyId?.testId?.test}
+                    {row.consultationId?.visitType[0]?.name}
+                    {medications(row.administerId?.medication)}
                   </td>
                   <td className="text-right py-5 border-b-2">
                     {formatAmount(row.amount)}
@@ -116,7 +129,6 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
               ))}
             </tbody>
           </table>
-          <h6 className="px-5 my-5">Terms & condintions:</h6>
 
           <div className="flex justify-end">
             <div className="border px-5 my-2 bg-ha-primary1">
