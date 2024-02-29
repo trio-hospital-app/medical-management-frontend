@@ -43,10 +43,10 @@ const PrintResult = forwardRef<HTMLDivElement, PrintResultProps>(
     };
 
     const medications = (drugs) => {
-      const drugNames = drugs.map((el) => {
+      const drugNames = drugs?.map((el) => {
         return el?.medicationId?.name;
       });
-      return drugNames.join(", ");
+      return drugNames?.join(", ");
     };
 
     return (
