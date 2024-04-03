@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  <>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <App />
@@ -19,5 +19,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
-  </React.StrictMode>,
+  </>
 );
